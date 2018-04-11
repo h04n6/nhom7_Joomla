@@ -1,0 +1,16 @@
+void Hướng dẫn tạo trang web bằng Joomla 3.x từ a - z()
+{
+  Link youtube (phần 1): https://www.youtube.com/watch?v=VP4Xk97MJ4M
+  Tổng là 6 phần. 5 phần còn lại mọi người đọc trong phần mô tả trên youtube nhé.
+}
+
+void hướng dẫn cài đặt joomla ()
+{
+  Tải thư mục joomla. Copy nó vào thư mục htdoc của xampp.
+  Tải file banquanao.sql. Truy cập localhost/phpmysql để import nó.
+  
+  **Đã cài đặt sẵn VitueMart
+  **Bản joomla đã cài đặt hiện tại là 3.8.5. KHÔNG cập nhật phiên bản mới hơn, tránh xảy ra lỗi không mong muốn.
+  **Xem 6 video để biết cách thực hiện 1 trang web bằng Joomla!.
+}
+
