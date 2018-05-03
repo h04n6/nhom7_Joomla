@@ -7,7 +7,7 @@
  * @package VirtueMart
  * @subpackage
  * @author RolandD
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -52,13 +52,13 @@ class VirtueMartViewAskquestion extends VmView {
 			}
 		}
 
-		$this->show_prices = (int)VmConfig::get ('show_prices', 1);
-		if ($this->show_prices) {
+		$show_prices = VmConfig::get ('show_prices', 1);
+		if ($show_prices == '1') {
 			if (!class_exists ('calculationHelper')) {
 				require(VMPATH_ADMIN . DS . 'helpers' . DS . 'calculationh.php');
 			}
 		}
-
+		$this->assignRef ('show_prices', $show_prices);
 		$document = JFactory::getDocument ();
 
 		$mainframe = JFactory::getApplication ();
@@ -92,7 +92,7 @@ class VirtueMartViewAskquestion extends VmView {
 		// Set Canonic link
 		$format = vRequest::getCmd('format', 'html');
 		if ($format == 'html') {
-			$document->addHeadLink (JUri::getInstance()->toString(array('scheme', 'host', 'port')).JRoute::_($product->canonical, FALSE), 'canonical', 'rel', '');
+			$document->addHeadLink ($product->canonical, 'canonical', 'rel', '');
 		}
 
 		// Set the titles
@@ -147,8 +147,6 @@ class VirtueMartViewAskquestion extends VmView {
 			$document->setMetaData ('author', $product->metaauthor);
 		}
 
-		$this->captcha = shopFunctionsF::renderCaptcha('ask_captcha');
-
 		parent::display ($tpl);
 	}
 
@@ -184,7 +182,7 @@ class VirtueMartViewAskquestion extends VmView {
 
 		$vendorModel->addImages ($this->vendor);
 
-		$this->vendorEmail = $vendorModel->getVendorEmail($this->vendor->virtuemart_vendor_id);
+		$this->vendorEmail = $vendorModel->getVendorEmail($this->vendor->virtuemart_vendor_id);;
 
 		// in this particular case, overwrite the value for fix the recipient name
 		$this->vendor->vendor_name = $this->user->get('name');

@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage Product
 * @author Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2009 - 2014 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: products.php 9413 2017-01-04 17:20:58Z Milbo $
+* @version $Id: products.php 8557 2014-11-09 21:06:17Z Milbo $
 */
 
 defined('_JEXEC') or die('Restricted access');
@@ -58,7 +58,6 @@ class TableProducts extends VmTable {
 	/** @var int File thumbnail image width */
 	var $product_in_stock	= 0;
 	var $product_ordered		= 0;
-	var $product_stockhandle	= 0;
 	/** @var int File thumbnail image width */
 	var $low_stock_notification	= 0;
 	/** @var int File thumbnail image width */
@@ -67,7 +66,6 @@ class TableProducts extends VmTable {
 	var $product_availability	= null;
 	/** @var int File thumbnail image width */
 	var $product_special	= null;
-	var $product_discontinued	= null;
 
 	/** @var int product internal ordering, it is for the ordering for child products under a parent null */
 	var $pordering = null;
@@ -120,7 +118,6 @@ class TableProducts extends VmTable {
 
 		$this->setParameterable('product_params',$varsToPushParam);
 		$this->_updateNulls = true;
-		$this->published = VmConfig::get('product.published',1);
 	}
 
 }

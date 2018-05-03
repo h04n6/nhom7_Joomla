@@ -7,20 +7,18 @@
  * @subpackage Product
  * @author Max Milbers
  * @todo Price update calculations
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2015 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: product_edit_information.php 9674 2017-11-16 14:17:23Z Milbo $
+ * @version $Id: product_edit_information.php 8982 2015-09-14 09:45:02Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
-
-
 
 // set row counter
 $i=0;
@@ -32,7 +30,7 @@ $i=0;
 		$parentRel = '';
 		if ($this->product->product_parent_id) {
 			$parentRel = vmText::sprintf('COM_VIRTUEMART_PRODUCT_FORM_PARENT',JHtml::_('link', JRoute::_('index.php?option=com_virtuemart&view=product&task=edit&virtuemart_product_id='.$this->product->product_parent_id),
-				($this->product_parent->product_name), array('title' => vmText::_('COM_VIRTUEMART_EDIT').' '.vRequest::vmSpecialChars($this->product_parent->product_name))).' =&gt; ');
+				($this->product_parent->product_name), array('title' => vmText::_('COM_VIRTUEMART_EDIT').' '.htmlentities($this->product_parent->product_name))).' =&gt; ');
 		}
 		echo vmText::sprintf('COM_VIRTUEMART_PRODUCT_INFORMATION',$parentRel);
 		echo ' id: '.$this->product->virtuemart_product_id ?>
@@ -44,19 +42,16 @@ $i=0;
 			</td>
 			<td>
 				<input class="required inputbox" type="text" name="product_name" id="product_name" value="<?php echo $this->product->product_name; ?>" size="32" maxlength="255" />
-				<?php echo $this->origLang ?>
 			</td>
 			<td colspan="2">
 				<label><?php echo VmHTML::checkbox('published', $this->product->published); ?><?php echo vmText::_('COM_VIRTUEMART_PUBLISHED') ?></label>
 				<label><?php echo VmHTML::checkbox('product_special', $this->product->product_special); ?> <?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_SPECIAL') ?></label>
-				<label><?php echo VmHTML::checkbox('product_discontinued', $this->product->product_discontinued); echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_DISCONTINUED') ?></label>
 			</td>
 			<td>
 				<span class="hastip" title="<?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_ALIAS_TIP');?>"><?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_ALIAS') ?></span>
 			</td>
-			<td height="18" >
+			<td height="18">
 				<input type="text" class="inputbox"  name="slug" id="slug" value="<?php echo $this->product->slug; ?>" size="32" maxlength="255" />
-				<?php echo $this->origLang ?>
 			</td>
 		</tr>
 
@@ -113,8 +108,9 @@ $i=0;
 				<?php echo vmText::_('COM_VIRTUEMART_CATEGORY_S') ?>
 			</td>
 			<td>
-				<select class="vm-drop" id="categories" name="categories[]" multiple="multiple"  data-placeholder="<?php echo vmText::_('COM_VIRTUEMART_DRDOWN_SELECT_SOME_OPTIONS')  ?>" size="100" >
-
+				<select class="inputbox width100" id="categories" name="categories[]" multiple="multiple"  data-placeholder="<?php echo vmText::_('COM_VIRTUEMART_DRDOWN_SELECT_SOME_OPTIONS')  ?>" size="100">
+					<option value=""><?php echo vmText::_('COM_VIRTUEMART_UNCATEGORIZED') ?></option>
+					<?php echo $this->category_tree; ?>
 				</select>			</td>
 			<?php
 			// It is important to have all product information in the form, since we do not preload the parent
@@ -130,7 +126,7 @@ $i=0;
 			<td>
 				<?php echo $this->shoppergroupList; ?>
 			</td>
-			<?php if($this->showVendors()) { ?>
+			<?php if(Vmconfig::get('multix','none')!=='none') { ?>
 			<td>
 				<?php echo vmText::_('COM_VIRTUEMART_VENDOR') ?>
 			</td>
@@ -146,19 +142,9 @@ $i=0;
 
 			<!-- Product pricing -->
 			<fieldset>
-			    <legend>
-				    <?php
-					echo vmText::sprintf('COM_VIRTUEMART_PRODUCT_FORM_PRICES',$this->activeShoppergroups);
-					if ($this->deliveryCountry) {
-						echo vmText::sprintf('COM_VIRTUEMART_PRODUCT_FORM_PRICES_COUNTRY', $this->deliveryCountry  );
-					}
-					if ($this->deliveryState)  {
-						echo  vmText::sprintf('COM_VIRTUEMART_PRODUCT_FORM_PRICES_STATE',$this->deliveryState   );
-					}
-					?>
-
-				</legend>
-
+			    <legend><?php
+					echo vmText::sprintf('COM_VIRTUEMART_PRODUCT_FORM_PRICES',$this->activeShoppergroups); ?></legend>
+			
 				<?php
 				//$product = $this->product;
 			
@@ -167,15 +153,20 @@ $i=0;
 				}
 	$this->i = 0;
 	$rowColor = 0;
-
-	$calculator = $this->calculator;
+	if (!class_exists ('calculationHelper')) {
+		require(VMPATH_ADMIN . DS . 'helpers' . DS . 'calculationh.php');
+	}
+	$calculator = calculationHelper::getInstance ();
 	$currency_model = VmModel::getModel ('currency');
 	$currencies = $currency_model->getCurrencies ();
 	$nbPrice = count ($this->product->allPrices);
 	$this->priceCounter = 0;
 	$this->product->allPrices[$nbPrice] = VmModel::getModel()->fillVoidPrice();
 
-
+	if (!class_exists ('calculationHelper')) {
+		require(VMPATH_ADMIN . DS . 'helpers' . DS . 'calculationh.php');
+	}
+	$calculator = calculationHelper::getInstance ();
 	?>
     <table border="0" width="100%" cellpadding="2" cellspacing="3" id="mainPriceTable" class="adminform  ">
         <tbody id="productPriceBody">
@@ -286,11 +277,7 @@ if ($link) {
 }
 ?>
 	</div>
-</div>
-<span class="hastip" title="<?php echo vmText::_('COM_VIRTUEMART_PRODUCT_PARENTID_TIP') ?>"><?php echo vmText::_('COM_VIRTUEMART_PRODUCT_PARENTID') ?></span>
-<input type="text" class="inputbox" name="product_parent_id" id="product_parent_id" value="<?php echo $this->product->product_parent_id; ?>" size="16" maxlength="64" />
-
-<div class="clear"></div>
+</div><div class="clear"></div>
 
 		<fieldset>
 			<legend>
@@ -299,32 +286,40 @@ if ($link) {
 			<textarea style="width: 100%;" class="inputbox" name="intnotes" id="intnotes" cols="35" rows="6"><?php echo $this->product->intnotes; ?></textarea>
 		</fieldset>
 
-<?php
 
-$j = 'jQuery(document).ready(function ($) {
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
         jQuery("#mainPriceTable").dynoTable({
-            removeClass: ".price-remove", //remove class name in  table
-            cloneClass: ".price-clone", //Custom cloner class name in  table
-            addRowTemplateId: "#productPriceRowTmpl", //Custom id for  row template
-            addRowButtonId: "#add_new_price", //Click this to add a price
+            removeClass:'.price-remove', //remove class name in  table
+            cloneClass:'.price-clone', //Custom cloner class name in  table
+            addRowTemplateId:'#productPriceRowTmpl', //Custom id for  row template
+            addRowButtonId:'#add_new_price', //Click this to add a price
             lastRowRemovable:true, //let the table be empty.
             orderable:true, //prices can be rearranged
-            dragHandleClass: ".price_ordering", //class for the click and draggable drag handle
+            dragHandleClass:".price_ordering", //class for the click and draggable drag handle
             onRowRemove:function () {
             },
             onRowClone:function () {
             },
             onRowAdd:function () {
-                //$(\'select\').chosen(\'destroy\');
-                //Virtuemart.updateChosenDropdownLayout($);
-                //$(".chzn-single").chosen();
-               // $(\'select\').trigger(\'chosen:updated\');
             },
             onTableEmpty:function () {
             },
             onRowReorder:function () {
             }
         });
-    });';
-vmJsApi::addJScript('dynotable_ini',$j);
-?>
+    });
+
+</script>
+
+<script type="text/javascript">
+	var tax_rates = new Array();
+	<?php
+		if( property_exists($this, 'taxrates') && is_array( $this->taxrates )) {
+			foreach( $this->taxrates as $key => $tax_rate ) {
+				echo 'tax_rates["'.$tax_rate->tax_rate_id.'"] = '.$tax_rate->tax_rate."\n";
+			}
+		}
+	?>
+</script>

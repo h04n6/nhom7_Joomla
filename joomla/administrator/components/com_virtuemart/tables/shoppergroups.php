@@ -42,10 +42,14 @@ class TableShoppergroups extends VmTable
 		$this->setLoggable();
 		$this->setTableShortCut('sg');
 
-		if (!class_exists('CurrencyDisplay')) require(VMPATH_ADMIN .'/helpers/currencydisplay.php');
+		$myfields = array('basePrice',
+			'variantModification','basePriceVariant',
+			'basePriceWithTax','basePriceWithTax','discountedPriceWithoutTax',
+			'salesPrice','priceWithoutTax',
+			'salesPriceWithDiscount','discountAmount','taxAmount','unitPrice');
 
 		$varsToPushParam = array('show_prices' => array(0,'int'));
-		foreach(CurrencyDisplay::$priceNames as $field){
+		foreach($myfields as $field){
 			$varsToPushParam[$field] = array(1,'int');
 			$varsToPushParam[$field.'Text'] = array(1,'int');
 			$varsToPushParam[$field.'Rounding'] = array(-1,'int');

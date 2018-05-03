@@ -1,22 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
--- https://www.phpmyadmin.net/
+-- version 4.2.11
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2018 at 12:18 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: May 03, 2018 at 03:20 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `banquanao`
@@ -28,94 +26,96 @@ SET time_zone = "+00:00";
 -- Table structure for table `xtqmd_assets`
 --
 
-CREATE TABLE `xtqmd_assets` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'Primary Key',
+CREATE TABLE IF NOT EXISTS `xtqmd_assets` (
+`id` int(10) unsigned NOT NULL COMMENT 'Primary Key',
   `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set parent.',
   `lft` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set lft.',
   `rgt` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set rgt.',
-  `level` int(10) UNSIGNED NOT NULL COMMENT 'The cached level in the nested tree.',
+  `level` int(10) unsigned NOT NULL COMMENT 'The cached level in the nested tree.',
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The unique name for the asset.\n',
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The descriptive title for the asset.',
   `rules` varchar(5120) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'JSON encoded access control.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_assets`
 --
 
 INSERT INTO `xtqmd_assets` (`id`, `parent_id`, `lft`, `rgt`, `level`, `name`, `title`, `rules`) VALUES
-(1, 0, 0, 143, 0, 'root.1', 'Root Asset', '{\"core.login.site\":{\"6\":1,\"2\":1},\"core.login.admin\":{\"6\":1},\"core.login.offline\":{\"6\":1},\"core.admin\":{\"8\":1},\"core.manage\":{\"7\":1},\"core.create\":{\"6\":1,\"3\":1},\"core.delete\":{\"6\":1},\"core.edit\":{\"6\":1,\"4\":1},\"core.edit.state\":{\"6\":1,\"5\":1},\"core.edit.own\":{\"6\":1,\"3\":1}}'),
+(1, 0, 0, 147, 0, 'root.1', 'Root Asset', '{"core.login.site":{"6":1,"2":1},"core.login.admin":{"6":1},"core.login.offline":{"6":1},"core.admin":{"8":1},"core.manage":{"7":1},"core.create":{"6":1,"3":1},"core.delete":{"6":1},"core.edit":{"6":1,"4":1},"core.edit.state":{"6":1,"5":1},"core.edit.own":{"6":1,"3":1}}'),
 (2, 1, 1, 2, 1, 'com_admin', 'com_admin', '{}'),
-(3, 1, 3, 6, 1, 'com_banners', 'com_banners', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
-(4, 1, 7, 8, 1, 'com_cache', 'com_cache', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"7\":1}}'),
-(5, 1, 9, 10, 1, 'com_checkin', 'com_checkin', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"7\":1}}'),
+(3, 1, 3, 6, 1, 'com_banners', 'com_banners', '{"core.admin":{"7":1},"core.manage":{"6":1}}'),
+(4, 1, 7, 8, 1, 'com_cache', 'com_cache', '{"core.admin":{"7":1},"core.manage":{"7":1}}'),
+(5, 1, 9, 10, 1, 'com_checkin', 'com_checkin', '{"core.admin":{"7":1},"core.manage":{"7":1}}'),
 (6, 1, 11, 12, 1, 'com_config', 'com_config', '{}'),
-(7, 1, 13, 16, 1, 'com_contact', 'com_contact', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
-(8, 1, 17, 34, 1, 'com_content', 'com_content', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":{\"3\":1},\"core.edit\":{\"4\":1},\"core.edit.state\":{\"5\":1}}'),
+(7, 1, 13, 16, 1, 'com_contact', 'com_contact', '{"core.admin":{"7":1},"core.manage":{"6":1}}'),
+(8, 1, 17, 34, 1, 'com_content', 'com_content', '{"core.admin":{"7":1},"core.manage":{"6":1},"core.create":{"3":1},"core.edit":{"4":1},"core.edit.state":{"5":1}}'),
 (9, 1, 35, 36, 1, 'com_cpanel', 'com_cpanel', '{}'),
-(10, 1, 37, 38, 1, 'com_installer', 'com_installer', '{\"core.manage\":{\"7\":0},\"core.delete\":{\"7\":0},\"core.edit.state\":{\"7\":0}}'),
-(11, 1, 39, 42, 1, 'com_languages', 'com_languages', '{\"core.admin\":{\"7\":1}}'),
+(10, 1, 37, 38, 1, 'com_installer', 'com_installer', '{"core.manage":{"7":0},"core.delete":{"7":0},"core.edit.state":{"7":0}}'),
+(11, 1, 39, 42, 1, 'com_languages', 'com_languages', '{"core.admin":{"7":1}}'),
 (12, 1, 43, 44, 1, 'com_login', 'com_login', '{}'),
 (13, 1, 45, 46, 1, 'com_mailto', 'com_mailto', '{}'),
 (14, 1, 47, 48, 1, 'com_massmail', 'com_massmail', '{}'),
-(15, 1, 49, 50, 1, 'com_media', 'com_media', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1},\"core.create\":{\"3\":1},\"core.delete\":{\"5\":1}}'),
-(16, 1, 51, 56, 1, 'com_menus', 'com_menus', '{\"core.admin\":{\"7\":1}}'),
-(17, 1, 57, 58, 1, 'com_messages', 'com_messages', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"7\":1}}'),
-(18, 1, 59, 110, 1, 'com_modules', 'com_modules', '{\"core.admin\":{\"7\":1}}'),
-(19, 1, 111, 114, 1, 'com_newsfeeds', 'com_newsfeeds', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
-(20, 1, 115, 116, 1, 'com_plugins', 'com_plugins', '{\"core.admin\":{\"7\":1}}'),
-(21, 1, 117, 118, 1, 'com_redirect', 'com_redirect', '{\"core.admin\":{\"7\":1}}'),
-(22, 1, 119, 120, 1, 'com_search', 'com_search', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
-(23, 1, 121, 122, 1, 'com_templates', 'com_templates', '{\"core.admin\":{\"7\":1}}'),
-(24, 1, 123, 126, 1, 'com_users', 'com_users', '{\"core.admin\":{\"7\":1}}'),
-(26, 1, 127, 128, 1, 'com_wrapper', 'com_wrapper', '{}'),
+(15, 1, 49, 50, 1, 'com_media', 'com_media', '{"core.admin":{"7":1},"core.manage":{"6":1},"core.create":{"3":1},"core.delete":{"5":1}}'),
+(16, 1, 51, 58, 1, 'com_menus', 'com_menus', '{"core.admin":{"7":1}}'),
+(17, 1, 59, 60, 1, 'com_messages', 'com_messages', '{"core.admin":{"7":1},"core.manage":{"7":1}}'),
+(18, 1, 61, 114, 1, 'com_modules', 'com_modules', '{"core.admin":{"7":1}}'),
+(19, 1, 115, 118, 1, 'com_newsfeeds', 'com_newsfeeds', '{"core.admin":{"7":1},"core.manage":{"6":1}}'),
+(20, 1, 119, 120, 1, 'com_plugins', 'com_plugins', '{"core.admin":{"7":1}}'),
+(21, 1, 121, 122, 1, 'com_redirect', 'com_redirect', '{"core.admin":{"7":1}}'),
+(22, 1, 123, 124, 1, 'com_search', 'com_search', '{"core.admin":{"7":1},"core.manage":{"6":1}}'),
+(23, 1, 125, 126, 1, 'com_templates', 'com_templates', '{"core.admin":{"7":1}}'),
+(24, 1, 127, 130, 1, 'com_users', 'com_users', '{"core.admin":{"7":1}}'),
+(26, 1, 131, 132, 1, 'com_wrapper', 'com_wrapper', '{}'),
 (28, 3, 4, 5, 2, 'com_banners.category.3', 'Uncategorised', '{}'),
 (29, 7, 14, 15, 2, 'com_contact.category.4', 'Uncategorised', '{}'),
-(30, 19, 112, 113, 2, 'com_newsfeeds.category.5', 'Uncategorised', '{}'),
-(32, 24, 124, 125, 2, 'com_users.category.7', 'Uncategorised', '{}'),
-(33, 1, 129, 130, 1, 'com_finder', 'com_finder', '{\"core.admin\":{\"7\":1},\"core.manage\":{\"6\":1}}'),
-(34, 1, 131, 132, 1, 'com_joomlaupdate', 'com_joomlaupdate', '{}'),
-(35, 1, 133, 134, 1, 'com_tags', 'com_tags', '{}'),
-(36, 1, 135, 136, 1, 'com_contenthistory', 'com_contenthistory', '{}'),
-(37, 1, 137, 138, 1, 'com_ajax', 'com_ajax', '{}'),
-(38, 1, 139, 140, 1, 'com_postinstall', 'com_postinstall', '{}'),
-(39, 18, 60, 61, 2, 'com_modules.module.1', 'Main Menu', '{}'),
-(40, 18, 62, 63, 2, 'com_modules.module.2', 'Login', '{}'),
-(41, 18, 64, 65, 2, 'com_modules.module.3', 'Popular Articles', '{}'),
-(42, 18, 66, 67, 2, 'com_modules.module.4', 'Recently Added Articles', '{}'),
-(43, 18, 68, 69, 2, 'com_modules.module.8', 'Toolbar', '{}'),
-(44, 18, 70, 71, 2, 'com_modules.module.9', 'Quick Icons', '{}'),
-(45, 18, 72, 73, 2, 'com_modules.module.10', 'Logged-in Users', '{}'),
-(46, 18, 74, 75, 2, 'com_modules.module.12', 'Admin Menu', '{}'),
-(47, 18, 76, 77, 2, 'com_modules.module.13', 'Admin Submenu', '{}'),
-(48, 18, 78, 79, 2, 'com_modules.module.14', 'User Status', '{}'),
-(49, 18, 80, 81, 2, 'com_modules.module.15', 'Title', '{}'),
-(50, 18, 82, 83, 2, 'com_modules.module.16', 'Login Form', '{}'),
-(51, 18, 84, 85, 2, 'com_modules.module.17', 'Breadcrumbs', '{}'),
-(52, 18, 86, 87, 2, 'com_modules.module.79', 'Multilanguage status', '{}'),
-(53, 18, 88, 89, 2, 'com_modules.module.86', 'Joomla Version', '{}'),
+(30, 19, 116, 117, 2, 'com_newsfeeds.category.5', 'Uncategorised', '{}'),
+(32, 24, 128, 129, 2, 'com_users.category.7', 'Uncategorised', '{}'),
+(33, 1, 133, 134, 1, 'com_finder', 'com_finder', '{"core.admin":{"7":1},"core.manage":{"6":1}}'),
+(34, 1, 135, 136, 1, 'com_joomlaupdate', 'com_joomlaupdate', '{}'),
+(35, 1, 137, 138, 1, 'com_tags', 'com_tags', '{}'),
+(36, 1, 139, 140, 1, 'com_contenthistory', 'com_contenthistory', '{}'),
+(37, 1, 141, 142, 1, 'com_ajax', 'com_ajax', '{}'),
+(38, 1, 143, 144, 1, 'com_postinstall', 'com_postinstall', '{}'),
+(39, 18, 62, 63, 2, 'com_modules.module.1', 'Main Menu', '{}'),
+(40, 18, 64, 65, 2, 'com_modules.module.2', 'Login', '{}'),
+(41, 18, 66, 67, 2, 'com_modules.module.3', 'Popular Articles', '{}'),
+(42, 18, 68, 69, 2, 'com_modules.module.4', 'Recently Added Articles', '{}'),
+(43, 18, 70, 71, 2, 'com_modules.module.8', 'Toolbar', '{}'),
+(44, 18, 72, 73, 2, 'com_modules.module.9', 'Quick Icons', '{}'),
+(45, 18, 74, 75, 2, 'com_modules.module.10', 'Logged-in Users', '{}'),
+(46, 18, 76, 77, 2, 'com_modules.module.12', 'Admin Menu', '{}'),
+(47, 18, 78, 79, 2, 'com_modules.module.13', 'Admin Submenu', '{}'),
+(48, 18, 80, 81, 2, 'com_modules.module.14', 'User Status', '{}'),
+(49, 18, 82, 83, 2, 'com_modules.module.15', 'Title', '{}'),
+(50, 18, 84, 85, 2, 'com_modules.module.16', 'Login Form', '{}'),
+(51, 18, 86, 87, 2, 'com_modules.module.17', 'Breadcrumbs', '{}'),
+(52, 18, 88, 89, 2, 'com_modules.module.79', 'Multilanguage status', '{}'),
+(53, 18, 90, 91, 2, 'com_modules.module.86', 'Joomla Version', '{}'),
 (54, 16, 52, 53, 2, 'com_menus.menu.1', 'Main Menu', '{}'),
-(55, 18, 90, 91, 2, 'com_modules.module.87', 'Sample Data', '{}'),
+(55, 18, 92, 93, 2, 'com_modules.module.87', 'Sample Data', '{}'),
 (56, 11, 40, 41, 2, 'com_languages.language.2', 'Vietnamese (vi-VN)', '{}'),
-(57, 1, 141, 142, 1, 'com_virtuemart', 'VIRTUEMART', '{}'),
 (58, 8, 18, 29, 2, 'com_content.category.8', 'Công ty Shop Online', '{}'),
 (60, 16, 54, 55, 2, 'com_menus.menu.2', 'Main menu (VN)', '{}'),
 (61, 58, 19, 24, 3, 'com_content.category.10', 'Giới thiệu', '{}'),
 (62, 58, 25, 26, 3, 'com_content.category.11', 'Tuyển dụng', '{}'),
 (63, 61, 20, 23, 4, 'com_content.category.12', 'Thông tin công ty', '{}'),
 (64, 63, 21, 22, 5, 'com_content.article.1', 'Giới thiệu', '{}'),
-(65, 18, 92, 93, 2, 'com_modules.module.88', 'THÔNG TIN CÔNG TY', '{}'),
-(66, 18, 94, 95, 2, 'com_modules.module.89', 'HỖ TRỢ KHÁCH HÀNG', '{}'),
+(65, 18, 94, 95, 2, 'com_modules.module.88', 'THÔNG TIN CÔNG TY', '{}'),
+(66, 18, 96, 97, 2, 'com_modules.module.89', 'HỖ TRỢ KHÁCH HÀNG', '{}'),
 (67, 8, 30, 33, 2, 'com_content.category.13', 'Uncategorised', '{}'),
 (68, 67, 31, 32, 3, 'com_content.article.2', 'Hướng dẫn mua hàng', '{}'),
-(69, 18, 96, 97, 2, 'com_modules.module.90', 'THEO DÕI CHÚNG TÔI', '{}'),
-(70, 18, 98, 99, 2, 'com_modules.module.91', 'CHÍNH SÁCH', '{}'),
-(71, 18, 100, 101, 2, 'com_modules.module.92', 'Đối tác', '{}'),
-(72, 18, 102, 103, 2, 'com_modules.module.93', 'Câu hỏi thường gặp', '{}'),
-(73, 18, 104, 105, 2, 'com_modules.module.94', 'Slideshow', '{}'),
-(74, 18, 106, 107, 2, 'com_modules.module.95', 'Group 7 - Categories', '{}'),
-(76, 18, 108, 109, 2, 'com_modules.module.97', 'Hotline', '{}'),
-(77, 58, 27, 28, 3, 'com_content.article.3', 'Liên hệ', '{}');
+(69, 18, 98, 99, 2, 'com_modules.module.90', 'THEO DÕI CHÚNG TÔI', '{}'),
+(70, 18, 100, 101, 2, 'com_modules.module.91', 'CHÍNH SÁCH', '{}'),
+(71, 18, 102, 103, 2, 'com_modules.module.92', 'Đối tác', '{}'),
+(72, 18, 104, 105, 2, 'com_modules.module.93', 'Câu hỏi thường gặp', '{}'),
+(73, 18, 106, 107, 2, 'com_modules.module.94', 'Slideshow', '{}'),
+(74, 18, 108, 109, 2, 'com_modules.module.95', 'Group 7 - Categories', '{}'),
+(76, 18, 110, 111, 2, 'com_modules.module.97', 'Hotline', '{}'),
+(77, 58, 27, 28, 3, 'com_content.article.3', 'Liên hệ', '{}'),
+(78, 1, 145, 146, 1, 'com_virtuemart', 'VIRTUEMART', '{}'),
+(80, 18, 112, 113, 2, 'com_modules.module.99', 'Group 7 - Categories', '{}'),
+(81, 16, 56, 57, 2, 'com_menus.menu.3', 'Menu Categories', '{}');
 
 -- --------------------------------------------------------
 
@@ -123,7 +123,7 @@ INSERT INTO `xtqmd_assets` (`id`, `parent_id`, `lft`, `rgt`, `level`, `name`, `t
 -- Table structure for table `xtqmd_associations`
 --
 
-CREATE TABLE `xtqmd_associations` (
+CREATE TABLE IF NOT EXISTS `xtqmd_associations` (
   `id` int(11) NOT NULL COMMENT 'A reference to the associated item.',
   `context` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The context of the associated item.',
   `key` char(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The key for the association computed from an md5 on associated ids.'
@@ -135,8 +135,8 @@ CREATE TABLE `xtqmd_associations` (
 -- Table structure for table `xtqmd_banners`
 --
 
-CREATE TABLE `xtqmd_banners` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_banners` (
+`id` int(11) NOT NULL,
   `cid` int(11) NOT NULL DEFAULT '0',
   `type` int(11) NOT NULL DEFAULT '0',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -146,10 +146,10 @@ CREATE TABLE `xtqmd_banners` (
   `clicks` int(11) NOT NULL DEFAULT '0',
   `clickurl` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `state` tinyint(3) NOT NULL DEFAULT '0',
-  `catid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `catid` int(10) unsigned NOT NULL DEFAULT '0',
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `custombannercode` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sticky` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `sticky` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `metakey` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -158,18 +158,18 @@ CREATE TABLE `xtqmd_banners` (
   `purchase_type` tinyint(4) NOT NULL DEFAULT '-1',
   `track_clicks` tinyint(4) NOT NULL DEFAULT '-1',
   `track_impressions` tinyint(4) NOT NULL DEFAULT '-1',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `reset` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
   `created_by_alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `version` int(10) UNSIGNED NOT NULL DEFAULT '1'
+  `modified_by` int(10) unsigned NOT NULL DEFAULT '0',
+  `version` int(10) unsigned NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -178,14 +178,14 @@ CREATE TABLE `xtqmd_banners` (
 -- Table structure for table `xtqmd_banner_clients`
 --
 
-CREATE TABLE `xtqmd_banner_clients` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_banner_clients` (
+`id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contact` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `extrainfo` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` tinyint(3) NOT NULL DEFAULT '0',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `metakey` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `own_prefix` tinyint(4) NOT NULL DEFAULT '0',
@@ -201,11 +201,11 @@ CREATE TABLE `xtqmd_banner_clients` (
 -- Table structure for table `xtqmd_banner_tracks`
 --
 
-CREATE TABLE `xtqmd_banner_tracks` (
+CREATE TABLE IF NOT EXISTS `xtqmd_banner_tracks` (
   `track_date` datetime NOT NULL,
-  `track_type` int(10) UNSIGNED NOT NULL,
-  `banner_id` int(10) UNSIGNED NOT NULL,
-  `count` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `track_type` int(10) unsigned NOT NULL,
+  `banner_id` int(10) unsigned NOT NULL,
+  `count` int(10) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -214,13 +214,13 @@ CREATE TABLE `xtqmd_banner_tracks` (
 -- Table structure for table `xtqmd_categories`
 --
 
-CREATE TABLE `xtqmd_categories` (
-  `id` int(11) NOT NULL,
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
-  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_categories` (
+`id` int(11) NOT NULL,
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `lft` int(11) NOT NULL DEFAULT '0',
   `rgt` int(11) NOT NULL DEFAULT '0',
-  `level` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `level` int(10) unsigned NOT NULL DEFAULT '0',
   `path` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `extension` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -228,21 +228,21 @@ CREATE TABLE `xtqmd_categories` (
   `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '0',
-  `checked_out` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `access` int(10) unsigned NOT NULL DEFAULT '0',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `metadesc` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'The meta description for the page.',
   `metakey` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'The meta keywords for the page.',
   `metadata` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'JSON encoded metadata properties.',
-  `created_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `created_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `modified_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0',
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `version` int(10) UNSIGNED NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `version` int(10) unsigned NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_categories`
@@ -250,15 +250,15 @@ CREATE TABLE `xtqmd_categories` (
 
 INSERT INTO `xtqmd_categories` (`id`, `asset_id`, `parent_id`, `lft`, `rgt`, `level`, `path`, `extension`, `title`, `alias`, `note`, `description`, `published`, `checked_out`, `checked_out_time`, `access`, `params`, `metadesc`, `metakey`, `metadata`, `created_user_id`, `created_time`, `modified_user_id`, `modified_time`, `hits`, `language`, `version`) VALUES
 (1, 0, 0, 0, 19, 0, '', 'system', 'ROOT', 'root', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{}', '', '', '{}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
-(3, 28, 1, 1, 2, 1, 'uncategorised', 'com_banners', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
-(4, 29, 1, 3, 4, 1, 'uncategorised', 'com_contact', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
-(5, 30, 1, 5, 6, 1, 'uncategorised', 'com_newsfeeds', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
-(7, 32, 1, 7, 8, 1, 'uncategorised', 'com_users', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
-(8, 58, 1, 9, 16, 1, 'cong-ty-shop-online', 'com_content', 'Công ty Shop Online', 'cong-ty-shop-online', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\",\"image_alt\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-30 02:59:43', 0, '2018-04-30 02:59:43', 0, '*', 1),
-(10, 61, 8, 10, 13, 2, 'cong-ty-shop-online/gioi-thieu', 'com_content', 'Giới thiệu', 'gioi-thieu', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\",\"image_alt\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-30 03:37:13', 0, '2018-04-30 03:37:13', 0, '*', 1),
-(11, 62, 8, 14, 15, 2, 'cong-ty-shop-online/tuyen-dung', 'com_content', 'Tuyển dụng', 'tuyen-dung', '', '<p>Tuyển dụng</p>', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\",\"image_alt\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-30 03:37:26', 0, '2018-04-30 03:37:26', 0, '*', 1),
-(12, 63, 10, 11, 12, 3, 'cong-ty-shop-online/gioi-thieu/thong-tin-cong-ty', 'com_content', 'Thông tin công ty', 'thong-tin-cong-ty', '', '<p>Thông tin công ty</p>', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\",\"image_alt\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-30 07:31:56', 0, '2018-04-30 07:31:56', 0, '*', 1),
-(13, 67, 1, 17, 18, 1, 'uncategorised', 'com_content', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{\"category_layout\":\"\",\"image\":\"\",\"image_alt\":\"\"}', '', '', '{\"author\":\"\",\"robots\":\"\"}', 596, '2018-04-30 08:32:39', 0, '2018-04-30 08:32:39', 0, '*', 1);
+(3, 28, 1, 1, 2, 1, 'uncategorised', 'com_banners', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
+(4, 29, 1, 3, 4, 1, 'uncategorised', 'com_contact', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
+(5, 30, 1, 5, 6, 1, 'uncategorised', 'com_newsfeeds', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
+(7, 32, 1, 7, 8, 1, 'uncategorised', 'com_users', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-11 14:35:05', 0, '0000-00-00 00:00:00', 0, '*', 1),
+(8, 58, 1, 9, 16, 1, 'cong-ty-shop-online', 'com_content', 'Công ty Shop Online', 'cong-ty-shop-online', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":"","image_alt":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-30 02:59:43', 0, '2018-04-30 02:59:43', 0, '*', 1),
+(10, 61, 8, 10, 13, 2, 'cong-ty-shop-online/gioi-thieu', 'com_content', 'Giới thiệu', 'gioi-thieu', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":"","image_alt":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-30 03:37:13', 0, '2018-04-30 03:37:13', 0, '*', 1),
+(11, 62, 8, 14, 15, 2, 'cong-ty-shop-online/tuyen-dung', 'com_content', 'Tuyển dụng', 'tuyen-dung', '', '<p>Tuyển dụng</p>', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":"","image_alt":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-30 03:37:26', 0, '2018-04-30 03:37:26', 0, '*', 1),
+(12, 63, 10, 11, 12, 3, 'cong-ty-shop-online/gioi-thieu/thong-tin-cong-ty', 'com_content', 'Thông tin công ty', 'thong-tin-cong-ty', '', '<p>Thông tin công ty</p>', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":"","image_alt":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-30 07:31:56', 0, '2018-04-30 07:31:56', 0, '*', 1),
+(13, 67, 1, 17, 18, 1, 'uncategorised', 'com_content', 'Uncategorised', 'uncategorised', '', '', 1, 0, '0000-00-00 00:00:00', 1, '{"category_layout":"","image":"","image_alt":""}', '', '', '{"author":"","robots":""}', 596, '2018-04-30 08:32:39', 0, '2018-04-30 08:32:39', 0, '*', 1);
 
 -- --------------------------------------------------------
 
@@ -266,8 +266,8 @@ INSERT INTO `xtqmd_categories` (`id`, `asset_id`, `parent_id`, `lft`, `rgt`, `le
 -- Table structure for table `xtqmd_contact_details`
 --
 
-CREATE TABLE `xtqmd_contact_details` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_contact_details` (
+`id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `con_position` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -281,15 +281,15 @@ CREATE TABLE `xtqmd_contact_details` (
   `misc` mediumtext COLLATE utf8mb4_unicode_ci,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_to` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `default_con` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `default_con` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '0',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL DEFAULT '0',
   `catid` int(11) NOT NULL DEFAULT '0',
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `access` int(10) unsigned NOT NULL DEFAULT '0',
   `mobile` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `webpage` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `sortname1` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -297,19 +297,19 @@ CREATE TABLE `xtqmd_contact_details` (
   `sortname3` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `language` varchar(7) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
   `created_by_alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_by` int(10) unsigned NOT NULL DEFAULT '0',
   `metakey` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `metadesc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `metadata` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `featured` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Set if contact is featured.',
+  `featured` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Set if contact is featured.',
   `xreference` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'A reference to enable linkages to external data sets.',
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `version` int(10) UNSIGNED NOT NULL DEFAULT '1',
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `version` int(10) unsigned NOT NULL DEFAULT '1',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -318,47 +318,47 @@ CREATE TABLE `xtqmd_contact_details` (
 -- Table structure for table `xtqmd_content`
 --
 
-CREATE TABLE `xtqmd_content` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+CREATE TABLE IF NOT EXISTS `xtqmd_content` (
+`id` int(10) unsigned NOT NULL,
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `introtext` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `fulltext` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` tinyint(3) NOT NULL DEFAULT '0',
-  `catid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `catid` int(10) unsigned NOT NULL DEFAULT '0',
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
   `created_by_alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_by` int(10) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `images` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `urls` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `attribs` varchar(5120) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `version` int(10) unsigned NOT NULL DEFAULT '1',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `metakey` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `metadesc` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `access` int(10) unsigned NOT NULL DEFAULT '0',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0',
   `metadata` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `featured` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Set if article is featured.',
+  `featured` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Set if article is featured.',
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The language code for the article.',
   `xreference` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'A reference to enable linkages to external data sets.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_content`
 --
 
 INSERT INTO `xtqmd_content` (`id`, `asset_id`, `title`, `alias`, `introtext`, `fulltext`, `state`, `catid`, `created`, `created_by`, `created_by_alias`, `modified`, `modified_by`, `checked_out`, `checked_out_time`, `publish_up`, `publish_down`, `images`, `urls`, `attribs`, `version`, `ordering`, `metakey`, `metadesc`, `access`, `hits`, `metadata`, `featured`, `language`, `xreference`) VALUES
-(1, 64, 'Giới thiệu', 'gioi-thieu', '<p><strong>CÔNG TY CỔ PHẦN THƯƠNG MẠI NGUYỄN KIM</strong></p>\r\n<ul>\r\n<li><strong>Năm 1992: </strong>Thành lập Cửa hàng Kinh doanh Điện - Điện tử - Điện lạnh</li>\r\n<li><strong>Năm 1996: </strong>Khai trương Trung tâm Điện tử - Điện lạnh Thành phố tại số 6Bis Trần Hưng Đạo, quận 1, TP.HCM</li>\r\n<li><strong>Năm 1999: </strong>Đổi tên thành Trung tâm Mua sắm Sài Gòn Nguyễn Kim. Thương hiệu \"Sài Gòn - Nguyễn Kim\" được bảo hộ độc quyền</li>\r\n<li><strong>Năm 2001: </strong>Trung tâm chuyển đổi thành Công ty TNHH Thương mại Nguyễn Kim, sau đổi thành Công ty TNHH Đầu tư Công nghệ Kỹ thuật Mới NKĐT (17/4/2001)</li>\r\n<li><strong>Năm 2006: </strong>Công ty Cổ phần Đầu tư và Thương mại Nguyễn Kim (22/6/2006)</li>\r\n<li><strong>Năm 2007: </strong>Công ty Cổ Phần Thương mại Nguyễn Kim (06/7/2007)</li>\r\n<li><strong>Năm 2015: </strong>Công bố chính thức hợp tác giữa Nguyễn Kim và Central Group. Gia tăng sức mạnh để trở thành Nhà bán lẻ đẳng cấp quốc tế</li>\r\n</ul>\r\n<ul>\r\n<li><strong>I. Các giải thưởng của Nguyễn Kim</strong></li>\r\n<ul>\r\n<li>1. Top 500 Nhà bán lẻ hàng đầu Châu Á – TBD (2007 – 2012)</li>\r\n<li>2. Giải thưởng Sao vàng đất Việt, 04 năm (2009, 2010, 2011, 2013)</li>\r\n<li>3. Thương hiệu Việt yêu thích nhất 4 năm liền (2011, 2012, 2013, 2014)</li>\r\n<li>4. Trung tâm Điện máy số 1 tại Việt Nam do người tiêu dùng bình chọn</li>\r\n<li>5. Top 500 DN tăng trưởng nhanh nhất Việt Nam (FAST500) (2010, 2011, 2012)</li>\r\n<li>6. Top 500 doanh nghiệp lớn nhất Việt Nam (2008 – 2013)</li>\r\n<li>7. Top 50 doanh nghiệp lớn nhất Việt Nam (2008, 2009, 2010, 2012)</li>\r\n<li>8. Top 50 thương hiệu nổi tiếng Việt Nam (2009, 2010)</li>\r\n<li>9. Top 10 Doanh nghiệp dịch vụ tốt nhất Việt Nam (2009, 2010)</li>\r\n<li>10. Nhà lãnh đạo xuất sắc (2008)</li>\r\n<li>11. Nhà bán lẻ hàng đầu Việt Nam (2008)</li>\r\n<li>12. Cúp đồng nhà bán lẻ hàng đầu Việt Nam (2007, 2008)</li>\r\n<li>13. Doanh nghiệp Sài Gòn tiêu biểu (2011, 2012)</li>\r\n<li>14. Thương hiệu Việt yêu thích nhất (2011 – 2013)</li>\r\n</ul>\r\n</ul>\r\n<ul>\r\n<li><strong>I. Các giải thưởng của Nguyễn Kim Online</strong></li>\r\n<ul>\r\n<li>1. Website và dịch vụ TMĐT tiêu biểu nhiều năm liên tục (2009 – 2013)</li>\r\n<li>2. Website TMĐT mô hình B2C chuyên ngành điện tử - viễn thông được người tiêu dùng yêu thích nhất năm 2011</li>\r\n<li>3. Wesbite TMĐT có dịch vụ chăm sóc khách hàng yêu thích nhất (2011, 2012)</li>\r\n<li>4. Wesbsite TMĐT có dịch vụ giao hàng tốt nhất (2011, 2012)</li>\r\n</ul>\r\n<li>Không chỉ tận tình chăm sóc khách hàng, Nguyễn Kim còn tâm niệm rằng muốn phát triển bền vững phải gắn kết văn hóa công ty với cộng đồng. Trong suốt 20 năm xây dựng và phát triển, Nguyễn Kim luôn tích cực chung tay góp sức vào các hoạt động văn hóa - xã hội vô cùng ý nghĩa. Có thể kể đến như:</li>\r\n<li>1. Tổ chức “Chương trình hành động vì nước sạch” (năm 2015) trang bị hệ thống lọc nước, cung cấp nước uống vệ sinh cho trẻ em nghèo Việt Nam</li>\r\n<li>2. Thực hiện dự án “Hành trình tri ân - Tiếp sức tương lai” (năm 2016)  xây dựng thư viện điện tử cho 21 trường tiểu học tọa lạc tại 13 tỉnh thành, trao tặng 21 gói điện máy gia dụng cho gia đình các em học sinh giỏi vượt khó...</li>\r\n<li>3. Là thành viên tích cực tham gia và đóng góp cho nhiều chương trình thiện nguyện của của tổ chức Từ thiện Minh Tâm</li>\r\n<li>4. Nhà tài trợ cho các chương trình giải trí ăn khách bậc nhất như \"Giọng Hát Việt\", \"Chung Sức\"...</li>\r\n</ul>\r\n<p> </p>', '', 1, 12, '2018-04-30 07:32:50', 596, '', '2018-04-30 07:32:50', 0, 0, '0000-00-00 00:00:00', '2018-04-30 07:32:50', '0000-00-00 00:00:00', '{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}', '{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}', '{\"article_layout\":\"\",\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"info_block_show_title\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_associations\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_page_title\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}', 1, 0, '', '', 1, 41, '{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}', 0, '*', ''),
-(2, 68, 'Hướng dẫn mua hàng', 'huong-dan-mua-hang', '<p>Hướng dẫn mua hàng tại đây ...</p>', '', 1, 13, '2018-04-30 08:33:23', 596, '', '2018-04-30 08:33:23', 0, 0, '0000-00-00 00:00:00', '2018-04-30 08:33:23', '0000-00-00 00:00:00', '{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}', '{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}', '{\"article_layout\":\"\",\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"info_block_show_title\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_associations\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_page_title\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}', 1, 0, '', '', 1, 1, '{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}', 0, '*', ''),
-(3, 77, 'Liên hệ', 'lien-he', '<p>Địa chỉ : Phòng 311 Nhà A4, Trường ĐH Hàng Hải Việt Nam</p>\r\n<p>Số điện thoại : (801) 2345 - 6789</p>\r\n<p>Shop Group 7 mở cửa từ 08h00 - 22h00 luôn chào đón quý khách hàng đến tham quan và mua sắm!</p>', '', 1, 8, '2018-05-01 10:03:06', 596, '', '2018-05-01 10:03:06', 0, 0, '0000-00-00 00:00:00', '2018-05-01 10:03:06', '0000-00-00 00:00:00', '{\"image_intro\":\"\",\"float_intro\":\"\",\"image_intro_alt\":\"\",\"image_intro_caption\":\"\",\"image_fulltext\":\"\",\"float_fulltext\":\"\",\"image_fulltext_alt\":\"\",\"image_fulltext_caption\":\"\"}', '{\"urla\":false,\"urlatext\":\"\",\"targeta\":\"\",\"urlb\":false,\"urlbtext\":\"\",\"targetb\":\"\",\"urlc\":false,\"urlctext\":\"\",\"targetc\":\"\"}', '{\"article_layout\":\"\",\"show_title\":\"\",\"link_titles\":\"\",\"show_tags\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"info_block_show_title\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_associations\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_vote\":\"\",\"show_hits\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"alternative_readmore\":\"\",\"article_page_title\":\"\",\"show_publishing_options\":\"\",\"show_article_options\":\"\",\"show_urls_images_backend\":\"\",\"show_urls_images_frontend\":\"\"}', 1, 0, '', '', 1, 5, '{\"robots\":\"\",\"author\":\"\",\"rights\":\"\",\"xreference\":\"\"}', 0, '*', '');
+(1, 64, 'Giới thiệu', 'gioi-thieu', '<p><strong>CÔNG TY CỔ PHẦN THƯƠNG MẠI NGUYỄN KIM</strong></p>\r\n<ul>\r\n<li><strong>Năm 1992: </strong>Thành lập Cửa hàng Kinh doanh Điện - Điện tử - Điện lạnh</li>\r\n<li><strong>Năm 1996: </strong>Khai trương Trung tâm Điện tử - Điện lạnh Thành phố tại số 6Bis Trần Hưng Đạo, quận 1, TP.HCM</li>\r\n<li><strong>Năm 1999: </strong>Đổi tên thành Trung tâm Mua sắm Sài Gòn Nguyễn Kim. Thương hiệu "Sài Gòn - Nguyễn Kim" được bảo hộ độc quyền</li>\r\n<li><strong>Năm 2001: </strong>Trung tâm chuyển đổi thành Công ty TNHH Thương mại Nguyễn Kim, sau đổi thành Công ty TNHH Đầu tư Công nghệ Kỹ thuật Mới NKĐT (17/4/2001)</li>\r\n<li><strong>Năm 2006: </strong>Công ty Cổ phần Đầu tư và Thương mại Nguyễn Kim (22/6/2006)</li>\r\n<li><strong>Năm 2007: </strong>Công ty Cổ Phần Thương mại Nguyễn Kim (06/7/2007)</li>\r\n<li><strong>Năm 2015: </strong>Công bố chính thức hợp tác giữa Nguyễn Kim và Central Group. Gia tăng sức mạnh để trở thành Nhà bán lẻ đẳng cấp quốc tế</li>\r\n</ul>\r\n<ul>\r\n<li><strong>I. Các giải thưởng của Nguyễn Kim</strong></li>\r\n<ul>\r\n<li>1. Top 500 Nhà bán lẻ hàng đầu Châu Á – TBD (2007 – 2012)</li>\r\n<li>2. Giải thưởng Sao vàng đất Việt, 04 năm (2009, 2010, 2011, 2013)</li>\r\n<li>3. Thương hiệu Việt yêu thích nhất 4 năm liền (2011, 2012, 2013, 2014)</li>\r\n<li>4. Trung tâm Điện máy số 1 tại Việt Nam do người tiêu dùng bình chọn</li>\r\n<li>5. Top 500 DN tăng trưởng nhanh nhất Việt Nam (FAST500) (2010, 2011, 2012)</li>\r\n<li>6. Top 500 doanh nghiệp lớn nhất Việt Nam (2008 – 2013)</li>\r\n<li>7. Top 50 doanh nghiệp lớn nhất Việt Nam (2008, 2009, 2010, 2012)</li>\r\n<li>8. Top 50 thương hiệu nổi tiếng Việt Nam (2009, 2010)</li>\r\n<li>9. Top 10 Doanh nghiệp dịch vụ tốt nhất Việt Nam (2009, 2010)</li>\r\n<li>10. Nhà lãnh đạo xuất sắc (2008)</li>\r\n<li>11. Nhà bán lẻ hàng đầu Việt Nam (2008)</li>\r\n<li>12. Cúp đồng nhà bán lẻ hàng đầu Việt Nam (2007, 2008)</li>\r\n<li>13. Doanh nghiệp Sài Gòn tiêu biểu (2011, 2012)</li>\r\n<li>14. Thương hiệu Việt yêu thích nhất (2011 – 2013)</li>\r\n</ul>\r\n</ul>\r\n<ul>\r\n<li><strong>I. Các giải thưởng của Nguyễn Kim Online</strong></li>\r\n<ul>\r\n<li>1. Website và dịch vụ TMĐT tiêu biểu nhiều năm liên tục (2009 – 2013)</li>\r\n<li>2. Website TMĐT mô hình B2C chuyên ngành điện tử - viễn thông được người tiêu dùng yêu thích nhất năm 2011</li>\r\n<li>3. Wesbite TMĐT có dịch vụ chăm sóc khách hàng yêu thích nhất (2011, 2012)</li>\r\n<li>4. Wesbsite TMĐT có dịch vụ giao hàng tốt nhất (2011, 2012)</li>\r\n</ul>\r\n<li>Không chỉ tận tình chăm sóc khách hàng, Nguyễn Kim còn tâm niệm rằng muốn phát triển bền vững phải gắn kết văn hóa công ty với cộng đồng. Trong suốt 20 năm xây dựng và phát triển, Nguyễn Kim luôn tích cực chung tay góp sức vào các hoạt động văn hóa - xã hội vô cùng ý nghĩa. Có thể kể đến như:</li>\r\n<li>1. Tổ chức “Chương trình hành động vì nước sạch” (năm 2015) trang bị hệ thống lọc nước, cung cấp nước uống vệ sinh cho trẻ em nghèo Việt Nam</li>\r\n<li>2. Thực hiện dự án “Hành trình tri ân - Tiếp sức tương lai” (năm 2016)  xây dựng thư viện điện tử cho 21 trường tiểu học tọa lạc tại 13 tỉnh thành, trao tặng 21 gói điện máy gia dụng cho gia đình các em học sinh giỏi vượt khó...</li>\r\n<li>3. Là thành viên tích cực tham gia và đóng góp cho nhiều chương trình thiện nguyện của của tổ chức Từ thiện Minh Tâm</li>\r\n<li>4. Nhà tài trợ cho các chương trình giải trí ăn khách bậc nhất như "Giọng Hát Việt", "Chung Sức"...</li>\r\n</ul>\r\n<p> </p>', '', 1, 12, '2018-04-30 07:32:50', 596, '', '2018-04-30 07:32:50', 0, 0, '0000-00-00 00:00:00', '2018-04-30 07:32:50', '0000-00-00 00:00:00', '{"image_intro":"","float_intro":"","image_intro_alt":"","image_intro_caption":"","image_fulltext":"","float_fulltext":"","image_fulltext_alt":"","image_fulltext_caption":""}', '{"urla":false,"urlatext":"","targeta":"","urlb":false,"urlbtext":"","targetb":"","urlc":false,"urlctext":"","targetc":""}', '{"article_layout":"","show_title":"","link_titles":"","show_tags":"","show_intro":"","info_block_position":"","info_block_show_title":"","show_category":"","link_category":"","show_parent_category":"","link_parent_category":"","show_associations":"","show_author":"","link_author":"","show_create_date":"","show_modify_date":"","show_publish_date":"","show_item_navigation":"","show_icons":"","show_print_icon":"","show_email_icon":"","show_vote":"","show_hits":"","show_noauth":"","urls_position":"","alternative_readmore":"","article_page_title":"","show_publishing_options":"","show_article_options":"","show_urls_images_backend":"","show_urls_images_frontend":""}', 1, 0, '', '', 1, 67, '{"robots":"","author":"","rights":"","xreference":""}', 0, '*', ''),
+(2, 68, 'Hướng dẫn mua hàng', 'huong-dan-mua-hang', '<p>Hướng dẫn mua hàng tại đây ...</p>', '', 1, 13, '2018-04-30 08:33:23', 596, '', '2018-04-30 08:33:23', 0, 0, '0000-00-00 00:00:00', '2018-04-30 08:33:23', '0000-00-00 00:00:00', '{"image_intro":"","float_intro":"","image_intro_alt":"","image_intro_caption":"","image_fulltext":"","float_fulltext":"","image_fulltext_alt":"","image_fulltext_caption":""}', '{"urla":false,"urlatext":"","targeta":"","urlb":false,"urlbtext":"","targetb":"","urlc":false,"urlctext":"","targetc":""}', '{"article_layout":"","show_title":"","link_titles":"","show_tags":"","show_intro":"","info_block_position":"","info_block_show_title":"","show_category":"","link_category":"","show_parent_category":"","link_parent_category":"","show_associations":"","show_author":"","link_author":"","show_create_date":"","show_modify_date":"","show_publish_date":"","show_item_navigation":"","show_icons":"","show_print_icon":"","show_email_icon":"","show_vote":"","show_hits":"","show_noauth":"","urls_position":"","alternative_readmore":"","article_page_title":"","show_publishing_options":"","show_article_options":"","show_urls_images_backend":"","show_urls_images_frontend":""}', 1, 0, '', '', 1, 1, '{"robots":"","author":"","rights":"","xreference":""}', 0, '*', ''),
+(3, 77, 'Liên hệ', 'lien-he', '<p>Địa chỉ : Phòng 311 Nhà A4, Trường ĐH Hàng Hải Việt Nam</p>\r\n<p>Số điện thoại : (801) 2345 - 6789</p>\r\n<p>Shop Group 7 mở cửa từ 08h00 - 22h00 luôn chào đón quý khách hàng đến tham quan và mua sắm!</p>', '', 1, 8, '2018-05-01 10:03:06', 596, '', '2018-05-01 10:03:06', 0, 0, '0000-00-00 00:00:00', '2018-05-01 10:03:06', '0000-00-00 00:00:00', '{"image_intro":"","float_intro":"","image_intro_alt":"","image_intro_caption":"","image_fulltext":"","float_fulltext":"","image_fulltext_alt":"","image_fulltext_caption":""}', '{"urla":false,"urlatext":"","targeta":"","urlb":false,"urlbtext":"","targetb":"","urlc":false,"urlctext":"","targetc":""}', '{"article_layout":"","show_title":"","link_titles":"","show_tags":"","show_intro":"","info_block_position":"","info_block_show_title":"","show_category":"","link_category":"","show_parent_category":"","link_parent_category":"","show_associations":"","show_author":"","link_author":"","show_create_date":"","show_modify_date":"","show_publish_date":"","show_item_navigation":"","show_icons":"","show_print_icon":"","show_email_icon":"","show_vote":"","show_hits":"","show_noauth":"","urls_position":"","alternative_readmore":"","article_page_title":"","show_publishing_options":"","show_article_options":"","show_urls_images_backend":"","show_urls_images_frontend":""}', 1, 0, '', '', 1, 11, '{"robots":"","author":"","rights":"","xreference":""}', 0, '*', '');
 
 -- --------------------------------------------------------
 
@@ -366,11 +366,11 @@ INSERT INTO `xtqmd_content` (`id`, `asset_id`, `title`, `alias`, `introtext`, `f
 -- Table structure for table `xtqmd_contentitem_tag_map`
 --
 
-CREATE TABLE `xtqmd_contentitem_tag_map` (
+CREATE TABLE IF NOT EXISTS `xtqmd_contentitem_tag_map` (
   `type_alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `core_content_id` int(10) UNSIGNED NOT NULL COMMENT 'PK from the core content table',
+  `core_content_id` int(10) unsigned NOT NULL COMMENT 'PK from the core content table',
   `content_item_id` int(11) NOT NULL COMMENT 'PK from the content type table',
-  `tag_id` int(10) UNSIGNED NOT NULL COMMENT 'PK from the tag table',
+  `tag_id` int(10) unsigned NOT NULL COMMENT 'PK from the tag table',
   `tag_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Date of most recent save for this tag-item',
   `type_id` mediumint(8) NOT NULL COMMENT 'PK from the content_type table'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Maps items from content tables to tags';
@@ -381,7 +381,7 @@ CREATE TABLE `xtqmd_contentitem_tag_map` (
 -- Table structure for table `xtqmd_content_frontpage`
 --
 
-CREATE TABLE `xtqmd_content_frontpage` (
+CREATE TABLE IF NOT EXISTS `xtqmd_content_frontpage` (
   `content_id` int(11) NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -392,10 +392,10 @@ CREATE TABLE `xtqmd_content_frontpage` (
 -- Table structure for table `xtqmd_content_rating`
 --
 
-CREATE TABLE `xtqmd_content_rating` (
+CREATE TABLE IF NOT EXISTS `xtqmd_content_rating` (
   `content_id` int(11) NOT NULL DEFAULT '0',
-  `rating_sum` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `rating_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `rating_sum` int(10) unsigned NOT NULL DEFAULT '0',
+  `rating_count` int(10) unsigned NOT NULL DEFAULT '0',
   `lastip` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -405,8 +405,8 @@ CREATE TABLE `xtqmd_content_rating` (
 -- Table structure for table `xtqmd_content_types`
 --
 
-CREATE TABLE `xtqmd_content_types` (
-  `type_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_content_types` (
+`type_id` int(10) unsigned NOT NULL,
   `type_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `type_alias` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `table` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -414,26 +414,26 @@ CREATE TABLE `xtqmd_content_types` (
   `field_mappings` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `router` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `content_history_options` varchar(5120) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'JSON string for com_contenthistory options'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_content_types`
 --
 
 INSERT INTO `xtqmd_content_types` (`type_id`, `type_title`, `type_alias`, `table`, `rules`, `field_mappings`, `router`, `content_history_options`) VALUES
-(1, 'Article', 'com_content.article', '{\"special\":{\"dbtable\":\"#__content\",\"key\":\"id\",\"type\":\"Content\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"state\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"introtext\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"attribs\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"urls\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"asset_id\"}, \"special\":{\"fulltext\":\"fulltext\"}}', 'ContentHelperRoute::getArticleRoute', '{\"formFile\":\"administrator\\/components\\/com_content\\/models\\/forms\\/article.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"],\"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ]}'),
-(2, 'Contact', 'com_contact.contact', '{\"special\":{\"dbtable\":\"#__contact_details\",\"key\":\"id\",\"type\":\"Contact\",\"prefix\":\"ContactTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"name\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"address\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"image\", \"core_urls\":\"webpage\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"null\"}, \"special\":{\"con_position\":\"con_position\",\"suburb\":\"suburb\",\"state\":\"state\",\"country\":\"country\",\"postcode\":\"postcode\",\"telephone\":\"telephone\",\"fax\":\"fax\",\"misc\":\"misc\",\"email_to\":\"email_to\",\"default_con\":\"default_con\",\"user_id\":\"user_id\",\"mobile\":\"mobile\",\"sortname1\":\"sortname1\",\"sortname2\":\"sortname2\",\"sortname3\":\"sortname3\"}}', 'ContactHelperRoute::getContactRoute', '{\"formFile\":\"administrator\\/components\\/com_contact\\/models\\/forms\\/contact.xml\",\"hideFields\":[\"default_con\",\"checked_out\",\"checked_out_time\",\"version\",\"xreference\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"],\"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"], \"displayLookup\":[ {\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ] }'),
-(3, 'Newsfeed', 'com_newsfeeds.newsfeed', '{\"special\":{\"dbtable\":\"#__newsfeeds\",\"key\":\"id\",\"type\":\"Newsfeed\",\"prefix\":\"NewsfeedsTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"name\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"link\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"xreference\", \"asset_id\":\"null\"}, \"special\":{\"numarticles\":\"numarticles\",\"cache_time\":\"cache_time\",\"rtl\":\"rtl\"}}', 'NewsfeedsHelperRoute::getNewsfeedRoute', '{\"formFile\":\"administrator\\/components\\/com_newsfeeds\\/models\\/forms\\/newsfeed.xml\",\"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\"],\"convertToInt\":[\"publish_up\", \"publish_down\", \"featured\", \"ordering\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ]}'),
-(4, 'User', 'com_users.user', '{\"special\":{\"dbtable\":\"#__users\",\"key\":\"id\",\"type\":\"User\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"name\",\"core_state\":\"null\",\"core_alias\":\"username\",\"core_created_time\":\"registerdate\",\"core_modified_time\":\"lastvisitDate\",\"core_body\":\"null\", \"core_hits\":\"null\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"access\":\"null\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"null\", \"core_language\":\"null\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"null\", \"core_ordering\":\"null\", \"core_metakey\":\"null\", \"core_metadesc\":\"null\", \"core_catid\":\"null\", \"core_xreference\":\"null\", \"asset_id\":\"null\"}, \"special\":{}}', 'UsersHelperRoute::getUserRoute', ''),
-(5, 'Article Category', 'com_content.category', '{\"special\":{\"dbtable\":\"#__categories\",\"key\":\"id\",\"type\":\"Category\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"parent_id\", \"core_xreference\":\"null\", \"asset_id\":\"asset_id\"}, \"special\":{\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\",\"extension\":\"extension\",\"note\":\"note\"}}', 'ContentHelperRoute::getCategoryRoute', '{\"formFile\":\"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\",\"lft\",\"rgt\",\"level\",\"path\",\"extension\"], \"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"],\"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"parent_id\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}]}'),
-(6, 'Contact Category', 'com_contact.category', '{\"special\":{\"dbtable\":\"#__categories\",\"key\":\"id\",\"type\":\"Category\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"parent_id\", \"core_xreference\":\"null\", \"asset_id\":\"asset_id\"}, \"special\":{\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\",\"extension\":\"extension\",\"note\":\"note\"}}', 'ContactHelperRoute::getCategoryRoute', '{\"formFile\":\"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\",\"lft\",\"rgt\",\"level\",\"path\",\"extension\"], \"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"],\"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"parent_id\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}]}'),
-(7, 'Newsfeeds Category', 'com_newsfeeds.category', '{\"special\":{\"dbtable\":\"#__categories\",\"key\":\"id\",\"type\":\"Category\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"parent_id\", \"core_xreference\":\"null\", \"asset_id\":\"asset_id\"}, \"special\":{\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\",\"extension\":\"extension\",\"note\":\"note\"}}', 'NewsfeedsHelperRoute::getCategoryRoute', '{\"formFile\":\"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\",\"lft\",\"rgt\",\"level\",\"path\",\"extension\"], \"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"],\"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"parent_id\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}]}'),
-(8, 'Tag', 'com_tags.tag', '{\"special\":{\"dbtable\":\"#__tags\",\"key\":\"tag_id\",\"type\":\"Tag\",\"prefix\":\"TagsTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"featured\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"urls\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"null\", \"core_xreference\":\"null\", \"asset_id\":\"null\"}, \"special\":{\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\"}}', 'TagsHelperRoute::getTagRoute', '{\"formFile\":\"administrator\\/components\\/com_tags\\/models\\/forms\\/tag.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\",\"version\", \"lft\", \"rgt\", \"level\", \"path\", \"urls\", \"publish_up\", \"publish_down\"],\"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"],\"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}, {\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}]}'),
-(9, 'Banner', 'com_banners.banner', '{\"special\":{\"dbtable\":\"#__banners\",\"key\":\"id\",\"type\":\"Banner\",\"prefix\":\"BannersTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"name\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created\",\"core_modified_time\":\"modified\",\"core_body\":\"description\", \"core_hits\":\"null\",\"core_publish_up\":\"publish_up\",\"core_publish_down\":\"publish_down\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"images\", \"core_urls\":\"link\", \"core_version\":\"version\", \"core_ordering\":\"ordering\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"catid\", \"core_xreference\":\"null\", \"asset_id\":\"null\"}, \"special\":{\"imptotal\":\"imptotal\", \"impmade\":\"impmade\", \"clicks\":\"clicks\", \"clickurl\":\"clickurl\", \"custombannercode\":\"custombannercode\", \"cid\":\"cid\", \"purchase_type\":\"purchase_type\", \"track_impressions\":\"track_impressions\", \"track_clicks\":\"track_clicks\"}}', '', '{\"formFile\":\"administrator\\/components\\/com_banners\\/models\\/forms\\/banner.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\",\"version\", \"reset\"],\"ignoreChanges\":[\"modified_by\", \"modified\", \"checked_out\", \"checked_out_time\", \"version\", \"imptotal\", \"impmade\", \"reset\"], \"convertToInt\":[\"publish_up\", \"publish_down\", \"ordering\"], \"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}, {\"sourceColumn\":\"cid\",\"targetTable\":\"#__banner_clients\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"created_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"modified_by\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"} ]}'),
-(10, 'Banners Category', 'com_banners.category', '{\"special\":{\"dbtable\":\"#__categories\",\"key\":\"id\",\"type\":\"Category\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"parent_id\", \"core_xreference\":\"null\", \"asset_id\":\"asset_id\"}, \"special\": {\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\",\"extension\":\"extension\",\"note\":\"note\"}}', '', '{\"formFile\":\"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml\", \"hideFields\":[\"asset_id\",\"checked_out\",\"checked_out_time\",\"version\",\"lft\",\"rgt\",\"level\",\"path\",\"extension\"], \"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"], \"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"parent_id\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}]}'),
-(11, 'Banner Client', 'com_banners.client', '{\"special\":{\"dbtable\":\"#__banner_clients\",\"key\":\"id\",\"type\":\"Client\",\"prefix\":\"BannersTable\"}}', '', '', '', '{\"formFile\":\"administrator\\/components\\/com_banners\\/models\\/forms\\/client.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\"], \"ignoreChanges\":[\"checked_out\", \"checked_out_time\"], \"convertToInt\":[], \"displayLookup\":[]}'),
-(12, 'User Notes', 'com_users.note', '{\"special\":{\"dbtable\":\"#__user_notes\",\"key\":\"id\",\"type\":\"Note\",\"prefix\":\"UsersTable\"}}', '', '', '', '{\"formFile\":\"administrator\\/components\\/com_users\\/models\\/forms\\/note.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\", \"publish_up\", \"publish_down\"],\"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\"], \"convertToInt\":[\"publish_up\", \"publish_down\"],\"displayLookup\":[{\"sourceColumn\":\"catid\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}, {\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}]}'),
-(13, 'User Notes Category', 'com_users.category', '{\"special\":{\"dbtable\":\"#__categories\",\"key\":\"id\",\"type\":\"Category\",\"prefix\":\"JTable\",\"config\":\"array()\"},\"common\":{\"dbtable\":\"#__ucm_content\",\"key\":\"ucm_id\",\"type\":\"Corecontent\",\"prefix\":\"JTable\",\"config\":\"array()\"}}', '', '{\"common\":{\"core_content_item_id\":\"id\",\"core_title\":\"title\",\"core_state\":\"published\",\"core_alias\":\"alias\",\"core_created_time\":\"created_time\",\"core_modified_time\":\"modified_time\",\"core_body\":\"description\", \"core_hits\":\"hits\",\"core_publish_up\":\"null\",\"core_publish_down\":\"null\",\"core_access\":\"access\", \"core_params\":\"params\", \"core_featured\":\"null\", \"core_metadata\":\"metadata\", \"core_language\":\"language\", \"core_images\":\"null\", \"core_urls\":\"null\", \"core_version\":\"version\", \"core_ordering\":\"null\", \"core_metakey\":\"metakey\", \"core_metadesc\":\"metadesc\", \"core_catid\":\"parent_id\", \"core_xreference\":\"null\", \"asset_id\":\"asset_id\"}, \"special\":{\"parent_id\":\"parent_id\",\"lft\":\"lft\",\"rgt\":\"rgt\",\"level\":\"level\",\"path\":\"path\",\"extension\":\"extension\",\"note\":\"note\"}}', '', '{\"formFile\":\"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml\", \"hideFields\":[\"checked_out\",\"checked_out_time\",\"version\",\"lft\",\"rgt\",\"level\",\"path\",\"extension\"], \"ignoreChanges\":[\"modified_user_id\", \"modified_time\", \"checked_out\", \"checked_out_time\", \"version\", \"hits\", \"path\"], \"convertToInt\":[\"publish_up\", \"publish_down\"], \"displayLookup\":[{\"sourceColumn\":\"created_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"}, {\"sourceColumn\":\"access\",\"targetTable\":\"#__viewlevels\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"},{\"sourceColumn\":\"modified_user_id\",\"targetTable\":\"#__users\",\"targetColumn\":\"id\",\"displayColumn\":\"name\"},{\"sourceColumn\":\"parent_id\",\"targetTable\":\"#__categories\",\"targetColumn\":\"id\",\"displayColumn\":\"title\"}]}');
+(1, 'Article', 'com_content.article', '{"special":{"dbtable":"#__content","key":"id","type":"Content","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"state","core_alias":"alias","core_created_time":"created","core_modified_time":"modified","core_body":"introtext", "core_hits":"hits","core_publish_up":"publish_up","core_publish_down":"publish_down","core_access":"access", "core_params":"attribs", "core_featured":"featured", "core_metadata":"metadata", "core_language":"language", "core_images":"images", "core_urls":"urls", "core_version":"version", "core_ordering":"ordering", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"catid", "core_xreference":"xreference", "asset_id":"asset_id"}, "special":{"fulltext":"fulltext"}}', 'ContentHelperRoute::getArticleRoute', '{"formFile":"administrator\\/components\\/com_content\\/models\\/forms\\/article.xml", "hideFields":["asset_id","checked_out","checked_out_time","version"],"ignoreChanges":["modified_by", "modified", "checked_out", "checked_out_time", "version", "hits"],"convertToInt":["publish_up", "publish_down", "featured", "ordering"],"displayLookup":[{"sourceColumn":"catid","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"created_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"} ]}'),
+(2, 'Contact', 'com_contact.contact', '{"special":{"dbtable":"#__contact_details","key":"id","type":"Contact","prefix":"ContactTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"name","core_state":"published","core_alias":"alias","core_created_time":"created","core_modified_time":"modified","core_body":"address", "core_hits":"hits","core_publish_up":"publish_up","core_publish_down":"publish_down","core_access":"access", "core_params":"params", "core_featured":"featured", "core_metadata":"metadata", "core_language":"language", "core_images":"image", "core_urls":"webpage", "core_version":"version", "core_ordering":"ordering", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"catid", "core_xreference":"xreference", "asset_id":"null"}, "special":{"con_position":"con_position","suburb":"suburb","state":"state","country":"country","postcode":"postcode","telephone":"telephone","fax":"fax","misc":"misc","email_to":"email_to","default_con":"default_con","user_id":"user_id","mobile":"mobile","sortname1":"sortname1","sortname2":"sortname2","sortname3":"sortname3"}}', 'ContactHelperRoute::getContactRoute', '{"formFile":"administrator\\/components\\/com_contact\\/models\\/forms\\/contact.xml","hideFields":["default_con","checked_out","checked_out_time","version","xreference"],"ignoreChanges":["modified_by", "modified", "checked_out", "checked_out_time", "version", "hits"],"convertToInt":["publish_up", "publish_down", "featured", "ordering"], "displayLookup":[ {"sourceColumn":"created_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"catid","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"} ] }'),
+(3, 'Newsfeed', 'com_newsfeeds.newsfeed', '{"special":{"dbtable":"#__newsfeeds","key":"id","type":"Newsfeed","prefix":"NewsfeedsTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"name","core_state":"published","core_alias":"alias","core_created_time":"created","core_modified_time":"modified","core_body":"description", "core_hits":"hits","core_publish_up":"publish_up","core_publish_down":"publish_down","core_access":"access", "core_params":"params", "core_featured":"featured", "core_metadata":"metadata", "core_language":"language", "core_images":"images", "core_urls":"link", "core_version":"version", "core_ordering":"ordering", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"catid", "core_xreference":"xreference", "asset_id":"null"}, "special":{"numarticles":"numarticles","cache_time":"cache_time","rtl":"rtl"}}', 'NewsfeedsHelperRoute::getNewsfeedRoute', '{"formFile":"administrator\\/components\\/com_newsfeeds\\/models\\/forms\\/newsfeed.xml","hideFields":["asset_id","checked_out","checked_out_time","version"],"ignoreChanges":["modified_by", "modified", "checked_out", "checked_out_time", "version", "hits"],"convertToInt":["publish_up", "publish_down", "featured", "ordering"],"displayLookup":[{"sourceColumn":"catid","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"created_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"} ]}'),
+(4, 'User', 'com_users.user', '{"special":{"dbtable":"#__users","key":"id","type":"User","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"name","core_state":"null","core_alias":"username","core_created_time":"registerdate","core_modified_time":"lastvisitDate","core_body":"null", "core_hits":"null","core_publish_up":"null","core_publish_down":"null","access":"null", "core_params":"params", "core_featured":"null", "core_metadata":"null", "core_language":"null", "core_images":"null", "core_urls":"null", "core_version":"null", "core_ordering":"null", "core_metakey":"null", "core_metadesc":"null", "core_catid":"null", "core_xreference":"null", "asset_id":"null"}, "special":{}}', 'UsersHelperRoute::getUserRoute', ''),
+(5, 'Article Category', 'com_content.category', '{"special":{"dbtable":"#__categories","key":"id","type":"Category","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"published","core_alias":"alias","core_created_time":"created_time","core_modified_time":"modified_time","core_body":"description", "core_hits":"hits","core_publish_up":"null","core_publish_down":"null","core_access":"access", "core_params":"params", "core_featured":"null", "core_metadata":"metadata", "core_language":"language", "core_images":"null", "core_urls":"null", "core_version":"version", "core_ordering":"null", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"parent_id", "core_xreference":"null", "asset_id":"asset_id"}, "special":{"parent_id":"parent_id","lft":"lft","rgt":"rgt","level":"level","path":"path","extension":"extension","note":"note"}}', 'ContentHelperRoute::getCategoryRoute', '{"formFile":"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml", "hideFields":["asset_id","checked_out","checked_out_time","version","lft","rgt","level","path","extension"], "ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time", "version", "hits", "path"],"convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"parent_id","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}]}'),
+(6, 'Contact Category', 'com_contact.category', '{"special":{"dbtable":"#__categories","key":"id","type":"Category","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"published","core_alias":"alias","core_created_time":"created_time","core_modified_time":"modified_time","core_body":"description", "core_hits":"hits","core_publish_up":"null","core_publish_down":"null","core_access":"access", "core_params":"params", "core_featured":"null", "core_metadata":"metadata", "core_language":"language", "core_images":"null", "core_urls":"null", "core_version":"version", "core_ordering":"null", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"parent_id", "core_xreference":"null", "asset_id":"asset_id"}, "special":{"parent_id":"parent_id","lft":"lft","rgt":"rgt","level":"level","path":"path","extension":"extension","note":"note"}}', 'ContactHelperRoute::getCategoryRoute', '{"formFile":"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml", "hideFields":["asset_id","checked_out","checked_out_time","version","lft","rgt","level","path","extension"], "ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time", "version", "hits", "path"],"convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"parent_id","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}]}'),
+(7, 'Newsfeeds Category', 'com_newsfeeds.category', '{"special":{"dbtable":"#__categories","key":"id","type":"Category","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"published","core_alias":"alias","core_created_time":"created_time","core_modified_time":"modified_time","core_body":"description", "core_hits":"hits","core_publish_up":"null","core_publish_down":"null","core_access":"access", "core_params":"params", "core_featured":"null", "core_metadata":"metadata", "core_language":"language", "core_images":"null", "core_urls":"null", "core_version":"version", "core_ordering":"null", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"parent_id", "core_xreference":"null", "asset_id":"asset_id"}, "special":{"parent_id":"parent_id","lft":"lft","rgt":"rgt","level":"level","path":"path","extension":"extension","note":"note"}}', 'NewsfeedsHelperRoute::getCategoryRoute', '{"formFile":"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml", "hideFields":["asset_id","checked_out","checked_out_time","version","lft","rgt","level","path","extension"], "ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time", "version", "hits", "path"],"convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"parent_id","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}]}'),
+(8, 'Tag', 'com_tags.tag', '{"special":{"dbtable":"#__tags","key":"tag_id","type":"Tag","prefix":"TagsTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"published","core_alias":"alias","core_created_time":"created_time","core_modified_time":"modified_time","core_body":"description", "core_hits":"hits","core_publish_up":"null","core_publish_down":"null","core_access":"access", "core_params":"params", "core_featured":"featured", "core_metadata":"metadata", "core_language":"language", "core_images":"images", "core_urls":"urls", "core_version":"version", "core_ordering":"null", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"null", "core_xreference":"null", "asset_id":"null"}, "special":{"parent_id":"parent_id","lft":"lft","rgt":"rgt","level":"level","path":"path"}}', 'TagsHelperRoute::getTagRoute', '{"formFile":"administrator\\/components\\/com_tags\\/models\\/forms\\/tag.xml", "hideFields":["checked_out","checked_out_time","version", "lft", "rgt", "level", "path", "urls", "publish_up", "publish_down"],"ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time", "version", "hits", "path"],"convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"}, {"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"}, {"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"}]}'),
+(9, 'Banner', 'com_banners.banner', '{"special":{"dbtable":"#__banners","key":"id","type":"Banner","prefix":"BannersTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"name","core_state":"published","core_alias":"alias","core_created_time":"created","core_modified_time":"modified","core_body":"description", "core_hits":"null","core_publish_up":"publish_up","core_publish_down":"publish_down","core_access":"access", "core_params":"params", "core_featured":"null", "core_metadata":"metadata", "core_language":"language", "core_images":"images", "core_urls":"link", "core_version":"version", "core_ordering":"ordering", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"catid", "core_xreference":"null", "asset_id":"null"}, "special":{"imptotal":"imptotal", "impmade":"impmade", "clicks":"clicks", "clickurl":"clickurl", "custombannercode":"custombannercode", "cid":"cid", "purchase_type":"purchase_type", "track_impressions":"track_impressions", "track_clicks":"track_clicks"}}', '', '{"formFile":"administrator\\/components\\/com_banners\\/models\\/forms\\/banner.xml", "hideFields":["checked_out","checked_out_time","version", "reset"],"ignoreChanges":["modified_by", "modified", "checked_out", "checked_out_time", "version", "imptotal", "impmade", "reset"], "convertToInt":["publish_up", "publish_down", "ordering"], "displayLookup":[{"sourceColumn":"catid","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}, {"sourceColumn":"cid","targetTable":"#__banner_clients","targetColumn":"id","displayColumn":"name"}, {"sourceColumn":"created_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"modified_by","targetTable":"#__users","targetColumn":"id","displayColumn":"name"} ]}'),
+(10, 'Banners Category', 'com_banners.category', '{"special":{"dbtable":"#__categories","key":"id","type":"Category","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"published","core_alias":"alias","core_created_time":"created_time","core_modified_time":"modified_time","core_body":"description", "core_hits":"hits","core_publish_up":"null","core_publish_down":"null","core_access":"access", "core_params":"params", "core_featured":"null", "core_metadata":"metadata", "core_language":"language", "core_images":"null", "core_urls":"null", "core_version":"version", "core_ordering":"null", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"parent_id", "core_xreference":"null", "asset_id":"asset_id"}, "special": {"parent_id":"parent_id","lft":"lft","rgt":"rgt","level":"level","path":"path","extension":"extension","note":"note"}}', '', '{"formFile":"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml", "hideFields":["asset_id","checked_out","checked_out_time","version","lft","rgt","level","path","extension"], "ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time", "version", "hits", "path"], "convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"parent_id","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}]}'),
+(11, 'Banner Client', 'com_banners.client', '{"special":{"dbtable":"#__banner_clients","key":"id","type":"Client","prefix":"BannersTable"}}', '', '', '', '{"formFile":"administrator\\/components\\/com_banners\\/models\\/forms\\/client.xml", "hideFields":["checked_out","checked_out_time"], "ignoreChanges":["checked_out", "checked_out_time"], "convertToInt":[], "displayLookup":[]}'),
+(12, 'User Notes', 'com_users.note', '{"special":{"dbtable":"#__user_notes","key":"id","type":"Note","prefix":"UsersTable"}}', '', '', '', '{"formFile":"administrator\\/components\\/com_users\\/models\\/forms\\/note.xml", "hideFields":["checked_out","checked_out_time", "publish_up", "publish_down"],"ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time"], "convertToInt":["publish_up", "publish_down"],"displayLookup":[{"sourceColumn":"catid","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}, {"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"}, {"sourceColumn":"user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"}, {"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"}]}'),
+(13, 'User Notes Category', 'com_users.category', '{"special":{"dbtable":"#__categories","key":"id","type":"Category","prefix":"JTable","config":"array()"},"common":{"dbtable":"#__ucm_content","key":"ucm_id","type":"Corecontent","prefix":"JTable","config":"array()"}}', '', '{"common":{"core_content_item_id":"id","core_title":"title","core_state":"published","core_alias":"alias","core_created_time":"created_time","core_modified_time":"modified_time","core_body":"description", "core_hits":"hits","core_publish_up":"null","core_publish_down":"null","core_access":"access", "core_params":"params", "core_featured":"null", "core_metadata":"metadata", "core_language":"language", "core_images":"null", "core_urls":"null", "core_version":"version", "core_ordering":"null", "core_metakey":"metakey", "core_metadesc":"metadesc", "core_catid":"parent_id", "core_xreference":"null", "asset_id":"asset_id"}, "special":{"parent_id":"parent_id","lft":"lft","rgt":"rgt","level":"level","path":"path","extension":"extension","note":"note"}}', '', '{"formFile":"administrator\\/components\\/com_categories\\/models\\/forms\\/category.xml", "hideFields":["checked_out","checked_out_time","version","lft","rgt","level","path","extension"], "ignoreChanges":["modified_user_id", "modified_time", "checked_out", "checked_out_time", "version", "hits", "path"], "convertToInt":["publish_up", "publish_down"], "displayLookup":[{"sourceColumn":"created_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"}, {"sourceColumn":"access","targetTable":"#__viewlevels","targetColumn":"id","displayColumn":"title"},{"sourceColumn":"modified_user_id","targetTable":"#__users","targetColumn":"id","displayColumn":"name"},{"sourceColumn":"parent_id","targetTable":"#__categories","targetColumn":"id","displayColumn":"title"}]}');
 
 -- --------------------------------------------------------
 
@@ -441,9 +441,9 @@ INSERT INTO `xtqmd_content_types` (`type_id`, `type_title`, `type_alias`, `table
 -- Table structure for table `xtqmd_core_log_searches`
 --
 
-CREATE TABLE `xtqmd_core_log_searches` (
+CREATE TABLE IF NOT EXISTS `xtqmd_core_log_searches` (
   `search_term` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `hits` int(10) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -452,8 +452,8 @@ CREATE TABLE `xtqmd_core_log_searches` (
 -- Table structure for table `xtqmd_extensions`
 --
 
-CREATE TABLE `xtqmd_extensions` (
-  `extension_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_extensions` (
+`extension_id` int(11) NOT NULL,
   `package_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Parent package ID for extensions installed as a package.',
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -461,197 +461,197 @@ CREATE TABLE `xtqmd_extensions` (
   `folder` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `client_id` tinyint(3) NOT NULL,
   `enabled` tinyint(3) NOT NULL DEFAULT '0',
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `access` int(10) unsigned NOT NULL DEFAULT '1',
   `protected` tinyint(3) NOT NULL DEFAULT '0',
   `manifest_cache` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `custom_data` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `system_data` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ordering` int(11) DEFAULT '0',
   `state` int(11) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10012 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_extensions`
 --
 
 INSERT INTO `xtqmd_extensions` (`extension_id`, `package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`, `ordering`, `state`) VALUES
-(1, 0, 'com_mailto', 'component', 'com_mailto', '', 0, 1, 1, 1, '{\"name\":\"com_mailto\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_MAILTO_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mailto\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(2, 0, 'com_wrapper', 'component', 'com_wrapper', '', 0, 1, 1, 1, '{\"name\":\"com_wrapper\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\\n\\t\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_WRAPPER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"wrapper\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(3, 0, 'com_admin', 'component', 'com_admin', '', 1, 1, 1, 1, '{\"name\":\"com_admin\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_ADMIN_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(4, 0, 'com_banners', 'component', 'com_banners', '', 1, 1, 1, 0, '{\"name\":\"com_banners\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_BANNERS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"banners\"}', '{\"purchase_type\":\"3\",\"track_impressions\":\"0\",\"track_clicks\":\"0\",\"metakey_prefix\":\"\",\"save_history\":\"1\",\"history_limit\":10}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(5, 0, 'com_cache', 'component', 'com_cache', '', 1, 1, 1, 1, '{\"name\":\"com_cache\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CACHE_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(6, 0, 'com_categories', 'component', 'com_categories', '', 1, 1, 1, 1, '{\"name\":\"com_categories\",\"type\":\"component\",\"creationDate\":\"December 2007\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CATEGORIES_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(7, 0, 'com_checkin', 'component', 'com_checkin', '', 1, 1, 1, 1, '{\"name\":\"com_checkin\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CHECKIN_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(8, 0, 'com_contact', 'component', 'com_contact', '', 1, 1, 1, 0, '{\"name\":\"com_contact\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CONTACT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"contact\"}', '{\"contact_layout\":\"_:default\",\"show_contact_category\":\"hide\",\"save_history\":\"1\",\"history_limit\":10,\"show_contact_list\":\"0\",\"presentation_style\":\"sliders\",\"show_tags\":\"1\",\"show_info\":\"1\",\"show_name\":\"1\",\"show_position\":\"1\",\"show_email\":\"0\",\"show_street_address\":\"1\",\"show_suburb\":\"1\",\"show_state\":\"1\",\"show_postcode\":\"1\",\"show_country\":\"1\",\"show_telephone\":\"1\",\"show_mobile\":\"1\",\"show_fax\":\"1\",\"show_webpage\":\"1\",\"show_image\":\"1\",\"show_misc\":\"1\",\"image\":\"\",\"allow_vcard\":\"0\",\"show_articles\":\"0\",\"articles_display_num\":\"10\",\"show_profile\":\"0\",\"show_user_custom_fields\":[\"-1\"],\"show_links\":\"0\",\"linka_name\":\"\",\"linkb_name\":\"\",\"linkc_name\":\"\",\"linkd_name\":\"\",\"linke_name\":\"\",\"contact_icons\":\"0\",\"icon_address\":\"\",\"icon_email\":\"\",\"icon_telephone\":\"\",\"icon_mobile\":\"\",\"icon_fax\":\"\",\"icon_misc\":\"\",\"category_layout\":\"_:default\",\"show_category_title\":\"1\",\"show_description\":\"1\",\"show_description_image\":\"0\",\"maxLevel\":\"-1\",\"show_subcat_desc\":\"1\",\"show_empty_categories\":\"0\",\"show_cat_items\":\"1\",\"show_cat_tags\":\"1\",\"show_base_description\":\"1\",\"maxLevelcat\":\"-1\",\"show_subcat_desc_cat\":\"1\",\"show_empty_categories_cat\":\"0\",\"show_cat_items_cat\":\"1\",\"filter_field\":\"0\",\"show_pagination_limit\":\"0\",\"show_headings\":\"1\",\"show_image_heading\":\"0\",\"show_position_headings\":\"1\",\"show_email_headings\":\"0\",\"show_telephone_headings\":\"1\",\"show_mobile_headings\":\"0\",\"show_fax_headings\":\"0\",\"show_suburb_headings\":\"1\",\"show_state_headings\":\"1\",\"show_country_headings\":\"1\",\"show_pagination\":\"2\",\"show_pagination_results\":\"1\",\"initial_sort\":\"ordering\",\"captcha\":\"\",\"show_email_form\":\"1\",\"show_email_copy\":\"0\",\"banned_email\":\"\",\"banned_subject\":\"\",\"banned_text\":\"\",\"validate_session\":\"1\",\"custom_reply\":\"0\",\"redirect\":\"\",\"show_feed_link\":\"1\",\"sef_advanced\":0,\"sef_ids\":0,\"custom_fields_enable\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(9, 0, 'com_cpanel', 'component', 'com_cpanel', '', 1, 1, 1, 1, '{\"name\":\"com_cpanel\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CPANEL_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10, 0, 'com_installer', 'component', 'com_installer', '', 1, 1, 1, 1, '{\"name\":\"com_installer\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_INSTALLER_XML_DESCRIPTION\",\"group\":\"\"}', '{\"show_jed_info\":\"1\",\"cachetimeout\":\"6\",\"minimum_stability\":\"4\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(11, 0, 'com_languages', 'component', 'com_languages', '', 1, 1, 1, 1, '{\"name\":\"com_languages\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_LANGUAGES_XML_DESCRIPTION\",\"group\":\"\"}', '{\"administrator\":\"en-GB\",\"site\":\"vi-VN\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(12, 0, 'com_login', 'component', 'com_login', '', 1, 1, 1, 1, '{\"name\":\"com_login\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_LOGIN_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(13, 0, 'com_media', 'component', 'com_media', '', 1, 1, 0, 1, '{\"name\":\"com_media\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_MEDIA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"media\"}', '{\"upload_extensions\":\"bmp,csv,doc,gif,ico,jpg,jpeg,odg,odp,ods,odt,pdf,png,ppt,txt,xcf,xls,BMP,CSV,DOC,GIF,ICO,JPG,JPEG,ODG,ODP,ODS,ODT,PDF,PNG,PPT,TXT,XCF,XLS\",\"upload_maxsize\":\"10\",\"file_path\":\"images\",\"image_path\":\"images\",\"restrict_uploads\":\"1\",\"allowed_media_usergroup\":\"3\",\"check_mime\":\"1\",\"image_extensions\":\"bmp,gif,jpg,png\",\"ignore_extensions\":\"\",\"upload_mime\":\"image\\/jpeg,image\\/gif,image\\/png,image\\/bmp,application\\/msword,application\\/excel,application\\/pdf,application\\/powerpoint,text\\/plain,application\\/x-zip\",\"upload_mime_illegal\":\"text\\/html\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(14, 0, 'com_menus', 'component', 'com_menus', '', 1, 1, 1, 1, '{\"name\":\"com_menus\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_MENUS_XML_DESCRIPTION\",\"group\":\"\"}', '{\"page_title\":\"\",\"show_page_heading\":0,\"page_heading\":\"\",\"pageclass_sfx\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(15, 0, 'com_messages', 'component', 'com_messages', '', 1, 1, 1, 1, '{\"name\":\"com_messages\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_MESSAGES_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(16, 0, 'com_modules', 'component', 'com_modules', '', 1, 1, 1, 1, '{\"name\":\"com_modules\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_MODULES_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(17, 0, 'com_newsfeeds', 'component', 'com_newsfeeds', '', 1, 1, 1, 0, '{\"name\":\"com_newsfeeds\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_NEWSFEEDS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"newsfeeds\"}', '{\"newsfeed_layout\":\"_:default\",\"save_history\":\"1\",\"history_limit\":5,\"show_feed_image\":\"1\",\"show_feed_description\":\"1\",\"show_item_description\":\"1\",\"feed_character_count\":\"0\",\"feed_display_order\":\"des\",\"float_first\":\"right\",\"float_second\":\"right\",\"show_tags\":\"1\",\"category_layout\":\"_:default\",\"show_category_title\":\"1\",\"show_description\":\"1\",\"show_description_image\":\"1\",\"maxLevel\":\"-1\",\"show_empty_categories\":\"0\",\"show_subcat_desc\":\"1\",\"show_cat_items\":\"1\",\"show_cat_tags\":\"1\",\"show_base_description\":\"1\",\"maxLevelcat\":\"-1\",\"show_empty_categories_cat\":\"0\",\"show_subcat_desc_cat\":\"1\",\"show_cat_items_cat\":\"1\",\"filter_field\":\"1\",\"show_pagination_limit\":\"1\",\"show_headings\":\"1\",\"show_articles\":\"0\",\"show_link\":\"1\",\"show_pagination\":\"1\",\"show_pagination_results\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(18, 0, 'com_plugins', 'component', 'com_plugins', '', 1, 1, 1, 1, '{\"name\":\"com_plugins\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_PLUGINS_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(19, 0, 'com_search', 'component', 'com_search', '', 1, 1, 1, 0, '{\"name\":\"com_search\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_SEARCH_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"search\"}', '{\"enabled\":\"0\",\"search_phrases\":\"1\",\"search_areas\":\"1\",\"show_date\":\"1\",\"opensearch_name\":\"\",\"opensearch_description\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(20, 0, 'com_templates', 'component', 'com_templates', '', 1, 1, 1, 1, '{\"name\":\"com_templates\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_TEMPLATES_XML_DESCRIPTION\",\"group\":\"\"}', '{\"template_positions_display\":\"0\",\"upload_limit\":\"10\",\"image_formats\":\"gif,bmp,jpg,jpeg,png\",\"source_formats\":\"txt,less,ini,xml,js,php,css,scss,sass\",\"font_formats\":\"woff,ttf,otf\",\"compressed_formats\":\"zip\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(22, 0, 'com_content', 'component', 'com_content', '', 1, 1, 0, 1, '{\"name\":\"com_content\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CONTENT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"content\"}', '{\"article_layout\":\"_:default\",\"show_title\":\"1\",\"link_titles\":\"1\",\"show_intro\":\"1\",\"info_block_position\":\"0\",\"info_block_show_title\":\"1\",\"show_category\":\"0\",\"link_category\":\"0\",\"show_parent_category\":\"0\",\"link_parent_category\":\"0\",\"show_associations\":\"0\",\"flags\":\"1\",\"show_author\":\"0\",\"link_author\":\"0\",\"show_create_date\":\"0\",\"show_modify_date\":\"0\",\"show_publish_date\":\"1\",\"show_item_navigation\":\"1\",\"show_vote\":\"0\",\"show_readmore\":\"1\",\"show_readmore_title\":\"1\",\"readmore_limit\":\"100\",\"show_tags\":\"1\",\"show_icons\":\"1\",\"show_print_icon\":\"1\",\"show_email_icon\":\"1\",\"show_hits\":\"1\",\"show_noauth\":\"0\",\"urls_position\":\"0\",\"captcha\":\"\",\"show_publishing_options\":\"1\",\"show_article_options\":\"1\",\"save_history\":\"1\",\"history_limit\":10,\"show_urls_images_frontend\":\"0\",\"show_urls_images_backend\":\"1\",\"targeta\":0,\"targetb\":0,\"targetc\":0,\"float_intro\":\"left\",\"float_fulltext\":\"left\",\"category_layout\":\"_:blog\",\"show_category_heading_title_text\":\"1\",\"show_category_title\":\"0\",\"show_description\":\"0\",\"show_description_image\":\"0\",\"maxLevel\":\"1\",\"show_empty_categories\":\"0\",\"show_no_articles\":\"1\",\"show_subcat_desc\":\"1\",\"show_cat_num_articles\":\"0\",\"show_cat_tags\":\"1\",\"show_base_description\":\"1\",\"maxLevelcat\":\"-1\",\"show_empty_categories_cat\":\"0\",\"show_subcat_desc_cat\":\"1\",\"show_cat_num_articles_cat\":\"1\",\"num_leading_articles\":\"1\",\"num_intro_articles\":\"4\",\"num_columns\":\"2\",\"num_links\":\"4\",\"multi_column_order\":\"0\",\"show_subcategory_content\":\"0\",\"show_pagination_limit\":\"1\",\"filter_field\":\"hide\",\"show_headings\":\"1\",\"list_show_date\":\"0\",\"date_format\":\"\",\"list_show_hits\":\"1\",\"list_show_author\":\"1\",\"orderby_pri\":\"order\",\"orderby_sec\":\"rdate\",\"order_date\":\"published\",\"show_pagination\":\"2\",\"show_pagination_results\":\"1\",\"show_featured\":\"show\",\"show_feed_link\":\"1\",\"feed_summary\":\"0\",\"feed_show_readmore\":\"0\",\"sef_advanced\":0,\"sef_ids\":0,\"custom_fields_enable\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(23, 0, 'com_config', 'component', 'com_config', '', 1, 1, 0, 1, '{\"name\":\"com_config\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_CONFIG_XML_DESCRIPTION\",\"group\":\"\"}', '{\"filters\":{\"1\":{\"filter_type\":\"NH\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"9\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"6\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"7\":{\"filter_type\":\"NONE\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"2\":{\"filter_type\":\"NH\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"3\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"4\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"5\":{\"filter_type\":\"BL\",\"filter_tags\":\"\",\"filter_attributes\":\"\"},\"8\":{\"filter_type\":\"NONE\",\"filter_tags\":\"\",\"filter_attributes\":\"\"}}}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(24, 0, 'com_redirect', 'component', 'com_redirect', '', 1, 1, 0, 1, '{\"name\":\"com_redirect\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_REDIRECT_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(25, 0, 'com_users', 'component', 'com_users', '', 1, 1, 0, 1, '{\"name\":\"com_users\",\"type\":\"component\",\"creationDate\":\"April 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_USERS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"users\"}', '{\"allowUserRegistration\":\"0\",\"new_usertype\":\"2\",\"guest_usergroup\":\"9\",\"sendpassword\":\"1\",\"useractivation\":\"2\",\"mail_to_admin\":\"1\",\"captcha\":\"\",\"frontend_userparams\":\"1\",\"site_language\":\"0\",\"change_login_name\":\"0\",\"reset_count\":\"10\",\"reset_time\":\"1\",\"minimum_length\":\"4\",\"minimum_integers\":\"0\",\"minimum_symbols\":\"0\",\"minimum_uppercase\":\"0\",\"save_history\":\"1\",\"history_limit\":5,\"mailSubjectPrefix\":\"\",\"mailBodySuffix\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(27, 0, 'com_finder', 'component', 'com_finder', '', 1, 1, 0, 0, '{\"name\":\"com_finder\",\"type\":\"component\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"COM_FINDER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"finder\"}', '{\"enabled\":\"0\",\"show_description\":\"1\",\"description_length\":255,\"allow_empty_query\":\"0\",\"show_url\":\"1\",\"show_autosuggest\":\"1\",\"show_suggested_query\":\"1\",\"show_explained_query\":\"1\",\"show_advanced\":\"1\",\"show_advanced_tips\":\"1\",\"expand_advanced\":\"0\",\"show_date_filters\":\"0\",\"sort_order\":\"relevance\",\"sort_direction\":\"desc\",\"highlight_terms\":\"1\",\"opensearch_name\":\"\",\"opensearch_description\":\"\",\"batch_size\":\"50\",\"memory_table_limit\":30000,\"title_multiplier\":\"1.7\",\"text_multiplier\":\"0.7\",\"meta_multiplier\":\"1.2\",\"path_multiplier\":\"2.0\",\"misc_multiplier\":\"0.3\",\"stem\":\"1\",\"stemmer\":\"snowball\",\"enable_logging\":\"0\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(28, 0, 'com_joomlaupdate', 'component', 'com_joomlaupdate', '', 1, 1, 0, 1, '{\"name\":\"com_joomlaupdate\",\"type\":\"component\",\"creationDate\":\"February 2012\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.2\",\"description\":\"COM_JOOMLAUPDATE_XML_DESCRIPTION\",\"group\":\"\"}', '{\"updatesource\":\"default\",\"customurl\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(29, 0, 'com_tags', 'component', 'com_tags', '', 1, 1, 1, 1, '{\"name\":\"com_tags\",\"type\":\"component\",\"creationDate\":\"December 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.1.0\",\"description\":\"COM_TAGS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"tags\"}', '{\"tag_layout\":\"_:default\",\"save_history\":\"1\",\"history_limit\":5,\"show_tag_title\":\"0\",\"tag_list_show_tag_image\":\"0\",\"tag_list_show_tag_description\":\"0\",\"tag_list_image\":\"\",\"tag_list_orderby\":\"title\",\"tag_list_orderby_direction\":\"ASC\",\"show_headings\":\"0\",\"tag_list_show_date\":\"0\",\"tag_list_show_item_image\":\"0\",\"tag_list_show_item_description\":\"0\",\"tag_list_item_maximum_characters\":0,\"return_any_or_all\":\"1\",\"include_children\":\"0\",\"maximum\":200,\"tag_list_language_filter\":\"all\",\"tags_layout\":\"_:default\",\"all_tags_orderby\":\"title\",\"all_tags_orderby_direction\":\"ASC\",\"all_tags_show_tag_image\":\"0\",\"all_tags_show_tag_descripion\":\"0\",\"all_tags_tag_maximum_characters\":20,\"all_tags_show_tag_hits\":\"0\",\"filter_field\":\"1\",\"show_pagination_limit\":\"1\",\"show_pagination\":\"2\",\"show_pagination_results\":\"1\",\"tag_field_ajax_mode\":\"1\",\"show_feed_link\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(30, 0, 'com_contenthistory', 'component', 'com_contenthistory', '', 1, 1, 1, 0, '{\"name\":\"com_contenthistory\",\"type\":\"component\",\"creationDate\":\"May 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"COM_CONTENTHISTORY_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"contenthistory\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(31, 0, 'com_ajax', 'component', 'com_ajax', '', 1, 1, 1, 1, '{\"name\":\"com_ajax\",\"type\":\"component\",\"creationDate\":\"August 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"COM_AJAX_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"ajax\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(32, 0, 'com_postinstall', 'component', 'com_postinstall', '', 1, 1, 1, 1, '{\"name\":\"com_postinstall\",\"type\":\"component\",\"creationDate\":\"September 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"COM_POSTINSTALL_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(33, 0, 'com_fields', 'component', 'com_fields', '', 1, 1, 1, 0, '{\"name\":\"com_fields\",\"type\":\"component\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"COM_FIELDS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"fields\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(34, 0, 'com_associations', 'component', 'com_associations', '', 1, 1, 1, 0, '{\"name\":\"com_associations\",\"type\":\"component\",\"creationDate\":\"Januar 2017\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"COM_ASSOCIATIONS_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(102, 0, 'LIB_PHPUTF8', 'library', 'phputf8', '', 0, 1, 1, 1, '{\"name\":\"LIB_PHPUTF8\",\"type\":\"library\",\"creationDate\":\"2006\",\"author\":\"Harry Fuecks\",\"copyright\":\"Copyright various authors\",\"authorEmail\":\"hfuecks@gmail.com\",\"authorUrl\":\"http:\\/\\/sourceforge.net\\/projects\\/phputf8\",\"version\":\"0.5\",\"description\":\"LIB_PHPUTF8_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"phputf8\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(103, 0, 'LIB_JOOMLA', 'library', 'joomla', '', 0, 1, 1, 1, '{\"name\":\"LIB_JOOMLA\",\"type\":\"library\",\"creationDate\":\"2008\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"https:\\/\\/www.joomla.org\",\"version\":\"13.1\",\"description\":\"LIB_JOOMLA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomla\"}', '{\"mediaversion\":\"ee07e585ec3615ded6600fcaec15e09b\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(104, 0, 'LIB_IDNA', 'library', 'idna_convert', '', 0, 1, 1, 1, '{\"name\":\"LIB_IDNA\",\"type\":\"library\",\"creationDate\":\"2004\",\"author\":\"phlyLabs\",\"copyright\":\"2004-2011 phlyLabs Berlin, http:\\/\\/phlylabs.de\",\"authorEmail\":\"phlymail@phlylabs.de\",\"authorUrl\":\"http:\\/\\/phlylabs.de\",\"version\":\"0.8.0\",\"description\":\"LIB_IDNA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"idna_convert\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(105, 0, 'FOF', 'library', 'fof', '', 0, 1, 1, 1, '{\"name\":\"FOF\",\"type\":\"library\",\"creationDate\":\"2015-04-22 13:15:32\",\"author\":\"Nicholas K. Dionysopoulos \\/ Akeeba Ltd\",\"copyright\":\"(C)2011-2015 Nicholas K. Dionysopoulos\",\"authorEmail\":\"nicholas@akeebabackup.com\",\"authorUrl\":\"https:\\/\\/www.akeebabackup.com\",\"version\":\"2.4.3\",\"description\":\"LIB_FOF_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"fof\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(106, 0, 'LIB_PHPASS', 'library', 'phpass', '', 0, 1, 1, 1, '{\"name\":\"LIB_PHPASS\",\"type\":\"library\",\"creationDate\":\"2004-2006\",\"author\":\"Solar Designer\",\"copyright\":\"\",\"authorEmail\":\"solar@openwall.com\",\"authorUrl\":\"http:\\/\\/www.openwall.com\\/phpass\\/\",\"version\":\"0.3\",\"description\":\"LIB_PHPASS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"phpass\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(200, 0, 'mod_articles_archive', 'module', 'mod_articles_archive', '', 0, 1, 1, 0, '{\"name\":\"mod_articles_archive\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_ARTICLES_ARCHIVE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_articles_archive\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(201, 0, 'mod_articles_latest', 'module', 'mod_articles_latest', '', 0, 1, 1, 0, '{\"name\":\"mod_articles_latest\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_LATEST_NEWS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_articles_latest\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(202, 0, 'mod_articles_popular', 'module', 'mod_articles_popular', '', 0, 1, 1, 0, '{\"name\":\"mod_articles_popular\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_POPULAR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_articles_popular\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(203, 0, 'mod_banners', 'module', 'mod_banners', '', 0, 1, 1, 0, '{\"name\":\"mod_banners\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_BANNERS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_banners\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(204, 0, 'mod_breadcrumbs', 'module', 'mod_breadcrumbs', '', 0, 1, 1, 1, '{\"name\":\"mod_breadcrumbs\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_BREADCRUMBS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_breadcrumbs\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(205, 0, 'mod_custom', 'module', 'mod_custom', '', 0, 1, 1, 1, '{\"name\":\"mod_custom\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_CUSTOM_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_custom\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(206, 0, 'mod_feed', 'module', 'mod_feed', '', 0, 1, 1, 0, '{\"name\":\"mod_feed\",\"type\":\"module\",\"creationDate\":\"July 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_FEED_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_feed\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(207, 0, 'mod_footer', 'module', 'mod_footer', '', 0, 1, 1, 0, '{\"name\":\"mod_footer\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_FOOTER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_footer\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(208, 0, 'mod_login', 'module', 'mod_login', '', 0, 1, 1, 1, '{\"name\":\"mod_login\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_LOGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_login\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(209, 0, 'mod_menu', 'module', 'mod_menu', '', 0, 1, 1, 1, '{\"name\":\"mod_menu\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_MENU_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_menu\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(210, 0, 'mod_articles_news', 'module', 'mod_articles_news', '', 0, 1, 1, 0, '{\"name\":\"mod_articles_news\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_ARTICLES_NEWS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_articles_news\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(211, 0, 'mod_random_image', 'module', 'mod_random_image', '', 0, 1, 1, 0, '{\"name\":\"mod_random_image\",\"type\":\"module\",\"creationDate\":\"July 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_RANDOM_IMAGE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_random_image\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(212, 0, 'mod_related_items', 'module', 'mod_related_items', '', 0, 1, 1, 0, '{\"name\":\"mod_related_items\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_RELATED_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_related_items\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(213, 0, 'mod_search', 'module', 'mod_search', '', 0, 1, 1, 0, '{\"name\":\"mod_search\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_SEARCH_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_search\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(214, 0, 'mod_stats', 'module', 'mod_stats', '', 0, 1, 1, 0, '{\"name\":\"mod_stats\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_STATS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_stats\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(215, 0, 'mod_syndicate', 'module', 'mod_syndicate', '', 0, 1, 1, 1, '{\"name\":\"mod_syndicate\",\"type\":\"module\",\"creationDate\":\"May 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_SYNDICATE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_syndicate\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(216, 0, 'mod_users_latest', 'module', 'mod_users_latest', '', 0, 1, 1, 0, '{\"name\":\"mod_users_latest\",\"type\":\"module\",\"creationDate\":\"December 2009\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_USERS_LATEST_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_users_latest\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(218, 0, 'mod_whosonline', 'module', 'mod_whosonline', '', 0, 1, 1, 0, '{\"name\":\"mod_whosonline\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_WHOSONLINE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_whosonline\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(219, 0, 'mod_wrapper', 'module', 'mod_wrapper', '', 0, 1, 1, 0, '{\"name\":\"mod_wrapper\",\"type\":\"module\",\"creationDate\":\"October 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_WRAPPER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_wrapper\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(220, 0, 'mod_articles_category', 'module', 'mod_articles_category', '', 0, 1, 1, 0, '{\"name\":\"mod_articles_category\",\"type\":\"module\",\"creationDate\":\"February 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_ARTICLES_CATEGORY_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_articles_category\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(221, 0, 'mod_articles_categories', 'module', 'mod_articles_categories', '', 0, 1, 1, 0, '{\"name\":\"mod_articles_categories\",\"type\":\"module\",\"creationDate\":\"February 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_ARTICLES_CATEGORIES_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_articles_categories\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(222, 0, 'mod_languages', 'module', 'mod_languages', '', 0, 1, 1, 1, '{\"name\":\"mod_languages\",\"type\":\"module\",\"creationDate\":\"February 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"MOD_LANGUAGES_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_languages\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(223, 0, 'mod_finder', 'module', 'mod_finder', '', 0, 1, 0, 0, '{\"name\":\"mod_finder\",\"type\":\"module\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_FINDER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_finder\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(300, 0, 'mod_custom', 'module', 'mod_custom', '', 1, 1, 1, 1, '{\"name\":\"mod_custom\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_CUSTOM_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_custom\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(301, 0, 'mod_feed', 'module', 'mod_feed', '', 1, 1, 1, 0, '{\"name\":\"mod_feed\",\"type\":\"module\",\"creationDate\":\"July 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_FEED_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_feed\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(302, 0, 'mod_latest', 'module', 'mod_latest', '', 1, 1, 1, 0, '{\"name\":\"mod_latest\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_LATEST_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_latest\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(303, 0, 'mod_logged', 'module', 'mod_logged', '', 1, 1, 1, 0, '{\"name\":\"mod_logged\",\"type\":\"module\",\"creationDate\":\"January 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_LOGGED_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_logged\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(304, 0, 'mod_login', 'module', 'mod_login', '', 1, 1, 1, 1, '{\"name\":\"mod_login\",\"type\":\"module\",\"creationDate\":\"March 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_LOGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_login\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(305, 0, 'mod_menu', 'module', 'mod_menu', '', 1, 1, 1, 0, '{\"name\":\"mod_menu\",\"type\":\"module\",\"creationDate\":\"March 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_MENU_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_menu\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(307, 0, 'mod_popular', 'module', 'mod_popular', '', 1, 1, 1, 0, '{\"name\":\"mod_popular\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_POPULAR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_popular\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(308, 0, 'mod_quickicon', 'module', 'mod_quickicon', '', 1, 1, 1, 1, '{\"name\":\"mod_quickicon\",\"type\":\"module\",\"creationDate\":\"Nov 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_QUICKICON_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_quickicon\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(309, 0, 'mod_status', 'module', 'mod_status', '', 1, 1, 1, 0, '{\"name\":\"mod_status\",\"type\":\"module\",\"creationDate\":\"Feb 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_STATUS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_status\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(310, 0, 'mod_submenu', 'module', 'mod_submenu', '', 1, 1, 1, 0, '{\"name\":\"mod_submenu\",\"type\":\"module\",\"creationDate\":\"Feb 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_SUBMENU_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_submenu\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(311, 0, 'mod_title', 'module', 'mod_title', '', 1, 1, 1, 0, '{\"name\":\"mod_title\",\"type\":\"module\",\"creationDate\":\"Nov 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_TITLE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_title\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(312, 0, 'mod_toolbar', 'module', 'mod_toolbar', '', 1, 1, 1, 1, '{\"name\":\"mod_toolbar\",\"type\":\"module\",\"creationDate\":\"Nov 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_TOOLBAR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_toolbar\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(313, 0, 'mod_multilangstatus', 'module', 'mod_multilangstatus', '', 1, 1, 1, 0, '{\"name\":\"mod_multilangstatus\",\"type\":\"module\",\"creationDate\":\"September 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_MULTILANGSTATUS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_multilangstatus\"}', '{\"cache\":\"0\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(314, 0, 'mod_version', 'module', 'mod_version', '', 1, 1, 1, 0, '{\"name\":\"mod_version\",\"type\":\"module\",\"creationDate\":\"January 2012\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_VERSION_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_version\"}', '{\"format\":\"short\",\"product\":\"1\",\"cache\":\"0\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(315, 0, 'mod_stats_admin', 'module', 'mod_stats_admin', '', 1, 1, 1, 0, '{\"name\":\"mod_stats_admin\",\"type\":\"module\",\"creationDate\":\"July 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"MOD_STATS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_stats_admin\"}', '{\"serverinfo\":\"0\",\"siteinfo\":\"0\",\"counter\":\"0\",\"increase\":\"0\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(316, 0, 'mod_tags_popular', 'module', 'mod_tags_popular', '', 0, 1, 1, 0, '{\"name\":\"mod_tags_popular\",\"type\":\"module\",\"creationDate\":\"January 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.1.0\",\"description\":\"MOD_TAGS_POPULAR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_tags_popular\"}', '{\"maximum\":\"5\",\"timeframe\":\"alltime\",\"owncache\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(317, 0, 'mod_tags_similar', 'module', 'mod_tags_similar', '', 0, 1, 1, 0, '{\"name\":\"mod_tags_similar\",\"type\":\"module\",\"creationDate\":\"January 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.1.0\",\"description\":\"MOD_TAGS_SIMILAR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_tags_similar\"}', '{\"maximum\":\"5\",\"matchtype\":\"any\",\"owncache\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(318, 0, 'mod_sampledata', 'module', 'mod_sampledata', '', 1, 1, 1, 0, '{\"name\":\"mod_sampledata\",\"type\":\"module\",\"creationDate\":\"July 2017\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.8.0\",\"description\":\"MOD_SAMPLEDATA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"mod_sampledata\"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(400, 0, 'plg_authentication_gmail', 'plugin', 'gmail', 'authentication', 0, 0, 1, 0, '{\"name\":\"plg_authentication_gmail\",\"type\":\"plugin\",\"creationDate\":\"February 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_GMAIL_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"gmail\"}', '{\"applysuffix\":\"0\",\"suffix\":\"\",\"verifypeer\":\"1\",\"user_blacklist\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(401, 0, 'plg_authentication_joomla', 'plugin', 'joomla', 'authentication', 0, 1, 1, 1, '{\"name\":\"plg_authentication_joomla\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_AUTH_JOOMLA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomla\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(402, 0, 'plg_authentication_ldap', 'plugin', 'ldap', 'authentication', 0, 0, 1, 0, '{\"name\":\"plg_authentication_ldap\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_LDAP_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"ldap\"}', '{\"host\":\"\",\"port\":\"389\",\"use_ldapV3\":\"0\",\"negotiate_tls\":\"0\",\"no_referrals\":\"0\",\"auth_method\":\"bind\",\"base_dn\":\"\",\"search_string\":\"\",\"users_dn\":\"\",\"username\":\"admin\",\"password\":\"bobby7\",\"ldap_fullname\":\"fullName\",\"ldap_email\":\"mail\",\"ldap_uid\":\"uid\"}', '', '', 0, '0000-00-00 00:00:00', 3, 0);
+(1, 0, 'com_mailto', 'component', 'com_mailto', '', 0, 1, 1, 1, '{"name":"com_mailto","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.\\t","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_MAILTO_XML_DESCRIPTION","group":"","filename":"mailto"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(2, 0, 'com_wrapper', 'component', 'com_wrapper', '', 0, 1, 1, 1, '{"name":"com_wrapper","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.\\n\\t","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_WRAPPER_XML_DESCRIPTION","group":"","filename":"wrapper"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(3, 0, 'com_admin', 'component', 'com_admin', '', 1, 1, 1, 1, '{"name":"com_admin","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_ADMIN_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(4, 0, 'com_banners', 'component', 'com_banners', '', 1, 1, 1, 0, '{"name":"com_banners","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_BANNERS_XML_DESCRIPTION","group":"","filename":"banners"}', '{"purchase_type":"3","track_impressions":"0","track_clicks":"0","metakey_prefix":"","save_history":"1","history_limit":10}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(5, 0, 'com_cache', 'component', 'com_cache', '', 1, 1, 1, 1, '{"name":"com_cache","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_CACHE_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(6, 0, 'com_categories', 'component', 'com_categories', '', 1, 1, 1, 1, '{"name":"com_categories","type":"component","creationDate":"December 2007","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_CATEGORIES_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(7, 0, 'com_checkin', 'component', 'com_checkin', '', 1, 1, 1, 1, '{"name":"com_checkin","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_CHECKIN_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(8, 0, 'com_contact', 'component', 'com_contact', '', 1, 1, 1, 0, '{"name":"com_contact","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_CONTACT_XML_DESCRIPTION","group":"","filename":"contact"}', '{"contact_layout":"_:default","show_contact_category":"hide","save_history":"1","history_limit":10,"show_contact_list":"0","presentation_style":"sliders","show_tags":"1","show_info":"1","show_name":"1","show_position":"1","show_email":"0","show_street_address":"1","show_suburb":"1","show_state":"1","show_postcode":"1","show_country":"1","show_telephone":"1","show_mobile":"1","show_fax":"1","show_webpage":"1","show_image":"1","show_misc":"1","image":"","allow_vcard":"0","show_articles":"0","articles_display_num":"10","show_profile":"0","show_user_custom_fields":["-1"],"show_links":"0","linka_name":"","linkb_name":"","linkc_name":"","linkd_name":"","linke_name":"","contact_icons":"0","icon_address":"","icon_email":"","icon_telephone":"","icon_mobile":"","icon_fax":"","icon_misc":"","category_layout":"_:default","show_category_title":"1","show_description":"1","show_description_image":"0","maxLevel":"-1","show_subcat_desc":"1","show_empty_categories":"0","show_cat_items":"1","show_cat_tags":"1","show_base_description":"1","maxLevelcat":"-1","show_subcat_desc_cat":"1","show_empty_categories_cat":"0","show_cat_items_cat":"1","filter_field":"0","show_pagination_limit":"0","show_headings":"1","show_image_heading":"0","show_position_headings":"1","show_email_headings":"0","show_telephone_headings":"1","show_mobile_headings":"0","show_fax_headings":"0","show_suburb_headings":"1","show_state_headings":"1","show_country_headings":"1","show_pagination":"2","show_pagination_results":"1","initial_sort":"ordering","captcha":"","show_email_form":"1","show_email_copy":"0","banned_email":"","banned_subject":"","banned_text":"","validate_session":"1","custom_reply":"0","redirect":"","show_feed_link":"1","sef_advanced":0,"sef_ids":0,"custom_fields_enable":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(9, 0, 'com_cpanel', 'component', 'com_cpanel', '', 1, 1, 1, 1, '{"name":"com_cpanel","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_CPANEL_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10, 0, 'com_installer', 'component', 'com_installer', '', 1, 1, 1, 1, '{"name":"com_installer","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_INSTALLER_XML_DESCRIPTION","group":""}', '{"show_jed_info":"1","cachetimeout":"6","minimum_stability":"4"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(11, 0, 'com_languages', 'component', 'com_languages', '', 1, 1, 1, 1, '{"name":"com_languages","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_LANGUAGES_XML_DESCRIPTION","group":""}', '{"administrator":"en-GB","site":"vi-VN"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(12, 0, 'com_login', 'component', 'com_login', '', 1, 1, 1, 1, '{"name":"com_login","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_LOGIN_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(13, 0, 'com_media', 'component', 'com_media', '', 1, 1, 0, 1, '{"name":"com_media","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_MEDIA_XML_DESCRIPTION","group":"","filename":"media"}', '{"upload_extensions":"bmp,csv,doc,gif,ico,jpg,jpeg,odg,odp,ods,odt,pdf,png,ppt,txt,xcf,xls,BMP,CSV,DOC,GIF,ICO,JPG,JPEG,ODG,ODP,ODS,ODT,PDF,PNG,PPT,TXT,XCF,XLS","upload_maxsize":"10","file_path":"images","image_path":"images","restrict_uploads":"1","allowed_media_usergroup":"3","check_mime":"1","image_extensions":"bmp,gif,jpg,png","ignore_extensions":"","upload_mime":"image\\/jpeg,image\\/gif,image\\/png,image\\/bmp,application\\/msword,application\\/excel,application\\/pdf,application\\/powerpoint,text\\/plain,application\\/x-zip","upload_mime_illegal":"text\\/html"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(14, 0, 'com_menus', 'component', 'com_menus', '', 1, 1, 1, 1, '{"name":"com_menus","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_MENUS_XML_DESCRIPTION","group":""}', '{"page_title":"","show_page_heading":0,"page_heading":"","pageclass_sfx":""}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(15, 0, 'com_messages', 'component', 'com_messages', '', 1, 1, 1, 1, '{"name":"com_messages","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_MESSAGES_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(16, 0, 'com_modules', 'component', 'com_modules', '', 1, 1, 1, 1, '{"name":"com_modules","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_MODULES_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(17, 0, 'com_newsfeeds', 'component', 'com_newsfeeds', '', 1, 1, 1, 0, '{"name":"com_newsfeeds","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_NEWSFEEDS_XML_DESCRIPTION","group":"","filename":"newsfeeds"}', '{"newsfeed_layout":"_:default","save_history":"1","history_limit":5,"show_feed_image":"1","show_feed_description":"1","show_item_description":"1","feed_character_count":"0","feed_display_order":"des","float_first":"right","float_second":"right","show_tags":"1","category_layout":"_:default","show_category_title":"1","show_description":"1","show_description_image":"1","maxLevel":"-1","show_empty_categories":"0","show_subcat_desc":"1","show_cat_items":"1","show_cat_tags":"1","show_base_description":"1","maxLevelcat":"-1","show_empty_categories_cat":"0","show_subcat_desc_cat":"1","show_cat_items_cat":"1","filter_field":"1","show_pagination_limit":"1","show_headings":"1","show_articles":"0","show_link":"1","show_pagination":"1","show_pagination_results":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(18, 0, 'com_plugins', 'component', 'com_plugins', '', 1, 1, 1, 1, '{"name":"com_plugins","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_PLUGINS_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(19, 0, 'com_search', 'component', 'com_search', '', 1, 1, 1, 0, '{"name":"com_search","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_SEARCH_XML_DESCRIPTION","group":"","filename":"search"}', '{"enabled":"0","search_phrases":"1","search_areas":"1","show_date":"1","opensearch_name":"","opensearch_description":""}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(20, 0, 'com_templates', 'component', 'com_templates', '', 1, 1, 1, 1, '{"name":"com_templates","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_TEMPLATES_XML_DESCRIPTION","group":""}', '{"template_positions_display":"0","upload_limit":"10","image_formats":"gif,bmp,jpg,jpeg,png","source_formats":"txt,less,ini,xml,js,php,css,scss,sass","font_formats":"woff,ttf,otf","compressed_formats":"zip"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(22, 0, 'com_content', 'component', 'com_content', '', 1, 1, 0, 1, '{"name":"com_content","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_CONTENT_XML_DESCRIPTION","group":"","filename":"content"}', '{"article_layout":"_:default","show_title":"1","link_titles":"1","show_intro":"1","info_block_position":"0","info_block_show_title":"1","show_category":"0","link_category":"0","show_parent_category":"0","link_parent_category":"0","show_associations":"0","flags":"1","show_author":"0","link_author":"0","show_create_date":"0","show_modify_date":"0","show_publish_date":"1","show_item_navigation":"1","show_vote":"0","show_readmore":"1","show_readmore_title":"1","readmore_limit":"100","show_tags":"1","show_icons":"1","show_print_icon":"1","show_email_icon":"1","show_hits":"1","show_noauth":"0","urls_position":"0","captcha":"","show_publishing_options":"1","show_article_options":"1","save_history":"1","history_limit":10,"show_urls_images_frontend":"0","show_urls_images_backend":"1","targeta":0,"targetb":0,"targetc":0,"float_intro":"left","float_fulltext":"left","category_layout":"_:blog","show_category_heading_title_text":"1","show_category_title":"0","show_description":"0","show_description_image":"0","maxLevel":"1","show_empty_categories":"0","show_no_articles":"1","show_subcat_desc":"1","show_cat_num_articles":"0","show_cat_tags":"1","show_base_description":"1","maxLevelcat":"-1","show_empty_categories_cat":"0","show_subcat_desc_cat":"1","show_cat_num_articles_cat":"1","num_leading_articles":"1","num_intro_articles":"4","num_columns":"2","num_links":"4","multi_column_order":"0","show_subcategory_content":"0","show_pagination_limit":"1","filter_field":"hide","show_headings":"1","list_show_date":"0","date_format":"","list_show_hits":"1","list_show_author":"1","orderby_pri":"order","orderby_sec":"rdate","order_date":"published","show_pagination":"2","show_pagination_results":"1","show_featured":"show","show_feed_link":"1","feed_summary":"0","feed_show_readmore":"0","sef_advanced":0,"sef_ids":0,"custom_fields_enable":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(23, 0, 'com_config', 'component', 'com_config', '', 1, 1, 0, 1, '{"name":"com_config","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_CONFIG_XML_DESCRIPTION","group":""}', '{"filters":{"1":{"filter_type":"NH","filter_tags":"","filter_attributes":""},"9":{"filter_type":"BL","filter_tags":"","filter_attributes":""},"6":{"filter_type":"BL","filter_tags":"","filter_attributes":""},"7":{"filter_type":"NONE","filter_tags":"","filter_attributes":""},"2":{"filter_type":"NH","filter_tags":"","filter_attributes":""},"3":{"filter_type":"BL","filter_tags":"","filter_attributes":""},"4":{"filter_type":"BL","filter_tags":"","filter_attributes":""},"5":{"filter_type":"BL","filter_tags":"","filter_attributes":""},"8":{"filter_type":"NONE","filter_tags":"","filter_attributes":""}}}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(24, 0, 'com_redirect', 'component', 'com_redirect', '', 1, 1, 0, 1, '{"name":"com_redirect","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_REDIRECT_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(25, 0, 'com_users', 'component', 'com_users', '', 1, 1, 0, 1, '{"name":"com_users","type":"component","creationDate":"April 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_USERS_XML_DESCRIPTION","group":"","filename":"users"}', '{"allowUserRegistration":"0","new_usertype":"2","guest_usergroup":"9","sendpassword":"1","useractivation":"2","mail_to_admin":"1","captcha":"","frontend_userparams":"1","site_language":"0","change_login_name":"0","reset_count":"10","reset_time":"1","minimum_length":"4","minimum_integers":"0","minimum_symbols":"0","minimum_uppercase":"0","save_history":"1","history_limit":5,"mailSubjectPrefix":"","mailBodySuffix":""}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(27, 0, 'com_finder', 'component', 'com_finder', '', 1, 1, 0, 0, '{"name":"com_finder","type":"component","creationDate":"August 2011","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"COM_FINDER_XML_DESCRIPTION","group":"","filename":"finder"}', '{"enabled":"0","show_description":"1","description_length":255,"allow_empty_query":"0","show_url":"1","show_autosuggest":"1","show_suggested_query":"1","show_explained_query":"1","show_advanced":"1","show_advanced_tips":"1","expand_advanced":"0","show_date_filters":"0","sort_order":"relevance","sort_direction":"desc","highlight_terms":"1","opensearch_name":"","opensearch_description":"","batch_size":"50","memory_table_limit":30000,"title_multiplier":"1.7","text_multiplier":"0.7","meta_multiplier":"1.2","path_multiplier":"2.0","misc_multiplier":"0.3","stem":"1","stemmer":"snowball","enable_logging":"0"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(28, 0, 'com_joomlaupdate', 'component', 'com_joomlaupdate', '', 1, 1, 0, 1, '{"name":"com_joomlaupdate","type":"component","creationDate":"February 2012","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.6.2","description":"COM_JOOMLAUPDATE_XML_DESCRIPTION","group":""}', '{"updatesource":"default","customurl":""}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(29, 0, 'com_tags', 'component', 'com_tags', '', 1, 1, 1, 1, '{"name":"com_tags","type":"component","creationDate":"December 2013","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.1.0","description":"COM_TAGS_XML_DESCRIPTION","group":"","filename":"tags"}', '{"tag_layout":"_:default","save_history":"1","history_limit":5,"show_tag_title":"0","tag_list_show_tag_image":"0","tag_list_show_tag_description":"0","tag_list_image":"","tag_list_orderby":"title","tag_list_orderby_direction":"ASC","show_headings":"0","tag_list_show_date":"0","tag_list_show_item_image":"0","tag_list_show_item_description":"0","tag_list_item_maximum_characters":0,"return_any_or_all":"1","include_children":"0","maximum":200,"tag_list_language_filter":"all","tags_layout":"_:default","all_tags_orderby":"title","all_tags_orderby_direction":"ASC","all_tags_show_tag_image":"0","all_tags_show_tag_descripion":"0","all_tags_tag_maximum_characters":20,"all_tags_show_tag_hits":"0","filter_field":"1","show_pagination_limit":"1","show_pagination":"2","show_pagination_results":"1","tag_field_ajax_mode":"1","show_feed_link":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(30, 0, 'com_contenthistory', 'component', 'com_contenthistory', '', 1, 1, 1, 0, '{"name":"com_contenthistory","type":"component","creationDate":"May 2013","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.2.0","description":"COM_CONTENTHISTORY_XML_DESCRIPTION","group":"","filename":"contenthistory"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(31, 0, 'com_ajax', 'component', 'com_ajax', '', 1, 1, 1, 1, '{"name":"com_ajax","type":"component","creationDate":"August 2013","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.2.0","description":"COM_AJAX_XML_DESCRIPTION","group":"","filename":"ajax"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(32, 0, 'com_postinstall', 'component', 'com_postinstall', '', 1, 1, 1, 1, '{"name":"com_postinstall","type":"component","creationDate":"September 2013","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.2.0","description":"COM_POSTINSTALL_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(33, 0, 'com_fields', 'component', 'com_fields', '', 1, 1, 1, 0, '{"name":"com_fields","type":"component","creationDate":"March 2016","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"COM_FIELDS_XML_DESCRIPTION","group":"","filename":"fields"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(34, 0, 'com_associations', 'component', 'com_associations', '', 1, 1, 1, 0, '{"name":"com_associations","type":"component","creationDate":"Januar 2017","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"COM_ASSOCIATIONS_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(102, 0, 'LIB_PHPUTF8', 'library', 'phputf8', '', 0, 1, 1, 1, '{"name":"LIB_PHPUTF8","type":"library","creationDate":"2006","author":"Harry Fuecks","copyright":"Copyright various authors","authorEmail":"hfuecks@gmail.com","authorUrl":"http:\\/\\/sourceforge.net\\/projects\\/phputf8","version":"0.5","description":"LIB_PHPUTF8_XML_DESCRIPTION","group":"","filename":"phputf8"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(103, 0, 'LIB_JOOMLA', 'library', 'joomla', '', 0, 1, 1, 1, '{"name":"LIB_JOOMLA","type":"library","creationDate":"2008","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"https:\\/\\/www.joomla.org","version":"13.1","description":"LIB_JOOMLA_XML_DESCRIPTION","group":"","filename":"joomla"}', '{"mediaversion":"5506ed4e0b471c2481fd32265d934978"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(104, 0, 'LIB_IDNA', 'library', 'idna_convert', '', 0, 1, 1, 1, '{"name":"LIB_IDNA","type":"library","creationDate":"2004","author":"phlyLabs","copyright":"2004-2011 phlyLabs Berlin, http:\\/\\/phlylabs.de","authorEmail":"phlymail@phlylabs.de","authorUrl":"http:\\/\\/phlylabs.de","version":"0.8.0","description":"LIB_IDNA_XML_DESCRIPTION","group":"","filename":"idna_convert"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(105, 0, 'FOF', 'library', 'fof', '', 0, 1, 1, 1, '{"name":"FOF","type":"library","creationDate":"2015-04-22 13:15:32","author":"Nicholas K. Dionysopoulos \\/ Akeeba Ltd","copyright":"(C)2011-2015 Nicholas K. Dionysopoulos","authorEmail":"nicholas@akeebabackup.com","authorUrl":"https:\\/\\/www.akeebabackup.com","version":"2.4.3","description":"LIB_FOF_XML_DESCRIPTION","group":"","filename":"fof"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(106, 0, 'LIB_PHPASS', 'library', 'phpass', '', 0, 1, 1, 1, '{"name":"LIB_PHPASS","type":"library","creationDate":"2004-2006","author":"Solar Designer","copyright":"","authorEmail":"solar@openwall.com","authorUrl":"http:\\/\\/www.openwall.com\\/phpass\\/","version":"0.3","description":"LIB_PHPASS_XML_DESCRIPTION","group":"","filename":"phpass"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(200, 0, 'mod_articles_archive', 'module', 'mod_articles_archive', '', 0, 1, 1, 0, '{"name":"mod_articles_archive","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_ARTICLES_ARCHIVE_XML_DESCRIPTION","group":"","filename":"mod_articles_archive"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(201, 0, 'mod_articles_latest', 'module', 'mod_articles_latest', '', 0, 1, 1, 0, '{"name":"mod_articles_latest","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_LATEST_NEWS_XML_DESCRIPTION","group":"","filename":"mod_articles_latest"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(202, 0, 'mod_articles_popular', 'module', 'mod_articles_popular', '', 0, 1, 1, 0, '{"name":"mod_articles_popular","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_POPULAR_XML_DESCRIPTION","group":"","filename":"mod_articles_popular"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(203, 0, 'mod_banners', 'module', 'mod_banners', '', 0, 1, 1, 0, '{"name":"mod_banners","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_BANNERS_XML_DESCRIPTION","group":"","filename":"mod_banners"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(204, 0, 'mod_breadcrumbs', 'module', 'mod_breadcrumbs', '', 0, 1, 1, 1, '{"name":"mod_breadcrumbs","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_BREADCRUMBS_XML_DESCRIPTION","group":"","filename":"mod_breadcrumbs"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(205, 0, 'mod_custom', 'module', 'mod_custom', '', 0, 1, 1, 1, '{"name":"mod_custom","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_CUSTOM_XML_DESCRIPTION","group":"","filename":"mod_custom"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(206, 0, 'mod_feed', 'module', 'mod_feed', '', 0, 1, 1, 0, '{"name":"mod_feed","type":"module","creationDate":"July 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_FEED_XML_DESCRIPTION","group":"","filename":"mod_feed"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(207, 0, 'mod_footer', 'module', 'mod_footer', '', 0, 1, 1, 0, '{"name":"mod_footer","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_FOOTER_XML_DESCRIPTION","group":"","filename":"mod_footer"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(208, 0, 'mod_login', 'module', 'mod_login', '', 0, 1, 1, 1, '{"name":"mod_login","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_LOGIN_XML_DESCRIPTION","group":"","filename":"mod_login"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(209, 0, 'mod_menu', 'module', 'mod_menu', '', 0, 1, 1, 1, '{"name":"mod_menu","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_MENU_XML_DESCRIPTION","group":"","filename":"mod_menu"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(210, 0, 'mod_articles_news', 'module', 'mod_articles_news', '', 0, 1, 1, 0, '{"name":"mod_articles_news","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_ARTICLES_NEWS_XML_DESCRIPTION","group":"","filename":"mod_articles_news"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(211, 0, 'mod_random_image', 'module', 'mod_random_image', '', 0, 1, 1, 0, '{"name":"mod_random_image","type":"module","creationDate":"July 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_RANDOM_IMAGE_XML_DESCRIPTION","group":"","filename":"mod_random_image"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(212, 0, 'mod_related_items', 'module', 'mod_related_items', '', 0, 1, 1, 0, '{"name":"mod_related_items","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_RELATED_XML_DESCRIPTION","group":"","filename":"mod_related_items"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(213, 0, 'mod_search', 'module', 'mod_search', '', 0, 1, 1, 0, '{"name":"mod_search","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_SEARCH_XML_DESCRIPTION","group":"","filename":"mod_search"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(214, 0, 'mod_stats', 'module', 'mod_stats', '', 0, 1, 1, 0, '{"name":"mod_stats","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_STATS_XML_DESCRIPTION","group":"","filename":"mod_stats"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(215, 0, 'mod_syndicate', 'module', 'mod_syndicate', '', 0, 1, 1, 1, '{"name":"mod_syndicate","type":"module","creationDate":"May 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_SYNDICATE_XML_DESCRIPTION","group":"","filename":"mod_syndicate"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(216, 0, 'mod_users_latest', 'module', 'mod_users_latest', '', 0, 1, 1, 0, '{"name":"mod_users_latest","type":"module","creationDate":"December 2009","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_USERS_LATEST_XML_DESCRIPTION","group":"","filename":"mod_users_latest"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(218, 0, 'mod_whosonline', 'module', 'mod_whosonline', '', 0, 1, 1, 0, '{"name":"mod_whosonline","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_WHOSONLINE_XML_DESCRIPTION","group":"","filename":"mod_whosonline"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(219, 0, 'mod_wrapper', 'module', 'mod_wrapper', '', 0, 1, 1, 0, '{"name":"mod_wrapper","type":"module","creationDate":"October 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_WRAPPER_XML_DESCRIPTION","group":"","filename":"mod_wrapper"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(220, 0, 'mod_articles_category', 'module', 'mod_articles_category', '', 0, 1, 1, 0, '{"name":"mod_articles_category","type":"module","creationDate":"February 2010","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_ARTICLES_CATEGORY_XML_DESCRIPTION","group":"","filename":"mod_articles_category"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(221, 0, 'mod_articles_categories', 'module', 'mod_articles_categories', '', 0, 1, 1, 0, '{"name":"mod_articles_categories","type":"module","creationDate":"February 2010","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_ARTICLES_CATEGORIES_XML_DESCRIPTION","group":"","filename":"mod_articles_categories"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(222, 0, 'mod_languages', 'module', 'mod_languages', '', 0, 1, 1, 1, '{"name":"mod_languages","type":"module","creationDate":"February 2010","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.5.0","description":"MOD_LANGUAGES_XML_DESCRIPTION","group":"","filename":"mod_languages"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(223, 0, 'mod_finder', 'module', 'mod_finder', '', 0, 1, 0, 0, '{"name":"mod_finder","type":"module","creationDate":"August 2011","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_FINDER_XML_DESCRIPTION","group":"","filename":"mod_finder"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(300, 0, 'mod_custom', 'module', 'mod_custom', '', 1, 1, 1, 1, '{"name":"mod_custom","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_CUSTOM_XML_DESCRIPTION","group":"","filename":"mod_custom"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(301, 0, 'mod_feed', 'module', 'mod_feed', '', 1, 1, 1, 0, '{"name":"mod_feed","type":"module","creationDate":"July 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_FEED_XML_DESCRIPTION","group":"","filename":"mod_feed"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(302, 0, 'mod_latest', 'module', 'mod_latest', '', 1, 1, 1, 0, '{"name":"mod_latest","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_LATEST_XML_DESCRIPTION","group":"","filename":"mod_latest"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(303, 0, 'mod_logged', 'module', 'mod_logged', '', 1, 1, 1, 0, '{"name":"mod_logged","type":"module","creationDate":"January 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_LOGGED_XML_DESCRIPTION","group":"","filename":"mod_logged"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(304, 0, 'mod_login', 'module', 'mod_login', '', 1, 1, 1, 1, '{"name":"mod_login","type":"module","creationDate":"March 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_LOGIN_XML_DESCRIPTION","group":"","filename":"mod_login"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(305, 0, 'mod_menu', 'module', 'mod_menu', '', 1, 1, 1, 0, '{"name":"mod_menu","type":"module","creationDate":"March 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_MENU_XML_DESCRIPTION","group":"","filename":"mod_menu"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(307, 0, 'mod_popular', 'module', 'mod_popular', '', 1, 1, 1, 0, '{"name":"mod_popular","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_POPULAR_XML_DESCRIPTION","group":"","filename":"mod_popular"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(308, 0, 'mod_quickicon', 'module', 'mod_quickicon', '', 1, 1, 1, 1, '{"name":"mod_quickicon","type":"module","creationDate":"Nov 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_QUICKICON_XML_DESCRIPTION","group":"","filename":"mod_quickicon"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(309, 0, 'mod_status', 'module', 'mod_status', '', 1, 1, 1, 0, '{"name":"mod_status","type":"module","creationDate":"Feb 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_STATUS_XML_DESCRIPTION","group":"","filename":"mod_status"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(310, 0, 'mod_submenu', 'module', 'mod_submenu', '', 1, 1, 1, 0, '{"name":"mod_submenu","type":"module","creationDate":"Feb 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_SUBMENU_XML_DESCRIPTION","group":"","filename":"mod_submenu"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(311, 0, 'mod_title', 'module', 'mod_title', '', 1, 1, 1, 0, '{"name":"mod_title","type":"module","creationDate":"Nov 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_TITLE_XML_DESCRIPTION","group":"","filename":"mod_title"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(312, 0, 'mod_toolbar', 'module', 'mod_toolbar', '', 1, 1, 1, 1, '{"name":"mod_toolbar","type":"module","creationDate":"Nov 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_TOOLBAR_XML_DESCRIPTION","group":"","filename":"mod_toolbar"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(313, 0, 'mod_multilangstatus', 'module', 'mod_multilangstatus', '', 1, 1, 1, 0, '{"name":"mod_multilangstatus","type":"module","creationDate":"September 2011","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_MULTILANGSTATUS_XML_DESCRIPTION","group":"","filename":"mod_multilangstatus"}', '{"cache":"0"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(314, 0, 'mod_version', 'module', 'mod_version', '', 1, 1, 1, 0, '{"name":"mod_version","type":"module","creationDate":"January 2012","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_VERSION_XML_DESCRIPTION","group":"","filename":"mod_version"}', '{"format":"short","product":"1","cache":"0"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(315, 0, 'mod_stats_admin', 'module', 'mod_stats_admin', '', 1, 1, 1, 0, '{"name":"mod_stats_admin","type":"module","creationDate":"July 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"MOD_STATS_XML_DESCRIPTION","group":"","filename":"mod_stats_admin"}', '{"serverinfo":"0","siteinfo":"0","counter":"0","increase":"0","cache":"1","cache_time":"900","cachemode":"static"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(316, 0, 'mod_tags_popular', 'module', 'mod_tags_popular', '', 0, 1, 1, 0, '{"name":"mod_tags_popular","type":"module","creationDate":"January 2013","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.1.0","description":"MOD_TAGS_POPULAR_XML_DESCRIPTION","group":"","filename":"mod_tags_popular"}', '{"maximum":"5","timeframe":"alltime","owncache":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(317, 0, 'mod_tags_similar', 'module', 'mod_tags_similar', '', 0, 1, 1, 0, '{"name":"mod_tags_similar","type":"module","creationDate":"January 2013","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.1.0","description":"MOD_TAGS_SIMILAR_XML_DESCRIPTION","group":"","filename":"mod_tags_similar"}', '{"maximum":"5","matchtype":"any","owncache":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(318, 0, 'mod_sampledata', 'module', 'mod_sampledata', '', 1, 1, 1, 0, '{"name":"mod_sampledata","type":"module","creationDate":"July 2017","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.8.0","description":"MOD_SAMPLEDATA_XML_DESCRIPTION","group":"","filename":"mod_sampledata"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(400, 0, 'plg_authentication_gmail', 'plugin', 'gmail', 'authentication', 0, 0, 1, 0, '{"name":"plg_authentication_gmail","type":"plugin","creationDate":"February 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_GMAIL_XML_DESCRIPTION","group":"","filename":"gmail"}', '{"applysuffix":"0","suffix":"","verifypeer":"1","user_blacklist":""}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(401, 0, 'plg_authentication_joomla', 'plugin', 'joomla', 'authentication', 0, 1, 1, 1, '{"name":"plg_authentication_joomla","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_AUTH_JOOMLA_XML_DESCRIPTION","group":"","filename":"joomla"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(402, 0, 'plg_authentication_ldap', 'plugin', 'ldap', 'authentication', 0, 0, 1, 0, '{"name":"plg_authentication_ldap","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_LDAP_XML_DESCRIPTION","group":"","filename":"ldap"}', '{"host":"","port":"389","use_ldapV3":"0","negotiate_tls":"0","no_referrals":"0","auth_method":"bind","base_dn":"","search_string":"","users_dn":"","username":"admin","password":"bobby7","ldap_fullname":"fullName","ldap_email":"mail","ldap_uid":"uid"}', '', '', 0, '0000-00-00 00:00:00', 3, 0),
+(403, 0, 'plg_content_contact', 'plugin', 'contact', 'content', 0, 1, 1, 0, '{"name":"plg_content_contact","type":"plugin","creationDate":"January 2014","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.2.2","description":"PLG_CONTENT_CONTACT_XML_DESCRIPTION","group":"","filename":"contact"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(404, 0, 'plg_content_emailcloak', 'plugin', 'emailcloak', 'content', 0, 1, 1, 0, '{"name":"plg_content_emailcloak","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_CONTENT_EMAILCLOAK_XML_DESCRIPTION","group":"","filename":"emailcloak"}', '{"mode":"1"}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(406, 0, 'plg_content_loadmodule', 'plugin', 'loadmodule', 'content', 0, 1, 1, 0, '{"name":"plg_content_loadmodule","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_LOADMODULE_XML_DESCRIPTION","group":"","filename":"loadmodule"}', '{"style":"xhtml"}', '', '', 0, '2011-09-18 15:22:50', 0, 0),
+(407, 0, 'plg_content_pagebreak', 'plugin', 'pagebreak', 'content', 0, 1, 1, 0, '{"name":"plg_content_pagebreak","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_CONTENT_PAGEBREAK_XML_DESCRIPTION","group":"","filename":"pagebreak"}', '{"title":"1","multipage_toc":"1","showall":"1"}', '', '', 0, '0000-00-00 00:00:00', 4, 0),
+(408, 0, 'plg_content_pagenavigation', 'plugin', 'pagenavigation', 'content', 0, 1, 1, 0, '{"name":"plg_content_pagenavigation","type":"plugin","creationDate":"January 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_PAGENAVIGATION_XML_DESCRIPTION","group":"","filename":"pagenavigation"}', '{"position":"1"}', '', '', 0, '0000-00-00 00:00:00', 5, 0),
+(409, 0, 'plg_content_vote', 'plugin', 'vote', 'content', 0, 0, 1, 0, '{"name":"plg_content_vote","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_VOTE_XML_DESCRIPTION","group":"","filename":"vote"}', '', '', '', 0, '0000-00-00 00:00:00', 6, 0),
+(410, 0, 'plg_editors_codemirror', 'plugin', 'codemirror', 'editors', 0, 1, 1, 1, '{"name":"plg_editors_codemirror","type":"plugin","creationDate":"28 March 2011","author":"Marijn Haverbeke","copyright":"Copyright (C) 2014 - 2017 by Marijn Haverbeke <marijnh@gmail.com> and others","authorEmail":"marijnh@gmail.com","authorUrl":"http:\\/\\/codemirror.net\\/","version":"5.34.0","description":"PLG_CODEMIRROR_XML_DESCRIPTION","group":"","filename":"codemirror"}', '{"lineNumbers":"1","lineWrapping":"1","matchTags":"1","matchBrackets":"1","marker-gutter":"1","autoCloseTags":"1","autoCloseBrackets":"1","autoFocus":"1","theme":"default","tabmode":"indent"}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(411, 0, 'plg_editors_none', 'plugin', 'none', 'editors', 0, 1, 1, 1, '{"name":"plg_editors_none","type":"plugin","creationDate":"September 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_NONE_XML_DESCRIPTION","group":"","filename":"none"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0);
 INSERT INTO `xtqmd_extensions` (`extension_id`, `package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`, `ordering`, `state`) VALUES
-(403, 0, 'plg_content_contact', 'plugin', 'contact', 'content', 0, 1, 1, 0, '{\"name\":\"plg_content_contact\",\"type\":\"plugin\",\"creationDate\":\"January 2014\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.2\",\"description\":\"PLG_CONTENT_CONTACT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"contact\"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(404, 0, 'plg_content_emailcloak', 'plugin', 'emailcloak', 'content', 0, 1, 1, 0, '{\"name\":\"plg_content_emailcloak\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CONTENT_EMAILCLOAK_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"emailcloak\"}', '{\"mode\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(406, 0, 'plg_content_loadmodule', 'plugin', 'loadmodule', 'content', 0, 1, 1, 0, '{\"name\":\"plg_content_loadmodule\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_LOADMODULE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"loadmodule\"}', '{\"style\":\"xhtml\"}', '', '', 0, '2011-09-18 15:22:50', 0, 0),
-(407, 0, 'plg_content_pagebreak', 'plugin', 'pagebreak', 'content', 0, 1, 1, 0, '{\"name\":\"plg_content_pagebreak\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CONTENT_PAGEBREAK_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"pagebreak\"}', '{\"title\":\"1\",\"multipage_toc\":\"1\",\"showall\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 4, 0),
-(408, 0, 'plg_content_pagenavigation', 'plugin', 'pagenavigation', 'content', 0, 1, 1, 0, '{\"name\":\"plg_content_pagenavigation\",\"type\":\"plugin\",\"creationDate\":\"January 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_PAGENAVIGATION_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"pagenavigation\"}', '{\"position\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 5, 0),
-(409, 0, 'plg_content_vote', 'plugin', 'vote', 'content', 0, 0, 1, 0, '{\"name\":\"plg_content_vote\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_VOTE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"vote\"}', '', '', '', 0, '0000-00-00 00:00:00', 6, 0),
-(410, 0, 'plg_editors_codemirror', 'plugin', 'codemirror', 'editors', 0, 1, 1, 1, '{\"name\":\"plg_editors_codemirror\",\"type\":\"plugin\",\"creationDate\":\"28 March 2011\",\"author\":\"Marijn Haverbeke\",\"copyright\":\"Copyright (C) 2014 - 2017 by Marijn Haverbeke <marijnh@gmail.com> and others\",\"authorEmail\":\"marijnh@gmail.com\",\"authorUrl\":\"http:\\/\\/codemirror.net\\/\",\"version\":\"5.34.0\",\"description\":\"PLG_CODEMIRROR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"codemirror\"}', '{\"lineNumbers\":\"1\",\"lineWrapping\":\"1\",\"matchTags\":\"1\",\"matchBrackets\":\"1\",\"marker-gutter\":\"1\",\"autoCloseTags\":\"1\",\"autoCloseBrackets\":\"1\",\"autoFocus\":\"1\",\"theme\":\"default\",\"tabmode\":\"indent\"}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(411, 0, 'plg_editors_none', 'plugin', 'none', 'editors', 0, 1, 1, 1, '{\"name\":\"plg_editors_none\",\"type\":\"plugin\",\"creationDate\":\"September 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_NONE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"none\"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0),
-(412, 0, 'plg_editors_tinymce', 'plugin', 'tinymce', 'editors', 0, 1, 1, 0, '{\"name\":\"plg_editors_tinymce\",\"type\":\"plugin\",\"creationDate\":\"2005-2017\",\"author\":\"Ephox Corporation\",\"copyright\":\"Ephox Corporation\",\"authorEmail\":\"N\\/A\",\"authorUrl\":\"http:\\/\\/www.tinymce.com\",\"version\":\"4.5.8\",\"description\":\"PLG_TINY_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"tinymce\"}', '{\"configuration\":{\"toolbars\":{\"2\":{\"toolbar1\":[\"bold\",\"underline\",\"strikethrough\",\"|\",\"undo\",\"redo\",\"|\",\"bullist\",\"numlist\",\"|\",\"pastetext\"]},\"1\":{\"menu\":[\"edit\",\"insert\",\"view\",\"format\",\"table\",\"tools\"],\"toolbar1\":[\"bold\",\"italic\",\"underline\",\"strikethrough\",\"|\",\"alignleft\",\"aligncenter\",\"alignright\",\"alignjustify\",\"|\",\"formatselect\",\"|\",\"bullist\",\"numlist\",\"|\",\"outdent\",\"indent\",\"|\",\"undo\",\"redo\",\"|\",\"link\",\"unlink\",\"anchor\",\"code\",\"|\",\"hr\",\"table\",\"|\",\"subscript\",\"superscript\",\"|\",\"charmap\",\"pastetext\",\"preview\"]},\"0\":{\"menu\":[\"edit\",\"insert\",\"view\",\"format\",\"table\",\"tools\"],\"toolbar1\":[\"bold\",\"italic\",\"underline\",\"strikethrough\",\"|\",\"alignleft\",\"aligncenter\",\"alignright\",\"alignjustify\",\"|\",\"styleselect\",\"|\",\"formatselect\",\"fontselect\",\"fontsizeselect\",\"|\",\"searchreplace\",\"|\",\"bullist\",\"numlist\",\"|\",\"outdent\",\"indent\",\"|\",\"undo\",\"redo\",\"|\",\"link\",\"unlink\",\"anchor\",\"image\",\"|\",\"code\",\"|\",\"forecolor\",\"backcolor\",\"|\",\"fullscreen\",\"|\",\"table\",\"|\",\"subscript\",\"superscript\",\"|\",\"charmap\",\"emoticons\",\"media\",\"hr\",\"ltr\",\"rtl\",\"|\",\"cut\",\"copy\",\"paste\",\"pastetext\",\"|\",\"visualchars\",\"visualblocks\",\"nonbreaking\",\"blockquote\",\"template\",\"|\",\"print\",\"preview\",\"codesample\",\"insertdatetime\",\"removeformat\"]}},\"setoptions\":{\"2\":{\"access\":[\"1\"],\"skin\":\"0\",\"skin_admin\":\"0\",\"mobile\":\"0\",\"drag_drop\":\"1\",\"path\":\"\",\"entity_encoding\":\"raw\",\"lang_mode\":\"1\",\"text_direction\":\"ltr\",\"content_css\":\"1\",\"content_css_custom\":\"\",\"relative_urls\":\"1\",\"newlines\":\"0\",\"use_config_textfilters\":\"0\",\"invalid_elements\":\"applet,iframe\",\"valid_elements\":\"\",\"extended_elements\":\"\",\"resizing\":\"1\",\"resize_horizontal\":\"1\",\"element_path\":\"1\",\"wordcount\":\"1\",\"image_advtab\":\"0\",\"advlist\":\"1\",\"contextmenu\":\"1\",\"custom_plugin\":\"\",\"custom_button\":\"\"},\"1\":{\"access\":[\"6\",\"2\"],\"skin\":\"0\",\"skin_admin\":\"0\",\"mobile\":\"0\",\"drag_drop\":\"1\",\"path\":\"\",\"entity_encoding\":\"raw\",\"lang_mode\":\"1\",\"text_direction\":\"ltr\",\"content_css\":\"1\",\"content_css_custom\":\"\",\"relative_urls\":\"1\",\"newlines\":\"0\",\"use_config_textfilters\":\"0\",\"invalid_elements\":\"script,applet,iframe\",\"valid_elements\":\"\",\"extended_elements\":\"\",\"resizing\":\"1\",\"resize_horizontal\":\"1\",\"element_path\":\"1\",\"wordcount\":\"1\",\"image_advtab\":\"0\",\"advlist\":\"1\",\"contextmenu\":\"1\",\"custom_plugin\":\"\",\"custom_button\":\"\"},\"0\":{\"access\":[\"7\",\"4\",\"8\"],\"skin\":\"0\",\"skin_admin\":\"0\",\"mobile\":\"0\",\"drag_drop\":\"1\",\"path\":\"\",\"entity_encoding\":\"raw\",\"lang_mode\":\"1\",\"text_direction\":\"ltr\",\"content_css\":\"1\",\"content_css_custom\":\"\",\"relative_urls\":\"1\",\"newlines\":\"0\",\"use_config_textfilters\":\"0\",\"invalid_elements\":\"script,applet,iframe\",\"valid_elements\":\"\",\"extended_elements\":\"\",\"resizing\":\"1\",\"resize_horizontal\":\"1\",\"element_path\":\"1\",\"wordcount\":\"1\",\"image_advtab\":\"1\",\"advlist\":\"1\",\"contextmenu\":\"1\",\"custom_plugin\":\"\",\"custom_button\":\"\"}}},\"sets_amount\":3,\"html_height\":\"550\",\"html_width\":\"750\"}', '', '', 0, '0000-00-00 00:00:00', 3, 0),
-(413, 0, 'plg_editors-xtd_article', 'plugin', 'article', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_article\",\"type\":\"plugin\",\"creationDate\":\"October 2009\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_ARTICLE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"article\"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(414, 0, 'plg_editors-xtd_image', 'plugin', 'image', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_image\",\"type\":\"plugin\",\"creationDate\":\"August 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_IMAGE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"image\"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0),
-(415, 0, 'plg_editors-xtd_pagebreak', 'plugin', 'pagebreak', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_pagebreak\",\"type\":\"plugin\",\"creationDate\":\"August 2004\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_EDITORSXTD_PAGEBREAK_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"pagebreak\"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
-(416, 0, 'plg_editors-xtd_readmore', 'plugin', 'readmore', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_readmore\",\"type\":\"plugin\",\"creationDate\":\"March 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_READMORE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"readmore\"}', '', '', '', 0, '0000-00-00 00:00:00', 4, 0),
-(417, 0, 'plg_search_categories', 'plugin', 'categories', 'search', 0, 1, 1, 0, '{\"name\":\"plg_search_categories\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEARCH_CATEGORIES_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"categories\"}', '{\"search_limit\":\"50\",\"search_content\":\"1\",\"search_archived\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(418, 0, 'plg_search_contacts', 'plugin', 'contacts', 'search', 0, 1, 1, 0, '{\"name\":\"plg_search_contacts\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEARCH_CONTACTS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"contacts\"}', '{\"search_limit\":\"50\",\"search_content\":\"1\",\"search_archived\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(419, 0, 'plg_search_content', 'plugin', 'content', 'search', 0, 1, 1, 0, '{\"name\":\"plg_search_content\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEARCH_CONTENT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"content\"}', '{\"search_limit\":\"50\",\"search_content\":\"1\",\"search_archived\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(420, 0, 'plg_search_newsfeeds', 'plugin', 'newsfeeds', 'search', 0, 1, 1, 0, '{\"name\":\"plg_search_newsfeeds\",\"type\":\"plugin\",\"creationDate\":\"November 2005\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEARCH_NEWSFEEDS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"newsfeeds\"}', '{\"search_limit\":\"50\",\"search_content\":\"1\",\"search_archived\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(422, 0, 'plg_system_languagefilter', 'plugin', 'languagefilter', 'system', 0, 0, 1, 1, '{\"name\":\"plg_system_languagefilter\",\"type\":\"plugin\",\"creationDate\":\"July 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SYSTEM_LANGUAGEFILTER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"languagefilter\"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(423, 0, 'plg_system_p3p', 'plugin', 'p3p', 'system', 0, 0, 1, 0, '{\"name\":\"plg_system_p3p\",\"type\":\"plugin\",\"creationDate\":\"September 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_P3P_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"p3p\"}', '{\"headers\":\"NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM\"}', '', '', 0, '0000-00-00 00:00:00', 2, 0),
-(424, 0, 'plg_system_cache', 'plugin', 'cache', 'system', 0, 0, 1, 1, '{\"name\":\"plg_system_cache\",\"type\":\"plugin\",\"creationDate\":\"February 2007\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CACHE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"cache\"}', '{\"browsercache\":\"0\",\"cachetime\":\"15\"}', '', '', 0, '0000-00-00 00:00:00', 9, 0),
-(425, 0, 'plg_system_debug', 'plugin', 'debug', 'system', 0, 1, 1, 0, '{\"name\":\"plg_system_debug\",\"type\":\"plugin\",\"creationDate\":\"December 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_DEBUG_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"debug\"}', '{\"profile\":\"1\",\"queries\":\"1\",\"memory\":\"1\",\"language_files\":\"1\",\"language_strings\":\"1\",\"strip-first\":\"1\",\"strip-prefix\":\"\",\"strip-suffix\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 4, 0),
-(426, 0, 'plg_system_log', 'plugin', 'log', 'system', 0, 1, 1, 1, '{\"name\":\"plg_system_log\",\"type\":\"plugin\",\"creationDate\":\"April 2007\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_LOG_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"log\"}', '', '', '', 0, '0000-00-00 00:00:00', 5, 0),
-(427, 0, 'plg_system_redirect', 'plugin', 'redirect', 'system', 0, 0, 1, 1, '{\"name\":\"plg_system_redirect\",\"type\":\"plugin\",\"creationDate\":\"April 2009\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SYSTEM_REDIRECT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"redirect\"}', '', '', '', 0, '0000-00-00 00:00:00', 6, 0),
-(428, 0, 'plg_system_remember', 'plugin', 'remember', 'system', 0, 1, 1, 1, '{\"name\":\"plg_system_remember\",\"type\":\"plugin\",\"creationDate\":\"April 2007\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_REMEMBER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"remember\"}', '', '', '', 0, '0000-00-00 00:00:00', 7, 0),
-(429, 0, 'plg_system_sef', 'plugin', 'sef', 'system', 0, 1, 1, 0, '{\"name\":\"plg_system_sef\",\"type\":\"plugin\",\"creationDate\":\"December 2007\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEF_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"sef\"}', '', '', '', 0, '0000-00-00 00:00:00', 8, 0),
-(430, 0, 'plg_system_logout', 'plugin', 'logout', 'system', 0, 1, 1, 1, '{\"name\":\"plg_system_logout\",\"type\":\"plugin\",\"creationDate\":\"April 2009\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SYSTEM_LOGOUT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"logout\"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
-(431, 0, 'plg_user_contactcreator', 'plugin', 'contactcreator', 'user', 0, 0, 1, 0, '{\"name\":\"plg_user_contactcreator\",\"type\":\"plugin\",\"creationDate\":\"August 2009\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CONTACTCREATOR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"contactcreator\"}', '{\"autowebpage\":\"\",\"category\":\"34\",\"autopublish\":\"0\"}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(432, 0, 'plg_user_joomla', 'plugin', 'joomla', 'user', 0, 1, 1, 0, '{\"name\":\"plg_user_joomla\",\"type\":\"plugin\",\"creationDate\":\"December 2006\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_USER_JOOMLA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomla\"}', '{\"autoregister\":\"1\",\"mail_to_user\":\"1\",\"forceLogout\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 2, 0),
-(433, 0, 'plg_user_profile', 'plugin', 'profile', 'user', 0, 0, 1, 0, '{\"name\":\"plg_user_profile\",\"type\":\"plugin\",\"creationDate\":\"January 2008\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_USER_PROFILE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"profile\"}', '{\"register-require_address1\":\"1\",\"register-require_address2\":\"1\",\"register-require_city\":\"1\",\"register-require_region\":\"1\",\"register-require_country\":\"1\",\"register-require_postal_code\":\"1\",\"register-require_phone\":\"1\",\"register-require_website\":\"1\",\"register-require_favoritebook\":\"1\",\"register-require_aboutme\":\"1\",\"register-require_tos\":\"1\",\"register-require_dob\":\"1\",\"profile-require_address1\":\"1\",\"profile-require_address2\":\"1\",\"profile-require_city\":\"1\",\"profile-require_region\":\"1\",\"profile-require_country\":\"1\",\"profile-require_postal_code\":\"1\",\"profile-require_phone\":\"1\",\"profile-require_website\":\"1\",\"profile-require_favoritebook\":\"1\",\"profile-require_aboutme\":\"1\",\"profile-require_tos\":\"1\",\"profile-require_dob\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(434, 0, 'plg_extension_joomla', 'plugin', 'joomla', 'extension', 0, 1, 1, 1, '{\"name\":\"plg_extension_joomla\",\"type\":\"plugin\",\"creationDate\":\"May 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_EXTENSION_JOOMLA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomla\"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(435, 0, 'plg_content_joomla', 'plugin', 'joomla', 'content', 0, 1, 1, 0, '{\"name\":\"plg_content_joomla\",\"type\":\"plugin\",\"creationDate\":\"November 2010\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CONTENT_JOOMLA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomla\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(436, 0, 'plg_system_languagecode', 'plugin', 'languagecode', 'system', 0, 0, 1, 0, '{\"name\":\"plg_system_languagecode\",\"type\":\"plugin\",\"creationDate\":\"November 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SYSTEM_LANGUAGECODE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"languagecode\"}', '', '', '', 0, '0000-00-00 00:00:00', 10, 0),
-(437, 0, 'plg_quickicon_joomlaupdate', 'plugin', 'joomlaupdate', 'quickicon', 0, 1, 1, 1, '{\"name\":\"plg_quickicon_joomlaupdate\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_QUICKICON_JOOMLAUPDATE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"joomlaupdate\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(438, 0, 'plg_quickicon_extensionupdate', 'plugin', 'extensionupdate', 'quickicon', 0, 1, 1, 1, '{\"name\":\"plg_quickicon_extensionupdate\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_QUICKICON_EXTENSIONUPDATE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"extensionupdate\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(439, 0, 'plg_captcha_recaptcha', 'plugin', 'recaptcha', 'captcha', 0, 0, 1, 0, '{\"name\":\"plg_captcha_recaptcha\",\"type\":\"plugin\",\"creationDate\":\"December 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.4.0\",\"description\":\"PLG_CAPTCHA_RECAPTCHA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"recaptcha\"}', '{\"public_key\":\"\",\"private_key\":\"\",\"theme\":\"clean\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(440, 0, 'plg_system_highlight', 'plugin', 'highlight', 'system', 0, 1, 1, 0, '{\"name\":\"plg_system_highlight\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SYSTEM_HIGHLIGHT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"highlight\"}', '', '', '', 0, '0000-00-00 00:00:00', 7, 0),
-(441, 0, 'plg_content_finder', 'plugin', 'finder', 'content', 0, 0, 1, 0, '{\"name\":\"plg_content_finder\",\"type\":\"plugin\",\"creationDate\":\"December 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_CONTENT_FINDER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"finder\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(442, 0, 'plg_finder_categories', 'plugin', 'categories', 'finder', 0, 1, 1, 0, '{\"name\":\"plg_finder_categories\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_CATEGORIES_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"categories\"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(443, 0, 'plg_finder_contacts', 'plugin', 'contacts', 'finder', 0, 1, 1, 0, '{\"name\":\"plg_finder_contacts\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_CONTACTS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"contacts\"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0),
-(444, 0, 'plg_finder_content', 'plugin', 'content', 'finder', 0, 1, 1, 0, '{\"name\":\"plg_finder_content\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_CONTENT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"content\"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
-(445, 0, 'plg_finder_newsfeeds', 'plugin', 'newsfeeds', 'finder', 0, 1, 1, 0, '{\"name\":\"plg_finder_newsfeeds\",\"type\":\"plugin\",\"creationDate\":\"August 2011\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_NEWSFEEDS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"newsfeeds\"}', '', '', '', 0, '0000-00-00 00:00:00', 4, 0),
-(447, 0, 'plg_finder_tags', 'plugin', 'tags', 'finder', 0, 1, 1, 0, '{\"name\":\"plg_finder_tags\",\"type\":\"plugin\",\"creationDate\":\"February 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_FINDER_TAGS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"tags\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(448, 0, 'plg_twofactorauth_totp', 'plugin', 'totp', 'twofactorauth', 0, 0, 1, 0, '{\"name\":\"plg_twofactorauth_totp\",\"type\":\"plugin\",\"creationDate\":\"August 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"PLG_TWOFACTORAUTH_TOTP_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"totp\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(449, 0, 'plg_authentication_cookie', 'plugin', 'cookie', 'authentication', 0, 1, 1, 0, '{\"name\":\"plg_authentication_cookie\",\"type\":\"plugin\",\"creationDate\":\"July 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_AUTH_COOKIE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"cookie\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(450, 0, 'plg_twofactorauth_yubikey', 'plugin', 'yubikey', 'twofactorauth', 0, 0, 1, 0, '{\"name\":\"plg_twofactorauth_yubikey\",\"type\":\"plugin\",\"creationDate\":\"September 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.2.0\",\"description\":\"PLG_TWOFACTORAUTH_YUBIKEY_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"yubikey\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(451, 0, 'plg_search_tags', 'plugin', 'tags', 'search', 0, 1, 1, 0, '{\"name\":\"plg_search_tags\",\"type\":\"plugin\",\"creationDate\":\"March 2014\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.0.0\",\"description\":\"PLG_SEARCH_TAGS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"tags\"}', '{\"search_limit\":\"50\",\"show_tagged_items\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(452, 0, 'plg_system_updatenotification', 'plugin', 'updatenotification', 'system', 0, 1, 1, 0, '{\"name\":\"plg_system_updatenotification\",\"type\":\"plugin\",\"creationDate\":\"May 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_UPDATENOTIFICATION_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"updatenotification\"}', '{\"lastrun\":1525164926}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(453, 0, 'plg_editors-xtd_module', 'plugin', 'module', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_module\",\"type\":\"plugin\",\"creationDate\":\"October 2015\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_MODULE_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"module\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(454, 0, 'plg_system_stats', 'plugin', 'stats', 'system', 0, 1, 1, 0, '{\"name\":\"plg_system_stats\",\"type\":\"plugin\",\"creationDate\":\"November 2013\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.5.0\",\"description\":\"PLG_SYSTEM_STATS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"stats\"}', '{\"mode\":3,\"lastrun\":1525099178,\"unique_id\":\"a8c3cc0a5b98a7c072def53a1274eb843703683d\",\"interval\":12}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(455, 0, 'plg_installer_packageinstaller', 'plugin', 'packageinstaller', 'installer', 0, 1, 1, 1, '{\"name\":\"plg_installer_packageinstaller\",\"type\":\"plugin\",\"creationDate\":\"May 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.0\",\"description\":\"PLG_INSTALLER_PACKAGEINSTALLER_PLUGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"packageinstaller\"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
-(456, 0, 'PLG_INSTALLER_FOLDERINSTALLER', 'plugin', 'folderinstaller', 'installer', 0, 1, 1, 1, '{\"name\":\"PLG_INSTALLER_FOLDERINSTALLER\",\"type\":\"plugin\",\"creationDate\":\"May 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.0\",\"description\":\"PLG_INSTALLER_FOLDERINSTALLER_PLUGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"folderinstaller\"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0),
-(457, 0, 'PLG_INSTALLER_URLINSTALLER', 'plugin', 'urlinstaller', 'installer', 0, 1, 1, 1, '{\"name\":\"PLG_INSTALLER_URLINSTALLER\",\"type\":\"plugin\",\"creationDate\":\"May 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.6.0\",\"description\":\"PLG_INSTALLER_URLINSTALLER_PLUGIN_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"urlinstaller\"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
-(458, 0, 'plg_quickicon_phpversioncheck', 'plugin', 'phpversioncheck', 'quickicon', 0, 1, 1, 1, '{\"name\":\"plg_quickicon_phpversioncheck\",\"type\":\"plugin\",\"creationDate\":\"August 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_QUICKICON_PHPVERSIONCHECK_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"phpversioncheck\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(459, 0, 'plg_editors-xtd_menu', 'plugin', 'menu', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_menu\",\"type\":\"plugin\",\"creationDate\":\"August 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_EDITORS-XTD_MENU_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"menu\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(460, 0, 'plg_editors-xtd_contact', 'plugin', 'contact', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_contact\",\"type\":\"plugin\",\"creationDate\":\"October 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_EDITORS-XTD_CONTACT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"contact\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(461, 0, 'plg_system_fields', 'plugin', 'fields', 'system', 0, 1, 1, 0, '{\"name\":\"plg_system_fields\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_SYSTEM_FIELDS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"fields\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(462, 0, 'plg_fields_calendar', 'plugin', 'calendar', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_calendar\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_CALENDAR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"calendar\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(463, 0, 'plg_fields_checkboxes', 'plugin', 'checkboxes', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_checkboxes\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_CHECKBOXES_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"checkboxes\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(464, 0, 'plg_fields_color', 'plugin', 'color', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_color\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_COLOR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"color\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(465, 0, 'plg_fields_editor', 'plugin', 'editor', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_editor\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_EDITOR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"editor\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(466, 0, 'plg_fields_imagelist', 'plugin', 'imagelist', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_imagelist\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_IMAGELIST_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"imagelist\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(467, 0, 'plg_fields_integer', 'plugin', 'integer', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_integer\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_INTEGER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"integer\"}', '{\"multiple\":\"0\",\"first\":\"1\",\"last\":\"100\",\"step\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(468, 0, 'plg_fields_list', 'plugin', 'list', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_list\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_LIST_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"list\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(469, 0, 'plg_fields_media', 'plugin', 'media', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_media\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_MEDIA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"media\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(470, 0, 'plg_fields_radio', 'plugin', 'radio', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_radio\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_RADIO_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"radio\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(471, 0, 'plg_fields_sql', 'plugin', 'sql', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_sql\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_SQL_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"sql\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(472, 0, 'plg_fields_text', 'plugin', 'text', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_text\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_TEXT_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"text\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(473, 0, 'plg_fields_textarea', 'plugin', 'textarea', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_textarea\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_TEXTAREA_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"textarea\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(474, 0, 'plg_fields_url', 'plugin', 'url', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_url\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_URL_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"url\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(475, 0, 'plg_fields_user', 'plugin', 'user', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_user\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_USER_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"user\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(476, 0, 'plg_fields_usergrouplist', 'plugin', 'usergrouplist', 'fields', 0, 1, 1, 0, '{\"name\":\"plg_fields_usergrouplist\",\"type\":\"plugin\",\"creationDate\":\"March 2016\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_FIELDS_USERGROUPLIST_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"usergrouplist\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(477, 0, 'plg_content_fields', 'plugin', 'fields', 'content', 0, 1, 1, 0, '{\"name\":\"plg_content_fields\",\"type\":\"plugin\",\"creationDate\":\"February 2017\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_CONTENT_FIELDS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"fields\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(478, 0, 'plg_editors-xtd_fields', 'plugin', 'fields', 'editors-xtd', 0, 1, 1, 0, '{\"name\":\"plg_editors-xtd_fields\",\"type\":\"plugin\",\"creationDate\":\"February 2017\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.7.0\",\"description\":\"PLG_EDITORS-XTD_FIELDS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"fields\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(479, 0, 'plg_sampledata_blog', 'plugin', 'blog', 'sampledata', 0, 1, 1, 0, '{\"name\":\"plg_sampledata_blog\",\"type\":\"plugin\",\"creationDate\":\"July 2017\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.8.0\",\"description\":\"PLG_SAMPLEDATA_BLOG_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"blog\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(503, 0, 'beez3', 'template', 'beez3', '', 0, 1, 1, 0, '{\"name\":\"beez3\",\"type\":\"template\",\"creationDate\":\"25 November 2009\",\"author\":\"Angie Radtke\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"a.radtke@derauftritt.de\",\"authorUrl\":\"http:\\/\\/www.der-auftritt.de\",\"version\":\"3.1.0\",\"description\":\"TPL_BEEZ3_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"templateDetails\"}', '{\"wrapperSmall\":\"53\",\"wrapperLarge\":\"72\",\"sitetitle\":\"\",\"sitedescription\":\"\",\"navposition\":\"center\",\"templatecolor\":\"nature\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(504, 0, 'hathor', 'template', 'hathor', '', 1, 1, 1, 0, '{\"name\":\"hathor\",\"type\":\"template\",\"creationDate\":\"May 2010\",\"author\":\"Andrea Tarr\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"\",\"version\":\"3.0.0\",\"description\":\"TPL_HATHOR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"templateDetails\"}', '{\"showSiteName\":\"0\",\"colourChoice\":\"0\",\"boldText\":\"0\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(506, 0, 'protostar', 'template', 'protostar', '', 0, 1, 1, 0, '{\"name\":\"protostar\",\"type\":\"template\",\"creationDate\":\"4\\/30\\/2012\",\"author\":\"Kyle Ledbetter\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"\",\"version\":\"1.0\",\"description\":\"TPL_PROTOSTAR_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"templateDetails\"}', '{\"templateColor\":\"\",\"logoFile\":\"\",\"googleFont\":\"1\",\"googleFontName\":\"Open+Sans\",\"fluidContainer\":\"0\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(507, 0, 'isis', 'template', 'isis', '', 1, 1, 1, 0, '{\"name\":\"isis\",\"type\":\"template\",\"creationDate\":\"3\\/30\\/2012\",\"author\":\"Kyle Ledbetter\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"\",\"version\":\"1.0\",\"description\":\"TPL_ISIS_XML_DESCRIPTION\",\"group\":\"\",\"filename\":\"templateDetails\"}', '{\"templateColor\":\"\",\"logoFile\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(600, 802, 'English (en-GB)', 'language', 'en-GB', '', 0, 1, 1, 1, '{\"name\":\"English (en-GB)\",\"type\":\"language\",\"creationDate\":\"February 2018\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.8.5\",\"description\":\"en-GB site language\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(601, 802, 'English (en-GB)', 'language', 'en-GB', '', 1, 1, 1, 1, '{\"name\":\"English (en-GB)\",\"type\":\"language\",\"creationDate\":\"February 2018\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.8.5\",\"description\":\"en-GB administrator language\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(700, 0, 'files_joomla', 'file', 'joomla', '', 0, 1, 1, 1, '{\"name\":\"files_joomla\",\"type\":\"file\",\"creationDate\":\"February 2018\",\"author\":\"Joomla! Project\",\"copyright\":\"(C) 2005 - 2018 Open Source Matters. All rights reserved\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.8.5\",\"description\":\"FILES_JOOMLA_XML_DESCRIPTION\",\"group\":\"\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(802, 0, 'English (en-GB) Language Pack', 'package', 'pkg_en-GB', '', 0, 1, 1, 1, '{\"name\":\"English (en-GB) Language Pack\",\"type\":\"package\",\"creationDate\":\"February 2018\",\"author\":\"Joomla! Project\",\"copyright\":\"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.\",\"authorEmail\":\"admin@joomla.org\",\"authorUrl\":\"www.joomla.org\",\"version\":\"3.8.5.1\",\"description\":\"en-GB language pack\",\"group\":\"\",\"filename\":\"pkg_en-GB\"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10000, 10002, 'Vietnamese-VN', 'language', 'vi-VN', '', 0, 1, 0, 0, '{\"name\":\"Vietnamese-VN\",\"type\":\"language\",\"creationDate\":\"December 2013\",\"author\":\"Vietnamese Translation Team Translation Team\",\"copyright\":\"Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"info@joomlaviet.info\",\"authorUrl\":\"http:\\/\\/joomlaviet.info\",\"version\":\"3.2.1.2\",\"description\":\"Vietnamese language pack for Joomla! 3.2\",\"group\":\"\",\"filename\":\"install\"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10001, 10002, 'Vietnamese-VN', 'language', 'vi-VN', '', 1, 1, 0, 0, '{\"name\":\"Vietnamese-VN\",\"type\":\"language\",\"creationDate\":\"December 2013\",\"author\":\"Vietnamese Translation Team\",\"copyright\":\"Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.\",\"authorEmail\":\"info@joomlaviet.info\",\"authorUrl\":\"http:\\/\\/joomlaviet.info\",\"version\":\"3.2.1.2\",\"description\":\"Vietnamese administration language for Joomla! 3.2\",\"group\":\"\",\"filename\":\"install\"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0);
-INSERT INTO `xtqmd_extensions` (`extension_id`, `package_id`, `name`, `type`, `element`, `folder`, `client_id`, `enabled`, `access`, `protected`, `manifest_cache`, `params`, `custom_data`, `system_data`, `checked_out`, `checked_out_time`, `ordering`, `state`) VALUES
-(10002, 0, 'Vietnamese Language Pack', 'package', 'pkg_vi-VN', '', 0, 1, 1, 0, '{\"name\":\"Vietnamese Language Pack\",\"type\":\"package\",\"creationDate\":\"December 2013\",\"author\":\"Vietnamese Translation Team\",\"copyright\":\"Copyright (C) 2013 joomlaviet.info and Open Source Matters. All rights reserved.\",\"authorEmail\":\"info@joomlaviet.info\",\"authorUrl\":\"http:\\/\\/joomlaviet.info\",\"version\":\"3.2.1.2\",\"description\":\"3.2.1.2 Joomla Vietnamese Language Package\",\"group\":\"\",\"filename\":\"pkg_vi-VN\"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10003, 0, 'VIRTUEMART', 'component', 'com_virtuemart', '', 1, 1, 0, 0, '{\"name\":\"VIRTUEMART\",\"type\":\"component\",\"creationDate\":\"December 21 2017\",\"author\":\"The VirtueMart Development Team\",\"copyright\":\"Copyright (C) 2004-2015 Virtuemart Team. All rights reserved.\",\"authorEmail\":\"max|at|virtuemart.net\",\"authorUrl\":\"https:\\/\\/virtuemart.net\",\"version\":\"3.2.12\",\"description\":\"\",\"group\":\"\",\"filename\":\"virtuemart\"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10004, 10007, 'YT Framework', 'plugin', 'yt', 'system', 0, 1, 1, 0, '{\"name\":\"YT Framework\",\"type\":\"plugin\",\"creationDate\":\"15\\/5\\/2014\",\"author\":\"YouTech Company\",\"copyright\":\"\",\"authorEmail\":\"contact@ytcvn.com\",\"authorUrl\":\"http:\\/\\/www.smartaddons.com\",\"version\":\"3.0.2\",\"description\":\"YT_DESC\",\"group\":\"\",\"filename\":\"yt\"}', '{\"show_sjhelp\":\"0\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10005, 10007, 'YT Shortcodes', 'plugin', 'ytshortcodes', 'system', 0, 1, 1, 0, '{\"name\":\"YT Shortcodes\",\"type\":\"plugin\",\"creationDate\":\"10 March 2015\",\"author\":\"YouTech Company\",\"copyright\":\"Copyright (C) 2015 YouTech Company\",\"authorEmail\":\"contact@ytcvn.com\",\"authorUrl\":\"http:\\/\\/www.smartaddons.com\",\"version\":\"3.0.0\",\"description\":\"YT_DESC\",\"group\":\"\",\"filename\":\"ytshortcodes\"}', '{\"show_sjbootstrap\":\"0\",\"show_sjfont-awesome\":\"1\",\"show_sjjquery\":\"0\",\"show_sjprettify\":\"1\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10006, 10007, 'sj_maxshop', 'template', 'sj_maxshop', '', 0, 1, 1, 0, '{\"name\":\"sj_maxshop\",\"type\":\"template\",\"creationDate\":\"1\\/1\\/2015\",\"author\":\"YouTech Company\",\"copyright\":\"\",\"authorEmail\":\"contact@ytcvn.com\",\"authorUrl\":\"http:\\/\\/www.smartaddons.com\",\"version\":\"1.1.0\",\"description\":\"\\n\\t\\t\\n\\t\\t\\t<div style=\\\"text-align:left;margin:0 0px 50px;\\\">\\n\\t\\t\\t<h2>SJ Maxshop - Downloaded from JoomlaLock.com<\\/h2>\\n\\t\\t\\t<p>This template has all the in built functionality of YT Framework v3 . SJ Maxshop comes with use shortcode such for video, gallery, slideshow, tabs, accordion etc. \\n\\t\\t\\tYT Framework 3.0 especially comes with rich administration features such as logo settings, layout builder,\\n\\t\\t\\tmega menu, unlimited fonts control.<\\/p>\\n\\t\\t\\t\\n\\t\\t\\t<h3 class=\\\"clear\\\">Key Features<\\/h3>\\n\\t\\t\\t<ul class=\\\"yt-list type-check\\\">\\n\\t\\t\\t\\t<li>Responsive Design supporting Phone, Tablets and Desktops<\\/li>\\n\\t\\t\\t\\t<li>Powered by Bootstrap and compatible with Joomla 3.0<\\/li>\\n\\t\\t\\t\\t<li>Sixed (6) styling with styling manager<\\/li>\\n\\t\\t\\t\\t<li>Uses latest web technologies like html5 and css3<\\/li>\\n\\t\\t\\t\\t<li>Uses shortcodes in built<\\/li>\\n\\t\\t\\t\\t<li>Built with LESS CSS<\\/li>\\n\\t\\t\\t\\t<li>Megamenu, RTL Support, CSS and JS compression and many more...<\\/li>\\n\\t\\t\\t<\\/ul>\\n\\t\\t\\t<\\/div>\\n\\t\\t\\n\\t\",\"group\":\"yt_framework\",\"filename\":\"templateDetails\"}', '{\"hideComponentHomePage\":\"0\",\"favicon\":\"images\\/favicon.ico\",\"logoType\":\"image\",\"logoText\":\"SmartAddons.Com\",\"sloganText\":\"The high quality products\",\"logoWidth\":\"161\",\"logoHeight\":\"24\",\"copyright\":\"1\",\"ytcopyright\":\"Copyright \\u00a9 {year} Sj Maxshop. All Rights Reserved\",\"joomla_create\":\"1\",\"layouttype\":\"res\",\"layoutFixed\":\"980\",\"layoutFloat\":\"90\",\"layoutRes\":\"1170\",\"typelayout\":\"wide\",\"bgbox\":\"pattern8\",\"bgframed\":\"pattern8\",\"bgrounded\":\"pattern8\",\"templateLayout\":\"layout1\",\"overrideLayouts\":\"494:variations\",\"themecolor\":\"red\",\"menutype\":\"mainmenu\",\"menustyle\":\"mega\",\"moofx\":\"easeInOutCirc\",\"moofxtimeout\":\"150\",\"keepMenu\":\"1\",\"fancyMenu\":\"1\",\"bodyFont\":\"Open+Sans\",\"bodySelectors\":\"body\",\"menuFont\":\"\",\"menuSelectors\":\"#menu a\",\"headingFont\":\"Open+Sans\",\"headingSelectors\":\"h1,h2,h3,h4,h5,h6\",\"otherSelectors\":\"\",\"leading_width\":\"270\",\"leading_height\":\"200\",\"intro_width\":\"270\",\"intro_height\":\"200\",\"thumbnail_background\":\"#000000\",\"thumbnail_mode\":\"fill\",\"showCpanel\":\"0\",\"showBacktotop\":\"1\",\"animateScroll\":\"0\",\"disableMootool\":\"1\",\"stickyPanel\":\"right\",\"stickyBar\":\"no\",\"developing\":\"0\",\"optimizeMergeFile\":\"0\",\"optimizeCSS\":\"0\",\"optimizeCSSExclude\":\"\",\"optimizeJS\":\"0\",\"optimizeJSExclude\":\"\",\"optimizeFolder\":\"yt-assets\",\"setGeneratorTag\":\"SmartAddons.Com - the high quality products!\",\"enableGoogleAnalytics\":\"0\",\"googleAnalyticsTrackingID\":\"\",\"headAfter\":\"\",\"headBefore\":\"\",\"bodyAfter\":\"\",\"bodyBefore\":\"\"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10007, 0, 'Package - Sj Maxshop', 'package', 'pkg_sj_maxshop', '', 0, 1, 1, 0, '{\"name\":\"Package - Sj Maxshop\",\"type\":\"package\",\"creationDate\":\"Mar 08, 2015\",\"author\":\" YouTech Company \",\"copyright\":\"Smartaddons\",\"authorEmail\":\"support@Smartaddons.com\",\"authorUrl\":\"www.Smartaddons.com\",\"version\":\"1.0.0\",\"description\":\"\",\"group\":\"\",\"filename\":\"pkg_sj_maxshop\"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
-(10008, 0, 'HA_Tao link than thien', 'plugin', 'HHAsef', 'system', 0, 1, 1, 0, '{\"name\":\"HA_Tao link than thien\",\"type\":\"plugin\",\"creationDate\":\"August 2014\",\"author\":\"Ho\\u00e0ng Anh\",\"copyright\":\"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.\",\"authorEmail\":\"webquangnam@gmail.net\",\"authorUrl\":\"www.webquangnam.com\",\"version\":\"3.0\",\"description\":\"\\n\\t\\t\\n\\t<img src=\\\"..\\/plugins\\/system\\/HHAsef\\/logo.png\\\" \\/>\\n\\t<p style=\\\"color:maroon;fload:left\\\">\\n\\tT\\u1ea1o ti\\u1ebfng vi\\u1ec7t kh\\u00f4ng d\\u1ea5u khi t\\u1ea1o link th\\u00e2n thi\\u1ec7n cho joomla 2.5 v\\u00e0 3X!<br\\/>\\n\\t\\u0110\\u01b0\\u1ee3c ph\\u00e1t tri\\u1ec3n b\\u1edfi: <a href=\\\"http:\\/\\/webquangnam.com\\/\\\" target=\\\"_blank\\\" color=\\\"red\\\">webquangnam.com (Ho\\u00e0ng Anh IT)<\\/a>\\n\\t<\\/p>\\n\\t\\n\\t\",\"group\":\"\",\"filename\":\"HHAsef\"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0);
+(412, 0, 'plg_editors_tinymce', 'plugin', 'tinymce', 'editors', 0, 1, 1, 0, '{"name":"plg_editors_tinymce","type":"plugin","creationDate":"2005-2017","author":"Ephox Corporation","copyright":"Ephox Corporation","authorEmail":"N\\/A","authorUrl":"http:\\/\\/www.tinymce.com","version":"4.5.8","description":"PLG_TINY_XML_DESCRIPTION","group":"","filename":"tinymce"}', '{"configuration":{"toolbars":{"2":{"toolbar1":["bold","underline","strikethrough","|","undo","redo","|","bullist","numlist","|","pastetext"]},"1":{"menu":["edit","insert","view","format","table","tools"],"toolbar1":["bold","italic","underline","strikethrough","|","alignleft","aligncenter","alignright","alignjustify","|","formatselect","|","bullist","numlist","|","outdent","indent","|","undo","redo","|","link","unlink","anchor","code","|","hr","table","|","subscript","superscript","|","charmap","pastetext","preview"]},"0":{"menu":["edit","insert","view","format","table","tools"],"toolbar1":["bold","italic","underline","strikethrough","|","alignleft","aligncenter","alignright","alignjustify","|","styleselect","|","formatselect","fontselect","fontsizeselect","|","searchreplace","|","bullist","numlist","|","outdent","indent","|","undo","redo","|","link","unlink","anchor","image","|","code","|","forecolor","backcolor","|","fullscreen","|","table","|","subscript","superscript","|","charmap","emoticons","media","hr","ltr","rtl","|","cut","copy","paste","pastetext","|","visualchars","visualblocks","nonbreaking","blockquote","template","|","print","preview","codesample","insertdatetime","removeformat"]}},"setoptions":{"2":{"access":["1"],"skin":"0","skin_admin":"0","mobile":"0","drag_drop":"1","path":"","entity_encoding":"raw","lang_mode":"1","text_direction":"ltr","content_css":"1","content_css_custom":"","relative_urls":"1","newlines":"0","use_config_textfilters":"0","invalid_elements":"applet,iframe","valid_elements":"","extended_elements":"","resizing":"1","resize_horizontal":"1","element_path":"1","wordcount":"1","image_advtab":"0","advlist":"1","contextmenu":"1","custom_plugin":"","custom_button":""},"1":{"access":["6","2"],"skin":"0","skin_admin":"0","mobile":"0","drag_drop":"1","path":"","entity_encoding":"raw","lang_mode":"1","text_direction":"ltr","content_css":"1","content_css_custom":"","relative_urls":"1","newlines":"0","use_config_textfilters":"0","invalid_elements":"script,applet,iframe","valid_elements":"","extended_elements":"","resizing":"1","resize_horizontal":"1","element_path":"1","wordcount":"1","image_advtab":"0","advlist":"1","contextmenu":"1","custom_plugin":"","custom_button":""},"0":{"access":["7","4","8"],"skin":"0","skin_admin":"0","mobile":"0","drag_drop":"1","path":"","entity_encoding":"raw","lang_mode":"1","text_direction":"ltr","content_css":"1","content_css_custom":"","relative_urls":"1","newlines":"0","use_config_textfilters":"0","invalid_elements":"script,applet,iframe","valid_elements":"","extended_elements":"","resizing":"1","resize_horizontal":"1","element_path":"1","wordcount":"1","image_advtab":"1","advlist":"1","contextmenu":"1","custom_plugin":"","custom_button":""}}},"sets_amount":3,"html_height":"550","html_width":"750"}', '', '', 0, '0000-00-00 00:00:00', 3, 0),
+(413, 0, 'plg_editors-xtd_article', 'plugin', 'article', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_article","type":"plugin","creationDate":"October 2009","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_ARTICLE_XML_DESCRIPTION","group":"","filename":"article"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(414, 0, 'plg_editors-xtd_image', 'plugin', 'image', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_image","type":"plugin","creationDate":"August 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_IMAGE_XML_DESCRIPTION","group":"","filename":"image"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0),
+(415, 0, 'plg_editors-xtd_pagebreak', 'plugin', 'pagebreak', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_pagebreak","type":"plugin","creationDate":"August 2004","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_EDITORSXTD_PAGEBREAK_XML_DESCRIPTION","group":"","filename":"pagebreak"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
+(416, 0, 'plg_editors-xtd_readmore', 'plugin', 'readmore', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_readmore","type":"plugin","creationDate":"March 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_READMORE_XML_DESCRIPTION","group":"","filename":"readmore"}', '', '', '', 0, '0000-00-00 00:00:00', 4, 0),
+(417, 0, 'plg_search_categories', 'plugin', 'categories', 'search', 0, 1, 1, 0, '{"name":"plg_search_categories","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SEARCH_CATEGORIES_XML_DESCRIPTION","group":"","filename":"categories"}', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(418, 0, 'plg_search_contacts', 'plugin', 'contacts', 'search', 0, 1, 1, 0, '{"name":"plg_search_contacts","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SEARCH_CONTACTS_XML_DESCRIPTION","group":"","filename":"contacts"}', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(419, 0, 'plg_search_content', 'plugin', 'content', 'search', 0, 1, 1, 0, '{"name":"plg_search_content","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SEARCH_CONTENT_XML_DESCRIPTION","group":"","filename":"content"}', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(420, 0, 'plg_search_newsfeeds', 'plugin', 'newsfeeds', 'search', 0, 1, 1, 0, '{"name":"plg_search_newsfeeds","type":"plugin","creationDate":"November 2005","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SEARCH_NEWSFEEDS_XML_DESCRIPTION","group":"","filename":"newsfeeds"}', '{"search_limit":"50","search_content":"1","search_archived":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(422, 0, 'plg_system_languagefilter', 'plugin', 'languagefilter', 'system', 0, 0, 1, 1, '{"name":"plg_system_languagefilter","type":"plugin","creationDate":"July 2010","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SYSTEM_LANGUAGEFILTER_XML_DESCRIPTION","group":"","filename":"languagefilter"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(423, 0, 'plg_system_p3p', 'plugin', 'p3p', 'system', 0, 0, 1, 0, '{"name":"plg_system_p3p","type":"plugin","creationDate":"September 2010","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_P3P_XML_DESCRIPTION","group":"","filename":"p3p"}', '{"headers":"NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"}', '', '', 0, '0000-00-00 00:00:00', 2, 0),
+(424, 0, 'plg_system_cache', 'plugin', 'cache', 'system', 0, 0, 1, 1, '{"name":"plg_system_cache","type":"plugin","creationDate":"February 2007","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_CACHE_XML_DESCRIPTION","group":"","filename":"cache"}', '{"browsercache":"0","cachetime":"15"}', '', '', 0, '0000-00-00 00:00:00', 9, 0),
+(425, 0, 'plg_system_debug', 'plugin', 'debug', 'system', 0, 1, 1, 0, '{"name":"plg_system_debug","type":"plugin","creationDate":"December 2006","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_DEBUG_XML_DESCRIPTION","group":"","filename":"debug"}', '{"profile":"1","queries":"1","memory":"1","language_files":"1","language_strings":"1","strip-first":"1","strip-prefix":"","strip-suffix":""}', '', '', 0, '0000-00-00 00:00:00', 4, 0),
+(426, 0, 'plg_system_log', 'plugin', 'log', 'system', 0, 1, 1, 1, '{"name":"plg_system_log","type":"plugin","creationDate":"April 2007","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_LOG_XML_DESCRIPTION","group":"","filename":"log"}', '', '', '', 0, '0000-00-00 00:00:00', 5, 0),
+(427, 0, 'plg_system_redirect', 'plugin', 'redirect', 'system', 0, 0, 1, 1, '{"name":"plg_system_redirect","type":"plugin","creationDate":"April 2009","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SYSTEM_REDIRECT_XML_DESCRIPTION","group":"","filename":"redirect"}', '', '', '', 0, '0000-00-00 00:00:00', 6, 0),
+(428, 0, 'plg_system_remember', 'plugin', 'remember', 'system', 0, 1, 1, 1, '{"name":"plg_system_remember","type":"plugin","creationDate":"April 2007","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_REMEMBER_XML_DESCRIPTION","group":"","filename":"remember"}', '', '', '', 0, '0000-00-00 00:00:00', 7, 0),
+(429, 0, 'plg_system_sef', 'plugin', 'sef', 'system', 0, 1, 1, 0, '{"name":"plg_system_sef","type":"plugin","creationDate":"December 2007","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SEF_XML_DESCRIPTION","group":"","filename":"sef"}', '', '', '', 0, '0000-00-00 00:00:00', 8, 0),
+(430, 0, 'plg_system_logout', 'plugin', 'logout', 'system', 0, 1, 1, 1, '{"name":"plg_system_logout","type":"plugin","creationDate":"April 2009","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SYSTEM_LOGOUT_XML_DESCRIPTION","group":"","filename":"logout"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
+(431, 0, 'plg_user_contactcreator', 'plugin', 'contactcreator', 'user', 0, 0, 1, 0, '{"name":"plg_user_contactcreator","type":"plugin","creationDate":"August 2009","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_CONTACTCREATOR_XML_DESCRIPTION","group":"","filename":"contactcreator"}', '{"autowebpage":"","category":"34","autopublish":"0"}', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(432, 0, 'plg_user_joomla', 'plugin', 'joomla', 'user', 0, 1, 1, 0, '{"name":"plg_user_joomla","type":"plugin","creationDate":"December 2006","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_USER_JOOMLA_XML_DESCRIPTION","group":"","filename":"joomla"}', '{"autoregister":"1","mail_to_user":"1","forceLogout":"1"}', '', '', 0, '0000-00-00 00:00:00', 2, 0),
+(433, 0, 'plg_user_profile', 'plugin', 'profile', 'user', 0, 0, 1, 0, '{"name":"plg_user_profile","type":"plugin","creationDate":"January 2008","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_USER_PROFILE_XML_DESCRIPTION","group":"","filename":"profile"}', '{"register-require_address1":"1","register-require_address2":"1","register-require_city":"1","register-require_region":"1","register-require_country":"1","register-require_postal_code":"1","register-require_phone":"1","register-require_website":"1","register-require_favoritebook":"1","register-require_aboutme":"1","register-require_tos":"1","register-require_dob":"1","profile-require_address1":"1","profile-require_address2":"1","profile-require_city":"1","profile-require_region":"1","profile-require_country":"1","profile-require_postal_code":"1","profile-require_phone":"1","profile-require_website":"1","profile-require_favoritebook":"1","profile-require_aboutme":"1","profile-require_tos":"1","profile-require_dob":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(434, 0, 'plg_extension_joomla', 'plugin', 'joomla', 'extension', 0, 1, 1, 1, '{"name":"plg_extension_joomla","type":"plugin","creationDate":"May 2010","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_EXTENSION_JOOMLA_XML_DESCRIPTION","group":"","filename":"joomla"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(435, 0, 'plg_content_joomla', 'plugin', 'joomla', 'content', 0, 1, 1, 0, '{"name":"plg_content_joomla","type":"plugin","creationDate":"November 2010","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_CONTENT_JOOMLA_XML_DESCRIPTION","group":"","filename":"joomla"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(436, 0, 'plg_system_languagecode', 'plugin', 'languagecode', 'system', 0, 0, 1, 0, '{"name":"plg_system_languagecode","type":"plugin","creationDate":"November 2011","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SYSTEM_LANGUAGECODE_XML_DESCRIPTION","group":"","filename":"languagecode"}', '', '', '', 0, '0000-00-00 00:00:00', 10, 0),
+(437, 0, 'plg_quickicon_joomlaupdate', 'plugin', 'joomlaupdate', 'quickicon', 0, 1, 1, 1, '{"name":"plg_quickicon_joomlaupdate","type":"plugin","creationDate":"August 2011","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_QUICKICON_JOOMLAUPDATE_XML_DESCRIPTION","group":"","filename":"joomlaupdate"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(438, 0, 'plg_quickicon_extensionupdate', 'plugin', 'extensionupdate', 'quickicon', 0, 1, 1, 1, '{"name":"plg_quickicon_extensionupdate","type":"plugin","creationDate":"August 2011","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_QUICKICON_EXTENSIONUPDATE_XML_DESCRIPTION","group":"","filename":"extensionupdate"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(439, 0, 'plg_captcha_recaptcha', 'plugin', 'recaptcha', 'captcha', 0, 0, 1, 0, '{"name":"plg_captcha_recaptcha","type":"plugin","creationDate":"December 2011","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.4.0","description":"PLG_CAPTCHA_RECAPTCHA_XML_DESCRIPTION","group":"","filename":"recaptcha"}', '{"public_key":"","private_key":"","theme":"clean"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(440, 0, 'plg_system_highlight', 'plugin', 'highlight', 'system', 0, 1, 1, 0, '{"name":"plg_system_highlight","type":"plugin","creationDate":"August 2011","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SYSTEM_HIGHLIGHT_XML_DESCRIPTION","group":"","filename":"highlight"}', '', '', '', 0, '0000-00-00 00:00:00', 7, 0),
+(441, 0, 'plg_content_finder', 'plugin', 'finder', 'content', 0, 0, 1, 0, '{"name":"plg_content_finder","type":"plugin","creationDate":"December 2011","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_CONTENT_FINDER_XML_DESCRIPTION","group":"","filename":"finder"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(442, 0, 'plg_finder_categories', 'plugin', 'categories', 'finder', 0, 1, 1, 0, '{"name":"plg_finder_categories","type":"plugin","creationDate":"August 2011","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_FINDER_CATEGORIES_XML_DESCRIPTION","group":"","filename":"categories"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(443, 0, 'plg_finder_contacts', 'plugin', 'contacts', 'finder', 0, 1, 1, 0, '{"name":"plg_finder_contacts","type":"plugin","creationDate":"August 2011","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_FINDER_CONTACTS_XML_DESCRIPTION","group":"","filename":"contacts"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0),
+(444, 0, 'plg_finder_content', 'plugin', 'content', 'finder', 0, 1, 1, 0, '{"name":"plg_finder_content","type":"plugin","creationDate":"August 2011","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_FINDER_CONTENT_XML_DESCRIPTION","group":"","filename":"content"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
+(445, 0, 'plg_finder_newsfeeds', 'plugin', 'newsfeeds', 'finder', 0, 1, 1, 0, '{"name":"plg_finder_newsfeeds","type":"plugin","creationDate":"August 2011","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_FINDER_NEWSFEEDS_XML_DESCRIPTION","group":"","filename":"newsfeeds"}', '', '', '', 0, '0000-00-00 00:00:00', 4, 0),
+(447, 0, 'plg_finder_tags', 'plugin', 'tags', 'finder', 0, 1, 1, 0, '{"name":"plg_finder_tags","type":"plugin","creationDate":"February 2013","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_FINDER_TAGS_XML_DESCRIPTION","group":"","filename":"tags"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(448, 0, 'plg_twofactorauth_totp', 'plugin', 'totp', 'twofactorauth', 0, 0, 1, 0, '{"name":"plg_twofactorauth_totp","type":"plugin","creationDate":"August 2013","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.2.0","description":"PLG_TWOFACTORAUTH_TOTP_XML_DESCRIPTION","group":"","filename":"totp"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(449, 0, 'plg_authentication_cookie', 'plugin', 'cookie', 'authentication', 0, 1, 1, 0, '{"name":"plg_authentication_cookie","type":"plugin","creationDate":"July 2013","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_AUTH_COOKIE_XML_DESCRIPTION","group":"","filename":"cookie"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(450, 0, 'plg_twofactorauth_yubikey', 'plugin', 'yubikey', 'twofactorauth', 0, 0, 1, 0, '{"name":"plg_twofactorauth_yubikey","type":"plugin","creationDate":"September 2013","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.2.0","description":"PLG_TWOFACTORAUTH_YUBIKEY_XML_DESCRIPTION","group":"","filename":"yubikey"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(451, 0, 'plg_search_tags', 'plugin', 'tags', 'search', 0, 1, 1, 0, '{"name":"plg_search_tags","type":"plugin","creationDate":"March 2014","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.0.0","description":"PLG_SEARCH_TAGS_XML_DESCRIPTION","group":"","filename":"tags"}', '{"search_limit":"50","show_tagged_items":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(452, 0, 'plg_system_updatenotification', 'plugin', 'updatenotification', 'system', 0, 1, 1, 0, '{"name":"plg_system_updatenotification","type":"plugin","creationDate":"May 2015","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.5.0","description":"PLG_SYSTEM_UPDATENOTIFICATION_XML_DESCRIPTION","group":"","filename":"updatenotification"}', '{"lastrun":1525277755}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(453, 0, 'plg_editors-xtd_module', 'plugin', 'module', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_module","type":"plugin","creationDate":"October 2015","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.5.0","description":"PLG_MODULE_XML_DESCRIPTION","group":"","filename":"module"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(454, 0, 'plg_system_stats', 'plugin', 'stats', 'system', 0, 1, 1, 0, '{"name":"plg_system_stats","type":"plugin","creationDate":"November 2013","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.5.0","description":"PLG_SYSTEM_STATS_XML_DESCRIPTION","group":"","filename":"stats"}', '{"mode":3,"lastrun":1525099178,"unique_id":"a8c3cc0a5b98a7c072def53a1274eb843703683d","interval":12}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(455, 0, 'plg_installer_packageinstaller', 'plugin', 'packageinstaller', 'installer', 0, 1, 1, 1, '{"name":"plg_installer_packageinstaller","type":"plugin","creationDate":"May 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.6.0","description":"PLG_INSTALLER_PACKAGEINSTALLER_PLUGIN_XML_DESCRIPTION","group":"","filename":"packageinstaller"}', '', '', '', 0, '0000-00-00 00:00:00', 1, 0),
+(456, 0, 'PLG_INSTALLER_FOLDERINSTALLER', 'plugin', 'folderinstaller', 'installer', 0, 1, 1, 1, '{"name":"PLG_INSTALLER_FOLDERINSTALLER","type":"plugin","creationDate":"May 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.6.0","description":"PLG_INSTALLER_FOLDERINSTALLER_PLUGIN_XML_DESCRIPTION","group":"","filename":"folderinstaller"}', '', '', '', 0, '0000-00-00 00:00:00', 2, 0),
+(457, 0, 'PLG_INSTALLER_URLINSTALLER', 'plugin', 'urlinstaller', 'installer', 0, 1, 1, 1, '{"name":"PLG_INSTALLER_URLINSTALLER","type":"plugin","creationDate":"May 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.6.0","description":"PLG_INSTALLER_URLINSTALLER_PLUGIN_XML_DESCRIPTION","group":"","filename":"urlinstaller"}', '', '', '', 0, '0000-00-00 00:00:00', 3, 0),
+(458, 0, 'plg_quickicon_phpversioncheck', 'plugin', 'phpversioncheck', 'quickicon', 0, 1, 1, 1, '{"name":"plg_quickicon_phpversioncheck","type":"plugin","creationDate":"August 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_QUICKICON_PHPVERSIONCHECK_XML_DESCRIPTION","group":"","filename":"phpversioncheck"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(459, 0, 'plg_editors-xtd_menu', 'plugin', 'menu', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_menu","type":"plugin","creationDate":"August 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_EDITORS-XTD_MENU_XML_DESCRIPTION","group":"","filename":"menu"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(460, 0, 'plg_editors-xtd_contact', 'plugin', 'contact', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_contact","type":"plugin","creationDate":"October 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_EDITORS-XTD_CONTACT_XML_DESCRIPTION","group":"","filename":"contact"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(461, 0, 'plg_system_fields', 'plugin', 'fields', 'system', 0, 1, 1, 0, '{"name":"plg_system_fields","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_SYSTEM_FIELDS_XML_DESCRIPTION","group":"","filename":"fields"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(462, 0, 'plg_fields_calendar', 'plugin', 'calendar', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_calendar","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_CALENDAR_XML_DESCRIPTION","group":"","filename":"calendar"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(463, 0, 'plg_fields_checkboxes', 'plugin', 'checkboxes', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_checkboxes","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_CHECKBOXES_XML_DESCRIPTION","group":"","filename":"checkboxes"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(464, 0, 'plg_fields_color', 'plugin', 'color', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_color","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_COLOR_XML_DESCRIPTION","group":"","filename":"color"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(465, 0, 'plg_fields_editor', 'plugin', 'editor', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_editor","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_EDITOR_XML_DESCRIPTION","group":"","filename":"editor"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(466, 0, 'plg_fields_imagelist', 'plugin', 'imagelist', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_imagelist","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_IMAGELIST_XML_DESCRIPTION","group":"","filename":"imagelist"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(467, 0, 'plg_fields_integer', 'plugin', 'integer', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_integer","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_INTEGER_XML_DESCRIPTION","group":"","filename":"integer"}', '{"multiple":"0","first":"1","last":"100","step":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(468, 0, 'plg_fields_list', 'plugin', 'list', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_list","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_LIST_XML_DESCRIPTION","group":"","filename":"list"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(469, 0, 'plg_fields_media', 'plugin', 'media', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_media","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_MEDIA_XML_DESCRIPTION","group":"","filename":"media"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(470, 0, 'plg_fields_radio', 'plugin', 'radio', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_radio","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_RADIO_XML_DESCRIPTION","group":"","filename":"radio"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(471, 0, 'plg_fields_sql', 'plugin', 'sql', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_sql","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_SQL_XML_DESCRIPTION","group":"","filename":"sql"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(472, 0, 'plg_fields_text', 'plugin', 'text', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_text","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_TEXT_XML_DESCRIPTION","group":"","filename":"text"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(473, 0, 'plg_fields_textarea', 'plugin', 'textarea', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_textarea","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_TEXTAREA_XML_DESCRIPTION","group":"","filename":"textarea"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(474, 0, 'plg_fields_url', 'plugin', 'url', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_url","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_URL_XML_DESCRIPTION","group":"","filename":"url"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(475, 0, 'plg_fields_user', 'plugin', 'user', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_user","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_USER_XML_DESCRIPTION","group":"","filename":"user"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(476, 0, 'plg_fields_usergrouplist', 'plugin', 'usergrouplist', 'fields', 0, 1, 1, 0, '{"name":"plg_fields_usergrouplist","type":"plugin","creationDate":"March 2016","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_FIELDS_USERGROUPLIST_XML_DESCRIPTION","group":"","filename":"usergrouplist"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(477, 0, 'plg_content_fields', 'plugin', 'fields', 'content', 0, 1, 1, 0, '{"name":"plg_content_fields","type":"plugin","creationDate":"February 2017","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_CONTENT_FIELDS_XML_DESCRIPTION","group":"","filename":"fields"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(478, 0, 'plg_editors-xtd_fields', 'plugin', 'fields', 'editors-xtd', 0, 1, 1, 0, '{"name":"plg_editors-xtd_fields","type":"plugin","creationDate":"February 2017","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.7.0","description":"PLG_EDITORS-XTD_FIELDS_XML_DESCRIPTION","group":"","filename":"fields"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(479, 0, 'plg_sampledata_blog', 'plugin', 'blog', 'sampledata', 0, 1, 1, 0, '{"name":"plg_sampledata_blog","type":"plugin","creationDate":"July 2017","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.8.0","description":"PLG_SAMPLEDATA_BLOG_XML_DESCRIPTION","group":"","filename":"blog"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(503, 0, 'beez3', 'template', 'beez3', '', 0, 1, 1, 0, '{"name":"beez3","type":"template","creationDate":"25 November 2009","author":"Angie Radtke","copyright":"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.","authorEmail":"a.radtke@derauftritt.de","authorUrl":"http:\\/\\/www.der-auftritt.de","version":"3.1.0","description":"TPL_BEEZ3_XML_DESCRIPTION","group":"","filename":"templateDetails"}', '{"wrapperSmall":"53","wrapperLarge":"72","sitetitle":"","sitedescription":"","navposition":"center","templatecolor":"nature"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(504, 0, 'hathor', 'template', 'hathor', '', 1, 1, 1, 0, '{"name":"hathor","type":"template","creationDate":"May 2010","author":"Andrea Tarr","copyright":"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"","version":"3.0.0","description":"TPL_HATHOR_XML_DESCRIPTION","group":"","filename":"templateDetails"}', '{"showSiteName":"0","colourChoice":"0","boldText":"0"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(506, 0, 'protostar', 'template', 'protostar', '', 0, 1, 1, 0, '{"name":"protostar","type":"template","creationDate":"4\\/30\\/2012","author":"Kyle Ledbetter","copyright":"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"","version":"1.0","description":"TPL_PROTOSTAR_XML_DESCRIPTION","group":"","filename":"templateDetails"}', '{"templateColor":"","logoFile":"","googleFont":"1","googleFontName":"Open+Sans","fluidContainer":"0"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(507, 0, 'isis', 'template', 'isis', '', 1, 1, 1, 0, '{"name":"isis","type":"template","creationDate":"3\\/30\\/2012","author":"Kyle Ledbetter","copyright":"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"","version":"1.0","description":"TPL_ISIS_XML_DESCRIPTION","group":"","filename":"templateDetails"}', '{"templateColor":"","logoFile":""}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(600, 802, 'English (en-GB)', 'language', 'en-GB', '', 0, 1, 1, 1, '{"name":"English (en-GB)","type":"language","creationDate":"February 2018","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.8.5","description":"en-GB site language","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(601, 802, 'English (en-GB)', 'language', 'en-GB', '', 1, 1, 1, 1, '{"name":"English (en-GB)","type":"language","creationDate":"February 2018","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.8.5","description":"en-GB administrator language","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(700, 0, 'files_joomla', 'file', 'joomla', '', 0, 1, 1, 1, '{"name":"files_joomla","type":"file","creationDate":"February 2018","author":"Joomla! Project","copyright":"(C) 2005 - 2018 Open Source Matters. All rights reserved","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.8.5","description":"FILES_JOOMLA_XML_DESCRIPTION","group":""}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(802, 0, 'English (en-GB) Language Pack', 'package', 'pkg_en-GB', '', 0, 1, 1, 1, '{"name":"English (en-GB) Language Pack","type":"package","creationDate":"February 2018","author":"Joomla! Project","copyright":"Copyright (C) 2005 - 2018 Open Source Matters, Inc. All rights reserved.","authorEmail":"admin@joomla.org","authorUrl":"www.joomla.org","version":"3.8.5.1","description":"en-GB language pack","group":"","filename":"pkg_en-GB"}', '', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10000, 10002, 'Vietnamese-VN', 'language', 'vi-VN', '', 0, 1, 0, 0, '{"name":"Vietnamese-VN","type":"language","creationDate":"December 2013","author":"Vietnamese Translation Team Translation Team","copyright":"Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.","authorEmail":"info@joomlaviet.info","authorUrl":"http:\\/\\/joomlaviet.info","version":"3.2.1.2","description":"Vietnamese language pack for Joomla! 3.2","group":"","filename":"install"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10001, 10002, 'Vietnamese-VN', 'language', 'vi-VN', '', 1, 1, 0, 0, '{"name":"Vietnamese-VN","type":"language","creationDate":"December 2013","author":"Vietnamese Translation Team","copyright":"Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.","authorEmail":"info@joomlaviet.info","authorUrl":"http:\\/\\/joomlaviet.info","version":"3.2.1.2","description":"Vietnamese administration language for Joomla! 3.2","group":"","filename":"install"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10002, 0, 'Vietnamese Language Pack', 'package', 'pkg_vi-VN', '', 0, 1, 1, 0, '{"name":"Vietnamese Language Pack","type":"package","creationDate":"December 2013","author":"Vietnamese Translation Team","copyright":"Copyright (C) 2013 joomlaviet.info and Open Source Matters. All rights reserved.","authorEmail":"info@joomlaviet.info","authorUrl":"http:\\/\\/joomlaviet.info","version":"3.2.1.2","description":"3.2.1.2 Joomla Vietnamese Language Package","group":"","filename":"pkg_vi-VN"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10004, 10007, 'YT Framework', 'plugin', 'yt', 'system', 0, 1, 1, 0, '{"name":"YT Framework","type":"plugin","creationDate":"15\\/5\\/2014","author":"YouTech Company","copyright":"","authorEmail":"contact@ytcvn.com","authorUrl":"http:\\/\\/www.smartaddons.com","version":"3.0.2","description":"YT_DESC","group":"","filename":"yt"}', '{"show_sjhelp":"0"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10005, 10007, 'YT Shortcodes', 'plugin', 'ytshortcodes', 'system', 0, 1, 1, 0, '{"name":"YT Shortcodes","type":"plugin","creationDate":"10 March 2015","author":"YouTech Company","copyright":"Copyright (C) 2015 YouTech Company","authorEmail":"contact@ytcvn.com","authorUrl":"http:\\/\\/www.smartaddons.com","version":"3.0.0","description":"YT_DESC","group":"","filename":"ytshortcodes"}', '{"show_sjbootstrap":"0","show_sjfont-awesome":"1","show_sjjquery":"0","show_sjprettify":"1"}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10006, 10007, 'sj_maxshop', 'template', 'sj_maxshop', '', 0, 1, 1, 0, '{"name":"sj_maxshop","type":"template","creationDate":"1\\/1\\/2015","author":"YouTech Company","copyright":"","authorEmail":"contact@ytcvn.com","authorUrl":"http:\\/\\/www.smartaddons.com","version":"1.1.0","description":"\\n\\t\\t\\n\\t\\t\\t<div style=\\"text-align:left;margin:0 0px 50px;\\">\\n\\t\\t\\t<h2>SJ Maxshop - Downloaded from JoomlaLock.com<\\/h2>\\n\\t\\t\\t<p>This template has all the in built functionality of YT Framework v3 . SJ Maxshop comes with use shortcode such for video, gallery, slideshow, tabs, accordion etc. \\n\\t\\t\\tYT Framework 3.0 especially comes with rich administration features such as logo settings, layout builder,\\n\\t\\t\\tmega menu, unlimited fonts control.<\\/p>\\n\\t\\t\\t\\n\\t\\t\\t<h3 class=\\"clear\\">Key Features<\\/h3>\\n\\t\\t\\t<ul class=\\"yt-list type-check\\">\\n\\t\\t\\t\\t<li>Responsive Design supporting Phone, Tablets and Desktops<\\/li>\\n\\t\\t\\t\\t<li>Powered by Bootstrap and compatible with Joomla 3.0<\\/li>\\n\\t\\t\\t\\t<li>Sixed (6) styling with styling manager<\\/li>\\n\\t\\t\\t\\t<li>Uses latest web technologies like html5 and css3<\\/li>\\n\\t\\t\\t\\t<li>Uses shortcodes in built<\\/li>\\n\\t\\t\\t\\t<li>Built with LESS CSS<\\/li>\\n\\t\\t\\t\\t<li>Megamenu, RTL Support, CSS and JS compression and many more...<\\/li>\\n\\t\\t\\t<\\/ul>\\n\\t\\t\\t<\\/div>\\n\\t\\t\\n\\t","group":"yt_framework","filename":"templateDetails"}', '{"hideComponentHomePage":"0","favicon":"images\\/favicon.ico","logoType":"image","logoText":"SmartAddons.Com","sloganText":"The high quality products","logoWidth":"161","logoHeight":"24","copyright":"1","ytcopyright":"Copyright \\u00a9 {year} Sj Maxshop. All Rights Reserved","joomla_create":"1","layouttype":"res","layoutFixed":"980","layoutFloat":"90","layoutRes":"1170","typelayout":"wide","bgbox":"pattern8","bgframed":"pattern8","bgrounded":"pattern8","templateLayout":"layout1","overrideLayouts":"494:variations","themecolor":"red","menutype":"mainmenu","menustyle":"mega","moofx":"easeInOutCirc","moofxtimeout":"150","keepMenu":"1","fancyMenu":"1","bodyFont":"Open+Sans","bodySelectors":"body","menuFont":"","menuSelectors":"#menu a","headingFont":"Open+Sans","headingSelectors":"h1,h2,h3,h4,h5,h6","otherSelectors":"","leading_width":"270","leading_height":"200","intro_width":"270","intro_height":"200","thumbnail_background":"#000000","thumbnail_mode":"fill","showCpanel":"0","showBacktotop":"1","animateScroll":"0","disableMootool":"1","stickyPanel":"right","stickyBar":"no","developing":"0","optimizeMergeFile":"0","optimizeCSS":"0","optimizeCSSExclude":"","optimizeJS":"0","optimizeJSExclude":"","optimizeFolder":"yt-assets","setGeneratorTag":"SmartAddons.Com - the high quality products!","enableGoogleAnalytics":"0","googleAnalyticsTrackingID":"","headAfter":"","headBefore":"","bodyAfter":"","bodyBefore":""}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10007, 0, 'Package - Sj Maxshop', 'package', 'pkg_sj_maxshop', '', 0, 1, 1, 0, '{"name":"Package - Sj Maxshop","type":"package","creationDate":"Mar 08, 2015","author":" YouTech Company ","copyright":"Smartaddons","authorEmail":"support@Smartaddons.com","authorUrl":"www.Smartaddons.com","version":"1.0.0","description":"","group":"","filename":"pkg_sj_maxshop"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10008, 0, 'HA_Tao link than thien', 'plugin', 'HHAsef', 'system', 0, 1, 1, 0, '{"name":"HA_Tao link than thien","type":"plugin","creationDate":"August 2014","author":"Ho\\u00e0ng Anh","copyright":"Copyright (C) 2005 - 2011 Open Source Matters. All rights reserved.","authorEmail":"webquangnam@gmail.net","authorUrl":"www.webquangnam.com","version":"3.0","description":"\\n\\t\\t\\n\\t<img src=\\"..\\/plugins\\/system\\/HHAsef\\/logo.png\\" \\/>\\n\\t<p style=\\"color:maroon;fload:left\\">\\n\\tT\\u1ea1o ti\\u1ebfng vi\\u1ec7t kh\\u00f4ng d\\u1ea5u khi t\\u1ea1o link th\\u00e2n thi\\u1ec7n cho joomla 2.5 v\\u00e0 3X!<br\\/>\\n\\t\\u0110\\u01b0\\u1ee3c ph\\u00e1t tri\\u1ec3n b\\u1edfi: <a href=\\"http:\\/\\/webquangnam.com\\/\\" target=\\"_blank\\" color=\\"red\\">webquangnam.com (Ho\\u00e0ng Anh IT)<\\/a>\\n\\t<\\/p>\\n\\t\\n\\t","group":"","filename":"HHAsef"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10009, 0, 'VIRTUEMART', 'component', 'com_virtuemart', '', 1, 1, 0, 0, '{"name":"VIRTUEMART","type":"component","creationDate":"September 18 2015","author":"The VirtueMart Development Team","copyright":"Copyright (C) 2004-2015 Virtuemart Team. All rights reserved.","authorEmail":"max|at|virtuemart.net","authorUrl":"http:\\/\\/www.virtuemart.net","version":"3.0.10","description":"","group":"","filename":"virtuemart"}', '{}', '', '', 0, '0000-00-00 00:00:00', 0, 0),
+(10011, 0, 'Sj Flat Menu', 'module', 'mod_sj_flat_menu', '', 0, 1, 0, 0, '{"name":"Sj Flat Menu","type":"module","creationDate":"September 2013","author":"YouTech Company","copyright":"Copyright (c) 2013 YouTech Company","authorEmail":"contact@ytcvn.com","authorUrl":"http:\\/\\/www.smartaddons.com","version":"1.0.0","description":"TPL_YTFRAMEWORK_XML_DESCRIPTION","group":"","filename":"mod_sj_flat_menu"}', '{"moduleclass_sfx":"","startlevel":"1","endlevel":"all","type_menu":"flyout","stype_layout":"vertical","event":"click","duration":"300","showsub":"true","menu_direction":"left","link_target":"_self","include_jquery":"0","pretext":"","posttext":"","owncache":"1","cache_time":"900"}', '', '', 0, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -659,11 +659,11 @@ INSERT INTO `xtqmd_extensions` (`extension_id`, `package_id`, `name`, `type`, `e
 -- Table structure for table `xtqmd_fields`
 --
 
-CREATE TABLE `xtqmd_fields` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_fields` (
+`id` int(10) unsigned NOT NULL,
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0',
   `context` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `group_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `group_id` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `label` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -680,9 +680,9 @@ CREATE TABLE `xtqmd_fields` (
   `fieldparams` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `modified_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_by` int(10) unsigned NOT NULL DEFAULT '0',
   `access` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -692,7 +692,7 @@ CREATE TABLE `xtqmd_fields` (
 -- Table structure for table `xtqmd_fields_categories`
 --
 
-CREATE TABLE `xtqmd_fields_categories` (
+CREATE TABLE IF NOT EXISTS `xtqmd_fields_categories` (
   `field_id` int(11) NOT NULL DEFAULT '0',
   `category_id` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -703,9 +703,9 @@ CREATE TABLE `xtqmd_fields_categories` (
 -- Table structure for table `xtqmd_fields_groups`
 --
 
-CREATE TABLE `xtqmd_fields_groups` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_fields_groups` (
+`id` int(10) unsigned NOT NULL,
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0',
   `context` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -717,9 +717,9 @@ CREATE TABLE `xtqmd_fields_groups` (
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_by` int(10) unsigned NOT NULL DEFAULT '0',
   `access` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -729,8 +729,8 @@ CREATE TABLE `xtqmd_fields_groups` (
 -- Table structure for table `xtqmd_fields_values`
 --
 
-CREATE TABLE `xtqmd_fields_values` (
-  `field_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_fields_values` (
+  `field_id` int(10) unsigned NOT NULL,
   `item_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Allow references to items which have strings as ids, eg. none db systems.',
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -741,19 +741,19 @@ CREATE TABLE `xtqmd_fields_values` (
 -- Table structure for table `xtqmd_finder_filters`
 --
 
-CREATE TABLE `xtqmd_finder_filters` (
-  `filter_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_filters` (
+`filter_id` int(10) unsigned NOT NULL,
   `title` varchar(255) NOT NULL,
   `alias` varchar(255) NOT NULL,
   `state` tinyint(1) NOT NULL DEFAULT '1',
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) unsigned NOT NULL,
   `created_by_alias` varchar(255) NOT NULL,
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_by` int(10) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `map_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `map_count` int(10) unsigned NOT NULL DEFAULT '0',
   `data` text NOT NULL,
   `params` mediumtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -764,8 +764,8 @@ CREATE TABLE `xtqmd_finder_filters` (
 -- Table structure for table `xtqmd_finder_links`
 --
 
-CREATE TABLE `xtqmd_finder_links` (
-  `link_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links` (
+`link_id` int(10) unsigned NOT NULL,
   `url` varchar(255) NOT NULL,
   `route` varchar(255) NOT NULL,
   `title` varchar(400) DEFAULT NULL,
@@ -780,8 +780,8 @@ CREATE TABLE `xtqmd_finder_links` (
   `publish_end_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `start_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `end_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `list_price` double UNSIGNED NOT NULL DEFAULT '0',
-  `sale_price` double UNSIGNED NOT NULL DEFAULT '0',
+  `list_price` double unsigned NOT NULL DEFAULT '0',
+  `sale_price` double unsigned NOT NULL DEFAULT '0',
   `type_id` int(11) NOT NULL,
   `object` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -792,10 +792,10 @@ CREATE TABLE `xtqmd_finder_links` (
 -- Table structure for table `xtqmd_finder_links_terms0`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms0` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms0` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -804,10 +804,10 @@ CREATE TABLE `xtqmd_finder_links_terms0` (
 -- Table structure for table `xtqmd_finder_links_terms1`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms1` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms1` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -816,10 +816,10 @@ CREATE TABLE `xtqmd_finder_links_terms1` (
 -- Table structure for table `xtqmd_finder_links_terms2`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms2` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms2` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -828,10 +828,10 @@ CREATE TABLE `xtqmd_finder_links_terms2` (
 -- Table structure for table `xtqmd_finder_links_terms3`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms3` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms3` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -840,10 +840,10 @@ CREATE TABLE `xtqmd_finder_links_terms3` (
 -- Table structure for table `xtqmd_finder_links_terms4`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms4` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms4` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -852,10 +852,10 @@ CREATE TABLE `xtqmd_finder_links_terms4` (
 -- Table structure for table `xtqmd_finder_links_terms5`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms5` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms5` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -864,10 +864,10 @@ CREATE TABLE `xtqmd_finder_links_terms5` (
 -- Table structure for table `xtqmd_finder_links_terms6`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms6` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms6` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -876,10 +876,10 @@ CREATE TABLE `xtqmd_finder_links_terms6` (
 -- Table structure for table `xtqmd_finder_links_terms7`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms7` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms7` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -888,10 +888,10 @@ CREATE TABLE `xtqmd_finder_links_terms7` (
 -- Table structure for table `xtqmd_finder_links_terms8`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms8` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms8` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -900,10 +900,10 @@ CREATE TABLE `xtqmd_finder_links_terms8` (
 -- Table structure for table `xtqmd_finder_links_terms9`
 --
 
-CREATE TABLE `xtqmd_finder_links_terms9` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_terms9` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -912,10 +912,10 @@ CREATE TABLE `xtqmd_finder_links_terms9` (
 -- Table structure for table `xtqmd_finder_links_termsa`
 --
 
-CREATE TABLE `xtqmd_finder_links_termsa` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_termsa` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -924,10 +924,10 @@ CREATE TABLE `xtqmd_finder_links_termsa` (
 -- Table structure for table `xtqmd_finder_links_termsb`
 --
 
-CREATE TABLE `xtqmd_finder_links_termsb` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_termsb` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -936,10 +936,10 @@ CREATE TABLE `xtqmd_finder_links_termsb` (
 -- Table structure for table `xtqmd_finder_links_termsc`
 --
 
-CREATE TABLE `xtqmd_finder_links_termsc` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_termsc` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -948,10 +948,10 @@ CREATE TABLE `xtqmd_finder_links_termsc` (
 -- Table structure for table `xtqmd_finder_links_termsd`
 --
 
-CREATE TABLE `xtqmd_finder_links_termsd` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_termsd` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -960,10 +960,10 @@ CREATE TABLE `xtqmd_finder_links_termsd` (
 -- Table structure for table `xtqmd_finder_links_termse`
 --
 
-CREATE TABLE `xtqmd_finder_links_termse` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_termse` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -972,10 +972,10 @@ CREATE TABLE `xtqmd_finder_links_termse` (
 -- Table structure for table `xtqmd_finder_links_termsf`
 --
 
-CREATE TABLE `xtqmd_finder_links_termsf` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `term_id` int(10) UNSIGNED NOT NULL,
-  `weight` float UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_links_termsf` (
+  `link_id` int(10) unsigned NOT NULL,
+  `term_id` int(10) unsigned NOT NULL,
+  `weight` float unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -984,14 +984,14 @@ CREATE TABLE `xtqmd_finder_links_termsf` (
 -- Table structure for table `xtqmd_finder_taxonomy`
 --
 
-CREATE TABLE `xtqmd_finder_taxonomy` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_taxonomy` (
+`id` int(10) unsigned NOT NULL,
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
-  `state` tinyint(1) UNSIGNED NOT NULL DEFAULT '1',
-  `access` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `ordering` tinyint(1) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `state` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `access` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `ordering` tinyint(1) unsigned NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `xtqmd_finder_taxonomy`
@@ -1006,9 +1006,9 @@ INSERT INTO `xtqmd_finder_taxonomy` (`id`, `parent_id`, `title`, `state`, `acces
 -- Table structure for table `xtqmd_finder_taxonomy_map`
 --
 
-CREATE TABLE `xtqmd_finder_taxonomy_map` (
-  `link_id` int(10) UNSIGNED NOT NULL,
-  `node_id` int(10) UNSIGNED NOT NULL
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_taxonomy_map` (
+  `link_id` int(10) unsigned NOT NULL,
+  `node_id` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -1017,13 +1017,13 @@ CREATE TABLE `xtqmd_finder_taxonomy_map` (
 -- Table structure for table `xtqmd_finder_terms`
 --
 
-CREATE TABLE `xtqmd_finder_terms` (
-  `term_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_terms` (
+`term_id` int(10) unsigned NOT NULL,
   `term` varchar(75) NOT NULL,
   `stem` varchar(75) NOT NULL,
-  `common` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `phrase` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `weight` float UNSIGNED NOT NULL DEFAULT '0',
+  `common` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `phrase` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `weight` float unsigned NOT NULL DEFAULT '0',
   `soundex` varchar(75) NOT NULL,
   `links` int(10) NOT NULL DEFAULT '0',
   `language` char(3) NOT NULL DEFAULT ''
@@ -1035,7 +1035,7 @@ CREATE TABLE `xtqmd_finder_terms` (
 -- Table structure for table `xtqmd_finder_terms_common`
 --
 
-CREATE TABLE `xtqmd_finder_terms_common` (
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_terms_common` (
   `term` varchar(75) NOT NULL,
   `language` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1055,7 +1055,7 @@ INSERT INTO `xtqmd_finder_terms_common` (`term`, `language`) VALUES
 ('and', 'en'),
 ('any', 'en'),
 ('are', 'en'),
-('aren\'t', 'en'),
+('aren''t', 'en'),
 ('as', 'en'),
 ('at', 'en'),
 ('be', 'en'),
@@ -1070,7 +1070,7 @@ INSERT INTO `xtqmd_finder_terms_common` (`term`, `language`) VALUES
 ('in', 'en'),
 ('into', 'en'),
 ('is', 'en'),
-('isn\'t', 'en'),
+('isn''t', 'en'),
 ('it', 'en'),
 ('its', 'en'),
 ('me', 'en'),
@@ -1162,13 +1162,13 @@ INSERT INTO `xtqmd_finder_terms_common` (`term`, `language`) VALUES
 -- Table structure for table `xtqmd_finder_tokens`
 --
 
-CREATE TABLE `xtqmd_finder_tokens` (
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_tokens` (
   `term` varchar(75) NOT NULL,
   `stem` varchar(75) NOT NULL,
-  `common` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `phrase` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `weight` float UNSIGNED NOT NULL DEFAULT '1',
-  `context` tinyint(1) UNSIGNED NOT NULL DEFAULT '2',
+  `common` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `phrase` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `weight` float unsigned NOT NULL DEFAULT '1',
+  `context` tinyint(1) unsigned NOT NULL DEFAULT '2',
   `language` char(3) NOT NULL DEFAULT ''
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8mb4;
 
@@ -1178,17 +1178,17 @@ CREATE TABLE `xtqmd_finder_tokens` (
 -- Table structure for table `xtqmd_finder_tokens_aggregate`
 --
 
-CREATE TABLE `xtqmd_finder_tokens_aggregate` (
-  `term_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_tokens_aggregate` (
+  `term_id` int(10) unsigned NOT NULL,
   `map_suffix` char(1) NOT NULL,
   `term` varchar(75) NOT NULL,
   `stem` varchar(75) NOT NULL,
-  `common` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `phrase` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `term_weight` float UNSIGNED NOT NULL,
-  `context` tinyint(1) UNSIGNED NOT NULL DEFAULT '2',
-  `context_weight` float UNSIGNED NOT NULL,
-  `total_weight` float UNSIGNED NOT NULL,
+  `common` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `phrase` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `term_weight` float unsigned NOT NULL,
+  `context` tinyint(1) unsigned NOT NULL DEFAULT '2',
+  `context_weight` float unsigned NOT NULL,
+  `total_weight` float unsigned NOT NULL,
   `language` char(3) NOT NULL DEFAULT ''
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8mb4;
 
@@ -1198,8 +1198,8 @@ CREATE TABLE `xtqmd_finder_tokens_aggregate` (
 -- Table structure for table `xtqmd_finder_types`
 --
 
-CREATE TABLE `xtqmd_finder_types` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_finder_types` (
+`id` int(10) unsigned NOT NULL,
   `title` varchar(100) NOT NULL,
   `mime` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1210,9 +1210,9 @@ CREATE TABLE `xtqmd_finder_types` (
 -- Table structure for table `xtqmd_languages`
 --
 
-CREATE TABLE `xtqmd_languages` (
-  `lang_id` int(11) UNSIGNED NOT NULL,
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_languages` (
+`lang_id` int(11) unsigned NOT NULL,
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0',
   `lang_code` char(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_native` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1223,9 +1223,9 @@ CREATE TABLE `xtqmd_languages` (
   `metadesc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `sitename` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `published` int(11) NOT NULL DEFAULT '0',
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `access` int(10) unsigned NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_languages`
@@ -1241,8 +1241,8 @@ INSERT INTO `xtqmd_languages` (`lang_id`, `asset_id`, `lang_code`, `title`, `tit
 -- Table structure for table `xtqmd_menu`
 --
 
-CREATE TABLE `xtqmd_menu` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_menu` (
+`id` int(11) NOT NULL,
   `menutype` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The type of menu this item belongs to. FK to #__menu_types.menutype',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The display title of the menu item.',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT 'The SEF alias of the menu item.',
@@ -1251,29 +1251,29 @@ CREATE TABLE `xtqmd_menu` (
   `link` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The actually link the menu item refers to.',
   `type` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The type of link: Component, URL, Alias, Separator',
   `published` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'The published state of the menu link.',
-  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'The parent menu item in the menu tree.',
-  `level` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'The relative level in the tree.',
-  `component_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to #__extensions.id',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to #__users.id',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '1' COMMENT 'The parent menu item in the menu tree.',
+  `level` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'The relative level in the tree.',
+  `component_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to #__extensions.id',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to #__users.id',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'The time the menu item was checked out.',
   `browserNav` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'The click behaviour of the link.',
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'The access level required to view the menu item.',
+  `access` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'The access level required to view the menu item.',
   `img` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The image of the menu item.',
-  `template_style_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `template_style_id` int(10) unsigned NOT NULL DEFAULT '0',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'JSON encoded data for the menu item.',
   `lft` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set lft.',
   `rgt` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set rgt.',
-  `home` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Indicates if this menu item is the home or default page.',
+  `home` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Indicates if this menu item is the home or default page.',
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `client_id` tinyint(4) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_menu`
 --
 
 INSERT INTO `xtqmd_menu` (`id`, `menutype`, `title`, `alias`, `note`, `path`, `link`, `type`, `published`, `parent_id`, `level`, `component_id`, `checked_out`, `checked_out_time`, `browserNav`, `access`, `img`, `template_style_id`, `params`, `lft`, `rgt`, `home`, `language`, `client_id`) VALUES
-(1, '', 'Menu_Item_Root', 'root', '', '', '', '', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, '', 0, '', 0, 75, 0, '*', 0),
+(1, '', 'Menu_Item_Root', 'root', '', '', '', '', 1, 0, 0, 0, 0, '0000-00-00 00:00:00', 0, 0, '', 0, '', 0, 87, 0, '*', 0),
 (2, 'main', 'com_banners', 'Banners', '', 'Banners', 'index.php?option=com_banners', 'component', 1, 1, 1, 4, 0, '0000-00-00 00:00:00', 0, 0, 'class:banners', 0, '', 1, 10, 0, '*', 1),
 (3, 'main', 'com_banners', 'Banners', '', 'Banners/Banners', 'index.php?option=com_banners', 'component', 1, 2, 2, 4, 0, '0000-00-00 00:00:00', 0, 0, 'class:banners', 0, '', 2, 3, 0, '*', 1),
 (4, 'main', 'com_banners_categories', 'Categories', '', 'Banners/Categories', 'index.php?option=com_categories&extension=com_banners', 'component', 1, 2, 2, 6, 0, '0000-00-00 00:00:00', 0, 0, 'class:banners-cat', 0, '', 4, 5, 0, '*', 1),
@@ -1294,23 +1294,29 @@ INSERT INTO `xtqmd_menu` (`id`, `menutype`, `title`, `alias`, `note`, `path`, `l
 (20, 'main', 'com_tags', 'Tags', '', 'Tags', 'index.php?option=com_tags', 'component', 1, 1, 1, 29, 0, '0000-00-00 00:00:00', 0, 1, 'class:tags', 0, '', 35, 36, 0, '', 1),
 (21, 'main', 'com_postinstall', 'Post-installation messages', '', 'Post-installation messages', 'index.php?option=com_postinstall', 'component', 1, 1, 1, 32, 0, '0000-00-00 00:00:00', 0, 1, 'class:postinstall', 0, '', 37, 38, 0, '*', 1),
 (22, 'main', 'com_associations', 'Multilingual Associations', '', 'Multilingual Associations', 'index.php?option=com_associations', 'component', 1, 1, 1, 34, 0, '0000-00-00 00:00:00', 0, 0, 'class:associations', 0, '', 39, 40, 0, '*', 1),
-(101, 'main-menu-vn', 'Trang chủ', 'trang-chu', '', 'trang-chu', 'index.php?option=com_content&view=featured', 'component', 1, 1, 1, 22, 596, '2018-05-01 09:57:44', 0, 1, ' ', 0, '{\"featured_categories\":[\"\"],\"layout_type\":\"blog\",\"num_leading_articles\":\"1\",\"num_intro_articles\":\"3\",\"num_columns\":\"3\",\"num_links\":\"0\",\"multi_column_order\":\"1\",\"orderby_pri\":\"\",\"orderby_sec\":\"front\",\"order_date\":\"\",\"show_pagination\":\"2\",\"show_pagination_results\":\"1\",\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"info_block_show_title\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_associations\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_readmore\":\"\",\"show_readmore_title\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_tags\":\"\",\"show_noauth\":\"\",\"show_feed_link\":\"1\",\"feed_summary\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_image_css\":\"\",\"menu_text\":1,\"menu_show\":1,\"page_title\":\"\",\"show_page_heading\":\"1\",\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0,\"ytmenu_class\":\"\",\"ytext_desc\":\"\",\"ytext_cols\":\"1\",\"ytext_width\":\"\",\"ytext_colwidth\":\"\",\"ytext_cssid\":\"\",\"ytext_contenttype\":\"menu\"}', 41, 42, 1, '*', 0),
-(102, 'main', 'COM_VIRTUEMART', 'com-virtuemart', '', 'com-virtuemart', 'index.php?option=com_virtuemart', 'component', 1, 1, 1, 10003, 0, '0000-00-00 00:00:00', 0, 1, '../components/com_virtuemart/assets/images/vmgeneral/menu_icon.png', 0, '{}', 43, 68, 0, '', 1),
-(103, 'main', 'COM_VIRTUEMART_CONTROL_PANEL', 'com-virtuemart-control-panel', '', 'com-virtuemart/com-virtuemart-control-panel', 'index.php?option=com_virtuemart&view=virtuemart', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-report.png', 0, '{}', 44, 45, 0, '', 1),
-(104, 'main', 'COM_VIRTUEMART_MENU_CATEGORIES', 'com-virtuemart-menu-categories', '', 'com-virtuemart/com-virtuemart-menu-categories', 'index.php?option=com_virtuemart&view=category', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-categories.png', 0, '{}', 46, 47, 0, '', 1),
-(105, 'main', 'COM_VIRTUEMART_MENU_PRODUCTS', 'com-virtuemart-menu-products', '', 'com-virtuemart/com-virtuemart-menu-products', 'index.php?option=com_virtuemart&view=product', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-products.png', 0, '{}', 48, 49, 0, '', 1),
-(106, 'main', 'COM_VIRTUEMART_MENU_ORDERS', 'com-virtuemart-menu-orders', '', 'com-virtuemart/com-virtuemart-menu-orders', 'index.php?option=com_virtuemart&view=orders', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-orders.png', 0, '{}', 50, 51, 0, '', 1),
-(107, 'main', 'COM_VIRTUEMART_MENU_REPORT', 'com-virtuemart-menu-report', '', 'com-virtuemart/com-virtuemart-menu-report', 'index.php?option=com_virtuemart&view=report', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-report.png', 0, '{}', 52, 53, 0, '', 1),
-(108, 'main', 'COM_VIRTUEMART_MENU_USERS', 'com-virtuemart-menu-users', '', 'com-virtuemart/com-virtuemart-menu-users', 'index.php?option=com_virtuemart&view=user', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-shoppers.png', 0, '{}', 54, 55, 0, '', 1),
-(109, 'main', 'COM_VIRTUEMART_MENU_MANUFACTURERS', 'com-virtuemart-menu-manufacturers', '', 'com-virtuemart/com-virtuemart-menu-manufacturers', 'index.php?option=com_virtuemart&view=manufacturer', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-manufacturers.png', 0, '{}', 56, 57, 0, '', 1),
-(110, 'main', 'COM_VIRTUEMART_MENU_STORE', 'com-virtuemart-menu-store', '', 'com-virtuemart/com-virtuemart-menu-store', 'index.php?option=com_virtuemart&view=user&task=editshop', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-shop.png', 0, '{}', 58, 59, 0, '', 1),
-(111, 'main', 'COM_VIRTUEMART_MENU_MEDIAFILES', 'com-virtuemart-menu-mediafiles', '', 'com-virtuemart/com-virtuemart-menu-mediafiles', 'index.php?option=com_virtuemart&view=media', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-media.png', 0, '{}', 60, 61, 0, '', 1),
-(112, 'main', 'COM_VIRTUEMART_MENU_SHIPMENTMETHODS', 'com-virtuemart-menu-shipmentmethods', '', 'com-virtuemart/com-virtuemart-menu-shipmentmethods', 'index.php?option=com_virtuemart&view=shipmentmethod', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-shipmentmethods.png', 0, '{}', 62, 63, 0, '', 1),
-(113, 'main', 'COM_VIRTUEMART_MENU_PAYMENTMETHODS', 'com-virtuemart-menu-paymentmethods', '', 'com-virtuemart/com-virtuemart-menu-paymentmethods', 'index.php?option=com_virtuemart&view=paymentmethod', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-paymentmethods.png', 0, '{}', 64, 65, 0, '', 1),
-(114, 'main', 'COM_VIRTUEMART_MENU_CONFIGURATION', 'com-virtuemart-menu-configuration', '', 'com-virtuemart/com-virtuemart-menu-configuration', 'index.php?option=com_virtuemart&view=config', 'component', 1, 102, 2, 10003, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-config.png', 0, '{}', 66, 67, 0, '', 1),
-(115, 'main-menu-vn', 'Giới thiệu', 'gioi-thieu', '', 'gioi-thieu', 'index.php?option=com_content&view=article&id=1', 'component', 1, 1, 1, 22, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"info_block_show_title\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_associations\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_tags\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_image_css\":\"\",\"menu_text\":1,\"menu_show\":1,\"page_title\":\"\",\"show_page_heading\":\"\",\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0,\"ytmenu_class\":\"\",\"ytext_desc\":\"\",\"ytext_cols\":\"1\",\"ytext_width\":\"\",\"ytext_colwidth\":\"\",\"ytext_cssid\":\"\",\"ytext_contenttype\":\"menu\"}', 69, 70, 0, '*', 0),
-(116, 'main-menu-vn', 'TUYỂN DỤNG', 'tuyen-dung', '', 'tuyen-dung', 'index.php?option=com_content&view=category&layout=blog&id=11', 'component', 1, 1, 1, 22, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{\"layout_type\":\"blog\",\"show_category_heading_title_text\":\"\",\"show_category_title\":\"\",\"show_description\":\"\",\"show_description_image\":\"\",\"maxLevel\":\"\",\"show_empty_categories\":\"\",\"show_no_articles\":\"\",\"show_subcat_desc\":\"\",\"show_cat_num_articles\":\"\",\"show_cat_tags\":\"\",\"page_subheading\":\"\",\"num_leading_articles\":\"\",\"num_intro_articles\":\"\",\"num_columns\":\"\",\"num_links\":\"\",\"multi_column_order\":\"\",\"show_subcategory_content\":\"\",\"orderby_pri\":\"\",\"orderby_sec\":\"\",\"order_date\":\"\",\"show_pagination\":\"\",\"show_pagination_results\":\"\",\"show_featured\":\"\",\"article_layout\":\"_:default\",\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"info_block_show_title\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_associations\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_readmore\":\"\",\"show_readmore_title\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_tags\":\"\",\"show_noauth\":\"\",\"show_feed_link\":\"\",\"feed_summary\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_image_css\":\"\",\"menu_text\":1,\"menu_show\":1,\"page_title\":\"\",\"show_page_heading\":\"\",\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0,\"ytmenu_class\":\"\",\"ytext_desc\":\"\",\"ytext_cols\":\"1\",\"ytext_width\":\"\",\"ytext_colwidth\":\"\",\"ytext_cssid\":\"\",\"ytext_contenttype\":\"menu\"}', 71, 72, 0, '*', 0),
-(117, 'main-menu-vn', 'LIÊN HỆ', 'lien-he', '', 'lien-he', 'index.php?option=com_content&view=article&id=3', 'component', 1, 1, 1, 22, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{\"show_title\":\"\",\"link_titles\":\"\",\"show_intro\":\"\",\"info_block_position\":\"\",\"info_block_show_title\":\"\",\"show_category\":\"\",\"link_category\":\"\",\"show_parent_category\":\"\",\"link_parent_category\":\"\",\"show_associations\":\"\",\"show_author\":\"\",\"link_author\":\"\",\"show_create_date\":\"\",\"show_modify_date\":\"\",\"show_publish_date\":\"\",\"show_item_navigation\":\"\",\"show_vote\":\"\",\"show_icons\":\"\",\"show_print_icon\":\"\",\"show_email_icon\":\"\",\"show_hits\":\"\",\"show_tags\":\"\",\"show_noauth\":\"\",\"urls_position\":\"\",\"menu-anchor_title\":\"\",\"menu-anchor_css\":\"\",\"menu_image\":\"\",\"menu_image_css\":\"\",\"menu_text\":1,\"menu_show\":1,\"page_title\":\"\",\"show_page_heading\":\"\",\"page_heading\":\"\",\"pageclass_sfx\":\"\",\"menu-meta_description\":\"\",\"menu-meta_keywords\":\"\",\"robots\":\"\",\"secure\":0,\"ytmenu_class\":\"\",\"ytext_desc\":\"\",\"ytext_cols\":\"1\",\"ytext_width\":\"\",\"ytext_colwidth\":\"\",\"ytext_cssid\":\"\",\"ytext_contenttype\":\"menu\"}', 73, 74, 0, '*', 0);
+(101, 'main-menu-vn', 'Trang chủ', 'trang-chu', '', 'trang-chu', 'index.php?option=com_content&view=featured', 'component', 1, 1, 1, 22, 596, '2018-05-01 09:57:44', 0, 1, ' ', 0, '{"featured_categories":[""],"layout_type":"blog","num_leading_articles":"1","num_intro_articles":"3","num_columns":"3","num_links":"0","multi_column_order":"1","orderby_pri":"","orderby_sec":"front","order_date":"","show_pagination":"2","show_pagination_results":"1","show_title":"","link_titles":"","show_intro":"","info_block_position":"","info_block_show_title":"","show_category":"","link_category":"","show_parent_category":"","link_parent_category":"","show_associations":"","show_author":"","link_author":"","show_create_date":"","show_modify_date":"","show_publish_date":"","show_item_navigation":"","show_vote":"","show_readmore":"","show_readmore_title":"","show_icons":"","show_print_icon":"","show_email_icon":"","show_hits":"","show_tags":"","show_noauth":"","show_feed_link":"1","feed_summary":"","menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"1","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 41, 42, 1, '*', 0),
+(115, 'main-menu-vn', 'Giới thiệu', 'gioi-thieu', '', 'gioi-thieu', 'index.php?option=com_content&view=article&id=1', 'component', 1, 1, 1, 22, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"show_title":"","link_titles":"","show_intro":"","info_block_position":"","info_block_show_title":"","show_category":"","link_category":"","show_parent_category":"","link_parent_category":"","show_associations":"","show_author":"","link_author":"","show_create_date":"","show_modify_date":"","show_publish_date":"","show_item_navigation":"","show_vote":"","show_icons":"","show_print_icon":"","show_email_icon":"","show_hits":"","show_tags":"","show_noauth":"","urls_position":"","menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 43, 44, 0, '*', 0),
+(116, 'main-menu-vn', 'TUYỂN DỤNG', 'tuyen-dung', '', 'tuyen-dung', 'index.php?option=com_content&view=category&layout=blog&id=11', 'component', 1, 1, 1, 22, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"layout_type":"blog","show_category_heading_title_text":"","show_category_title":"","show_description":"","show_description_image":"","maxLevel":"","show_empty_categories":"","show_no_articles":"","show_subcat_desc":"","show_cat_num_articles":"","show_cat_tags":"","page_subheading":"","num_leading_articles":"","num_intro_articles":"","num_columns":"","num_links":"","multi_column_order":"","show_subcategory_content":"","orderby_pri":"","orderby_sec":"","order_date":"","show_pagination":"","show_pagination_results":"","show_featured":"","article_layout":"_:default","show_title":"","link_titles":"","show_intro":"","info_block_position":"","info_block_show_title":"","show_category":"","link_category":"","show_parent_category":"","link_parent_category":"","show_associations":"","show_author":"","link_author":"","show_create_date":"","show_modify_date":"","show_publish_date":"","show_item_navigation":"","show_vote":"","show_readmore":"","show_readmore_title":"","show_icons":"","show_print_icon":"","show_email_icon":"","show_hits":"","show_tags":"","show_noauth":"","show_feed_link":"","feed_summary":"","menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 45, 46, 0, '*', 0),
+(117, 'main-menu-vn', 'LIÊN HỆ', 'lien-he', '', 'lien-he', 'index.php?option=com_content&view=article&id=3', 'component', 1, 1, 1, 22, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"show_title":"","link_titles":"","show_intro":"","info_block_position":"","info_block_show_title":"","show_category":"","link_category":"","show_parent_category":"","link_parent_category":"","show_associations":"","show_author":"","link_author":"","show_create_date":"","show_modify_date":"","show_publish_date":"","show_item_navigation":"","show_vote":"","show_icons":"","show_print_icon":"","show_email_icon":"","show_hits":"","show_tags":"","show_noauth":"","urls_position":"","menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 47, 48, 0, '*', 0),
+(118, 'main', 'COM_VIRTUEMART', 'comvirtuemart', '', 'comvirtuemart', 'index.php?option=com_virtuemart', 'component', 1, 1, 1, 10009, 0, '0000-00-00 00:00:00', 0, 1, '../components/com_virtuemart/assets/images/vmgeneral/menu_icon.png', 0, '{}', 49, 72, 0, '', 1),
+(119, 'main', 'COM_VIRTUEMART_MENU_CATEGORIES', 'comvirtuemartmenucategories', '', 'comvirtuemart/comvirtuemartmenucategories', 'index.php?option=com_virtuemart&view=category', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-categories.png', 0, '{}', 50, 51, 0, '', 1),
+(120, 'main', 'COM_VIRTUEMART_MENU_PRODUCTS', 'comvirtuemartmenuproducts', '', 'comvirtuemart/comvirtuemartmenuproducts', 'index.php?option=com_virtuemart&view=product', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-products.png', 0, '{}', 52, 53, 0, '', 1),
+(121, 'main', 'COM_VIRTUEMART_MENU_ORDERS', 'comvirtuemartmenuorders', '', 'comvirtuemart/comvirtuemartmenuorders', 'index.php?option=com_virtuemart&view=orders', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-orders.png', 0, '{}', 54, 55, 0, '', 1),
+(122, 'main', 'COM_VIRTUEMART_MENU_REPORT', 'comvirtuemartmenureport', '', 'comvirtuemart/comvirtuemartmenureport', 'index.php?option=com_virtuemart&view=report', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-report.png', 0, '{}', 56, 57, 0, '', 1),
+(123, 'main', 'COM_VIRTUEMART_MENU_USERS', 'comvirtuemartmenuusers', '', 'comvirtuemart/comvirtuemartmenuusers', 'index.php?option=com_virtuemart&view=user', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-shoppers.png', 0, '{}', 58, 59, 0, '', 1),
+(124, 'main', 'COM_VIRTUEMART_MENU_MANUFACTURERS', 'comvirtuemartmenumanufacturers', '', 'comvirtuemart/comvirtuemartmenumanufacturers', 'index.php?option=com_virtuemart&view=manufacturer', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-manufacturers.png', 0, '{}', 60, 61, 0, '', 1),
+(125, 'main', 'COM_VIRTUEMART_MENU_STORE', 'comvirtuemartmenustore', '', 'comvirtuemart/comvirtuemartmenustore', 'index.php?option=com_virtuemart&view=user&task=editshop', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-shop.png', 0, '{}', 62, 63, 0, '', 1),
+(126, 'main', 'COM_VIRTUEMART_MENU_MEDIAFILES', 'comvirtuemartmenumediafiles', '', 'comvirtuemart/comvirtuemartmenumediafiles', 'index.php?option=com_virtuemart&view=media', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-media.png', 0, '{}', 64, 65, 0, '', 1),
+(127, 'main', 'COM_VIRTUEMART_MENU_SHIPMENTMETHODS', 'comvirtuemartmenushipmentmethods', '', 'comvirtuemart/comvirtuemartmenushipmentmethods', 'index.php?option=com_virtuemart&view=shipmentmethod', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-shipmentmethods.png', 0, '{}', 66, 67, 0, '', 1),
+(128, 'main', 'COM_VIRTUEMART_MENU_PAYMENTMETHODS', 'comvirtuemartmenupaymentmethods', '', 'comvirtuemart/comvirtuemartmenupaymentmethods', 'index.php?option=com_virtuemart&view=paymentmethod', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-paymentmethods.png', 0, '{}', 68, 69, 0, '', 1),
+(129, 'main', 'COM_VIRTUEMART_MENU_CONFIGURATION', 'comvirtuemartmenuconfiguration', '', 'comvirtuemart/comvirtuemartmenuconfiguration', 'index.php?option=com_virtuemart&view=config', 'component', 1, 118, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, 'components/com_virtuemart/assets/images/icon_16/menu-icon16-config.png', 0, '{}', 70, 71, 0, '', 1),
+(130, 'main-menu-vn', 'Shop', 'shop', '', 'shop', 'index.php?option=com_virtuemart&view=category&virtuemart_category_id=0&virtuemart_manufacturer_id=0&categorylayout=0&showcategory=1&showproducts=1&productsublayout=0', 'component', 1, 1, 1, 10009, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 73, 74, 0, '*', 0),
+(131, 'menu-categories', 'Áo phông', 'ao-phong', '', 'ao-phong', 'index.php?option=com_virtuemart&view=category&virtuemart_category_id=4&virtuemart_manufacturer_id=0&categorylayout=0&showcategory=1&showproducts=1&productsublayout=0', 'component', 1, 1, 1, 10009, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 75, 80, 0, '*', 0),
+(132, 'menu-categories', 'Sơ mi', 'so-mi', '', 'so-mi', 'index.php?option=com_virtuemart&view=category&virtuemart_category_id=1&virtuemart_manufacturer_id=0&categorylayout=0&showcategory=1&showproducts=1&productsublayout=0', 'component', 1, 1, 1, 10009, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 81, 86, 0, '*', 0),
+(133, 'menu-categories', 'Nam', 'nam', '', 'ao-phong/nam', 'index.php?option=com_virtuemart&view=category&virtuemart_category_id=5&virtuemart_manufacturer_id=0&categorylayout=0&showcategory=1&showproducts=1&productsublayout=0', 'component', 1, 131, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 76, 77, 0, '*', 0),
+(134, 'menu-categories', 'Nữ', 'nu', '', 'ao-phong/nu', 'index.php?option=com_virtuemart&view=category&virtuemart_category_id=6&virtuemart_manufacturer_id=0&categorylayout=0&showcategory=1&showproducts=1&productsublayout=0', 'component', 1, 131, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 78, 79, 0, '*', 0),
+(135, 'menu-categories', 'Nam', 'nam1', '', 'so-mi/nam1', 'index.php?option=com_virtuemart&view=category&virtuemart_category_id=0&virtuemart_manufacturer_id=0&categorylayout=0&showcategory=1&showproducts=1&productsublayout=0', 'component', 1, 132, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 82, 83, 0, '*', 0),
+(136, 'menu-categories', 'Nữ', 'nu-1', '', 'so-mi/nu-1', 'index.php?option=com_virtuemart&view=category&virtuemart_category_id=3&virtuemart_manufacturer_id=0&categorylayout=0&showcategory=1&showproducts=1&productsublayout=0', 'component', 1, 132, 2, 10009, 0, '0000-00-00 00:00:00', 0, 1, ' ', 0, '{"menu-anchor_title":"","menu-anchor_css":"","menu_image":"","menu_image_css":"","menu_text":1,"menu_show":1,"page_title":"","show_page_heading":"","page_heading":"","pageclass_sfx":"","menu-meta_description":"","menu-meta_keywords":"","robots":"","secure":0,"ytmenu_class":"","ytext_desc":"","ytext_cols":"1","ytext_width":"","ytext_colwidth":"","ytext_cssid":"","ytext_contenttype":"menu"}', 84, 85, 0, '*', 0);
 
 -- --------------------------------------------------------
 
@@ -1318,14 +1324,14 @@ INSERT INTO `xtqmd_menu` (`id`, `menutype`, `title`, `alias`, `note`, `path`, `l
 -- Table structure for table `xtqmd_menu_types`
 --
 
-CREATE TABLE `xtqmd_menu_types` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_menu_types` (
+`id` int(10) unsigned NOT NULL,
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0',
   `menutype` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(48) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `client_id` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_menu_types`
@@ -1333,7 +1339,8 @@ CREATE TABLE `xtqmd_menu_types` (
 
 INSERT INTO `xtqmd_menu_types` (`id`, `asset_id`, `menutype`, `title`, `description`, `client_id`) VALUES
 (1, 0, 'mainmenu', 'Main Menu', 'The main menu for the site', 0),
-(2, 60, 'main-menu-vn', 'Main menu (VN)', '', 0);
+(2, 60, 'main-menu-vn', 'Main menu (VN)', '', 0),
+(3, 81, 'menu-categories', 'Menu Categories', 'Menu Categories', 0);
 
 -- --------------------------------------------------------
 
@@ -1341,14 +1348,14 @@ INSERT INTO `xtqmd_menu_types` (`id`, `asset_id`, `menutype`, `title`, `descript
 -- Table structure for table `xtqmd_messages`
 --
 
-CREATE TABLE `xtqmd_messages` (
-  `message_id` int(10) UNSIGNED NOT NULL,
-  `user_id_from` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id_to` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `folder_id` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_messages` (
+`message_id` int(10) unsigned NOT NULL,
+  `user_id_from` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_id_to` int(10) unsigned NOT NULL DEFAULT '0',
+  `folder_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `date_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `state` tinyint(1) NOT NULL DEFAULT '0',
-  `priority` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `priority` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1359,8 +1366,8 @@ CREATE TABLE `xtqmd_messages` (
 -- Table structure for table `xtqmd_messages_cfg`
 --
 
-CREATE TABLE `xtqmd_messages_cfg` (
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_messages_cfg` (
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `cfg_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `cfg_value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1371,57 +1378,58 @@ CREATE TABLE `xtqmd_messages_cfg` (
 -- Table structure for table `xtqmd_modules`
 --
 
-CREATE TABLE `xtqmd_modules` (
-  `id` int(11) NOT NULL,
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+CREATE TABLE IF NOT EXISTS `xtqmd_modules` (
+`id` int(11) NOT NULL,
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `ordering` int(11) NOT NULL DEFAULT '0',
   `position` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `published` tinyint(1) NOT NULL DEFAULT '0',
   `module` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `showtitle` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `access` int(10) unsigned NOT NULL DEFAULT '0',
+  `showtitle` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `client_id` tinyint(4) NOT NULL DEFAULT '0',
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_modules`
 --
 
 INSERT INTO `xtqmd_modules` (`id`, `asset_id`, `title`, `note`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `publish_up`, `publish_down`, `published`, `module`, `access`, `showtitle`, `params`, `client_id`, `language`) VALUES
-(1, 39, 'Main Menu', '', '', 1, 'position-7', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, 1, '{\"menutype\":\"mainmenu\",\"startLevel\":\"0\",\"endLevel\":\"0\",\"showAllChildren\":\"1\",\"tag_id\":\"\",\"class_sfx\":\"\",\"window_open\":\"\",\"layout\":\"\",\"moduleclass_sfx\":\"_menu\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"itemid\"}', 0, '*'),
+(1, 39, 'Main Menu', '', '', 1, 'position-7', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 1, 1, '{"menutype":"mainmenu","startLevel":"0","endLevel":"0","showAllChildren":"1","tag_id":"","class_sfx":"","window_open":"","layout":"","moduleclass_sfx":"_menu","cache":"1","cache_time":"900","cachemode":"itemid"}', 0, '*'),
 (2, 40, 'Login', '', '', 1, 'login', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, 1, '', 1, '*'),
-(3, 41, 'Popular Articles', '', '', 3, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 3, 1, '{\"count\":\"5\",\"catid\":\"\",\"user_id\":\"0\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\"}', 1, '*'),
-(4, 42, 'Recently Added Articles', '', '', 4, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 3, 1, '{\"count\":\"5\",\"ordering\":\"c_dsc\",\"catid\":\"\",\"user_id\":\"0\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\"}', 1, '*'),
+(3, 41, 'Popular Articles', '', '', 3, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_popular', 3, 1, '{"count":"5","catid":"","user_id":"0","layout":"_:default","moduleclass_sfx":"","cache":"0"}', 1, '*'),
+(4, 42, 'Recently Added Articles', '', '', 4, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_latest', 3, 1, '{"count":"5","ordering":"c_dsc","catid":"","user_id":"0","layout":"_:default","moduleclass_sfx":"","cache":"0"}', 1, '*'),
 (8, 43, 'Toolbar', '', '', 1, 'toolbar', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_toolbar', 3, 1, '', 1, '*'),
 (9, 44, 'Quick Icons', '', '', 1, 'icon', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_quickicon', 3, 1, '', 1, '*'),
-(10, 45, 'Logged-in Users', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 3, 1, '{\"count\":\"5\",\"name\":\"1\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\"}', 1, '*'),
-(12, 46, 'Admin Menu', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 3, 1, '{\"layout\":\"\",\"moduleclass_sfx\":\"\",\"shownew\":\"1\",\"showhelp\":\"1\",\"cache\":\"0\"}', 1, '*'),
+(10, 45, 'Logged-in Users', '', '', 2, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_logged', 3, 1, '{"count":"5","name":"1","layout":"_:default","moduleclass_sfx":"","cache":"0"}', 1, '*'),
+(12, 46, 'Admin Menu', '', '', 1, 'menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_menu', 3, 1, '{"layout":"","moduleclass_sfx":"","shownew":"1","showhelp":"1","cache":"0"}', 1, '*'),
 (13, 47, 'Admin Submenu', '', '', 1, 'submenu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_submenu', 3, 1, '', 1, '*'),
 (14, 48, 'User Status', '', '', 2, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_status', 3, 1, '', 1, '*'),
 (15, 49, 'Title', '', '', 1, 'title', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_title', 3, 1, '', 1, '*'),
-(16, 50, 'Login Form', '', '', 7, 'position-7', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, 1, '{\"greeting\":\"1\",\"name\":\"0\"}', 0, '*'),
-(17, 51, 'Breadcrumbs', '', '', 1, 'position-2', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, 1, '{\"moduleclass_sfx\":\"\",\"showHome\":\"1\",\"homeText\":\"\",\"showComponent\":\"1\",\"separator\":\"\",\"cache\":\"0\",\"cache_time\":\"0\",\"cachemode\":\"itemid\"}', 0, '*'),
-(79, 52, 'Multilanguage status', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'mod_multilangstatus', 3, 1, '{\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\"}', 1, '*'),
-(86, 53, 'Joomla Version', '', '', 1, 'footer', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_version', 3, 1, '{\"format\":\"short\",\"product\":\"1\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"0\"}', 1, '*'),
+(16, 50, 'Login Form', '', '', 7, 'position-7', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_login', 1, 1, '{"greeting":"1","name":"0"}', 0, '*'),
+(17, 51, 'Breadcrumbs', '', '', 1, 'breadcrumb', 596, '2018-05-02 18:05:41', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_breadcrumbs', 1, 0, '{"showHere":"0","showHome":"1","homeText":"","showLast":"1","separator":"","layout":"_:default","moduleclass_sfx":"","cache":"0","cache_time":"0","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(79, 52, 'Multilanguage status', '', '', 1, 'status', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'mod_multilangstatus', 3, 1, '{"layout":"_:default","moduleclass_sfx":"","cache":"0"}', 1, '*'),
+(86, 53, 'Joomla Version', '', '', 1, 'footer', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_version', 3, 1, '{"format":"short","product":"1","layout":"_:default","moduleclass_sfx":"","cache":"0"}', 1, '*'),
 (87, 55, 'Sample Data', '', '', 0, 'cpanel', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_sampledata', 6, 1, '{}', 1, '*'),
-(88, 65, 'THÔNG TIN CÔNG TY', '', '<p><span style=\"color: #ff0000;\">GROUP 7 - SHOP BÁN QUẦN ÁO ONLINE HÀNG ĐẦU VIỆT NAM</span></p>\r\n<p>Copyright © 2018 - 2018 Công ty cổ phần thương mại Group 7</p>\r\n<p>Giấy chứng nhận ĐKKD số: 0302707087 do Sở KH &amp; ĐT TP Hải Phòng cấp lần đầu ngày 13/02/2018</p>\r\n<p>Địa chỉ: Phòng 311 Nhà A4, Trường ĐH Hàng Hải Việt Nam</p>', 1, 'bottom6', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(89, 66, 'HỖ TRỢ KHÁCH HÀNG', '', '<p><a href=\"index.php?option=com_content&amp;view=article&amp;id=2&amp;catid=13\">Hướng dẫn mua hàng</a></p>\r\n<p>Hình thức thanh toán</p>\r\n<p>Chăm sóc khách hàng</p>\r\n<p>Đổi - trả sản phẩm</p>\r\n<p>Tra cứu thẻ thành viên</p>', 1, 'bottom7', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(90, 69, 'THEO DÕI CHÚNG TÔI', '', '<p>[yt_social_icon type=\"facebook\" style=\"min\" color=\"no\"]http://www.facebook.com/SmartAddons.page[/yt_social_icon] [yt_social_icon type=\"twitter\" style=\"min\" color=\"no\"]https://twitter.com/smartaddons[/yt_social_icon] [yt_social_icon type=\"google-plus\" style=\"min\" color=\"no\"]https://plus.google.com/u/0/103151395684525745793/posts [/yt_social_icon] [yt_social_icon type=\"pinterest\" style=\"min\" color=\"no\"]http://www.pinterest.com/in/smartaddons[/yt_social_icon] [yt_social_icon type=\"rss\" style=\"min\" color=\"no\"]http://www.rss.com/in/smartaddons[/yt_social_icon]</p>', 1, 'bottom8', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"1\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(91, 70, 'CHÍNH SÁCH', '', '<ol>\r\n<li>Getting Started</li>\r\n<li>Dùng thử sản phẩm</li>\r\n<li>Khu vực giao nhận</li>\r\n<li>Chính sách thẻ khách hàng</li>\r\n<li>Trả góp</li>\r\n</ol>', 1, 'bottom9', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(92, 71, 'Đối tác', '', '<p>[yt_carousel source=\"media: images/doitac/logo-footer_01.jpg, images/doitac/logo-footer_02.jpg, images/doitac/logo-footer_03.jpg, images/doitac/logo-footer_04.jpg, images/doitac/logo-footer_05.jpg, images/doitac/logo-footer_06.jpg, images/doitac/logo-footer_07.jpg, images/doitac/logo-footer_08.jpg, images/doitac/logo-footer_09.jpg\" style=\"1\" limit=\"8\" items=\"8\" margin=\"30\" image=\"yes\" image_height=\"45\" image_width=\"78\" title=\"yes\" title_link=\"yes\" title_limit=\"\" intro_text=\"no\" intro_text_limit=\"60\" color=\"#FFFFFF\" background=\"$fff\" title_color=\"#FFFFFF\" arrows=\"yes\" arrow position=\"default\" pagination=\"no\" autoplay=\"yes\" hoverpause=\"yes\" lazyload=\"yes\" loop=\"yes\" delay=\"1\" speed=\"1\"] </p>', 1, 'bottom10', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"1\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(93, 72, 'Câu hỏi thường gặp', '', '<p> </p>\r\n<p> </p>\r\n<p>  Mua hàng như thế nào ?</p>\r\n<p>  Hình thức thanh toán ?</p>\r\n<p>  Bảo hành như thế nào?</p>\r\n<p>  Chính sách khuyến mãi với khách hàng quen?</p>', 1, 'left', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(94, 73, 'Slideshow', '', '<p>[yt_carousel source=\"media: images/slideshow/banner_1.jpg, images/slideshow/banner_2.jpg, images/slideshow/banner_3.jpg, images/slideshow/banner_4.jpg, images/slideshow/banner_5.jpg\" style=\"1\" limit=\"4\" items=\"1\" margin=\"0\" image=\"yes\" image_height=\"433\" image_width=\"870\" title=\"yes\" title_link=\"yes\" title_limit=\"\" intro_text=\"no\" intro_text_limit=\"60\" color=\"#FFFFFF\" background=\"$fff\" title_color=\"#FFFFFF\" arrows=\"yes\" arrow position=\"default\" pagination=\"no\" autoplay=\"yes\" hoverpause=\"yes\" lazyload=\"yes\" loop=\"yes\" delay=\"1\" speed=\"0.35\"] </p>', 1, 'slideshow', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 0, '{\"prepare_content\":\"1\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(95, 74, 'Group 7 - Categories', '', '<p>Quần áo nam</p>\r\n<p>Quần áo nữ</p>\r\n<p>Phụ kiện thời trang</p>', 1, 'left', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*'),
-(97, 76, 'Hotline', '', '<div class=\"phone-contact\"><img src=\"images/hot-line-icon.png\" alt=\"\" />\r\n<div class=\"inner-info\"><strong>HOTLINE:</strong>\r\n<p>(801) 2345 - 6789</p>\r\n</div>\r\n</div>', 1, 'header-right', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{\"prepare_content\":\"0\",\"backgroundimage\":\"\",\"layout\":\"_:default\",\"moduleclass_sfx\":\"\",\"cache\":\"1\",\"cache_time\":\"900\",\"cachemode\":\"static\",\"module_tag\":\"div\",\"bootstrap_size\":\"0\",\"header_tag\":\"h3\",\"header_class\":\"\",\"style\":\"0\"}', 0, '*');
+(88, 65, 'THÔNG TIN CÔNG TY', '', '<p><span style="color: #ff0000;">GROUP 7 - SHOP BÁN QUẦN ÁO ONLINE HÀNG ĐẦU VIỆT NAM</span></p>\r\n<p>Copyright © 2018 - 2018 Công ty cổ phần thương mại Group 7</p>\r\n<p>Giấy chứng nhận ĐKKD số: 0302707087 do Sở KH &amp; ĐT TP Hải Phòng cấp lần đầu ngày 13/02/2018</p>\r\n<p>Địa chỉ: Phòng 311 Nhà A4, Trường ĐH Hàng Hải Việt Nam</p>', 1, 'bottom6', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{"prepare_content":"0","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(89, 66, 'HỖ TRỢ KHÁCH HÀNG', '', '<p><a href="index.php?option=com_content&amp;view=article&amp;id=2&amp;catid=13">Hướng dẫn mua hàng</a></p>\r\n<p>Hình thức thanh toán</p>\r\n<p>Chăm sóc khách hàng</p>\r\n<p>Đổi - trả sản phẩm</p>\r\n<p>Tra cứu thẻ thành viên</p>', 1, 'bottom7', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{"prepare_content":"0","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(90, 69, 'THEO DÕI CHÚNG TÔI', '', '<p>[yt_social_icon type="facebook" style="min" color="no"]http://www.facebook.com/SmartAddons.page[/yt_social_icon] [yt_social_icon type="twitter" style="min" color="no"]https://twitter.com/smartaddons[/yt_social_icon] [yt_social_icon type="google-plus" style="min" color="no"]https://plus.google.com/u/0/103151395684525745793/posts [/yt_social_icon] [yt_social_icon type="pinterest" style="min" color="no"]http://www.pinterest.com/in/smartaddons[/yt_social_icon] [yt_social_icon type="rss" style="min" color="no"]http://www.rss.com/in/smartaddons[/yt_social_icon]</p>', 1, 'bottom8', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{"prepare_content":"1","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(91, 70, 'CHÍNH SÁCH', '', '<ol>\r\n<li>Getting Started</li>\r\n<li>Dùng thử sản phẩm</li>\r\n<li>Khu vực giao nhận</li>\r\n<li>Chính sách thẻ khách hàng</li>\r\n<li>Trả góp</li>\r\n</ol>', 1, 'bottom9', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{"prepare_content":"0","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(92, 71, 'Đối tác', '', '<p>[yt_carousel source="media: images/doitac/logo-footer_01.jpg, images/doitac/logo-footer_02.jpg, images/doitac/logo-footer_03.jpg, images/doitac/logo-footer_04.jpg, images/doitac/logo-footer_05.jpg, images/doitac/logo-footer_06.jpg, images/doitac/logo-footer_07.jpg, images/doitac/logo-footer_08.jpg, images/doitac/logo-footer_09.jpg" style="1" limit="8" items="8" margin="30" image="yes" image_height="45" image_width="78" title="yes" title_link="yes" title_limit="" intro_text="no" intro_text_limit="60" color="#FFFFFF" background="$fff" title_color="#FFFFFF" arrows="yes" arrow position="default" pagination="no" autoplay="yes" hoverpause="yes" lazyload="yes" loop="yes" delay="1" speed="1"] </p>', 1, 'bottom10', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{"prepare_content":"1","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(93, 72, 'Câu hỏi thường gặp', '', '<p> </p>\r\n<p>  Mua hàng như thế nào ?</p>\r\n<p>  Hình thức thanh toán ?</p>\r\n<p>  Bảo hành như thế nào?</p>\r\n<p>  Chính sách khuyến mãi với khách hàng quen?</p>', 1, 'left', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{"prepare_content":"0","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(94, 73, 'Slideshow', '', '<p>[yt_carousel source="media: images/slideshow/banner_1.jpg, images/slideshow/banner_2.jpg, images/slideshow/banner_3.jpg, images/slideshow/banner_4.jpg, images/slideshow/banner_5.jpg" style="1" limit="4" items="1" margin="0" image="yes" image_height="433" image_width="870" title="yes" title_link="yes" title_limit="" intro_text="no" intro_text_limit="60" color="#FFFFFF" background="$fff" title_color="#FFFFFF" arrows="yes" arrow position="default" pagination="no" autoplay="yes" hoverpause="yes" lazyload="yes" loop="yes" delay="1" speed="0.35"] </p>', 1, 'slideshow', 596, '2018-05-02 18:55:17', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 0, '{"prepare_content":"1","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(95, 74, 'Group 7 - Categories', '', '<p>Quần áo nam</p>\r\n<p>Quần áo nữ</p>\r\n<p>Phụ kiện thời trang</p>', 1, 'left', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'mod_custom', 1, 1, '{"prepare_content":"0","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(97, 76, 'Hotline', '', '<div class="phone-contact"><img src="images/hot-line-icon.png" alt="" />\r\n<div class="inner-info"><strong>HOTLINE:</strong>\r\n<p>(801) 2345 - 6789</p>\r\n</div>\r\n</div>', 1, 'header-right', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_custom', 1, 1, '{"prepare_content":"0","backgroundimage":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"static","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*'),
+(99, 80, 'Group 7 - Categories', '', '', 1, 'vertical-menu', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 'mod_sj_flat_menu', 1, 1, '{"moduleclass_sfx":"all-categories","menutype":"menu-categories","startlevel":"1","endlevel":"all","type_menu":"flyout","stype_layout":"vertical","event":"mouseover","duration":"300","showsub":"true","menu_direction":"left","link_target":"_self","layout":"sj_maxshop:allcategory","include_jquery":"0","pretext":"","posttext":"","owncache":"1","cache_time":"900","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}', 0, '*');
 
 -- --------------------------------------------------------
 
@@ -1429,7 +1437,7 @@ INSERT INTO `xtqmd_modules` (`id`, `asset_id`, `title`, `note`, `content`, `orde
 -- Table structure for table `xtqmd_modules_menu`
 --
 
-CREATE TABLE `xtqmd_modules_menu` (
+CREATE TABLE IF NOT EXISTS `xtqmd_modules_menu` (
   `moduleid` int(11) NOT NULL DEFAULT '0',
   `menuid` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1462,10 +1470,21 @@ INSERT INTO `xtqmd_modules_menu` (`moduleid`, `menuid`) VALUES
 (90, 0),
 (91, 0),
 (92, 0),
-(93, 0),
+(93, 101),
+(93, 115),
+(93, 116),
+(93, 117),
+(93, 130),
+(93, 131),
+(93, 132),
+(93, 133),
+(93, 134),
+(93, 135),
+(93, 136),
 (94, 101),
 (95, 0),
-(97, 0);
+(97, 0),
+(99, 101);
 
 -- --------------------------------------------------------
 
@@ -1473,27 +1492,27 @@ INSERT INTO `xtqmd_modules_menu` (`moduleid`, `menuid`) VALUES
 -- Table structure for table `xtqmd_newsfeeds`
 --
 
-CREATE TABLE `xtqmd_newsfeeds` (
+CREATE TABLE IF NOT EXISTS `xtqmd_newsfeeds` (
   `catid` int(11) NOT NULL DEFAULT '0',
-  `id` int(10) UNSIGNED NOT NULL,
+`id` int(10) unsigned NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `link` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `published` tinyint(1) NOT NULL DEFAULT '0',
-  `numarticles` int(10) UNSIGNED NOT NULL DEFAULT '1',
-  `cache_time` int(10) UNSIGNED NOT NULL DEFAULT '3600',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `numarticles` int(10) unsigned NOT NULL DEFAULT '1',
+  `cache_time` int(10) unsigned NOT NULL DEFAULT '3600',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `rtl` tinyint(4) NOT NULL DEFAULT '0',
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `access` int(10) unsigned NOT NULL DEFAULT '0',
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_by` int(10) unsigned NOT NULL DEFAULT '0',
   `created_by_alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_by` int(10) unsigned NOT NULL DEFAULT '0',
   `metakey` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `metadesc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `metadata` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1501,8 +1520,8 @@ CREATE TABLE `xtqmd_newsfeeds` (
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` int(10) UNSIGNED NOT NULL DEFAULT '1',
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `version` int(10) unsigned NOT NULL DEFAULT '1',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0',
   `images` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1512,8 +1531,8 @@ CREATE TABLE `xtqmd_newsfeeds` (
 -- Table structure for table `xtqmd_overrider`
 --
 
-CREATE TABLE `xtqmd_overrider` (
-  `id` int(10) NOT NULL COMMENT 'Primary Key',
+CREATE TABLE IF NOT EXISTS `xtqmd_overrider` (
+`id` int(10) NOT NULL COMMENT 'Primary Key',
   `constant` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `string` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
@@ -1525,8 +1544,8 @@ CREATE TABLE `xtqmd_overrider` (
 -- Table structure for table `xtqmd_postinstall_messages`
 --
 
-CREATE TABLE `xtqmd_postinstall_messages` (
-  `postinstall_message_id` bigint(20) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_postinstall_messages` (
+`postinstall_message_id` bigint(20) unsigned NOT NULL,
   `extension_id` bigint(20) NOT NULL DEFAULT '700' COMMENT 'FK to #__extensions',
   `title_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Lang key for the title',
   `description_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Lang key for description',
@@ -1540,7 +1559,7 @@ CREATE TABLE `xtqmd_postinstall_messages` (
   `condition_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Display condition method, must return boolean',
   `version_introduced` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '3.2.0' COMMENT 'Version when this message was introduced',
   `enabled` tinyint(3) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_postinstall_messages`
@@ -1560,13 +1579,13 @@ INSERT INTO `xtqmd_postinstall_messages` (`postinstall_message_id`, `extension_i
 -- Table structure for table `xtqmd_redirect_links`
 --
 
-CREATE TABLE `xtqmd_redirect_links` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_redirect_links` (
+`id` int(10) unsigned NOT NULL,
   `old_url` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL,
   `new_url` varchar(2048) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `referer` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL,
   `comment` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0',
   `published` tinyint(4) NOT NULL,
   `created_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -1579,7 +1598,7 @@ CREATE TABLE `xtqmd_redirect_links` (
 -- Table structure for table `xtqmd_schemas`
 --
 
-CREATE TABLE `xtqmd_schemas` (
+CREATE TABLE IF NOT EXISTS `xtqmd_schemas` (
   `extension_id` int(11) NOT NULL,
   `version_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1597,10 +1616,10 @@ INSERT INTO `xtqmd_schemas` (`extension_id`, `version_id`) VALUES
 -- Table structure for table `xtqmd_session`
 --
 
-CREATE TABLE `xtqmd_session` (
+CREATE TABLE IF NOT EXISTS `xtqmd_session` (
   `session_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `client_id` tinyint(3) UNSIGNED DEFAULT NULL,
-  `guest` tinyint(4) UNSIGNED DEFAULT '1',
+  `client_id` tinyint(3) unsigned DEFAULT NULL,
+  `guest` tinyint(4) unsigned DEFAULT '1',
   `time` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `data` mediumtext COLLATE utf8mb4_unicode_ci,
   `userid` int(11) DEFAULT '0',
@@ -1612,22 +1631,8 @@ CREATE TABLE `xtqmd_session` (
 --
 
 INSERT INTO `xtqmd_session` (`session_id`, `client_id`, `guest`, `time`, `data`, `userid`, `username`) VALUES
-('1d2ivdp2sj4rvglgqi1n4jtnam', 0, 1, '1525079050', 'joomla|s:948:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjI6e3M6NzoiY291bnRlciI7aToyMjtzOjU6InRpbWVyIjtPOjg6InN0ZENsYXNzIjozOntzOjU6InN0YXJ0IjtpOjE1MjUwNzY2ODg7czo0OiJsYXN0IjtpOjE1MjUwNzkwNDg7czozOiJub3ciO2k6MTUyNTA3OTA1MDt9fXM6ODoicmVnaXN0cnkiO086MjQ6Ikpvb21sYVxSZWdpc3RyeVxSZWdpc3RyeSI6Mzp7czo3OiIAKgBkYXRhIjtPOjg6InN0ZENsYXNzIjowOnt9czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjIwOiJKb29tbGFcQ01TXFVzZXJcVXNlciI6MTp7czoyOiJpZCI7aTowO31zOjEwOiJjb21fbWFpbHRvIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6ImxpbmtzIjthOjE6e3M6NDA6IjAxNGI4MjYyZTk4ODhkN2QxNTY1NDQ1MGRjM2IzZTk0MWY5N2M5MzciO086ODoic3RkQ2xhc3MiOjI6e3M6NDoibGluayI7czo0NDoiaHR0cDovL2xvY2FsaG9zdC9qb29tbGEvaW5kZXgucGhwL2dpb2ktdGhpZXUiO3M6NjoiZXhwaXJ5IjtpOjE1MjUwNzkwNTA7fX19fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=\";', 0, ''),
-('55ip9a4lvv423kidf5gr2o2605', 0, 1, '1525102306', 'joomla|s:664:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjI6e3M6NzoiY291bnRlciI7aToyO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTEwMjE0MTtzOjQ6Imxhc3QiO2k6MTUyNTEwMjE0MTtzOjM6Im5vdyI7aToxNTI1MTAyMzA1O319czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjA6e31zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtpOjA7fX19czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9\";', 0, ''),
-('5qh42o6k5ncbmhke5muq30pt5i', 0, 1, '1525079443', 'joomla|s:664:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjI6e3M6NzoiY291bnRlciI7aToyO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTA3OTQxMztzOjQ6Imxhc3QiO2k6MTUyNTA3OTQxMztzOjM6Im5vdyI7aToxNTI1MDc5NDQyO319czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjA6e31zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtpOjA7fX19czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9\";', 0, ''),
-('8q7mqfreopeh9tb71m4jbvgpt9', 1, 0, '1525059487', 'joomla|s:3064:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aToxMTE7czo1OiJ0b2tlbiI7czozMjoiUkVReGk4VEhjUmtRZG56N3BIdWJVamwzUHFWUmNlbXIiO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTA1NjY3ODtzOjQ6Imxhc3QiO2k6MTUyNTA1OTQ4NDtzOjM6Im5vdyI7aToxNTI1MDU5NDg3O319czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjY6e3M6OToiY29tX21lbnVzIjtPOjg6InN0ZENsYXNzIjoyOntzOjU6Iml0ZW1zIjtPOjg6InN0ZENsYXNzIjo0OntzOjg6Im1lbnV0eXBlIjtzOjEyOiJtYWluLW1lbnUtdm4iO3M6OToiY2xpZW50X2lkIjtpOjA7czoxMDoibGltaXRzdGFydCI7aTowO3M6NDoibGlzdCI7YTo0OntzOjk6ImRpcmVjdGlvbiI7czozOiJhc2MiO3M6NToibGltaXQiO3M6MjoiMjAiO3M6ODoib3JkZXJpbmciO3M6NToiYS5sZnQiO3M6NToic3RhcnQiO2Q6MDt9fXM6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6Mjp7czo0OiJpdGVtIjtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjthOjA6e31zOjQ6ImRhdGEiO047czo0OiJ0eXBlIjtOO3M6NDoibGluayI7Tjt9czo0OiJtZW51IjtPOjg6InN0ZENsYXNzIjoxOntzOjQ6ImRhdGEiO047fX19czoxMzoiY29tX2luc3RhbGxlciI7Tzo4OiJzdGRDbGFzcyI6Mzp7czo3OiJtZXNzYWdlIjtzOjA6IiI7czoxNzoiZXh0ZW5zaW9uX21lc3NhZ2UiO3M6MDoiIjtzOjEyOiJyZWRpcmVjdF91cmwiO047fXM6MTE6ImNvbV9wbHVnaW5zIjtPOjg6InN0ZENsYXNzIjoyOntzOjc6InBsdWdpbnMiO086ODoic3RkQ2xhc3MiOjM6e3M6NjoiZmlsdGVyIjthOjQ6e3M6Njoic2VhcmNoIjtzOjQ6InRoYW4iO3M6NzoiZW5hYmxlZCI7czowOiIiO3M6NjoiZm9sZGVyIjtzOjA6IiI7czo2OiJhY2Nlc3MiO3M6MDoiIjt9czo0OiJsaXN0IjthOjQ6e3M6MTI6ImZ1bGxvcmRlcmluZyI7czoxMDoiZm9sZGVyIEFTQyI7czo1OiJsaW1pdCI7czoyOiIyMCI7czo5OiJzb3J0VGFibGUiO3M6NjoiZm9sZGVyIjtzOjE0OiJkaXJlY3Rpb25UYWJsZSI7czozOiJBU0MiO31zOjEwOiJsaW1pdHN0YXJ0IjtpOjA7fXM6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo2OiJwbHVnaW4iO086ODoic3RkQ2xhc3MiOjI6e3M6MjoiaWQiO2E6MDp7fXM6NDoiZGF0YSI7Tjt9fX1zOjE0OiJjb21fY2F0ZWdvcmllcyI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoxMDoiY2F0ZWdvcmllcyI7Tzo4OiJzdGRDbGFzcyI6MTp7czo3OiJjb250ZW50IjtPOjg6InN0ZENsYXNzIjo0OntzOjY6ImZpbHRlciI7YTo3OntzOjY6InNlYXJjaCI7czowOiIiO3M6OToicHVibGlzaGVkIjtzOjA6IiI7czo2OiJhY2Nlc3MiO3M6MDoiIjtzOjg6Imxhbmd1YWdlIjtzOjA6IiI7czozOiJ0YWciO3M6MDoiIjtzOjU6ImxldmVsIjtzOjA6IiI7czo5OiJleHRlbnNpb24iO3M6MTE6ImNvbV9jb250ZW50Ijt9czo0OiJsaXN0IjthOjI6e3M6MTI6ImZ1bGxvcmRlcmluZyI7czo5OiJhLmxmdCBBU0MiO3M6NToibGltaXQiO3M6MjoiMjAiO31zOjY6InNlYXJjaCI7czowOiIiO3M6MTA6ImxpbWl0c3RhcnQiO2k6MDt9fXM6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo4OiJjYXRlZ29yeSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czo0OiJkYXRhIjtOO3M6MjoiaWQiO2E6MDp7fX19fXM6MTM6ImNvbV90ZW1wbGF0ZXMiO086ODoic3RkQ2xhc3MiOjE6e3M6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJzdHlsZSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoyOiJpZCI7YTowOnt9czo0OiJkYXRhIjtOO319fXM6MTA6ImNvbV9jb25maWciO086ODoic3RkQ2xhc3MiOjE6e3M6NjoiY29uZmlnIjtPOjg6InN0ZENsYXNzIjoxOntzOjY6Imdsb2JhbCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo0OiJkYXRhIjtOO319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtzOjM6IjU5NiI7fXM6MTE6ImFwcGxpY2F0aW9uIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6InF1ZXVlIjthOjA6e319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=\";', 596, 'admin'),
-('afik3ne8rcoq7gskn7ouptsbu8', 1, 0, '1525078514', 'joomla|s:1948:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aToxMTQ7czo1OiJ0b2tlbiI7czozMjoibm9vaGJIS01kQk5COWM1ZzNTcXhQUmlHWGRYcDdNTWoiO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTA3NTI0MjtzOjQ6Imxhc3QiO2k6MTUyNTA3ODUxMztzOjM6Im5vdyI7aToxNTI1MDc4NTEzO319czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjQ6e3M6MTE6ImNvbV9tb2R1bGVzIjtPOjg6InN0ZENsYXNzIjoyOntzOjQ6ImVkaXQiO086ODoic3RkQ2xhc3MiOjE6e3M6NjoibW9kdWxlIjtPOjg6InN0ZENsYXNzIjoyOntzOjQ6ImRhdGEiO047czoyOiJpZCI7YTowOnt9fX1zOjM6ImFkZCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo2OiJtb2R1bGUiO086ODoic3RkQ2xhc3MiOjI6e3M6MTI6ImV4dGVuc2lvbl9pZCI7TjtzOjY6InBhcmFtcyI7Tjt9fX1zOjExOiJjb21fY29udGVudCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo0OiJlZGl0IjtPOjg6InN0ZENsYXNzIjoxOntzOjc6ImFydGljbGUiO086ODoic3RkQ2xhc3MiOjE6e3M6NDoiZGF0YSI7Tjt9fX1zOjE0OiJjb21fY2F0ZWdvcmllcyI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoxMDoiY2F0ZWdvcmllcyI7Tzo4OiJzdGRDbGFzcyI6MTp7czo3OiJjb250ZW50IjtPOjg6InN0ZENsYXNzIjoyOntzOjY6ImZpbHRlciI7Tzo4OiJzdGRDbGFzcyI6MTp7czo5OiJleHRlbnNpb24iO3M6MTE6ImNvbV9jb250ZW50Ijt9czo0OiJsaXN0IjthOjQ6e3M6OToiZGlyZWN0aW9uIjtzOjM6ImFzYyI7czo1OiJsaW1pdCI7czoyOiIyMCI7czo4OiJvcmRlcmluZyI7czo1OiJhLmxmdCI7czo1OiJzdGFydCI7ZDowO319fXM6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo4OiJjYXRlZ29yeSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czo0OiJkYXRhIjtOO3M6MjoiaWQiO2E6MDp7fX19fXM6MTM6ImNvbV90ZW1wbGF0ZXMiO086ODoic3RkQ2xhc3MiOjE6e3M6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJzdHlsZSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoyOiJpZCI7YTowOnt9czo0OiJkYXRhIjtOO319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtzOjM6IjU5NiI7fXM6MTE6ImFwcGxpY2F0aW9uIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6InF1ZXVlIjthOjA6e319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=\";', 596, 'admin'),
-('b23bsprl8t0rbdvthmrjhsqbp8', 1, 0, '1525169904', 'joomla|s:2424:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aTo4NTtzOjU6InRpbWVyIjtPOjg6InN0ZENsYXNzIjozOntzOjU6InN0YXJ0IjtpOjE1MjUxNjc1OTI7czo0OiJsYXN0IjtpOjE1MjUxNjk5MDM7czozOiJub3ciO2k6MTUyNTE2OTkwNDt9czo1OiJ0b2tlbiI7czozMjoiTm9aa2FNRk5iSmoxTTlqU0JVMWhrZlFtbUZDeTBqMWgiO31zOjg6InJlZ2lzdHJ5IjtPOjI0OiJKb29tbGFcUmVnaXN0cnlcUmVnaXN0cnkiOjM6e3M6NzoiACoAZGF0YSI7Tzo4OiJzdGRDbGFzcyI6NDp7czoxMToiY29tX21vZHVsZXMiO086ODoic3RkQ2xhc3MiOjI6e3M6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo2OiJtb2R1bGUiO086ODoic3RkQ2xhc3MiOjI6e3M6MjoiaWQiO2E6MDp7fXM6NDoiZGF0YSI7Tjt9fXM6MzoiYWRkIjtPOjg6InN0ZENsYXNzIjoxOntzOjY6Im1vZHVsZSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoxMjoiZXh0ZW5zaW9uX2lkIjtOO3M6NjoicGFyYW1zIjtOO319fXM6OToiY29tX21lbnVzIjtPOjg6InN0ZENsYXNzIjoyOntzOjU6Iml0ZW1zIjtPOjg6InN0ZENsYXNzIjo0OntzOjg6Im1lbnV0eXBlIjtzOjEyOiJtYWluLW1lbnUtdm4iO3M6OToiY2xpZW50X2lkIjtpOjA7czoxMDoibGltaXRzdGFydCI7aTowO3M6NDoibGlzdCI7YTo0OntzOjk6ImRpcmVjdGlvbiI7czozOiJhc2MiO3M6NToibGltaXQiO3M6MjoiMjAiO3M6ODoib3JkZXJpbmciO3M6NToiYS5sZnQiO3M6NToic3RhcnQiO2Q6MDt9fXM6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo0OiJpdGVtIjtPOjg6InN0ZENsYXNzIjo0OntzOjI6ImlkIjthOjE6e2k6MDtpOjEwMTt9czo0OiJkYXRhIjtOO3M6NDoidHlwZSI7TjtzOjQ6ImxpbmsiO047fX19czoxNDoiY29tX2NhdGVnb3JpZXMiO086ODoic3RkQ2xhc3MiOjE6e3M6MTA6ImNhdGVnb3JpZXMiO086ODoic3RkQ2xhc3MiOjE6e3M6NzoiY29udGVudCI7Tzo4OiJzdGRDbGFzcyI6Mzp7czo1OiJtb2RhbCI7Tzo4OiJzdGRDbGFzcyI6Mjp7czo2OiJmaWx0ZXIiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiZXh0ZW5zaW9uIjtzOjExOiJjb21fY29udGVudCI7fXM6NDoibGlzdCI7YTo0OntzOjk6ImRpcmVjdGlvbiI7czozOiJhc2MiO3M6NToibGltaXQiO3M6MjoiMjAiO3M6ODoib3JkZXJpbmciO3M6NToiYS5sZnQiO3M6NToic3RhcnQiO2Q6MDt9fXM6NjoiZmlsdGVyIjtPOjg6InN0ZENsYXNzIjoxOntzOjk6ImV4dGVuc2lvbiI7czoxMToiY29tX2NvbnRlbnQiO31zOjQ6Imxpc3QiO2E6NDp7czo5OiJkaXJlY3Rpb24iO3M6MzoiYXNjIjtzOjU6ImxpbWl0IjtzOjI6IjIwIjtzOjg6Im9yZGVyaW5nIjtzOjU6ImEubGZ0IjtzOjU6InN0YXJ0IjtkOjA7fX19fXM6MTE6ImNvbV9jb250ZW50IjtPOjg6InN0ZENsYXNzIjoxOntzOjQ6ImVkaXQiO086ODoic3RkQ2xhc3MiOjE6e3M6NzoiYXJ0aWNsZSI7Tzo4OiJzdGRDbGFzcyI6MTp7czo0OiJkYXRhIjtOO319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtzOjM6IjU5NiI7fXM6MTE6ImFwcGxpY2F0aW9uIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6InF1ZXVlIjthOjA6e319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=\";', 596, 'admin'),
-('d3ogtm19dfie3io1n994vsp34t', 1, 0, '1525165096', 'joomla|s:744:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aTozO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTE2NTA5MDtzOjQ6Imxhc3QiO2k6MTUyNTE2NTA5MztzOjM6Im5vdyI7aToxNTI1MTY1MDkzO31zOjU6InRva2VuIjtzOjMyOiJ0R29LWnZoUGtlODV0dk1heWQ2SDFubjM0WjZubGFhYiI7fXM6ODoicmVnaXN0cnkiO086MjQ6Ikpvb21sYVxSZWdpc3RyeVxSZWdpc3RyeSI6Mzp7czo3OiIAKgBkYXRhIjtPOjg6InN0ZENsYXNzIjowOnt9czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjIwOiJKb29tbGFcQ01TXFVzZXJcVXNlciI6MTp7czoyOiJpZCI7czozOiI1OTYiO319fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', 596, 'admin'),
-('kkf8s96c97ifmarlurjf6j11oh', 0, 1, '1525169340', 'joomla|s:1188:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjI6e3M6NzoiY291bnRlciI7aToxNTtzOjU6InRpbWVyIjtPOjg6InN0ZENsYXNzIjozOntzOjU6InN0YXJ0IjtpOjE1MjUxNjc1OTE7czo0OiJsYXN0IjtpOjE1MjUxNjkxMzY7czozOiJub3ciO2k6MTUyNTE2OTM0MDt9fXM6ODoicmVnaXN0cnkiO086MjQ6Ikpvb21sYVxSZWdpc3RyeVxSZWdpc3RyeSI6Mzp7czo3OiIAKgBkYXRhIjtPOjg6InN0ZENsYXNzIjowOnt9czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjIwOiJKb29tbGFcQ01TXFVzZXJcVXNlciI6MTp7czoyOiJpZCI7aTowO31zOjEwOiJjb21fbWFpbHRvIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6ImxpbmtzIjthOjI6e3M6NDA6IjVjM2FhMDYyYjI1ZmZjMzZjZmRhMDUzY2YyYTNhZThiMThlNmM3ODciO086ODoic3RkQ2xhc3MiOjI6e3M6NDoibGluayI7czo1NzoiaHR0cDovL2xvY2FsaG9zdC9uaG9tN19Kb29tbGEvam9vbWxhL2luZGV4LnBocC9naW9pLXRoaWV1IjtzOjY6ImV4cGlyeSI7aToxNTI1MTY4NjA1O31zOjQwOiI0OTAxZmRkMGFlZjc3ZDU0ZGRiNjMzNGMxNDJjOTdlNDJjMWY2NzRlIjtPOjg6InN0ZENsYXNzIjoyOntzOjQ6ImxpbmsiO3M6NTQ6Imh0dHA6Ly9sb2NhbGhvc3QvbmhvbTdfSm9vbWxhL2pvb21sYS9pbmRleC5waHAvbGllbi1oZSI7czo2OiJleHBpcnkiO2k6MTUyNTE2OTM0MDt9fX19fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', 0, ''),
-('m59dg8dprm2gua4li0dkeoub27', 0, 1, '1525079200', 'joomla|s:948:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjI6e3M6NzoiY291bnRlciI7aTozO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTA3OTA3NDtzOjQ6Imxhc3QiO2k6MTUyNTA3OTE5ODtzOjM6Im5vdyI7aToxNTI1MDc5MjAwO319czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjA6e31zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtpOjA7fXM6MTA6ImNvbV9tYWlsdG8iO086ODoic3RkQ2xhc3MiOjE6e3M6NToibGlua3MiO2E6MTp7czo0MDoiMDE0YjgyNjJlOTg4OGQ3ZDE1NjU0NDUwZGMzYjNlOTQxZjk3YzkzNyI7Tzo4OiJzdGRDbGFzcyI6Mjp7czo0OiJsaW5rIjtzOjQ0OiJodHRwOi8vbG9jYWxob3N0L2pvb21sYS9pbmRleC5waHAvZ2lvaS10aGlldSI7czo2OiJleHBpcnkiO2k6MTUyNTA3OTIwMDt9fX19fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', 0, ''),
-('nlpsh104knp8ij9bnbsg1dtn79', 0, 1, '1525059452', 'joomla|s:664:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjI6e3M6NzoiY291bnRlciI7aTo2O3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTA1ODI5NDtzOjQ6Imxhc3QiO2k6MTUyNTA1ODg5MjtzOjM6Im5vdyI7aToxNTI1MDU5NDUxO319czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjA6e31zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtpOjA7fX19czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9\";', 0, ''),
-('ounqoloh70chs015mvs26bc3ij', 1, 0, '1525103359', 'joomla|s:2228:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo1OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aToxODQ7czo1OiJ0b2tlbiI7czozMjoiOTJ2SXdtaW1KRUc0SVhXVFdHREpFOGJsclNkSVdlMDAiO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTEwMDc0NztzOjQ6Imxhc3QiO2k6MTUyNTEwMzM1ODtzOjM6Im5vdyI7aToxNTI1MTAzMzU5O319czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjI6e3M6MTE6ImNvbV9tb2R1bGVzIjtPOjg6InN0ZENsYXNzIjozOntzOjQ6ImVkaXQiO086ODoic3RkQ2xhc3MiOjE6e3M6NjoibW9kdWxlIjtPOjg6InN0ZENsYXNzIjoyOntzOjQ6ImRhdGEiO047czoyOiJpZCI7YTowOnt9fX1zOjM6ImFkZCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo2OiJtb2R1bGUiO086ODoic3RkQ2xhc3MiOjI6e3M6MTI6ImV4dGVuc2lvbl9pZCI7TjtzOjY6InBhcmFtcyI7Tjt9fXM6NzoibW9kdWxlcyI7Tzo4OiJzdGRDbGFzcyI6NDp7czo2OiJmaWx0ZXIiO2E6Nzp7czo2OiJzZWFyY2giO3M6MDoiIjtzOjU6InN0YXRlIjtzOjA6IiI7czo4OiJwb3NpdGlvbiI7czowOiIiO3M6NjoibW9kdWxlIjtzOjA6IiI7czo4OiJtZW51aXRlbSI7czowOiIiO3M6NjoiYWNjZXNzIjtzOjA6IiI7czo4OiJsYW5ndWFnZSI7czowOiIiO31zOjk6ImNsaWVudF9pZCI7aTowO3M6NDoibGlzdCI7YToyOntzOjEyOiJmdWxsb3JkZXJpbmciO3M6MTQ6ImEucG9zaXRpb24gQVNDIjtzOjU6ImxpbWl0IjtzOjI6IjIwIjt9czoxMDoibGltaXRzdGFydCI7aTowO319czoxMToiY29tX3BsdWdpbnMiO086ODoic3RkQ2xhc3MiOjI6e3M6NzoicGx1Z2lucyI7Tzo4OiJzdGRDbGFzcyI6Mzp7czo2OiJmaWx0ZXIiO2E6NDp7czo2OiJzZWFyY2giO3M6MzoiTUNFIjtzOjc6ImVuYWJsZWQiO3M6MDoiIjtzOjY6ImZvbGRlciI7czowOiIiO3M6NjoiYWNjZXNzIjtzOjA6IiI7fXM6NDoibGlzdCI7YTo0OntzOjEyOiJmdWxsb3JkZXJpbmciO3M6MTA6ImZvbGRlciBBU0MiO3M6NToibGltaXQiO3M6MjoiMjAiO3M6OToic29ydFRhYmxlIjtzOjY6ImZvbGRlciI7czoxNDoiZGlyZWN0aW9uVGFibGUiO3M6MzoiQVNDIjt9czoxMDoibGltaXRzdGFydCI7aTowO31zOjQ6ImVkaXQiO086ODoic3RkQ2xhc3MiOjE6e3M6NjoicGx1Z2luIjtPOjg6InN0ZENsYXNzIjoyOntzOjI6ImlkIjthOjA6e31zOjQ6ImRhdGEiO047fX19fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fXM6NDoidXNlciI7TzoyMDoiSm9vbWxhXENNU1xVc2VyXFVzZXIiOjE6e3M6MjoiaWQiO3M6MzoiNTk2Ijt9czoxMToiYXBwbGljYXRpb24iO086ODoic3RkQ2xhc3MiOjE6e3M6NToicXVldWUiO2E6MDp7fX1zOjk6ImNvbV9tZWRpYSI7Tzo4OiJzdGRDbGFzcyI6MTp7czoxMDoicmV0dXJuX3VybCI7czoyNjoiaW5kZXgucGhwP29wdGlvbj1jb21fbWVkaWEiO319fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', 596, 'admin'),
-('p384vufcbjkarmtnecrrflpdct', 1, 0, '1525086572', 'joomla|s:868:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aTo0O3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTA4NjU1NztzOjQ6Imxhc3QiO2k6MTUyNTA4NjU2MDtzOjM6Im5vdyI7aToxNTI1MDg2NTYxO31zOjU6InRva2VuIjtzOjMyOiJvaHcyZ1N3VGxPcGgyYTdITFNYSmtqSUtpbWJWeVdKViI7fXM6ODoicmVnaXN0cnkiO086MjQ6Ikpvb21sYVxSZWdpc3RyeVxSZWdpc3RyeSI6Mzp7czo3OiIAKgBkYXRhIjtPOjg6InN0ZENsYXNzIjoxOntzOjEzOiJjb21faW5zdGFsbGVyIjtPOjg6InN0ZENsYXNzIjoyOntzOjc6Im1lc3NhZ2UiO3M6MDoiIjtzOjE3OiJleHRlbnNpb25fbWVzc2FnZSI7czowOiIiO319czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjIwOiJKb29tbGFcQ01TXFVzZXJcVXNlciI6MTp7czoyOiJpZCI7czozOiI1OTYiO319fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', 596, 'admin'),
-('r3320rja6se5nks2tvm9s2icar', 0, 1, '1525103363', 'joomla|s:964:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjI6e3M6NzoiY291bnRlciI7aToyNztzOjU6InRpbWVyIjtPOjg6InN0ZENsYXNzIjozOntzOjU6InN0YXJ0IjtpOjE1MjUxMDEwNDQ7czo0OiJsYXN0IjtpOjE1MjUxMDMyODk7czozOiJub3ciO2k6MTUyNTEwMzM2Mzt9fXM6ODoicmVnaXN0cnkiO086MjQ6Ikpvb21sYVxSZWdpc3RyeVxSZWdpc3RyeSI6Mzp7czo3OiIAKgBkYXRhIjtPOjg6InN0ZENsYXNzIjowOnt9czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjIwOiJKb29tbGFcQ01TXFVzZXJcVXNlciI6MTp7czoyOiJpZCI7aTowO31zOjEwOiJjb21fbWFpbHRvIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6ImxpbmtzIjthOjE6e3M6NDA6IjVjM2FhMDYyYjI1ZmZjMzZjZmRhMDUzY2YyYTNhZThiMThlNmM3ODciO086ODoic3RkQ2xhc3MiOjI6e3M6NDoibGluayI7czo1NzoiaHR0cDovL2xvY2FsaG9zdC9uaG9tN19Kb29tbGEvam9vbWxhL2luZGV4LnBocC9naW9pLXRoaWV1IjtzOjY6ImV4cGlyeSI7aToxNTI1MTAxMzExO319fX19czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9\";', 0, ''),
-('r90q2hc2lq9g04bi88k61ho21v', 1, 0, '1525079441', 'joomla|s:1244:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aToxOTtzOjU6InRpbWVyIjtPOjg6InN0ZENsYXNzIjozOntzOjU6InN0YXJ0IjtpOjE1MjUwNzkzMTY7czo0OiJsYXN0IjtpOjE1MjUwNzk0NDA7czozOiJub3ciO2k6MTUyNTA3OTQ0MTt9czo1OiJ0b2tlbiI7czozMjoiT21kR0REeWVPTGtMd1FtbEpwZGo2MWNKaDFzYVVUbDgiO31zOjg6InJlZ2lzdHJ5IjtPOjI0OiJKb29tbGFcUmVnaXN0cnlcUmVnaXN0cnkiOjM6e3M6NzoiACoAZGF0YSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoxMzoiY29tX2luc3RhbGxlciI7Tzo4OiJzdGRDbGFzcyI6Mjp7czo3OiJtZXNzYWdlIjtzOjA6IiI7czoxNzoiZXh0ZW5zaW9uX21lc3NhZ2UiO3M6MDoiIjt9czoxMToiY29tX21vZHVsZXMiO086ODoic3RkQ2xhc3MiOjI6e3M6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo2OiJtb2R1bGUiO086ODoic3RkQ2xhc3MiOjI6e3M6NDoiZGF0YSI7TjtzOjI6ImlkIjthOjA6e319fXM6MzoiYWRkIjtPOjg6InN0ZENsYXNzIjoxOntzOjY6Im1vZHVsZSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoxMjoiZXh0ZW5zaW9uX2lkIjtOO3M6NjoicGFyYW1zIjtOO319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtzOjM6IjU5NiI7fXM6MTE6ImFwcGxpY2F0aW9uIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6InF1ZXVlIjthOjA6e319fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=\";', 596, 'admin'),
-('rsoh4qmse3rvcs7ralgvn4koqi', 0, 1, '1525167519', 'joomla|s:828:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo0OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjE6e3M6NzoiY291bnRlciI7aToxO31zOjg6InJlZ2lzdHJ5IjtPOjI0OiJKb29tbGFcUmVnaXN0cnlcUmVnaXN0cnkiOjM6e3M6NzoiACoAZGF0YSI7Tzo4OiJzdGRDbGFzcyI6MDp7fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fXM6NDoidXNlciI7TzoyMDoiSm9vbWxhXENNU1xVc2VyXFVzZXIiOjE6e3M6MjoiaWQiO2k6MDt9czoxMDoiY29tX21haWx0byI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJsaW5rcyI7YToxOntzOjQwOiI1YzNhYTA2MmIyNWZmYzM2Y2ZkYTA1M2NmMmEzYWU4YjE4ZTZjNzg3IjtPOjg6InN0ZENsYXNzIjoyOntzOjQ6ImxpbmsiO3M6NTc6Imh0dHA6Ly9sb2NhbGhvc3QvbmhvbTdfSm9vbWxhL2pvb21sYS9pbmRleC5waHAvZ2lvaS10aGlldSI7czo2OiJleHBpcnkiO2k6MTUyNTE2NzUxOTt9fX19fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', 0, ''),
-('tr9e2ha0v2rnr4kbibibob2q7c', 0, 1, '1525086760', 'joomla|s:736:\"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aToyO3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTA4NjUzNztzOjQ6Imxhc3QiO2k6MTUyNTA4NjUzNztzOjM6Im5vdyI7aToxNTI1MDg2NzU5O31zOjU6InRva2VuIjtzOjMyOiJtWHhwTzJqT1A0Sml3V0VlQ0xWS1VDaU1aYUlSYXNVeSI7fXM6ODoicmVnaXN0cnkiO086MjQ6Ikpvb21sYVxSZWdpc3RyeVxSZWdpc3RyeSI6Mzp7czo3OiIAKgBkYXRhIjtPOjg6InN0ZENsYXNzIjowOnt9czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjIwOiJKb29tbGFcQ01TXFVzZXJcVXNlciI6MTp7czoyOiJpZCI7aTowO319fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==\";', 0, '');
+('qgkq9kfqdp4aqtm2p01p3shhh7', 1, 0, '1525287631', 'joomla|s:4572:"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjE6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjo1OntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aTo3Nzk7czo1OiJ0aW1lciI7Tzo4OiJzdGRDbGFzcyI6Mzp7czo1OiJzdGFydCI7aToxNTI1Mjc3Nzk2O3M6NDoibGFzdCI7aToxNTI1Mjg3NTg1O3M6Mzoibm93IjtpOjE1MjUyODc2MzE7fXM6NToidG9rZW4iO3M6MzI6ImxRWjVnVXAwYXVpQmlEaUhsWHd0Q2pvNVlVZ0x3WHFWIjt9czo4OiJyZWdpc3RyeSI7TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjY6e3M6MTM6ImNvbV9pbnN0YWxsZXIiO086ODoic3RkQ2xhc3MiOjQ6e3M6NzoibWVzc2FnZSI7czowOiIiO3M6MTc6ImV4dGVuc2lvbl9tZXNzYWdlIjtzOjA6IiI7czo2OiJtYW5hZ2UiO086ODoic3RkQ2xhc3MiOjM6e3M6NjoiZmlsdGVyIjthOjU6e3M6Njoic2VhcmNoIjtzOjY6InZpcnR1ZSI7czo2OiJzdGF0dXMiO3M6MDoiIjtzOjk6ImNsaWVudF9pZCI7czowOiIiO3M6NDoidHlwZSI7czowOiIiO3M6NjoiZm9sZGVyIjtzOjA6IiI7fXM6NDoibGlzdCI7YToyOntzOjEyOiJmdWxsb3JkZXJpbmciO3M6ODoibmFtZSBBU0MiO3M6NToibGltaXQiO3M6MjoiMjAiO31zOjEwOiJsaW1pdHN0YXJ0IjtpOjA7fXM6MTI6InJlZGlyZWN0X3VybCI7Tjt9czoxNDoiY29tX3ZpcnR1ZW1hcnQiO086ODoic3RkQ2xhc3MiOjEwOntzOjg6ImN1cnJlbmN5IjtPOjg6InN0ZENsYXNzIjo1OntzOjY6InNlYXJjaCI7czo0OiJ2aWV0IjtzOjEyOiJmaWx0ZXJfb3JkZXIiO3M6MjI6InZpcnR1ZW1hcnRfY3VycmVuY3lfaWQiO3M6MTY6ImZpbHRlcl9vcmRlcl9EaXIiO3M6MzoiQVNDIjtzOjU6ImxpbWl0IjtzOjI6IjMwIjtzOjEwOiJsaW1pdHN0YXJ0IjtpOjA7fXM6NzoicHJvZHVjdCI7Tzo4OiJzdGRDbGFzcyI6NTp7czoxNjoiZmlsdGVyX29yZGVyX0RpciI7czo0OiJERVNDIjtzOjEyOiJmaWx0ZXJfb3JkZXIiO3M6MTA6ImNyZWF0ZWRfb24iO3M6Njoic2VhcmNoIjtzOjA6IiI7czo2OiJmaWx0ZXIiO086ODoic3RkQ2xhc3MiOjI6e3M6MjI6InZpcnR1ZW1hcnRfY2F0ZWdvcnlfaWQiO2k6MDtzOjI2OiJ2aXJ0dWVtYXJ0X21hbnVmYWN0dXJlcl9pZCI7aTowO31zOjEwOiJsaW1pdHN0YXJ0IjtpOjA7fXM6NToibWVkaWEiO086ODoic3RkQ2xhc3MiOjE6e3M6MTY6ImZpbHRlcl9vcmRlcl9EaXIiO3M6NDoiREVTQyI7fXM6OToicHJvZHVjdGM0IjtPOjg6InN0ZENsYXNzIjoxOntzOjU6ImxpbWl0IjtzOjI6IjMwIjt9czo5OiJwcm9kdWN0YzEiO086ODoic3RkQ2xhc3MiOjE6e3M6NToibGltaXQiO3M6MjoiMzAiO31zOjk6InByb2R1Y3RjMiI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJsaW1pdCI7czoyOiIzMCI7fXM6OToicHJvZHVjdGMzIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6ImxpbWl0IjtzOjI6IjMwIjt9czo5OiJwcm9kdWN0YzUiO086ODoic3RkQ2xhc3MiOjE6e3M6NToibGltaXQiO3M6MjoiMzAiO31zOjk6InByb2R1Y3RjNiI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJsaW1pdCI7czoyOiIzMCI7fXM6ODoicHJvZHVjdGMiO086ODoic3RkQ2xhc3MiOjE6e3M6NToibGltaXQiO3M6MjoiMzAiO319czo5OiJjb21fbWVudXMiO086ODoic3RkQ2xhc3MiOjI6e3M6NToiaXRlbXMiO086ODoic3RkQ2xhc3MiOjQ6e3M6ODoibWVudXR5cGUiO3M6MTI6Im1haW4tbWVudS12biI7czo5OiJjbGllbnRfaWQiO2k6MDtzOjEwOiJsaW1pdHN0YXJ0IjtpOjA7czo0OiJsaXN0IjthOjQ6e3M6OToiZGlyZWN0aW9uIjtzOjM6ImFzYyI7czo1OiJsaW1pdCI7czoyOiIyMCI7czo4OiJvcmRlcmluZyI7czo1OiJhLmxmdCI7czo1OiJzdGFydCI7ZDowO319czo0OiJlZGl0IjtPOjg6InN0ZENsYXNzIjoyOntzOjQ6Iml0ZW0iO086ODoic3RkQ2xhc3MiOjQ6e3M6NDoiZGF0YSI7TjtzOjQ6InR5cGUiO047czo0OiJsaW5rIjtOO3M6MjoiaWQiO2E6MDp7fX1zOjQ6Im1lbnUiO086ODoic3RkQ2xhc3MiOjI6e3M6NDoiZGF0YSI7TjtzOjI6ImlkIjthOjA6e319fX1zOjIyOiJ2aXJ0dWVtYXJ0X2NhdGVnb3J5X2lkIjtzOjE6IjYiO3M6MTE6ImNvbV9tb2R1bGVzIjtPOjg6InN0ZENsYXNzIjozOntzOjc6Im1vZHVsZXMiO086ODoic3RkQ2xhc3MiOjQ6e3M6NjoiZmlsdGVyIjthOjU6e3M6Njoic2VhcmNoIjtzOjA6IiI7czo1OiJzdGF0ZSI7czowOiIiO3M6ODoicG9zaXRpb24iO3M6MDoiIjtzOjY6Im1vZHVsZSI7czowOiIiO3M6NjoiYWNjZXNzIjtzOjA6IiI7fXM6OToiY2xpZW50X2lkIjtpOjA7czo0OiJsaXN0IjthOjI6e3M6MTI6ImZ1bGxvcmRlcmluZyI7czoxNDoiYS5wb3NpdGlvbiBBU0MiO3M6NToibGltaXQiO3M6MjoiMjAiO31zOjEwOiJsaW1pdHN0YXJ0IjtpOjA7fXM6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo2OiJtb2R1bGUiO086ODoic3RkQ2xhc3MiOjI6e3M6MjoiaWQiO2E6Mzp7aTowO2k6MTc7aToxO2k6OTg7aTozO2k6OTQ7fXM6NDoiZGF0YSI7Tjt9fXM6MzoiYWRkIjtPOjg6InN0ZENsYXNzIjoxOntzOjY6Im1vZHVsZSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoxMjoiZXh0ZW5zaW9uX2lkIjtOO3M6NjoicGFyYW1zIjtOO319fXM6MTM6ImNvbV90ZW1wbGF0ZXMiO086ODoic3RkQ2xhc3MiOjI6e3M6NDoiZWRpdCI7Tzo4OiJzdGRDbGFzcyI6MTp7czo1OiJzdHlsZSI7Tzo4OiJzdGRDbGFzcyI6Mjp7czoyOiJpZCI7YToxOntpOjA7aTo5O31zOjQ6ImRhdGEiO047fX1zOjY6InN0eWxlcyI7Tzo4OiJzdGRDbGFzcyI6NDp7czo2OiJmaWx0ZXIiO2E6Mzp7czo2OiJzZWFyY2giO3M6MDoiIjtzOjg6Im1lbnVpdGVtIjtzOjA6IiI7czo4OiJ0ZW1wbGF0ZSI7czowOiIiO31zOjk6ImNsaWVudF9pZCI7czoxOiIwIjtzOjQ6Imxpc3QiO2E6Mjp7czoxMjoiZnVsbG9yZGVyaW5nIjtzOjA6IiI7czo1OiJsaW1pdCI7czoyOiIyMCI7fXM6MTA6ImxpbWl0c3RhcnQiO2k6MDt9fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO31zOjQ6InVzZXIiO086MjA6Ikpvb21sYVxDTVNcVXNlclxVc2VyIjoxOntzOjI6ImlkIjtzOjM6IjU5NiI7fXM6MTE6ImFwcGxpY2F0aW9uIjtPOjg6InN0ZENsYXNzIjoxOntzOjU6InF1ZXVlIjthOjA6e319czo5OiJjb21fbWVkaWEiO086ODoic3RkQ2xhc3MiOjE6e3M6MTA6InJldHVybl91cmwiO3M6OTc6ImluZGV4LnBocD9vcHRpb249Y29tX21lZGlhJnZpZXc9aW1hZ2VzJnRtcGw9Y29tcG9uZW50JmZpZWxkaWQ9JmVfbmFtZT1wcm9kdWN0X2Rlc2MmYXNzZXQ9JmF1dGhvcj0iO319fXM6MTQ6IgAqAGluaXRpYWxpemVkIjtiOjA7czo5OiJzZXBhcmF0b3IiO3M6MToiLiI7fQ==";', 596, 'admin'),
+('sg5vsvj4fm9igtl24sl4dm7gp5', 0, 1, '1525289250', 'joomla|s:924:"TzoyNDoiSm9vbWxhXFJlZ2lzdHJ5XFJlZ2lzdHJ5IjozOntzOjc6IgAqAGRhdGEiO086ODoic3RkQ2xhc3MiOjI6e3M6OToiX19kZWZhdWx0IjtPOjg6InN0ZENsYXNzIjozOntzOjc6InNlc3Npb24iO086ODoic3RkQ2xhc3MiOjM6e3M6NzoiY291bnRlciI7aTo1O3M6NToidGltZXIiO086ODoic3RkQ2xhc3MiOjM6e3M6NToic3RhcnQiO2k6MTUyNTI4OTE4MTtzOjQ6Imxhc3QiO2k6MTUyNTI4OTI0NTtzOjM6Im5vdyI7aToxNTI1Mjg5MjUwO31zOjU6InRva2VuIjtzOjMyOiJMa1NpeGNkcUg0QUlKWWwxam83bzhSeTI2QTEzcjl4YSI7fXM6ODoicmVnaXN0cnkiO086MjQ6Ikpvb21sYVxSZWdpc3RyeVxSZWdpc3RyeSI6Mzp7czo3OiIAKgBkYXRhIjtPOjg6InN0ZENsYXNzIjowOnt9czoxNDoiACoAaW5pdGlhbGl6ZWQiO2I6MDtzOjk6InNlcGFyYXRvciI7czoxOiIuIjt9czo0OiJ1c2VyIjtPOjIwOiJKb29tbGFcQ01TXFVzZXJcVXNlciI6MTp7czoyOiJpZCI7aTowO319czo0OiJfX3ZtIjtPOjg6InN0ZENsYXNzIjo0OntzOjY6Im1hbmFnZSI7aTowO3M6MTU6InZtbGFzdHZpc0l0ZW1pZCI7aToxMzY7czoyMzoidm1sYXN0dmlzaXRlZGNhdGVnb3J5aWQiO2k6MztzOjE5OiJ2bWxhc3R2aXNpdGVkbWFudWlkIjtpOjA7fX1zOjE0OiIAKgBpbml0aWFsaXplZCI7YjowO3M6OToic2VwYXJhdG9yIjtzOjE6Ii4iO30=";', 0, '');
 
 -- --------------------------------------------------------
 
@@ -1635,38 +1640,38 @@ INSERT INTO `xtqmd_session` (`session_id`, `client_id`, `guest`, `time`, `data`,
 -- Table structure for table `xtqmd_tags`
 --
 
-CREATE TABLE `xtqmd_tags` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_tags` (
+`id` int(10) unsigned NOT NULL,
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
   `lft` int(11) NOT NULL DEFAULT '0',
   `rgt` int(11) NOT NULL DEFAULT '0',
-  `level` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `level` int(10) unsigned NOT NULL DEFAULT '0',
   `path` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `description` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '0',
-  `checked_out` int(11) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `access` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `access` int(10) unsigned NOT NULL DEFAULT '0',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `metadesc` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The meta description for the page.',
   `metakey` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'The meta keywords for the page.',
   `metadata` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'JSON encoded metadata properties.',
-  `created_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `created_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by_alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `modified_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `modified_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `images` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `urls` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0',
   `language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `version` int(10) unsigned NOT NULL DEFAULT '1',
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_tags`
@@ -1681,25 +1686,25 @@ INSERT INTO `xtqmd_tags` (`id`, `parent_id`, `lft`, `rgt`, `level`, `path`, `tit
 -- Table structure for table `xtqmd_template_styles`
 --
 
-CREATE TABLE `xtqmd_template_styles` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_template_styles` (
+`id` int(10) unsigned NOT NULL,
   `template` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `client_id` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `client_id` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `home` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `params` text COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_template_styles`
 --
 
 INSERT INTO `xtqmd_template_styles` (`id`, `template`, `client_id`, `home`, `title`, `params`) VALUES
-(4, 'beez3', 0, '0', 'Beez3 - Default', '{\"wrapperSmall\":\"53\",\"wrapperLarge\":\"72\",\"logo\":\"images\\/joomla_black.png\",\"sitetitle\":\"Joomla!\",\"sitedescription\":\"Open Source Content Management\",\"navposition\":\"left\",\"templatecolor\":\"personal\",\"html5\":\"0\"}'),
-(5, 'hathor', 1, '0', 'Hathor - Default', '{\"showSiteName\":\"0\",\"colourChoice\":\"\",\"boldText\":\"0\"}'),
-(7, 'protostar', 0, '0', 'protostar - Default', '{\"templateColor\":\"\",\"logoFile\":\"\",\"googleFont\":\"1\",\"googleFontName\":\"Open+Sans\",\"fluidContainer\":\"0\"}'),
-(8, 'isis', 1, '1', 'isis - Default', '{\"templateColor\":\"\",\"logoFile\":\"\"}'),
-(9, 'sj_maxshop', 0, '1', 'sj_maxshop - Default', '{\"hideComponentHomePage\":0,\"favicon\":\"images\\/favicon.ico\",\"logoType\":\"image\",\"overrideLogoImage\":\"\",\"logoText\":\"SmartAddons.Com\",\"sloganText\":\"The high quality products\",\"logoWidth\":\"161\",\"logoHeight\":\"24\",\"copyright\":\"1\",\"ytcopyright\":\"Copyright \\u00a9 {year} Sj Maxshop. All Rights Reserved\",\"joomla_create\":\"1\",\"layouttype\":\"res\",\"layoutFixed\":\"980\",\"layoutFloat\":\"90\",\"layoutRes\":\"1170\",\"typelayout\":\"rounded\",\"bgbox\":\"pattern8\",\"bgframed\":\"pattern8\",\"bgrounded\":\"pattern8\",\"templateLayout\":\"layout5\",\"overrideLayouts\":\"494:variations\",\"themecolor\":\"red\",\"menutype\":\"main-menu-vn\",\"menustyle\":\"mega\",\"moofx\":\"easeInOutCirc\",\"moofxtimeout\":\"150\",\"keepMenu\":1,\"fancyMenu\":1,\"bodyFont\":\"0\",\"bodySelectors\":\"body\",\"menuFont\":\"0\",\"menuSelectors\":\"#menu a\",\"headingFont\":\"0\",\"headingSelectors\":\"h1,h2,h3,h4,h5,h6\",\"otherFont\":\"0\",\"otherSelectors\":\"\",\"leading_width\":\"270\",\"leading_height\":\"200\",\"intro_width\":\"270\",\"intro_height\":\"200\",\"thumbnail_background\":\"#000000\",\"thumbnail_mode\":\"fill\",\"showCpanel\":0,\"showBacktotop\":1,\"animateScroll\":0,\"disableMootool\":1,\"stickyPanel\":\"right\",\"stickyBar\":\"no\",\"developing\":0,\"optimizeMergeFile\":0,\"optimizeCSS\":0,\"optimizeCSSExclude\":\"\",\"optimizeJS\":0,\"optimizeJSExclude\":\"\",\"optimizeFolder\":\"yt-assets\",\"setGeneratorTag\":\"SmartAddons.Com - the high quality products!\",\"enableGoogleAnalytics\":0,\"googleAnalyticsTrackingID\":\"\",\"headAfter\":\"\",\"headBefore\":\"\",\"bodyAfter\":\"\",\"bodyBefore\":\"\"}');
+(4, 'beez3', 0, '0', 'Beez3 - Default', '{"wrapperSmall":"53","wrapperLarge":"72","logo":"images\\/joomla_black.png","sitetitle":"Joomla!","sitedescription":"Open Source Content Management","navposition":"left","templatecolor":"personal","html5":"0"}'),
+(5, 'hathor', 1, '0', 'Hathor - Default', '{"showSiteName":"0","colourChoice":"","boldText":"0"}'),
+(7, 'protostar', 0, '0', 'protostar - Default', '{"templateColor":"","logoFile":"","googleFont":"1","googleFontName":"Open+Sans","fluidContainer":"0"}'),
+(8, 'isis', 1, '1', 'isis - Default', '{"templateColor":"","logoFile":""}'),
+(9, 'sj_maxshop', 0, '1', 'sj_maxshop - Default', '{"hideComponentHomePage":0,"favicon":"images\\/favicon.ico","logoType":"image","overrideLogoImage":"","logoText":"SmartAddons.Com","sloganText":"The high quality products","logoWidth":"161","logoHeight":"24","copyright":"1","ytcopyright":"Copyright \\u00a9 {year} Sj Maxshop. All Rights Reserved","joomla_create":"1","layouttype":"res","layoutFixed":"980","layoutFloat":"90","layoutRes":"1170","typelayout":"rounded","bgbox":"pattern8","bgframed":"pattern8","bgrounded":"pattern8","templateLayout":"layout5","overrideLayouts":"494:variations","themecolor":"red","menutype":"main-menu-vn","menustyle":"mega","moofx":"easeInOutCirc","moofxtimeout":"150","keepMenu":1,"fancyMenu":1,"bodyFont":"0","bodySelectors":"body","menuFont":"0","menuSelectors":"#menu a","headingFont":"0","headingSelectors":"h1,h2,h3,h4,h5,h6","otherFont":"0","otherSelectors":"","leading_width":"270","leading_height":"200","intro_width":"270","intro_height":"200","thumbnail_background":"#000000","thumbnail_mode":"fill","showCpanel":0,"showBacktotop":1,"animateScroll":0,"disableMootool":1,"stickyPanel":"right","stickyBar":"no","developing":0,"optimizeMergeFile":0,"optimizeCSS":0,"optimizeCSSExclude":"","optimizeJS":0,"optimizeJSExclude":"","optimizeFolder":"yt-assets","setGeneratorTag":"SmartAddons.Com - the high quality products!","enableGoogleAnalytics":0,"googleAnalyticsTrackingID":"","headAfter":"","headBefore":"","bodyAfter":"","bodyBefore":""}');
 
 -- --------------------------------------------------------
 
@@ -1707,8 +1712,8 @@ INSERT INTO `xtqmd_template_styles` (`id`, `template`, `client_id`, `home`, `tit
 -- Table structure for table `xtqmd_ucm_base`
 --
 
-CREATE TABLE `xtqmd_ucm_base` (
-  `ucm_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_ucm_base` (
+  `ucm_id` int(10) unsigned NOT NULL,
   `ucm_item_id` int(10) NOT NULL,
   `ucm_type_id` int(11) NOT NULL,
   `ucm_language_id` int(11) NOT NULL
@@ -1720,39 +1725,39 @@ CREATE TABLE `xtqmd_ucm_base` (
 -- Table structure for table `xtqmd_ucm_content`
 --
 
-CREATE TABLE `xtqmd_ucm_content` (
-  `core_content_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_ucm_content` (
+`core_content_id` int(10) unsigned NOT NULL,
   `core_type_alias` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'FK to the content types table',
   `core_title` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `core_alias` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `core_body` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `core_state` tinyint(1) NOT NULL DEFAULT '0',
   `core_checked_out_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `core_checked_out_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `core_access` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `core_checked_out_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `core_access` int(10) unsigned NOT NULL DEFAULT '0',
   `core_params` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `core_featured` tinyint(4) UNSIGNED NOT NULL DEFAULT '0',
+  `core_featured` tinyint(4) unsigned NOT NULL DEFAULT '0',
   `core_metadata` varchar(2048) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'JSON encoded metadata properties.',
-  `core_created_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `core_created_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `core_created_by_alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `core_created_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `core_modified_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Most recent user that modified',
+  `core_modified_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Most recent user that modified',
   `core_modified_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `core_language` char(7) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `core_publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `core_publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `core_content_item_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'ID from the individual type table',
-  `asset_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
+  `core_content_item_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'ID from the individual type table',
+  `asset_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'FK to the #__assets table.',
   `core_images` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `core_urls` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `core_hits` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `core_version` int(10) UNSIGNED NOT NULL DEFAULT '1',
+  `core_hits` int(10) unsigned NOT NULL DEFAULT '0',
+  `core_version` int(10) unsigned NOT NULL DEFAULT '1',
   `core_ordering` int(11) NOT NULL DEFAULT '0',
   `core_metakey` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `core_metadesc` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `core_catid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `core_catid` int(10) unsigned NOT NULL DEFAULT '0',
   `core_xreference` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'A reference to enable linkages to external data sets.',
-  `core_type_id` int(10) UNSIGNED NOT NULL DEFAULT '0'
+  `core_type_id` int(10) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Contains core content data in name spaced fields';
 
 -- --------------------------------------------------------
@@ -1761,32 +1766,32 @@ CREATE TABLE `xtqmd_ucm_content` (
 -- Table structure for table `xtqmd_ucm_history`
 --
 
-CREATE TABLE `xtqmd_ucm_history` (
-  `version_id` int(10) UNSIGNED NOT NULL,
-  `ucm_item_id` int(10) UNSIGNED NOT NULL,
-  `ucm_type_id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_ucm_history` (
+`version_id` int(10) unsigned NOT NULL,
+  `ucm_item_id` int(10) unsigned NOT NULL,
+  `ucm_type_id` int(10) unsigned NOT NULL,
   `version_note` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Optional version name',
   `save_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `editor_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `character_count` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Number of characters in this version.',
+  `editor_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `character_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Number of characters in this version.',
   `sha1_hash` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'SHA1 hash of the version_data column.',
   `version_data` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'json-encoded string of version data',
   `keep_forever` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0=auto delete; 1=keep'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_ucm_history`
 --
 
 INSERT INTO `xtqmd_ucm_history` (`version_id`, `ucm_item_id`, `ucm_type_id`, `version_note`, `save_date`, `editor_user_id`, `character_count`, `sha1_hash`, `version_data`, `keep_forever`) VALUES
-(1, 8, 5, '', '2018-04-30 02:59:43', 596, 580, 'daf911568e20467e569caa5e679fb71709fc4450', '{\"id\":8,\"asset_id\":58,\"parent_id\":\"1\",\"lft\":\"11\",\"rgt\":12,\"level\":1,\"path\":null,\"extension\":\"com_content\",\"title\":\"C\\u00f4ng ty Shop Online\",\"alias\":\"cong-ty-shop-online\",\"note\":\"\",\"description\":\"\",\"published\":\"1\",\"checked_out\":null,\"checked_out_time\":null,\"access\":\"1\",\"params\":\"{\\\"category_layout\\\":\\\"\\\",\\\"image\\\":\\\"\\\",\\\"image_alt\\\":\\\"\\\"}\",\"metadesc\":\"\",\"metakey\":\"\",\"metadata\":\"{\\\"author\\\":\\\"\\\",\\\"robots\\\":\\\"\\\"}\",\"created_user_id\":\"596\",\"created_time\":\"2018-04-30 02:59:43\",\"modified_user_id\":null,\"modified_time\":\"2018-04-30 02:59:43\",\"hits\":\"0\",\"language\":\"*\",\"version\":null}', 0),
-(4, 10, 5, '', '2018-04-30 03:37:13', 596, 568, '864c7cc36f29d7ccd2ca1336b1fef40286613265', '{\"id\":10,\"asset_id\":61,\"parent_id\":\"8\",\"lft\":\"10\",\"rgt\":11,\"level\":2,\"path\":null,\"extension\":\"com_content\",\"title\":\"Gi\\u1edbi thi\\u1ec7u\",\"alias\":\"gioi-thieu\",\"note\":\"\",\"description\":\"\",\"published\":\"1\",\"checked_out\":null,\"checked_out_time\":null,\"access\":\"1\",\"params\":\"{\\\"category_layout\\\":\\\"\\\",\\\"image\\\":\\\"\\\",\\\"image_alt\\\":\\\"\\\"}\",\"metadesc\":\"\",\"metakey\":\"\",\"metadata\":\"{\\\"author\\\":\\\"\\\",\\\"robots\\\":\\\"\\\"}\",\"created_user_id\":\"596\",\"created_time\":\"2018-04-30 03:37:13\",\"modified_user_id\":null,\"modified_time\":\"2018-04-30 03:37:13\",\"hits\":\"0\",\"language\":\"*\",\"version\":null}', 0),
-(5, 11, 5, '', '2018-04-30 03:37:26', 596, 596, 'bef4c9c9fa489ad740071d309689128a63c07bf6', '{\"id\":11,\"asset_id\":62,\"parent_id\":\"8\",\"lft\":\"12\",\"rgt\":13,\"level\":2,\"path\":null,\"extension\":\"com_content\",\"title\":\"Tuy\\u1ec3n d\\u1ee5ng\",\"alias\":\"tuyen-dung\",\"note\":\"\",\"description\":\"<p>Tuy\\u1ec3n d\\u1ee5ng<\\/p>\",\"published\":\"1\",\"checked_out\":null,\"checked_out_time\":null,\"access\":\"1\",\"params\":\"{\\\"category_layout\\\":\\\"\\\",\\\"image\\\":\\\"\\\",\\\"image_alt\\\":\\\"\\\"}\",\"metadesc\":\"\",\"metakey\":\"\",\"metadata\":\"{\\\"author\\\":\\\"\\\",\\\"robots\\\":\\\"\\\"}\",\"created_user_id\":\"596\",\"created_time\":\"2018-04-30 03:37:26\",\"modified_user_id\":null,\"modified_time\":\"2018-04-30 03:37:26\",\"hits\":\"0\",\"language\":\"*\",\"version\":null}', 0),
-(6, 12, 5, '', '2018-04-30 07:31:56', 596, 618, '9b1ba9231f5a5efdee0dfd7001e4a1b5bf5aa57f', '{\"id\":12,\"asset_id\":63,\"parent_id\":\"10\",\"lft\":\"11\",\"rgt\":12,\"level\":3,\"path\":null,\"extension\":\"com_content\",\"title\":\"Th\\u00f4ng tin c\\u00f4ng ty\",\"alias\":\"thong-tin-cong-ty\",\"note\":\"\",\"description\":\"<p>Th\\u00f4ng tin c\\u00f4ng ty<\\/p>\",\"published\":\"1\",\"checked_out\":null,\"checked_out_time\":null,\"access\":\"1\",\"params\":\"{\\\"category_layout\\\":\\\"\\\",\\\"image\\\":\\\"\\\",\\\"image_alt\\\":\\\"\\\"}\",\"metadesc\":\"\",\"metakey\":\"\",\"metadata\":\"{\\\"author\\\":\\\"\\\",\\\"robots\\\":\\\"\\\"}\",\"created_user_id\":\"596\",\"created_time\":\"2018-04-30 07:31:56\",\"modified_user_id\":null,\"modified_time\":\"2018-04-30 07:31:56\",\"hits\":\"0\",\"language\":\"*\",\"version\":null}', 0),
-(7, 1, 1, '', '2018-04-30 07:32:50', 596, 7771, '991503cbbda3b032f5cd52b89ca59971c70293dd', '{\"id\":1,\"asset_id\":64,\"title\":\"Gi\\u1edbi thi\\u1ec7u\",\"alias\":\"gioi-thieu\",\"introtext\":\"<p><strong>C\\u00d4NG TY C\\u1ed4 PH\\u1ea6N TH\\u01af\\u01a0NG M\\u1ea0I NGUY\\u1ec4N KIM<\\/strong><\\/p>\\r\\n<ul>\\r\\n<li><strong>N\\u0103m 1992:\\u00a0<\\/strong>Th\\u00e0nh l\\u1eadp C\\u1eeda h\\u00e0ng Kinh doanh \\u0110i\\u1ec7n - \\u0110i\\u1ec7n t\\u1eed - \\u0110i\\u1ec7n\\u00a0l\\u1ea1nh<\\/li>\\r\\n<li><strong>N\\u0103m 1996:\\u00a0<\\/strong>Khai tr\\u01b0\\u01a1ng Trung t\\u00e2m \\u0110i\\u1ec7n t\\u1eed - \\u0110i\\u1ec7n l\\u1ea1nh Th\\u00e0nh ph\\u1ed1 t\\u1ea1i s\\u1ed1 6Bis Tr\\u1ea7n H\\u01b0ng \\u0110\\u1ea1o, qu\\u1eadn 1, TP.HCM<\\/li>\\r\\n<li><strong>N\\u0103m 1999:\\u00a0<\\/strong>\\u0110\\u1ed5i t\\u00ean th\\u00e0nh Trung t\\u00e2m Mua s\\u1eafm S\\u00e0i G\\u00f2n Nguy\\u1ec5n Kim.\\u00a0Th\\u01b0\\u01a1ng hi\\u1ec7u \\\"S\\u00e0i G\\u00f2n - Nguy\\u1ec5n Kim\\\" \\u0111\\u01b0\\u1ee3c b\\u1ea3o h\\u1ed9 \\u0111\\u1ed9c quy\\u1ec1n<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02001:\\u00a0<\\/strong>Trung t\\u00e2m chuy\\u1ec3n \\u0111\\u1ed5i th\\u00e0nh C\\u00f4ng ty TNHH Th\\u01b0\\u01a1ng m\\u1ea1i Nguy\\u1ec5n Kim, sau \\u0111\\u1ed5i th\\u00e0nh C\\u00f4ng ty TNHH \\u0110\\u1ea7u t\\u01b0 C\\u00f4ng ngh\\u1ec7 K\\u1ef9 thu\\u1eadt M\\u1edbi NK\\u0110T (17\\/4\\/2001)<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02006:\\u00a0<\\/strong>C\\u00f4ng ty C\\u1ed5 ph\\u1ea7n \\u0110\\u1ea7u t\\u01b0 v\\u00e0 Th\\u01b0\\u01a1ng m\\u1ea1i Nguy\\u1ec5n Kim (22\\/6\\/2006)<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02007:\\u00a0<\\/strong>C\\u00f4ng ty C\\u1ed5 Ph\\u1ea7n Th\\u01b0\\u01a1ng m\\u1ea1i Nguy\\u1ec5n Kim (06\\/7\\/2007)<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02015:\\u00a0<\\/strong>C\\u00f4ng b\\u1ed1 ch\\u00ednh th\\u1ee9c h\\u1ee3p t\\u00e1c gi\\u1eefa Nguy\\u1ec5n Kim v\\u00e0 Central Group.\\u00a0Gia t\\u0103ng s\\u1ee9c m\\u1ea1nh \\u0111\\u1ec3 tr\\u1edf th\\u00e0nh Nh\\u00e0 b\\u00e1n l\\u1ebb \\u0111\\u1eb3ng c\\u1ea5p qu\\u1ed1c t\\u1ebf<\\/li>\\r\\n<\\/ul>\\r\\n<ul>\\r\\n<li><strong>I. C\\u00e1c gi\\u1ea3i th\\u01b0\\u1edfng\\u00a0c\\u1ee7a Nguy\\u1ec5n Kim<\\/strong><\\/li>\\r\\n<ul>\\r\\n<li>1. Top 500 Nh\\u00e0 b\\u00e1n l\\u1ebb h\\u00e0ng \\u0111\\u1ea7u Ch\\u00e2u \\u00c1 \\u2013 TBD (2007 \\u2013 2012)<\\/li>\\r\\n<li>2. Gi\\u1ea3i th\\u01b0\\u1edfng Sao v\\u00e0ng \\u0111\\u1ea5t Vi\\u1ec7t, 04 n\\u0103m (2009, 2010, 2011, 2013)<\\/li>\\r\\n<li>3. Th\\u01b0\\u01a1ng hi\\u1ec7u Vi\\u1ec7t y\\u00eau th\\u00edch nh\\u1ea5t 4 n\\u0103m li\\u1ec1n (2011, 2012, 2013, 2014)<\\/li>\\r\\n<li>4. Trung t\\u00e2m \\u0110i\\u1ec7n m\\u00e1y s\\u1ed1 1 t\\u1ea1i Vi\\u1ec7t Nam do ng\\u01b0\\u1eddi ti\\u00eau d\\u00f9ng b\\u00ecnh ch\\u1ecdn<\\/li>\\r\\n<li>5. Top 500 DN t\\u0103ng tr\\u01b0\\u1edfng nhanh nh\\u1ea5t Vi\\u1ec7t Nam (FAST500) (2010, 2011, 2012)<\\/li>\\r\\n<li>6. Top 500 doanh nghi\\u1ec7p l\\u1edbn nh\\u1ea5t Vi\\u1ec7t Nam (2008 \\u2013 2013)<\\/li>\\r\\n<li>7. Top 50 doanh nghi\\u1ec7p l\\u1edbn nh\\u1ea5t Vi\\u1ec7t Nam (2008, 2009, 2010, 2012)<\\/li>\\r\\n<li>8. Top 50 th\\u01b0\\u01a1ng hi\\u1ec7u n\\u1ed5i ti\\u1ebfng Vi\\u1ec7t Nam (2009, 2010)<\\/li>\\r\\n<li>9. Top 10 Doanh nghi\\u1ec7p d\\u1ecbch v\\u1ee5 t\\u1ed1t nh\\u1ea5t Vi\\u1ec7t Nam (2009, 2010)<\\/li>\\r\\n<li>10. Nh\\u00e0 l\\u00e3nh \\u0111\\u1ea1o xu\\u1ea5t s\\u1eafc (2008)<\\/li>\\r\\n<li>11. Nh\\u00e0 b\\u00e1n l\\u1ebb h\\u00e0ng \\u0111\\u1ea7u Vi\\u1ec7t Nam (2008)<\\/li>\\r\\n<li>12. C\\u00fap \\u0111\\u1ed3ng nh\\u00e0 b\\u00e1n l\\u1ebb h\\u00e0ng \\u0111\\u1ea7u Vi\\u1ec7t Nam (2007, 2008)<\\/li>\\r\\n<li>13. Doanh nghi\\u1ec7p S\\u00e0i G\\u00f2n ti\\u00eau bi\\u1ec3u (2011, 2012)<\\/li>\\r\\n<li>14. Th\\u01b0\\u01a1ng hi\\u1ec7u Vi\\u1ec7t y\\u00eau th\\u00edch nh\\u1ea5t (2011 \\u2013 2013)<\\/li>\\r\\n<\\/ul>\\r\\n<\\/ul>\\r\\n<ul>\\r\\n<li><strong>I. C\\u00e1c gi\\u1ea3i th\\u01b0\\u1edfng c\\u1ee7a\\u00a0Nguy\\u1ec5n Kim Online<\\/strong><\\/li>\\r\\n<ul>\\r\\n<li>1. Website v\\u00e0 d\\u1ecbch v\\u1ee5 TM\\u0110T ti\\u00eau bi\\u1ec3u nhi\\u1ec1u n\\u0103m li\\u00ean t\\u1ee5c (2009 \\u2013 2013)<\\/li>\\r\\n<li>2. Website TM\\u0110T m\\u00f4 h\\u00ecnh B2C chuy\\u00ean ng\\u00e0nh \\u0111i\\u1ec7n t\\u1eed - vi\\u1ec5n th\\u00f4ng \\u0111\\u01b0\\u1ee3c ng\\u01b0\\u1eddi ti\\u00eau d\\u00f9ng y\\u00eau th\\u00edch nh\\u1ea5t n\\u0103m 2011<\\/li>\\r\\n<li>3. Wesbite TM\\u0110T c\\u00f3 d\\u1ecbch v\\u1ee5 ch\\u0103m s\\u00f3c kh\\u00e1ch h\\u00e0ng y\\u00eau th\\u00edch nh\\u1ea5t (2011, 2012)<\\/li>\\r\\n<li>4. Wesbsite TM\\u0110T c\\u00f3 d\\u1ecbch v\\u1ee5 giao h\\u00e0ng t\\u1ed1t nh\\u1ea5t (2011, 2012)<\\/li>\\r\\n<\\/ul>\\r\\n<li>Kh\\u00f4ng ch\\u1ec9 t\\u1eadn t\\u00ecnh ch\\u0103m s\\u00f3c\\u00a0kh\\u00e1ch h\\u00e0ng, Nguy\\u1ec5n Kim c\\u00f2n t\\u00e2m ni\\u1ec7m r\\u1eb1ng mu\\u1ed1n ph\\u00e1t tri\\u1ec3n b\\u1ec1n v\\u1eefng ph\\u1ea3i g\\u1eafn k\\u1ebft v\\u0103n h\\u00f3a c\\u00f4ng ty v\\u1edbi c\\u1ed9ng \\u0111\\u1ed3ng. Trong su\\u1ed1t 20 n\\u0103m x\\u00e2y d\\u1ef1ng v\\u00e0 ph\\u00e1t tri\\u1ec3n, Nguy\\u1ec5n Kim lu\\u00f4n t\\u00edch c\\u1ef1c chung tay g\\u00f3p s\\u1ee9c\\u00a0v\\u00e0o c\\u00e1c ho\\u1ea1t \\u0111\\u1ed9ng v\\u0103n h\\u00f3a - x\\u00e3 h\\u1ed9i v\\u00f4 c\\u00f9ng \\u00fd ngh\\u0129a. C\\u00f3 th\\u1ec3 k\\u1ec3 \\u0111\\u1ebfn nh\\u01b0:<\\/li>\\r\\n<li>1.\\u00a0T\\u1ed5 ch\\u1ee9c\\u00a0\\u201cCh\\u01b0\\u01a1ng tr\\u00ecnh h\\u00e0nh \\u0111\\u1ed9ng v\\u00ec n\\u01b0\\u1edbc s\\u1ea1ch\\u201d (n\\u0103m 2015)\\u00a0trang b\\u1ecb h\\u1ec7 th\\u1ed1ng l\\u1ecdc n\\u01b0\\u1edbc, cung c\\u1ea5p n\\u01b0\\u1edbc u\\u1ed1ng v\\u1ec7 sinh cho tr\\u1ebb em ngh\\u00e8o Vi\\u1ec7t Nam<\\/li>\\r\\n<li>2.\\u00a0Th\\u1ef1c hi\\u1ec7n d\\u1ef1 \\u00e1n \\u201cH\\u00e0nh tr\\u00ecnh tri \\u00e2n - Ti\\u1ebfp s\\u1ee9c t\\u01b0\\u01a1ng lai\\u201d (n\\u0103m 2016)\\u00a0\\u00a0x\\u00e2y d\\u1ef1ng th\\u01b0 vi\\u1ec7n \\u0111i\\u1ec7n t\\u1eed cho 21 tr\\u01b0\\u1eddng ti\\u1ec3u h\\u1ecdc t\\u1ecda l\\u1ea1c t\\u1ea1i 13 t\\u1ec9nh\\u00a0th\\u00e0nh,\\u00a0trao t\\u1eb7ng 21 g\\u00f3i \\u0111i\\u1ec7n m\\u00e1y gia d\\u1ee5ng cho gia \\u0111\\u00ecnh c\\u00e1c em h\\u1ecdc sinh gi\\u1ecfi v\\u01b0\\u1ee3t kh\\u00f3...<\\/li>\\r\\n<li>3. L\\u00e0 th\\u00e0nh vi\\u00ean t\\u00edch c\\u1ef1c\\u00a0tham gia v\\u00e0 \\u0111\\u00f3ng g\\u00f3p cho nhi\\u1ec1u ch\\u01b0\\u01a1ng tr\\u00ecnh thi\\u1ec7n nguy\\u1ec7n c\\u1ee7a\\u00a0c\\u1ee7a t\\u1ed5 ch\\u1ee9c T\\u1eeb thi\\u1ec7n Minh T\\u00e2m<\\/li>\\r\\n<li>4. Nh\\u00e0 t\\u00e0i tr\\u1ee3 cho c\\u00e1c ch\\u01b0\\u01a1ng tr\\u00ecnh gi\\u1ea3i tr\\u00ed \\u0103n kh\\u00e1ch b\\u1eadc nh\\u1ea5t nh\\u01b0 \\\"Gi\\u1ecdng H\\u00e1t Vi\\u1ec7t\\\", \\\"Chung S\\u1ee9c\\\"...<\\/li>\\r\\n<\\/ul>\\r\\n<p>\\u00a0<\\/p>\",\"fulltext\":\"\",\"state\":1,\"catid\":\"12\",\"created\":\"2018-04-30 07:32:50\",\"created_by\":\"596\",\"created_by_alias\":\"\",\"modified\":\"2018-04-30 07:32:50\",\"modified_by\":null,\"checked_out\":null,\"checked_out_time\":null,\"publish_up\":\"2018-04-30 07:32:50\",\"publish_down\":\"0000-00-00 00:00:00\",\"images\":\"{\\\"image_intro\\\":\\\"\\\",\\\"float_intro\\\":\\\"\\\",\\\"image_intro_alt\\\":\\\"\\\",\\\"image_intro_caption\\\":\\\"\\\",\\\"image_fulltext\\\":\\\"\\\",\\\"float_fulltext\\\":\\\"\\\",\\\"image_fulltext_alt\\\":\\\"\\\",\\\"image_fulltext_caption\\\":\\\"\\\"}\",\"urls\":\"{\\\"urla\\\":false,\\\"urlatext\\\":\\\"\\\",\\\"targeta\\\":\\\"\\\",\\\"urlb\\\":false,\\\"urlbtext\\\":\\\"\\\",\\\"targetb\\\":\\\"\\\",\\\"urlc\\\":false,\\\"urlctext\\\":\\\"\\\",\\\"targetc\\\":\\\"\\\"}\",\"attribs\":\"{\\\"article_layout\\\":\\\"\\\",\\\"show_title\\\":\\\"\\\",\\\"link_titles\\\":\\\"\\\",\\\"show_tags\\\":\\\"\\\",\\\"show_intro\\\":\\\"\\\",\\\"info_block_position\\\":\\\"\\\",\\\"info_block_show_title\\\":\\\"\\\",\\\"show_category\\\":\\\"\\\",\\\"link_category\\\":\\\"\\\",\\\"show_parent_category\\\":\\\"\\\",\\\"link_parent_category\\\":\\\"\\\",\\\"show_associations\\\":\\\"\\\",\\\"show_author\\\":\\\"\\\",\\\"link_author\\\":\\\"\\\",\\\"show_create_date\\\":\\\"\\\",\\\"show_modify_date\\\":\\\"\\\",\\\"show_publish_date\\\":\\\"\\\",\\\"show_item_navigation\\\":\\\"\\\",\\\"show_icons\\\":\\\"\\\",\\\"show_print_icon\\\":\\\"\\\",\\\"show_email_icon\\\":\\\"\\\",\\\"show_vote\\\":\\\"\\\",\\\"show_hits\\\":\\\"\\\",\\\"show_noauth\\\":\\\"\\\",\\\"urls_position\\\":\\\"\\\",\\\"alternative_readmore\\\":\\\"\\\",\\\"article_page_title\\\":\\\"\\\",\\\"show_publishing_options\\\":\\\"\\\",\\\"show_article_options\\\":\\\"\\\",\\\"show_urls_images_backend\\\":\\\"\\\",\\\"show_urls_images_frontend\\\":\\\"\\\"}\",\"version\":1,\"ordering\":null,\"metakey\":\"\",\"metadesc\":\"\",\"access\":\"1\",\"hits\":null,\"metadata\":\"{\\\"robots\\\":\\\"\\\",\\\"author\\\":\\\"\\\",\\\"rights\\\":\\\"\\\",\\\"xreference\\\":\\\"\\\"}\",\"featured\":\"0\",\"language\":\"*\",\"xreference\":\"\"}', 0),
-(8, 13, 5, '', '2018-04-30 08:32:39', 596, 564, 'eed6ccf18c71a1a43d93b53f2a1786931e146444', '{\"id\":13,\"asset_id\":67,\"parent_id\":\"1\",\"lft\":\"17\",\"rgt\":18,\"level\":1,\"path\":null,\"extension\":\"com_content\",\"title\":\"Uncategorised\",\"alias\":\"uncategorised\",\"note\":\"\",\"description\":\"\",\"published\":\"1\",\"checked_out\":null,\"checked_out_time\":null,\"access\":\"1\",\"params\":\"{\\\"category_layout\\\":\\\"\\\",\\\"image\\\":\\\"\\\",\\\"image_alt\\\":\\\"\\\"}\",\"metadesc\":\"\",\"metakey\":\"\",\"metadata\":\"{\\\"author\\\":\\\"\\\",\\\"robots\\\":\\\"\\\"}\",\"created_user_id\":\"596\",\"created_time\":\"2018-04-30 08:32:39\",\"modified_user_id\":null,\"modified_time\":\"2018-04-30 08:32:39\",\"hits\":\"0\",\"language\":\"*\",\"version\":null}', 0),
-(9, 2, 1, '', '2018-04-30 08:33:23', 596, 1856, '764a8b0b32149c22539248fc864031082945874e', '{\"id\":2,\"asset_id\":68,\"title\":\"H\\u01b0\\u1edbng d\\u1eabn mua h\\u00e0ng\",\"alias\":\"huong-dan-mua-hang\",\"introtext\":\"<p>H\\u01b0\\u1edbng d\\u1eabn mua h\\u00e0ng t\\u1ea1i \\u0111\\u00e2y ...<\\/p>\",\"fulltext\":\"\",\"state\":1,\"catid\":\"13\",\"created\":\"2018-04-30 08:33:23\",\"created_by\":\"596\",\"created_by_alias\":\"\",\"modified\":\"2018-04-30 08:33:23\",\"modified_by\":null,\"checked_out\":null,\"checked_out_time\":null,\"publish_up\":\"2018-04-30 08:33:23\",\"publish_down\":\"0000-00-00 00:00:00\",\"images\":\"{\\\"image_intro\\\":\\\"\\\",\\\"float_intro\\\":\\\"\\\",\\\"image_intro_alt\\\":\\\"\\\",\\\"image_intro_caption\\\":\\\"\\\",\\\"image_fulltext\\\":\\\"\\\",\\\"float_fulltext\\\":\\\"\\\",\\\"image_fulltext_alt\\\":\\\"\\\",\\\"image_fulltext_caption\\\":\\\"\\\"}\",\"urls\":\"{\\\"urla\\\":false,\\\"urlatext\\\":\\\"\\\",\\\"targeta\\\":\\\"\\\",\\\"urlb\\\":false,\\\"urlbtext\\\":\\\"\\\",\\\"targetb\\\":\\\"\\\",\\\"urlc\\\":false,\\\"urlctext\\\":\\\"\\\",\\\"targetc\\\":\\\"\\\"}\",\"attribs\":\"{\\\"article_layout\\\":\\\"\\\",\\\"show_title\\\":\\\"\\\",\\\"link_titles\\\":\\\"\\\",\\\"show_tags\\\":\\\"\\\",\\\"show_intro\\\":\\\"\\\",\\\"info_block_position\\\":\\\"\\\",\\\"info_block_show_title\\\":\\\"\\\",\\\"show_category\\\":\\\"\\\",\\\"link_category\\\":\\\"\\\",\\\"show_parent_category\\\":\\\"\\\",\\\"link_parent_category\\\":\\\"\\\",\\\"show_associations\\\":\\\"\\\",\\\"show_author\\\":\\\"\\\",\\\"link_author\\\":\\\"\\\",\\\"show_create_date\\\":\\\"\\\",\\\"show_modify_date\\\":\\\"\\\",\\\"show_publish_date\\\":\\\"\\\",\\\"show_item_navigation\\\":\\\"\\\",\\\"show_icons\\\":\\\"\\\",\\\"show_print_icon\\\":\\\"\\\",\\\"show_email_icon\\\":\\\"\\\",\\\"show_vote\\\":\\\"\\\",\\\"show_hits\\\":\\\"\\\",\\\"show_noauth\\\":\\\"\\\",\\\"urls_position\\\":\\\"\\\",\\\"alternative_readmore\\\":\\\"\\\",\\\"article_page_title\\\":\\\"\\\",\\\"show_publishing_options\\\":\\\"\\\",\\\"show_article_options\\\":\\\"\\\",\\\"show_urls_images_backend\\\":\\\"\\\",\\\"show_urls_images_frontend\\\":\\\"\\\"}\",\"version\":1,\"ordering\":null,\"metakey\":\"\",\"metadesc\":\"\",\"access\":\"1\",\"hits\":null,\"metadata\":\"{\\\"robots\\\":\\\"\\\",\\\"author\\\":\\\"\\\",\\\"rights\\\":\\\"\\\",\\\"xreference\\\":\\\"\\\"}\",\"featured\":\"0\",\"language\":\"*\",\"xreference\":\"\"}', 0),
-(10, 3, 1, '', '2018-05-01 10:03:06', 596, 2116, '566d8036efeacc573a0bb493b5d84f93d9edc796', '{\"id\":3,\"asset_id\":77,\"title\":\"Li\\u00ean h\\u1ec7\",\"alias\":\"lien-he\",\"introtext\":\"<p>\\u0110\\u1ecba ch\\u1ec9 :\\u00a0Ph\\u00f2ng 311 Nh\\u00e0 A4, Tr\\u01b0\\u1eddng \\u0110H H\\u00e0ng H\\u1ea3i Vi\\u1ec7t Nam<\\/p>\\r\\n<p>S\\u1ed1 \\u0111i\\u1ec7n tho\\u1ea1i :\\u00a0(801) 2345 - 6789<\\/p>\\r\\n<p>Shop Group 7 m\\u1edf c\\u1eeda t\\u1eeb 08h00 - 22h00 lu\\u00f4n ch\\u00e0o \\u0111\\u00f3n qu\\u00fd kh\\u00e1ch h\\u00e0ng \\u0111\\u1ebfn tham quan v\\u00e0 mua s\\u1eafm!<\\/p>\",\"fulltext\":\"\",\"state\":1,\"catid\":\"8\",\"created\":\"2018-05-01 10:03:06\",\"created_by\":\"596\",\"created_by_alias\":\"\",\"modified\":\"2018-05-01 10:03:06\",\"modified_by\":null,\"checked_out\":null,\"checked_out_time\":null,\"publish_up\":\"2018-05-01 10:03:06\",\"publish_down\":\"0000-00-00 00:00:00\",\"images\":\"{\\\"image_intro\\\":\\\"\\\",\\\"float_intro\\\":\\\"\\\",\\\"image_intro_alt\\\":\\\"\\\",\\\"image_intro_caption\\\":\\\"\\\",\\\"image_fulltext\\\":\\\"\\\",\\\"float_fulltext\\\":\\\"\\\",\\\"image_fulltext_alt\\\":\\\"\\\",\\\"image_fulltext_caption\\\":\\\"\\\"}\",\"urls\":\"{\\\"urla\\\":false,\\\"urlatext\\\":\\\"\\\",\\\"targeta\\\":\\\"\\\",\\\"urlb\\\":false,\\\"urlbtext\\\":\\\"\\\",\\\"targetb\\\":\\\"\\\",\\\"urlc\\\":false,\\\"urlctext\\\":\\\"\\\",\\\"targetc\\\":\\\"\\\"}\",\"attribs\":\"{\\\"article_layout\\\":\\\"\\\",\\\"show_title\\\":\\\"\\\",\\\"link_titles\\\":\\\"\\\",\\\"show_tags\\\":\\\"\\\",\\\"show_intro\\\":\\\"\\\",\\\"info_block_position\\\":\\\"\\\",\\\"info_block_show_title\\\":\\\"\\\",\\\"show_category\\\":\\\"\\\",\\\"link_category\\\":\\\"\\\",\\\"show_parent_category\\\":\\\"\\\",\\\"link_parent_category\\\":\\\"\\\",\\\"show_associations\\\":\\\"\\\",\\\"show_author\\\":\\\"\\\",\\\"link_author\\\":\\\"\\\",\\\"show_create_date\\\":\\\"\\\",\\\"show_modify_date\\\":\\\"\\\",\\\"show_publish_date\\\":\\\"\\\",\\\"show_item_navigation\\\":\\\"\\\",\\\"show_icons\\\":\\\"\\\",\\\"show_print_icon\\\":\\\"\\\",\\\"show_email_icon\\\":\\\"\\\",\\\"show_vote\\\":\\\"\\\",\\\"show_hits\\\":\\\"\\\",\\\"show_noauth\\\":\\\"\\\",\\\"urls_position\\\":\\\"\\\",\\\"alternative_readmore\\\":\\\"\\\",\\\"article_page_title\\\":\\\"\\\",\\\"show_publishing_options\\\":\\\"\\\",\\\"show_article_options\\\":\\\"\\\",\\\"show_urls_images_backend\\\":\\\"\\\",\\\"show_urls_images_frontend\\\":\\\"\\\"}\",\"version\":1,\"ordering\":null,\"metakey\":\"\",\"metadesc\":\"\",\"access\":\"1\",\"hits\":null,\"metadata\":\"{\\\"robots\\\":\\\"\\\",\\\"author\\\":\\\"\\\",\\\"rights\\\":\\\"\\\",\\\"xreference\\\":\\\"\\\"}\",\"featured\":\"0\",\"language\":\"*\",\"xreference\":\"\"}', 0);
+(1, 8, 5, '', '2018-04-30 02:59:43', 596, 580, 'daf911568e20467e569caa5e679fb71709fc4450', '{"id":8,"asset_id":58,"parent_id":"1","lft":"11","rgt":12,"level":1,"path":null,"extension":"com_content","title":"C\\u00f4ng ty Shop Online","alias":"cong-ty-shop-online","note":"","description":"","published":"1","checked_out":null,"checked_out_time":null,"access":"1","params":"{\\"category_layout\\":\\"\\",\\"image\\":\\"\\",\\"image_alt\\":\\"\\"}","metadesc":"","metakey":"","metadata":"{\\"author\\":\\"\\",\\"robots\\":\\"\\"}","created_user_id":"596","created_time":"2018-04-30 02:59:43","modified_user_id":null,"modified_time":"2018-04-30 02:59:43","hits":"0","language":"*","version":null}', 0),
+(4, 10, 5, '', '2018-04-30 03:37:13', 596, 568, '864c7cc36f29d7ccd2ca1336b1fef40286613265', '{"id":10,"asset_id":61,"parent_id":"8","lft":"10","rgt":11,"level":2,"path":null,"extension":"com_content","title":"Gi\\u1edbi thi\\u1ec7u","alias":"gioi-thieu","note":"","description":"","published":"1","checked_out":null,"checked_out_time":null,"access":"1","params":"{\\"category_layout\\":\\"\\",\\"image\\":\\"\\",\\"image_alt\\":\\"\\"}","metadesc":"","metakey":"","metadata":"{\\"author\\":\\"\\",\\"robots\\":\\"\\"}","created_user_id":"596","created_time":"2018-04-30 03:37:13","modified_user_id":null,"modified_time":"2018-04-30 03:37:13","hits":"0","language":"*","version":null}', 0),
+(5, 11, 5, '', '2018-04-30 03:37:26', 596, 596, 'bef4c9c9fa489ad740071d309689128a63c07bf6', '{"id":11,"asset_id":62,"parent_id":"8","lft":"12","rgt":13,"level":2,"path":null,"extension":"com_content","title":"Tuy\\u1ec3n d\\u1ee5ng","alias":"tuyen-dung","note":"","description":"<p>Tuy\\u1ec3n d\\u1ee5ng<\\/p>","published":"1","checked_out":null,"checked_out_time":null,"access":"1","params":"{\\"category_layout\\":\\"\\",\\"image\\":\\"\\",\\"image_alt\\":\\"\\"}","metadesc":"","metakey":"","metadata":"{\\"author\\":\\"\\",\\"robots\\":\\"\\"}","created_user_id":"596","created_time":"2018-04-30 03:37:26","modified_user_id":null,"modified_time":"2018-04-30 03:37:26","hits":"0","language":"*","version":null}', 0),
+(6, 12, 5, '', '2018-04-30 07:31:56', 596, 618, '9b1ba9231f5a5efdee0dfd7001e4a1b5bf5aa57f', '{"id":12,"asset_id":63,"parent_id":"10","lft":"11","rgt":12,"level":3,"path":null,"extension":"com_content","title":"Th\\u00f4ng tin c\\u00f4ng ty","alias":"thong-tin-cong-ty","note":"","description":"<p>Th\\u00f4ng tin c\\u00f4ng ty<\\/p>","published":"1","checked_out":null,"checked_out_time":null,"access":"1","params":"{\\"category_layout\\":\\"\\",\\"image\\":\\"\\",\\"image_alt\\":\\"\\"}","metadesc":"","metakey":"","metadata":"{\\"author\\":\\"\\",\\"robots\\":\\"\\"}","created_user_id":"596","created_time":"2018-04-30 07:31:56","modified_user_id":null,"modified_time":"2018-04-30 07:31:56","hits":"0","language":"*","version":null}', 0),
+(7, 1, 1, '', '2018-04-30 07:32:50', 596, 7771, '991503cbbda3b032f5cd52b89ca59971c70293dd', '{"id":1,"asset_id":64,"title":"Gi\\u1edbi thi\\u1ec7u","alias":"gioi-thieu","introtext":"<p><strong>C\\u00d4NG TY C\\u1ed4 PH\\u1ea6N TH\\u01af\\u01a0NG M\\u1ea0I NGUY\\u1ec4N KIM<\\/strong><\\/p>\\r\\n<ul>\\r\\n<li><strong>N\\u0103m 1992:\\u00a0<\\/strong>Th\\u00e0nh l\\u1eadp C\\u1eeda h\\u00e0ng Kinh doanh \\u0110i\\u1ec7n - \\u0110i\\u1ec7n t\\u1eed - \\u0110i\\u1ec7n\\u00a0l\\u1ea1nh<\\/li>\\r\\n<li><strong>N\\u0103m 1996:\\u00a0<\\/strong>Khai tr\\u01b0\\u01a1ng Trung t\\u00e2m \\u0110i\\u1ec7n t\\u1eed - \\u0110i\\u1ec7n l\\u1ea1nh Th\\u00e0nh ph\\u1ed1 t\\u1ea1i s\\u1ed1 6Bis Tr\\u1ea7n H\\u01b0ng \\u0110\\u1ea1o, qu\\u1eadn 1, TP.HCM<\\/li>\\r\\n<li><strong>N\\u0103m 1999:\\u00a0<\\/strong>\\u0110\\u1ed5i t\\u00ean th\\u00e0nh Trung t\\u00e2m Mua s\\u1eafm S\\u00e0i G\\u00f2n Nguy\\u1ec5n Kim.\\u00a0Th\\u01b0\\u01a1ng hi\\u1ec7u \\"S\\u00e0i G\\u00f2n - Nguy\\u1ec5n Kim\\" \\u0111\\u01b0\\u1ee3c b\\u1ea3o h\\u1ed9 \\u0111\\u1ed9c quy\\u1ec1n<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02001:\\u00a0<\\/strong>Trung t\\u00e2m chuy\\u1ec3n \\u0111\\u1ed5i th\\u00e0nh C\\u00f4ng ty TNHH Th\\u01b0\\u01a1ng m\\u1ea1i Nguy\\u1ec5n Kim, sau \\u0111\\u1ed5i th\\u00e0nh C\\u00f4ng ty TNHH \\u0110\\u1ea7u t\\u01b0 C\\u00f4ng ngh\\u1ec7 K\\u1ef9 thu\\u1eadt M\\u1edbi NK\\u0110T (17\\/4\\/2001)<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02006:\\u00a0<\\/strong>C\\u00f4ng ty C\\u1ed5 ph\\u1ea7n \\u0110\\u1ea7u t\\u01b0 v\\u00e0 Th\\u01b0\\u01a1ng m\\u1ea1i Nguy\\u1ec5n Kim (22\\/6\\/2006)<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02007:\\u00a0<\\/strong>C\\u00f4ng ty C\\u1ed5 Ph\\u1ea7n Th\\u01b0\\u01a1ng m\\u1ea1i Nguy\\u1ec5n Kim (06\\/7\\/2007)<\\/li>\\r\\n<li><strong>N\\u0103m\\u00a02015:\\u00a0<\\/strong>C\\u00f4ng b\\u1ed1 ch\\u00ednh th\\u1ee9c h\\u1ee3p t\\u00e1c gi\\u1eefa Nguy\\u1ec5n Kim v\\u00e0 Central Group.\\u00a0Gia t\\u0103ng s\\u1ee9c m\\u1ea1nh \\u0111\\u1ec3 tr\\u1edf th\\u00e0nh Nh\\u00e0 b\\u00e1n l\\u1ebb \\u0111\\u1eb3ng c\\u1ea5p qu\\u1ed1c t\\u1ebf<\\/li>\\r\\n<\\/ul>\\r\\n<ul>\\r\\n<li><strong>I. C\\u00e1c gi\\u1ea3i th\\u01b0\\u1edfng\\u00a0c\\u1ee7a Nguy\\u1ec5n Kim<\\/strong><\\/li>\\r\\n<ul>\\r\\n<li>1. Top 500 Nh\\u00e0 b\\u00e1n l\\u1ebb h\\u00e0ng \\u0111\\u1ea7u Ch\\u00e2u \\u00c1 \\u2013 TBD (2007 \\u2013 2012)<\\/li>\\r\\n<li>2. Gi\\u1ea3i th\\u01b0\\u1edfng Sao v\\u00e0ng \\u0111\\u1ea5t Vi\\u1ec7t, 04 n\\u0103m (2009, 2010, 2011, 2013)<\\/li>\\r\\n<li>3. Th\\u01b0\\u01a1ng hi\\u1ec7u Vi\\u1ec7t y\\u00eau th\\u00edch nh\\u1ea5t 4 n\\u0103m li\\u1ec1n (2011, 2012, 2013, 2014)<\\/li>\\r\\n<li>4. Trung t\\u00e2m \\u0110i\\u1ec7n m\\u00e1y s\\u1ed1 1 t\\u1ea1i Vi\\u1ec7t Nam do ng\\u01b0\\u1eddi ti\\u00eau d\\u00f9ng b\\u00ecnh ch\\u1ecdn<\\/li>\\r\\n<li>5. Top 500 DN t\\u0103ng tr\\u01b0\\u1edfng nhanh nh\\u1ea5t Vi\\u1ec7t Nam (FAST500) (2010, 2011, 2012)<\\/li>\\r\\n<li>6. Top 500 doanh nghi\\u1ec7p l\\u1edbn nh\\u1ea5t Vi\\u1ec7t Nam (2008 \\u2013 2013)<\\/li>\\r\\n<li>7. Top 50 doanh nghi\\u1ec7p l\\u1edbn nh\\u1ea5t Vi\\u1ec7t Nam (2008, 2009, 2010, 2012)<\\/li>\\r\\n<li>8. Top 50 th\\u01b0\\u01a1ng hi\\u1ec7u n\\u1ed5i ti\\u1ebfng Vi\\u1ec7t Nam (2009, 2010)<\\/li>\\r\\n<li>9. Top 10 Doanh nghi\\u1ec7p d\\u1ecbch v\\u1ee5 t\\u1ed1t nh\\u1ea5t Vi\\u1ec7t Nam (2009, 2010)<\\/li>\\r\\n<li>10. Nh\\u00e0 l\\u00e3nh \\u0111\\u1ea1o xu\\u1ea5t s\\u1eafc (2008)<\\/li>\\r\\n<li>11. Nh\\u00e0 b\\u00e1n l\\u1ebb h\\u00e0ng \\u0111\\u1ea7u Vi\\u1ec7t Nam (2008)<\\/li>\\r\\n<li>12. C\\u00fap \\u0111\\u1ed3ng nh\\u00e0 b\\u00e1n l\\u1ebb h\\u00e0ng \\u0111\\u1ea7u Vi\\u1ec7t Nam (2007, 2008)<\\/li>\\r\\n<li>13. Doanh nghi\\u1ec7p S\\u00e0i G\\u00f2n ti\\u00eau bi\\u1ec3u (2011, 2012)<\\/li>\\r\\n<li>14. Th\\u01b0\\u01a1ng hi\\u1ec7u Vi\\u1ec7t y\\u00eau th\\u00edch nh\\u1ea5t (2011 \\u2013 2013)<\\/li>\\r\\n<\\/ul>\\r\\n<\\/ul>\\r\\n<ul>\\r\\n<li><strong>I. C\\u00e1c gi\\u1ea3i th\\u01b0\\u1edfng c\\u1ee7a\\u00a0Nguy\\u1ec5n Kim Online<\\/strong><\\/li>\\r\\n<ul>\\r\\n<li>1. Website v\\u00e0 d\\u1ecbch v\\u1ee5 TM\\u0110T ti\\u00eau bi\\u1ec3u nhi\\u1ec1u n\\u0103m li\\u00ean t\\u1ee5c (2009 \\u2013 2013)<\\/li>\\r\\n<li>2. Website TM\\u0110T m\\u00f4 h\\u00ecnh B2C chuy\\u00ean ng\\u00e0nh \\u0111i\\u1ec7n t\\u1eed - vi\\u1ec5n th\\u00f4ng \\u0111\\u01b0\\u1ee3c ng\\u01b0\\u1eddi ti\\u00eau d\\u00f9ng y\\u00eau th\\u00edch nh\\u1ea5t n\\u0103m 2011<\\/li>\\r\\n<li>3. Wesbite TM\\u0110T c\\u00f3 d\\u1ecbch v\\u1ee5 ch\\u0103m s\\u00f3c kh\\u00e1ch h\\u00e0ng y\\u00eau th\\u00edch nh\\u1ea5t (2011, 2012)<\\/li>\\r\\n<li>4. Wesbsite TM\\u0110T c\\u00f3 d\\u1ecbch v\\u1ee5 giao h\\u00e0ng t\\u1ed1t nh\\u1ea5t (2011, 2012)<\\/li>\\r\\n<\\/ul>\\r\\n<li>Kh\\u00f4ng ch\\u1ec9 t\\u1eadn t\\u00ecnh ch\\u0103m s\\u00f3c\\u00a0kh\\u00e1ch h\\u00e0ng, Nguy\\u1ec5n Kim c\\u00f2n t\\u00e2m ni\\u1ec7m r\\u1eb1ng mu\\u1ed1n ph\\u00e1t tri\\u1ec3n b\\u1ec1n v\\u1eefng ph\\u1ea3i g\\u1eafn k\\u1ebft v\\u0103n h\\u00f3a c\\u00f4ng ty v\\u1edbi c\\u1ed9ng \\u0111\\u1ed3ng. Trong su\\u1ed1t 20 n\\u0103m x\\u00e2y d\\u1ef1ng v\\u00e0 ph\\u00e1t tri\\u1ec3n, Nguy\\u1ec5n Kim lu\\u00f4n t\\u00edch c\\u1ef1c chung tay g\\u00f3p s\\u1ee9c\\u00a0v\\u00e0o c\\u00e1c ho\\u1ea1t \\u0111\\u1ed9ng v\\u0103n h\\u00f3a - x\\u00e3 h\\u1ed9i v\\u00f4 c\\u00f9ng \\u00fd ngh\\u0129a. C\\u00f3 th\\u1ec3 k\\u1ec3 \\u0111\\u1ebfn nh\\u01b0:<\\/li>\\r\\n<li>1.\\u00a0T\\u1ed5 ch\\u1ee9c\\u00a0\\u201cCh\\u01b0\\u01a1ng tr\\u00ecnh h\\u00e0nh \\u0111\\u1ed9ng v\\u00ec n\\u01b0\\u1edbc s\\u1ea1ch\\u201d (n\\u0103m 2015)\\u00a0trang b\\u1ecb h\\u1ec7 th\\u1ed1ng l\\u1ecdc n\\u01b0\\u1edbc, cung c\\u1ea5p n\\u01b0\\u1edbc u\\u1ed1ng v\\u1ec7 sinh cho tr\\u1ebb em ngh\\u00e8o Vi\\u1ec7t Nam<\\/li>\\r\\n<li>2.\\u00a0Th\\u1ef1c hi\\u1ec7n d\\u1ef1 \\u00e1n \\u201cH\\u00e0nh tr\\u00ecnh tri \\u00e2n - Ti\\u1ebfp s\\u1ee9c t\\u01b0\\u01a1ng lai\\u201d (n\\u0103m 2016)\\u00a0\\u00a0x\\u00e2y d\\u1ef1ng th\\u01b0 vi\\u1ec7n \\u0111i\\u1ec7n t\\u1eed cho 21 tr\\u01b0\\u1eddng ti\\u1ec3u h\\u1ecdc t\\u1ecda l\\u1ea1c t\\u1ea1i 13 t\\u1ec9nh\\u00a0th\\u00e0nh,\\u00a0trao t\\u1eb7ng 21 g\\u00f3i \\u0111i\\u1ec7n m\\u00e1y gia d\\u1ee5ng cho gia \\u0111\\u00ecnh c\\u00e1c em h\\u1ecdc sinh gi\\u1ecfi v\\u01b0\\u1ee3t kh\\u00f3...<\\/li>\\r\\n<li>3. L\\u00e0 th\\u00e0nh vi\\u00ean t\\u00edch c\\u1ef1c\\u00a0tham gia v\\u00e0 \\u0111\\u00f3ng g\\u00f3p cho nhi\\u1ec1u ch\\u01b0\\u01a1ng tr\\u00ecnh thi\\u1ec7n nguy\\u1ec7n c\\u1ee7a\\u00a0c\\u1ee7a t\\u1ed5 ch\\u1ee9c T\\u1eeb thi\\u1ec7n Minh T\\u00e2m<\\/li>\\r\\n<li>4. Nh\\u00e0 t\\u00e0i tr\\u1ee3 cho c\\u00e1c ch\\u01b0\\u01a1ng tr\\u00ecnh gi\\u1ea3i tr\\u00ed \\u0103n kh\\u00e1ch b\\u1eadc nh\\u1ea5t nh\\u01b0 \\"Gi\\u1ecdng H\\u00e1t Vi\\u1ec7t\\", \\"Chung S\\u1ee9c\\"...<\\/li>\\r\\n<\\/ul>\\r\\n<p>\\u00a0<\\/p>","fulltext":"","state":1,"catid":"12","created":"2018-04-30 07:32:50","created_by":"596","created_by_alias":"","modified":"2018-04-30 07:32:50","modified_by":null,"checked_out":null,"checked_out_time":null,"publish_up":"2018-04-30 07:32:50","publish_down":"0000-00-00 00:00:00","images":"{\\"image_intro\\":\\"\\",\\"float_intro\\":\\"\\",\\"image_intro_alt\\":\\"\\",\\"image_intro_caption\\":\\"\\",\\"image_fulltext\\":\\"\\",\\"float_fulltext\\":\\"\\",\\"image_fulltext_alt\\":\\"\\",\\"image_fulltext_caption\\":\\"\\"}","urls":"{\\"urla\\":false,\\"urlatext\\":\\"\\",\\"targeta\\":\\"\\",\\"urlb\\":false,\\"urlbtext\\":\\"\\",\\"targetb\\":\\"\\",\\"urlc\\":false,\\"urlctext\\":\\"\\",\\"targetc\\":\\"\\"}","attribs":"{\\"article_layout\\":\\"\\",\\"show_title\\":\\"\\",\\"link_titles\\":\\"\\",\\"show_tags\\":\\"\\",\\"show_intro\\":\\"\\",\\"info_block_position\\":\\"\\",\\"info_block_show_title\\":\\"\\",\\"show_category\\":\\"\\",\\"link_category\\":\\"\\",\\"show_parent_category\\":\\"\\",\\"link_parent_category\\":\\"\\",\\"show_associations\\":\\"\\",\\"show_author\\":\\"\\",\\"link_author\\":\\"\\",\\"show_create_date\\":\\"\\",\\"show_modify_date\\":\\"\\",\\"show_publish_date\\":\\"\\",\\"show_item_navigation\\":\\"\\",\\"show_icons\\":\\"\\",\\"show_print_icon\\":\\"\\",\\"show_email_icon\\":\\"\\",\\"show_vote\\":\\"\\",\\"show_hits\\":\\"\\",\\"show_noauth\\":\\"\\",\\"urls_position\\":\\"\\",\\"alternative_readmore\\":\\"\\",\\"article_page_title\\":\\"\\",\\"show_publishing_options\\":\\"\\",\\"show_article_options\\":\\"\\",\\"show_urls_images_backend\\":\\"\\",\\"show_urls_images_frontend\\":\\"\\"}","version":1,"ordering":null,"metakey":"","metadesc":"","access":"1","hits":null,"metadata":"{\\"robots\\":\\"\\",\\"author\\":\\"\\",\\"rights\\":\\"\\",\\"xreference\\":\\"\\"}","featured":"0","language":"*","xreference":""}', 0),
+(8, 13, 5, '', '2018-04-30 08:32:39', 596, 564, 'eed6ccf18c71a1a43d93b53f2a1786931e146444', '{"id":13,"asset_id":67,"parent_id":"1","lft":"17","rgt":18,"level":1,"path":null,"extension":"com_content","title":"Uncategorised","alias":"uncategorised","note":"","description":"","published":"1","checked_out":null,"checked_out_time":null,"access":"1","params":"{\\"category_layout\\":\\"\\",\\"image\\":\\"\\",\\"image_alt\\":\\"\\"}","metadesc":"","metakey":"","metadata":"{\\"author\\":\\"\\",\\"robots\\":\\"\\"}","created_user_id":"596","created_time":"2018-04-30 08:32:39","modified_user_id":null,"modified_time":"2018-04-30 08:32:39","hits":"0","language":"*","version":null}', 0),
+(9, 2, 1, '', '2018-04-30 08:33:23', 596, 1856, '764a8b0b32149c22539248fc864031082945874e', '{"id":2,"asset_id":68,"title":"H\\u01b0\\u1edbng d\\u1eabn mua h\\u00e0ng","alias":"huong-dan-mua-hang","introtext":"<p>H\\u01b0\\u1edbng d\\u1eabn mua h\\u00e0ng t\\u1ea1i \\u0111\\u00e2y ...<\\/p>","fulltext":"","state":1,"catid":"13","created":"2018-04-30 08:33:23","created_by":"596","created_by_alias":"","modified":"2018-04-30 08:33:23","modified_by":null,"checked_out":null,"checked_out_time":null,"publish_up":"2018-04-30 08:33:23","publish_down":"0000-00-00 00:00:00","images":"{\\"image_intro\\":\\"\\",\\"float_intro\\":\\"\\",\\"image_intro_alt\\":\\"\\",\\"image_intro_caption\\":\\"\\",\\"image_fulltext\\":\\"\\",\\"float_fulltext\\":\\"\\",\\"image_fulltext_alt\\":\\"\\",\\"image_fulltext_caption\\":\\"\\"}","urls":"{\\"urla\\":false,\\"urlatext\\":\\"\\",\\"targeta\\":\\"\\",\\"urlb\\":false,\\"urlbtext\\":\\"\\",\\"targetb\\":\\"\\",\\"urlc\\":false,\\"urlctext\\":\\"\\",\\"targetc\\":\\"\\"}","attribs":"{\\"article_layout\\":\\"\\",\\"show_title\\":\\"\\",\\"link_titles\\":\\"\\",\\"show_tags\\":\\"\\",\\"show_intro\\":\\"\\",\\"info_block_position\\":\\"\\",\\"info_block_show_title\\":\\"\\",\\"show_category\\":\\"\\",\\"link_category\\":\\"\\",\\"show_parent_category\\":\\"\\",\\"link_parent_category\\":\\"\\",\\"show_associations\\":\\"\\",\\"show_author\\":\\"\\",\\"link_author\\":\\"\\",\\"show_create_date\\":\\"\\",\\"show_modify_date\\":\\"\\",\\"show_publish_date\\":\\"\\",\\"show_item_navigation\\":\\"\\",\\"show_icons\\":\\"\\",\\"show_print_icon\\":\\"\\",\\"show_email_icon\\":\\"\\",\\"show_vote\\":\\"\\",\\"show_hits\\":\\"\\",\\"show_noauth\\":\\"\\",\\"urls_position\\":\\"\\",\\"alternative_readmore\\":\\"\\",\\"article_page_title\\":\\"\\",\\"show_publishing_options\\":\\"\\",\\"show_article_options\\":\\"\\",\\"show_urls_images_backend\\":\\"\\",\\"show_urls_images_frontend\\":\\"\\"}","version":1,"ordering":null,"metakey":"","metadesc":"","access":"1","hits":null,"metadata":"{\\"robots\\":\\"\\",\\"author\\":\\"\\",\\"rights\\":\\"\\",\\"xreference\\":\\"\\"}","featured":"0","language":"*","xreference":""}', 0),
+(10, 3, 1, '', '2018-05-01 10:03:06', 596, 2116, '566d8036efeacc573a0bb493b5d84f93d9edc796', '{"id":3,"asset_id":77,"title":"Li\\u00ean h\\u1ec7","alias":"lien-he","introtext":"<p>\\u0110\\u1ecba ch\\u1ec9 :\\u00a0Ph\\u00f2ng 311 Nh\\u00e0 A4, Tr\\u01b0\\u1eddng \\u0110H H\\u00e0ng H\\u1ea3i Vi\\u1ec7t Nam<\\/p>\\r\\n<p>S\\u1ed1 \\u0111i\\u1ec7n tho\\u1ea1i :\\u00a0(801) 2345 - 6789<\\/p>\\r\\n<p>Shop Group 7 m\\u1edf c\\u1eeda t\\u1eeb 08h00 - 22h00 lu\\u00f4n ch\\u00e0o \\u0111\\u00f3n qu\\u00fd kh\\u00e1ch h\\u00e0ng \\u0111\\u1ebfn tham quan v\\u00e0 mua s\\u1eafm!<\\/p>","fulltext":"","state":1,"catid":"8","created":"2018-05-01 10:03:06","created_by":"596","created_by_alias":"","modified":"2018-05-01 10:03:06","modified_by":null,"checked_out":null,"checked_out_time":null,"publish_up":"2018-05-01 10:03:06","publish_down":"0000-00-00 00:00:00","images":"{\\"image_intro\\":\\"\\",\\"float_intro\\":\\"\\",\\"image_intro_alt\\":\\"\\",\\"image_intro_caption\\":\\"\\",\\"image_fulltext\\":\\"\\",\\"float_fulltext\\":\\"\\",\\"image_fulltext_alt\\":\\"\\",\\"image_fulltext_caption\\":\\"\\"}","urls":"{\\"urla\\":false,\\"urlatext\\":\\"\\",\\"targeta\\":\\"\\",\\"urlb\\":false,\\"urlbtext\\":\\"\\",\\"targetb\\":\\"\\",\\"urlc\\":false,\\"urlctext\\":\\"\\",\\"targetc\\":\\"\\"}","attribs":"{\\"article_layout\\":\\"\\",\\"show_title\\":\\"\\",\\"link_titles\\":\\"\\",\\"show_tags\\":\\"\\",\\"show_intro\\":\\"\\",\\"info_block_position\\":\\"\\",\\"info_block_show_title\\":\\"\\",\\"show_category\\":\\"\\",\\"link_category\\":\\"\\",\\"show_parent_category\\":\\"\\",\\"link_parent_category\\":\\"\\",\\"show_associations\\":\\"\\",\\"show_author\\":\\"\\",\\"link_author\\":\\"\\",\\"show_create_date\\":\\"\\",\\"show_modify_date\\":\\"\\",\\"show_publish_date\\":\\"\\",\\"show_item_navigation\\":\\"\\",\\"show_icons\\":\\"\\",\\"show_print_icon\\":\\"\\",\\"show_email_icon\\":\\"\\",\\"show_vote\\":\\"\\",\\"show_hits\\":\\"\\",\\"show_noauth\\":\\"\\",\\"urls_position\\":\\"\\",\\"alternative_readmore\\":\\"\\",\\"article_page_title\\":\\"\\",\\"show_publishing_options\\":\\"\\",\\"show_article_options\\":\\"\\",\\"show_urls_images_backend\\":\\"\\",\\"show_urls_images_frontend\\":\\"\\"}","version":1,"ordering":null,"metakey":"","metadesc":"","access":"1","hits":null,"metadata":"{\\"robots\\":\\"\\",\\"author\\":\\"\\",\\"rights\\":\\"\\",\\"xreference\\":\\"\\"}","featured":"0","language":"*","xreference":""}', 0);
 
 -- --------------------------------------------------------
 
@@ -1794,8 +1799,8 @@ INSERT INTO `xtqmd_ucm_history` (`version_id`, `ucm_item_id`, `ucm_type_id`, `ve
 -- Table structure for table `xtqmd_updates`
 --
 
-CREATE TABLE `xtqmd_updates` (
-  `update_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_updates` (
+`update_id` int(11) NOT NULL,
   `update_site_id` int(11) DEFAULT '0',
   `extension_id` int(11) DEFAULT '0',
   `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '',
@@ -1809,89 +1814,89 @@ CREATE TABLE `xtqmd_updates` (
   `detailsurl` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `infourl` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `extra_query` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Available Updates';
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Available Updates';
 
 --
 -- Dumping data for table `xtqmd_updates`
 --
 
 INSERT INTO `xtqmd_updates` (`update_id`, `update_site_id`, `extension_id`, `name`, `description`, `element`, `type`, `folder`, `client_id`, `version`, `data`, `detailsurl`, `infourl`, `extra_query`) VALUES
-(1, 2, 0, 'Swedish', '', 'pkg_sv-SE', 'package', '', 0, '3.8.7.2', '', 'https://update.joomla.org/language/details3/sv-SE_details.xml', '', ''),
-(2, 2, 0, 'Syriac', '', 'pkg_sy-IQ', 'package', '', 0, '3.4.5.1', '', 'https://update.joomla.org/language/details3/sy-IQ_details.xml', '', ''),
-(3, 2, 0, 'Tamil', '', 'pkg_ta-IN', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ta-IN_details.xml', '', ''),
-(4, 2, 0, 'Thai', '', 'pkg_th-TH', 'package', '', 0, '3.8.6.1', '', 'https://update.joomla.org/language/details3/th-TH_details.xml', '', ''),
-(5, 2, 0, 'Turkish', '', 'pkg_tr-TR', 'package', '', 0, '3.8.2.1', '', 'https://update.joomla.org/language/details3/tr-TR_details.xml', '', ''),
-(6, 2, 0, 'Ukrainian', '', 'pkg_uk-UA', 'package', '', 0, '3.7.1.1', '', 'https://update.joomla.org/language/details3/uk-UA_details.xml', '', ''),
-(7, 2, 0, 'Uyghur', '', 'pkg_ug-CN', 'package', '', 0, '3.7.5.1', '', 'https://update.joomla.org/language/details3/ug-CN_details.xml', '', ''),
-(8, 2, 0, 'Albanian', '', 'pkg_sq-AL', 'package', '', 0, '3.1.1.2', '', 'https://update.joomla.org/language/details3/sq-AL_details.xml', '', ''),
-(9, 2, 0, 'Basque', '', 'pkg_eu-ES', 'package', '', 0, '3.7.5.1', '', 'https://update.joomla.org/language/details3/eu-ES_details.xml', '', ''),
-(10, 2, 0, 'Hindi', '', 'pkg_hi-IN', 'package', '', 0, '3.3.6.2', '', 'https://update.joomla.org/language/details3/hi-IN_details.xml', '', ''),
-(11, 2, 0, 'German DE', '', 'pkg_de-DE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-DE_details.xml', '', ''),
-(12, 2, 0, 'Portuguese Brazil', '', 'pkg_pt-BR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/pt-BR_details.xml', '', ''),
-(13, 2, 0, 'Serbian Latin', '', 'pkg_sr-YU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sr-YU_details.xml', '', ''),
-(14, 1, 700, 'Joomla', '', 'joomla', 'file', '', 0, '3.8.7', '', 'https://update.joomla.org/core/sts/extension_sts.xml', '', ''),
-(15, 2, 0, 'Spanish', '', 'pkg_es-ES', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/es-ES_details.xml', '', ''),
-(16, 2, 0, 'Bosnian', '', 'pkg_bs-BA', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/bs-BA_details.xml', '', ''),
-(17, 2, 0, 'Serbian Cyrillic', '', 'pkg_sr-RS', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sr-RS_details.xml', '', ''),
-(18, 2, 0, 'Bahasa Indonesia', '', 'pkg_id-ID', 'package', '', 0, '3.6.2.1', '', 'https://update.joomla.org/language/details3/id-ID_details.xml', '', ''),
-(19, 2, 0, 'Finnish', '', 'pkg_fi-FI', 'package', '', 0, '3.8.1.1', '', 'https://update.joomla.org/language/details3/fi-FI_details.xml', '', ''),
-(20, 2, 0, 'Swahili', '', 'pkg_sw-KE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sw-KE_details.xml', '', ''),
-(21, 2, 0, 'Montenegrin', '', 'pkg_srp-ME', 'package', '', 0, '3.3.1.2', '', 'https://update.joomla.org/language/details3/srp-ME_details.xml', '', ''),
-(22, 2, 0, 'English CA', '', 'pkg_en-CA', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-CA_details.xml', '', ''),
-(23, 2, 0, 'French CA', '', 'pkg_fr-CA', 'package', '', 0, '3.6.5.1', '', 'https://update.joomla.org/language/details3/fr-CA_details.xml', '', ''),
-(24, 2, 0, 'Welsh', '', 'pkg_cy-GB', 'package', '', 0, '3.8.5.1', '', 'https://update.joomla.org/language/details3/cy-GB_details.xml', '', ''),
-(25, 2, 0, 'Sinhala', '', 'pkg_si-LK', 'package', '', 0, '3.3.1.2', '', 'https://update.joomla.org/language/details3/si-LK_details.xml', '', ''),
-(26, 2, 0, 'Dari Persian', '', 'pkg_prs-AF', 'package', '', 0, '3.4.4.2', '', 'https://update.joomla.org/language/details3/prs-AF_details.xml', '', ''),
-(27, 2, 0, 'Turkmen', '', 'pkg_tk-TM', 'package', '', 0, '3.5.0.2', '', 'https://update.joomla.org/language/details3/tk-TM_details.xml', '', ''),
-(28, 2, 0, 'Irish', '', 'pkg_ga-IE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ga-IE_details.xml', '', ''),
-(29, 2, 0, 'Dzongkha', '', 'pkg_dz-BT', 'package', '', 0, '3.6.2.1', '', 'https://update.joomla.org/language/details3/dz-BT_details.xml', '', ''),
-(30, 2, 0, 'Slovenian', '', 'pkg_sl-SI', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sl-SI_details.xml', '', ''),
-(31, 2, 0, 'Spanish CO', '', 'pkg_es-CO', 'package', '', 0, '3.8.6.1', '', 'https://update.joomla.org/language/details3/es-CO_details.xml', '', ''),
-(32, 2, 0, 'German CH', '', 'pkg_de-CH', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-CH_details.xml', '', ''),
-(33, 2, 0, 'German AT', '', 'pkg_de-AT', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-AT_details.xml', '', ''),
-(34, 2, 0, 'German LI', '', 'pkg_de-LI', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-LI_details.xml', '', ''),
-(35, 2, 0, 'German LU', '', 'pkg_de-LU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-LU_details.xml', '', ''),
-(36, 2, 0, 'English NZ', '', 'pkg_en-NZ', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-NZ_details.xml', '', ''),
-(37, 4, 0, 'Armenian', '', 'pkg_hy-AM', 'package', '', 0, '3.4.4.1', '', 'https://update.joomla.org/language/details3/hy-AM_details.xml', '', ''),
-(38, 4, 0, 'Malay', '', 'pkg_ms-MY', 'package', '', 0, '3.4.1.2', '', 'https://update.joomla.org/language/details3/ms-MY_details.xml', '', ''),
-(39, 4, 0, 'Romanian', '', 'pkg_ro-RO', 'package', '', 0, '3.7.3.1', '', 'https://update.joomla.org/language/details3/ro-RO_details.xml', '', ''),
-(40, 4, 0, 'Flemish', '', 'pkg_nl-BE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/nl-BE_details.xml', '', ''),
-(41, 4, 0, 'Chinese Traditional', '', 'pkg_zh-TW', 'package', '', 0, '3.8.0.1', '', 'https://update.joomla.org/language/details3/zh-TW_details.xml', '', ''),
-(42, 4, 0, 'French', '', 'pkg_fr-FR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/fr-FR_details.xml', '', ''),
-(43, 4, 0, 'Galician', '', 'pkg_gl-ES', 'package', '', 0, '3.3.1.2', '', 'https://update.joomla.org/language/details3/gl-ES_details.xml', '', ''),
-(44, 4, 0, 'Georgian', '', 'pkg_ka-GE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ka-GE_details.xml', '', ''),
-(45, 4, 0, 'Greek', '', 'pkg_el-GR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/el-GR_details.xml', '', ''),
-(46, 4, 0, 'Japanese', '', 'pkg_ja-JP', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ja-JP_details.xml', '', ''),
-(47, 4, 0, 'Hebrew', '', 'pkg_he-IL', 'package', '', 0, '3.1.1.2', '', 'https://update.joomla.org/language/details3/he-IL_details.xml', '', ''),
-(48, 4, 0, 'Bengali', '', 'pkg_bn-BD', 'package', '', 0, '3.8.5.1', '', 'https://update.joomla.org/language/details3/bn-BD_details.xml', '', ''),
-(49, 4, 0, 'Hungarian', '', 'pkg_hu-HU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/hu-HU_details.xml', '', ''),
-(50, 4, 0, 'Afrikaans', '', 'pkg_af-ZA', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/af-ZA_details.xml', '', ''),
-(51, 4, 0, 'Arabic Unitag', '', 'pkg_ar-AA', 'package', '', 0, '3.7.5.1', '', 'https://update.joomla.org/language/details3/ar-AA_details.xml', '', ''),
-(52, 4, 0, 'Belarusian', '', 'pkg_be-BY', 'package', '', 0, '3.2.1.2', '', 'https://update.joomla.org/language/details3/be-BY_details.xml', '', ''),
-(53, 4, 0, 'Bulgarian', '', 'pkg_bg-BG', 'package', '', 0, '3.6.5.2', '', 'https://update.joomla.org/language/details3/bg-BG_details.xml', '', ''),
-(54, 4, 0, 'Catalan', '', 'pkg_ca-ES', 'package', '', 0, '3.8.3.3', '', 'https://update.joomla.org/language/details3/ca-ES_details.xml', '', ''),
-(55, 4, 0, 'Chinese Simplified', '', 'pkg_zh-CN', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/zh-CN_details.xml', '', ''),
-(56, 4, 0, 'Croatian', '', 'pkg_hr-HR', 'package', '', 0, '3.8.5.1', '', 'https://update.joomla.org/language/details3/hr-HR_details.xml', '', ''),
-(57, 4, 0, 'Czech', '', 'pkg_cs-CZ', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/cs-CZ_details.xml', '', ''),
-(58, 4, 0, 'Danish', '', 'pkg_da-DK', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/da-DK_details.xml', '', ''),
-(59, 4, 0, 'Dutch', '', 'pkg_nl-NL', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/nl-NL_details.xml', '', ''),
-(60, 4, 0, 'Esperanto', '', 'pkg_eo-XX', 'package', '', 0, '3.8.3.1', '', 'https://update.joomla.org/language/details3/eo-XX_details.xml', '', ''),
-(61, 4, 0, 'Estonian', '', 'pkg_et-EE', 'package', '', 0, '3.7.0.1', '', 'https://update.joomla.org/language/details3/et-EE_details.xml', '', ''),
-(62, 4, 0, 'Italian', '', 'pkg_it-IT', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/it-IT_details.xml', '', ''),
-(63, 4, 0, 'Khmer', '', 'pkg_km-KH', 'package', '', 0, '3.4.5.1', '', 'https://update.joomla.org/language/details3/km-KH_details.xml', '', ''),
-(64, 4, 0, 'Korean', '', 'pkg_ko-KR', 'package', '', 0, '3.8.6.1', '', 'https://update.joomla.org/language/details3/ko-KR_details.xml', '', ''),
-(65, 4, 0, 'Latvian', '', 'pkg_lv-LV', 'package', '', 0, '3.7.3.1', '', 'https://update.joomla.org/language/details3/lv-LV_details.xml', '', ''),
-(66, 4, 0, 'Macedonian', '', 'pkg_mk-MK', 'package', '', 0, '3.6.5.1', '', 'https://update.joomla.org/language/details3/mk-MK_details.xml', '', ''),
-(67, 4, 0, 'Norwegian Bokmal', '', 'pkg_nb-NO', 'package', '', 0, '3.8.4.1', '', 'https://update.joomla.org/language/details3/nb-NO_details.xml', '', ''),
-(68, 4, 0, 'Norwegian Nynorsk', '', 'pkg_nn-NO', 'package', '', 0, '3.4.2.1', '', 'https://update.joomla.org/language/details3/nn-NO_details.xml', '', ''),
-(69, 4, 0, 'Persian', '', 'pkg_fa-IR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/fa-IR_details.xml', '', ''),
-(70, 4, 0, 'Polish', '', 'pkg_pl-PL', 'package', '', 0, '3.8.7.2', '', 'https://update.joomla.org/language/details3/pl-PL_details.xml', '', ''),
-(71, 4, 0, 'Portuguese', '', 'pkg_pt-PT', 'package', '', 0, '3.8.2.1', '', 'https://update.joomla.org/language/details3/pt-PT_details.xml', '', ''),
-(72, 4, 0, 'Russian', '', 'pkg_ru-RU', 'package', '', 0, '3.8.2.1', '', 'https://update.joomla.org/language/details3/ru-RU_details.xml', '', ''),
-(73, 4, 0, 'English AU', '', 'pkg_en-AU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-AU_details.xml', '', ''),
-(74, 4, 0, 'Slovak', '', 'pkg_sk-SK', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sk-SK_details.xml', '', ''),
-(75, 4, 0, 'English US', '', 'pkg_en-US', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-US_details.xml', '', ''),
-(76, 5, 10003, 'VirtueMart', 'VirtueMart Component', 'com_virtuemart', 'component', '', 1, '3.2.14', '', 'http://virtuemart.net/releases/vm3/virtuemart_update.xml', 'https://virtuemart.net/news/489-virtuemart-3-2-14-security-release-and-enhanced-invoice-handling', '');
+(1, 2, 0, 'Belarusian', '', 'pkg_be-BY', 'package', '', 0, '3.2.1.2', '', 'https://update.joomla.org/language/details3/be-BY_details.xml', '', ''),
+(2, 2, 0, 'Bulgarian', '', 'pkg_bg-BG', 'package', '', 0, '3.6.5.2', '', 'https://update.joomla.org/language/details3/bg-BG_details.xml', '', ''),
+(3, 2, 0, 'Catalan', '', 'pkg_ca-ES', 'package', '', 0, '3.8.3.3', '', 'https://update.joomla.org/language/details3/ca-ES_details.xml', '', ''),
+(4, 2, 0, 'Chinese Simplified', '', 'pkg_zh-CN', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/zh-CN_details.xml', '', ''),
+(5, 2, 0, 'Croatian', '', 'pkg_hr-HR', 'package', '', 0, '3.8.5.1', '', 'https://update.joomla.org/language/details3/hr-HR_details.xml', '', ''),
+(6, 2, 0, 'Czech', '', 'pkg_cs-CZ', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/cs-CZ_details.xml', '', ''),
+(7, 2, 0, 'Danish', '', 'pkg_da-DK', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/da-DK_details.xml', '', ''),
+(8, 2, 0, 'Dutch', '', 'pkg_nl-NL', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/nl-NL_details.xml', '', ''),
+(9, 2, 0, 'Esperanto', '', 'pkg_eo-XX', 'package', '', 0, '3.8.3.1', '', 'https://update.joomla.org/language/details3/eo-XX_details.xml', '', ''),
+(10, 2, 0, 'Estonian', '', 'pkg_et-EE', 'package', '', 0, '3.7.0.1', '', 'https://update.joomla.org/language/details3/et-EE_details.xml', '', ''),
+(11, 2, 0, 'Italian', '', 'pkg_it-IT', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/it-IT_details.xml', '', ''),
+(12, 1, 700, 'Joomla', '', 'joomla', 'file', '', 0, '3.8.7', '', 'https://update.joomla.org/core/sts/extension_sts.xml', '', ''),
+(13, 2, 0, 'Khmer', '', 'pkg_km-KH', 'package', '', 0, '3.4.5.1', '', 'https://update.joomla.org/language/details3/km-KH_details.xml', '', ''),
+(14, 2, 0, 'Korean', '', 'pkg_ko-KR', 'package', '', 0, '3.8.6.1', '', 'https://update.joomla.org/language/details3/ko-KR_details.xml', '', ''),
+(15, 2, 0, 'Latvian', '', 'pkg_lv-LV', 'package', '', 0, '3.7.3.1', '', 'https://update.joomla.org/language/details3/lv-LV_details.xml', '', ''),
+(16, 2, 0, 'Macedonian', '', 'pkg_mk-MK', 'package', '', 0, '3.6.5.1', '', 'https://update.joomla.org/language/details3/mk-MK_details.xml', '', ''),
+(17, 2, 0, 'Norwegian Bokmal', '', 'pkg_nb-NO', 'package', '', 0, '3.8.4.1', '', 'https://update.joomla.org/language/details3/nb-NO_details.xml', '', ''),
+(18, 2, 0, 'Norwegian Nynorsk', '', 'pkg_nn-NO', 'package', '', 0, '3.4.2.1', '', 'https://update.joomla.org/language/details3/nn-NO_details.xml', '', ''),
+(19, 2, 0, 'Persian', '', 'pkg_fa-IR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/fa-IR_details.xml', '', ''),
+(20, 2, 0, 'Polish', '', 'pkg_pl-PL', 'package', '', 0, '3.8.7.2', '', 'https://update.joomla.org/language/details3/pl-PL_details.xml', '', ''),
+(21, 2, 0, 'Portuguese', '', 'pkg_pt-PT', 'package', '', 0, '3.8.2.1', '', 'https://update.joomla.org/language/details3/pt-PT_details.xml', '', ''),
+(22, 2, 0, 'Russian', '', 'pkg_ru-RU', 'package', '', 0, '3.8.2.1', '', 'https://update.joomla.org/language/details3/ru-RU_details.xml', '', ''),
+(23, 2, 0, 'English AU', '', 'pkg_en-AU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-AU_details.xml', '', ''),
+(24, 2, 0, 'Slovak', '', 'pkg_sk-SK', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sk-SK_details.xml', '', ''),
+(25, 2, 0, 'English US', '', 'pkg_en-US', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-US_details.xml', '', ''),
+(26, 2, 0, 'Swedish', '', 'pkg_sv-SE', 'package', '', 0, '3.8.7.2', '', 'https://update.joomla.org/language/details3/sv-SE_details.xml', '', ''),
+(27, 2, 0, 'Syriac', '', 'pkg_sy-IQ', 'package', '', 0, '3.4.5.1', '', 'https://update.joomla.org/language/details3/sy-IQ_details.xml', '', ''),
+(28, 2, 0, 'Tamil', '', 'pkg_ta-IN', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ta-IN_details.xml', '', ''),
+(29, 2, 0, 'Thai', '', 'pkg_th-TH', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/th-TH_details.xml', '', ''),
+(30, 2, 0, 'Turkish', '', 'pkg_tr-TR', 'package', '', 0, '3.8.2.1', '', 'https://update.joomla.org/language/details3/tr-TR_details.xml', '', ''),
+(31, 2, 0, 'Ukrainian', '', 'pkg_uk-UA', 'package', '', 0, '3.7.1.1', '', 'https://update.joomla.org/language/details3/uk-UA_details.xml', '', ''),
+(32, 2, 0, 'Uyghur', '', 'pkg_ug-CN', 'package', '', 0, '3.7.5.1', '', 'https://update.joomla.org/language/details3/ug-CN_details.xml', '', ''),
+(33, 2, 0, 'Albanian', '', 'pkg_sq-AL', 'package', '', 0, '3.1.1.2', '', 'https://update.joomla.org/language/details3/sq-AL_details.xml', '', ''),
+(34, 2, 0, 'Basque', '', 'pkg_eu-ES', 'package', '', 0, '3.7.5.1', '', 'https://update.joomla.org/language/details3/eu-ES_details.xml', '', ''),
+(35, 2, 0, 'Hindi', '', 'pkg_hi-IN', 'package', '', 0, '3.3.6.2', '', 'https://update.joomla.org/language/details3/hi-IN_details.xml', '', ''),
+(36, 2, 0, 'German DE', '', 'pkg_de-DE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-DE_details.xml', '', ''),
+(37, 2, 0, 'Portuguese Brazil', '', 'pkg_pt-BR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/pt-BR_details.xml', '', ''),
+(38, 2, 0, 'Serbian Latin', '', 'pkg_sr-YU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sr-YU_details.xml', '', ''),
+(39, 2, 0, 'Spanish', '', 'pkg_es-ES', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/es-ES_details.xml', '', ''),
+(40, 2, 0, 'Bosnian', '', 'pkg_bs-BA', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/bs-BA_details.xml', '', ''),
+(41, 2, 0, 'Serbian Cyrillic', '', 'pkg_sr-RS', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sr-RS_details.xml', '', ''),
+(42, 2, 0, 'Bahasa Indonesia', '', 'pkg_id-ID', 'package', '', 0, '3.6.2.1', '', 'https://update.joomla.org/language/details3/id-ID_details.xml', '', ''),
+(43, 2, 0, 'Finnish', '', 'pkg_fi-FI', 'package', '', 0, '3.8.1.1', '', 'https://update.joomla.org/language/details3/fi-FI_details.xml', '', ''),
+(44, 2, 0, 'Swahili', '', 'pkg_sw-KE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sw-KE_details.xml', '', ''),
+(45, 2, 0, 'Montenegrin', '', 'pkg_srp-ME', 'package', '', 0, '3.3.1.2', '', 'https://update.joomla.org/language/details3/srp-ME_details.xml', '', ''),
+(46, 2, 0, 'English CA', '', 'pkg_en-CA', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-CA_details.xml', '', ''),
+(47, 2, 0, 'French CA', '', 'pkg_fr-CA', 'package', '', 0, '3.6.5.1', '', 'https://update.joomla.org/language/details3/fr-CA_details.xml', '', ''),
+(48, 2, 0, 'Welsh', '', 'pkg_cy-GB', 'package', '', 0, '3.8.5.1', '', 'https://update.joomla.org/language/details3/cy-GB_details.xml', '', ''),
+(49, 2, 0, 'Sinhala', '', 'pkg_si-LK', 'package', '', 0, '3.3.1.2', '', 'https://update.joomla.org/language/details3/si-LK_details.xml', '', ''),
+(50, 2, 0, 'Dari Persian', '', 'pkg_prs-AF', 'package', '', 0, '3.4.4.2', '', 'https://update.joomla.org/language/details3/prs-AF_details.xml', '', ''),
+(51, 2, 0, 'Turkmen', '', 'pkg_tk-TM', 'package', '', 0, '3.5.0.2', '', 'https://update.joomla.org/language/details3/tk-TM_details.xml', '', ''),
+(52, 2, 0, 'Irish', '', 'pkg_ga-IE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ga-IE_details.xml', '', ''),
+(53, 2, 0, 'Dzongkha', '', 'pkg_dz-BT', 'package', '', 0, '3.6.2.1', '', 'https://update.joomla.org/language/details3/dz-BT_details.xml', '', ''),
+(54, 2, 0, 'Slovenian', '', 'pkg_sl-SI', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/sl-SI_details.xml', '', ''),
+(55, 2, 0, 'Spanish CO', '', 'pkg_es-CO', 'package', '', 0, '3.8.6.1', '', 'https://update.joomla.org/language/details3/es-CO_details.xml', '', ''),
+(56, 2, 0, 'German CH', '', 'pkg_de-CH', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-CH_details.xml', '', ''),
+(57, 2, 0, 'German AT', '', 'pkg_de-AT', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-AT_details.xml', '', ''),
+(58, 2, 0, 'German LI', '', 'pkg_de-LI', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-LI_details.xml', '', ''),
+(59, 2, 0, 'German LU', '', 'pkg_de-LU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/de-LU_details.xml', '', ''),
+(60, 2, 0, 'English NZ', '', 'pkg_en-NZ', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/en-NZ_details.xml', '', ''),
+(61, 4, 0, 'Armenian', '', 'pkg_hy-AM', 'package', '', 0, '3.4.4.1', '', 'https://update.joomla.org/language/details3/hy-AM_details.xml', '', ''),
+(62, 4, 0, 'Malay', '', 'pkg_ms-MY', 'package', '', 0, '3.4.1.2', '', 'https://update.joomla.org/language/details3/ms-MY_details.xml', '', ''),
+(63, 4, 0, 'Romanian', '', 'pkg_ro-RO', 'package', '', 0, '3.7.3.1', '', 'https://update.joomla.org/language/details3/ro-RO_details.xml', '', ''),
+(64, 4, 0, 'Flemish', '', 'pkg_nl-BE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/nl-BE_details.xml', '', ''),
+(65, 4, 0, 'Chinese Traditional', '', 'pkg_zh-TW', 'package', '', 0, '3.8.0.1', '', 'https://update.joomla.org/language/details3/zh-TW_details.xml', '', ''),
+(66, 4, 0, 'French', '', 'pkg_fr-FR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/fr-FR_details.xml', '', ''),
+(67, 4, 0, 'Galician', '', 'pkg_gl-ES', 'package', '', 0, '3.3.1.2', '', 'https://update.joomla.org/language/details3/gl-ES_details.xml', '', ''),
+(68, 4, 0, 'Georgian', '', 'pkg_ka-GE', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ka-GE_details.xml', '', ''),
+(69, 4, 0, 'Greek', '', 'pkg_el-GR', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/el-GR_details.xml', '', ''),
+(70, 4, 0, 'Japanese', '', 'pkg_ja-JP', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/ja-JP_details.xml', '', ''),
+(71, 4, 0, 'Hebrew', '', 'pkg_he-IL', 'package', '', 0, '3.1.1.2', '', 'https://update.joomla.org/language/details3/he-IL_details.xml', '', ''),
+(72, 4, 0, 'Bengali', '', 'pkg_bn-BD', 'package', '', 0, '3.8.5.1', '', 'https://update.joomla.org/language/details3/bn-BD_details.xml', '', ''),
+(73, 4, 0, 'Hungarian', '', 'pkg_hu-HU', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/hu-HU_details.xml', '', ''),
+(74, 4, 0, 'Afrikaans', '', 'pkg_af-ZA', 'package', '', 0, '3.8.7.1', '', 'https://update.joomla.org/language/details3/af-ZA_details.xml', '', ''),
+(75, 4, 0, 'Arabic Unitag', '', 'pkg_ar-AA', 'package', '', 0, '3.7.5.1', '', 'https://update.joomla.org/language/details3/ar-AA_details.xml', '', ''),
+(76, 7, 10009, 'VirtueMart', 'VirtueMart Component', 'com_virtuemart', 'component', '', 1, '3.2.14', '', 'http://virtuemart.net/releases/vm3/virtuemart_update.xml', 'https://virtuemart.net/news/489-virtuemart-3-2-14-security-release-and-enhanced-invoice-handling', '');
 
 -- --------------------------------------------------------
 
@@ -1899,27 +1904,27 @@ INSERT INTO `xtqmd_updates` (`update_id`, `update_site_id`, `extension_id`, `nam
 -- Table structure for table `xtqmd_update_sites`
 --
 
-CREATE TABLE `xtqmd_update_sites` (
-  `update_site_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_update_sites` (
+`update_site_id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `location` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `enabled` int(11) DEFAULT '0',
   `last_check_timestamp` bigint(20) DEFAULT '0',
   `extra_query` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Update Sites';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Update Sites';
 
 --
 -- Dumping data for table `xtqmd_update_sites`
 --
 
 INSERT INTO `xtqmd_update_sites` (`update_site_id`, `name`, `type`, `location`, `enabled`, `last_check_timestamp`, `extra_query`) VALUES
-(1, 'Joomla! Core', 'collection', 'https://update.joomla.org/core/list.xml', 1, 1525164929, ''),
-(2, 'Accredited Joomla! Translations', 'collection', 'https://update.joomla.org/language/translationlist_3.xml', 1, 1525099559, ''),
-(3, 'Joomla! Update Component Update Site', 'extension', 'https://update.joomla.org/core/extensions/com_joomlaupdate.xml', 1, 1525099560, ''),
-(4, 'Accredited Joomla! Translations', 'collection', 'http://update.joomla.org/language/translationlist_3.xml', 1, 1525099561, ''),
-(5, 'VirtueMart3 Update Site', 'extension', 'http://virtuemart.net/releases/vm3/virtuemart_update.xml', 1, 1525099562, ''),
-(6, '', 'collection', 'http://smartaddons.com/update_server/products.xml', 1, 1525099564, '');
+(1, 'Joomla! Core', 'collection', 'https://update.joomla.org/core/list.xml', 1, 1525285489, ''),
+(2, 'Accredited Joomla! Translations', 'collection', 'https://update.joomla.org/language/translationlist_3.xml', 1, 1525285490, ''),
+(3, 'Joomla! Update Component Update Site', 'extension', 'https://update.joomla.org/core/extensions/com_joomlaupdate.xml', 1, 1525285491, ''),
+(4, 'Accredited Joomla! Translations', 'collection', 'http://update.joomla.org/language/translationlist_3.xml', 1, 1525285492, ''),
+(6, '', 'collection', 'http://smartaddons.com/update_server/products.xml', 1, 1525285494, ''),
+(7, 'VirtueMart3 Update Site', 'extension', 'http://virtuemart.net/releases/vm3/virtuemart_update.xml', 1, 1525285494, '');
 
 -- --------------------------------------------------------
 
@@ -1927,7 +1932,7 @@ INSERT INTO `xtqmd_update_sites` (`update_site_id`, `name`, `type`, `location`, 
 -- Table structure for table `xtqmd_update_sites_extensions`
 --
 
-CREATE TABLE `xtqmd_update_sites_extensions` (
+CREATE TABLE IF NOT EXISTS `xtqmd_update_sites_extensions` (
   `update_site_id` int(11) NOT NULL DEFAULT '0',
   `extension_id` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Links extensions to update sites';
@@ -1941,10 +1946,10 @@ INSERT INTO `xtqmd_update_sites_extensions` (`update_site_id`, `extension_id`) V
 (2, 802),
 (3, 28),
 (4, 10002),
-(5, 10003),
 (6, 10004),
 (6, 10005),
-(6, 10006);
+(6, 10006),
+(7, 10009);
 
 -- --------------------------------------------------------
 
@@ -1952,13 +1957,13 @@ INSERT INTO `xtqmd_update_sites_extensions` (`update_site_id`, `extension_id`) V
 -- Table structure for table `xtqmd_usergroups`
 --
 
-CREATE TABLE `xtqmd_usergroups` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'Primary Key',
-  `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Adjacency List Reference Id',
+CREATE TABLE IF NOT EXISTS `xtqmd_usergroups` (
+`id` int(10) unsigned NOT NULL COMMENT 'Primary Key',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Adjacency List Reference Id',
   `lft` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set lft.',
   `rgt` int(11) NOT NULL DEFAULT '0' COMMENT 'Nested set rgt.',
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_usergroups`
@@ -1981,8 +1986,8 @@ INSERT INTO `xtqmd_usergroups` (`id`, `parent_id`, `lft`, `rgt`, `title`) VALUES
 -- Table structure for table `xtqmd_users`
 --
 
-CREATE TABLE `xtqmd_users` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_users` (
+`id` int(11) NOT NULL,
   `name` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `username` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -1998,14 +2003,14 @@ CREATE TABLE `xtqmd_users` (
   `otpKey` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'Two factor authentication encrypted keys',
   `otep` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT 'One time emergency passwords',
   `requireReset` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Require user to reset password on next login'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=597 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_users`
 --
 
 INSERT INTO `xtqmd_users` (`id`, `name`, `username`, `email`, `password`, `block`, `sendEmail`, `registerDate`, `lastvisitDate`, `activation`, `params`, `lastResetTime`, `resetCount`, `otpKey`, `otep`, `requireReset`) VALUES
-(596, 'Super User', 'admin', 'hoanghd.cnt@gmail.com', '$2y$10$iY5BD.TtY6QVoVbQdCIIcOsRtiYdwr1ftosl8CTClMdVgQLlFSrPi', 0, 1, '2018-04-11 14:35:06', '2018-05-01 09:46:24', '0', '', '0000-00-00 00:00:00', 0, '', '', 0);
+(596, 'Super User', 'admin', 'hoanghd.cnt@gmail.com', '$2y$10$iY5BD.TtY6QVoVbQdCIIcOsRtiYdwr1ftosl8CTClMdVgQLlFSrPi', 0, 1, '2018-04-11 14:35:06', '2018-05-02 16:16:41', '0', '{}', '0000-00-00 00:00:00', 0, '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -2013,8 +2018,8 @@ INSERT INTO `xtqmd_users` (`id`, `name`, `username`, `email`, `password`, `block
 -- Table structure for table `xtqmd_user_keys`
 --
 
-CREATE TABLE `xtqmd_user_keys` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_user_keys` (
+`id` int(10) unsigned NOT NULL,
   `user_id` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `series` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2029,18 +2034,18 @@ CREATE TABLE `xtqmd_user_keys` (
 -- Table structure for table `xtqmd_user_notes`
 --
 
-CREATE TABLE `xtqmd_user_notes` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `catid` int(10) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_user_notes` (
+`id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `catid` int(10) unsigned NOT NULL DEFAULT '0',
   `subject` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `state` tinyint(3) NOT NULL DEFAULT '0',
-  `checked_out` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `created_user_id` int(10) unsigned NOT NULL DEFAULT '0',
   `created_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_user_id` int(10) UNSIGNED NOT NULL,
+  `modified_user_id` int(10) unsigned NOT NULL,
   `modified_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `review_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -2053,7 +2058,7 @@ CREATE TABLE `xtqmd_user_notes` (
 -- Table structure for table `xtqmd_user_profiles`
 --
 
-CREATE TABLE `xtqmd_user_profiles` (
+CREATE TABLE IF NOT EXISTS `xtqmd_user_profiles` (
   `user_id` int(11) NOT NULL,
   `profile_key` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `profile_value` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2066,9 +2071,9 @@ CREATE TABLE `xtqmd_user_profiles` (
 -- Table structure for table `xtqmd_user_usergroup_map`
 --
 
-CREATE TABLE `xtqmd_user_usergroup_map` (
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__users.id',
-  `group_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__usergroups.id'
+CREATE TABLE IF NOT EXISTS `xtqmd_user_usergroup_map` (
+  `user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__users.id',
+  `group_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Foreign Key to #__usergroups.id'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2084,7 +2089,7 @@ INSERT INTO `xtqmd_user_usergroup_map` (`user_id`, `group_id`) VALUES
 -- Table structure for table `xtqmd_utf8_conversion`
 --
 
-CREATE TABLE `xtqmd_utf8_conversion` (
+CREATE TABLE IF NOT EXISTS `xtqmd_utf8_conversion` (
   `converted` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -2101,12 +2106,12 @@ INSERT INTO `xtqmd_utf8_conversion` (`converted`) VALUES
 -- Table structure for table `xtqmd_viewlevels`
 --
 
-CREATE TABLE `xtqmd_viewlevels` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT 'Primary Key',
+CREATE TABLE IF NOT EXISTS `xtqmd_viewlevels` (
+`id` int(10) unsigned NOT NULL COMMENT 'Primary Key',
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `rules` varchar(5120) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'JSON encoded access control.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `xtqmd_viewlevels`
@@ -2125,10 +2130,10 @@ INSERT INTO `xtqmd_viewlevels` (`id`, `title`, `ordering`, `rules`) VALUES
 -- Table structure for table `xtqmd_virtuemart_adminmenuentries`
 --
 
-CREATE TABLE `xtqmd_virtuemart_adminmenuentries` (
-  `id` tinyint(1) UNSIGNED NOT NULL,
-  `module_id` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'The ID of the VM Module, this Item is assigned to',
-  `parent_id` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_adminmenuentries` (
+`id` tinyint(1) unsigned NOT NULL,
+  `module_id` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'The ID of the VM Module, this Item is assigned to',
+  `parent_id` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `name` char(64) NOT NULL DEFAULT '0',
   `link` char(64) NOT NULL DEFAULT '0',
   `depends` char(64) NOT NULL DEFAULT '' COMMENT 'Names of the Parameters, this Item depends on',
@@ -2138,7 +2143,7 @@ CREATE TABLE `xtqmd_virtuemart_adminmenuentries` (
   `tooltip` char(128) DEFAULT NULL,
   `view` char(32) DEFAULT NULL,
   `task` char(32) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Administration Menu Items';
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='Administration Menu Items';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_adminmenuentries`
@@ -2181,22 +2186,22 @@ INSERT INTO `xtqmd_virtuemart_adminmenuentries` (`id`, `module_id`, `parent_id`,
 -- Table structure for table `xtqmd_virtuemart_calcs`
 --
 
-CREATE TABLE `xtqmd_virtuemart_calcs` (
-  `virtuemart_calc_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Belongs to vendor',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_calcs` (
+`virtuemart_calc_id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '1' COMMENT 'BELONGS TO VENDOR',
   `calc_jplugin_id` int(1) NOT NULL DEFAULT '0',
-  `calc_name` varchar(64) NOT NULL DEFAULT '' COMMENT 'Name of the rule',
-  `calc_descr` varchar(128) NOT NULL DEFAULT '' COMMENT 'Description',
-  `calc_kind` varchar(16) NOT NULL DEFAULT '' COMMENT 'Discount/Tax/Margin/Commission',
-  `calc_value_mathop` varchar(8) NOT NULL DEFAULT '' COMMENT 'the mathematical operation like (+,-,+%,-%)',
+  `calc_name` char(64) NOT NULL DEFAULT '' COMMENT 'NAME OF THE RULE',
+  `calc_descr` char(128) NOT NULL DEFAULT '' COMMENT 'DESCRIPTION',
+  `calc_kind` char(16) NOT NULL DEFAULT '' COMMENT 'DISCOUNT/TAX/MARGIN/COMMISSION',
+  `calc_value_mathop` char(8) NOT NULL DEFAULT '' COMMENT 'THE MATHEMATICAL OPERATION LIKE (+,-,+%,-%)',
   `calc_value` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT 'The Amount',
-  `calc_currency` smallint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'Currency of the Rule',
+  `calc_currency` smallint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Currency of the Rule',
   `calc_shopper_published` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Visible for Shoppers',
   `calc_vendor_published` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Visible for Vendors',
   `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Startdate if nothing is set = permanent',
   `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Enddate if nothing is set = permanent',
   `for_override` tinyint(1) NOT NULL DEFAULT '0',
-  `calc_params` varchar(15359) NOT NULL DEFAULT '',
+  `calc_params` varchar(18000) NOT NULL DEFAULT '',
   `ordering` int(1) NOT NULL DEFAULT '0',
   `shared` tinyint(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -2214,10 +2219,10 @@ CREATE TABLE `xtqmd_virtuemart_calcs` (
 -- Table structure for table `xtqmd_virtuemart_calc_categories`
 --
 
-CREATE TABLE `xtqmd_virtuemart_calc_categories` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_calc_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_category_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_calc_categories` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_calc_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_category_id` int(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2226,10 +2231,10 @@ CREATE TABLE `xtqmd_virtuemart_calc_categories` (
 -- Table structure for table `xtqmd_virtuemart_calc_countries`
 --
 
-CREATE TABLE `xtqmd_virtuemart_calc_countries` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_calc_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_country_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_calc_countries` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_calc_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_country_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2238,10 +2243,10 @@ CREATE TABLE `xtqmd_virtuemart_calc_countries` (
 -- Table structure for table `xtqmd_virtuemart_calc_manufacturers`
 --
 
-CREATE TABLE `xtqmd_virtuemart_calc_manufacturers` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_calc_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_manufacturer_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_calc_manufacturers` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_calc_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_manufacturer_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2250,10 +2255,10 @@ CREATE TABLE `xtqmd_virtuemart_calc_manufacturers` (
 -- Table structure for table `xtqmd_virtuemart_calc_shoppergroups`
 --
 
-CREATE TABLE `xtqmd_virtuemart_calc_shoppergroups` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_calc_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_calc_shoppergroups` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_calc_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2262,10 +2267,10 @@ CREATE TABLE `xtqmd_virtuemart_calc_shoppergroups` (
 -- Table structure for table `xtqmd_virtuemart_calc_states`
 --
 
-CREATE TABLE `xtqmd_virtuemart_calc_states` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_calc_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_state_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_calc_states` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_calc_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_state_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2274,10 +2279,10 @@ CREATE TABLE `xtqmd_virtuemart_calc_states` (
 -- Table structure for table `xtqmd_virtuemart_carts`
 --
 
-CREATE TABLE `xtqmd_virtuemart_carts` (
-  `virtuemart_cart_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_carts` (
+`virtuemart_cart_id` int(1) unsigned NOT NULL,
+  `virtuemart_user_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` int(1) unsigned NOT NULL,
   `cartData` varbinary(50000) DEFAULT NULL,
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
@@ -2291,19 +2296,19 @@ CREATE TABLE `xtqmd_virtuemart_carts` (
 -- Table structure for table `xtqmd_virtuemart_categories`
 --
 
-CREATE TABLE `xtqmd_virtuemart_categories` (
-  `virtuemart_category_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT 'Belongs to vendor',
-  `category_template` varchar(128) DEFAULT NULL,
-  `category_layout` varchar(64) DEFAULT NULL,
-  `category_product_layout` varchar(64) DEFAULT NULL,
-  `products_per_row` varchar(1) NOT NULL DEFAULT '',
-  `limit_list_step` varchar(32) DEFAULT NULL,
-  `limit_list_initial` smallint(1) UNSIGNED DEFAULT NULL,
-  `hits` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_categories` (
+`virtuemart_category_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '1' COMMENT 'BELONGS TO VENDOR',
+  `category_template` char(128) DEFAULT NULL,
+  `category_layout` char(64) DEFAULT NULL,
+  `category_product_layout` char(64) DEFAULT NULL,
+  `products_per_row` tinyint(1) DEFAULT NULL,
+  `limit_list_step` char(32) DEFAULT NULL,
+  `limit_list_initial` smallint(1) unsigned DEFAULT NULL,
+  `hits` int(1) unsigned NOT NULL DEFAULT '0',
+  `metarobot` char(40) NOT NULL DEFAULT '',
+  `metaauthor` char(64) NOT NULL DEFAULT '',
   `cat_params` varchar(15359) NOT NULL DEFAULT '',
-  `metarobot` varchar(40) NOT NULL DEFAULT '',
-  `metaauthor` varchar(64) NOT NULL DEFAULT '',
   `ordering` int(1) NOT NULL DEFAULT '0',
   `shared` tinyint(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -2313,7 +2318,19 @@ CREATE TABLE `xtqmd_virtuemart_categories` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Product Categories are stored here';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Product Categories are stored here';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_categories`
+--
+
+INSERT INTO `xtqmd_virtuemart_categories` (`virtuemart_category_id`, `virtuemart_vendor_id`, `category_template`, `category_layout`, `category_product_layout`, `products_per_row`, `limit_list_step`, `limit_list_initial`, `hits`, `metarobot`, `metaauthor`, `cat_params`, `ordering`, `shared`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(1, 1, '0', '0', '0', 0, '0', 0, 0, '', '', '', 0, 0, 1, '2018-05-02 16:32:34', 596, '2018-05-02 17:17:22', 596, '0000-00-00 00:00:00', 0),
+(2, 1, '0', '0', '0', 0, '0', 0, 0, '', '', '', 0, 0, 1, '2018-05-02 16:33:22', 596, '2018-05-02 16:33:22', 596, '0000-00-00 00:00:00', 0),
+(3, 1, '0', '0', '0', 0, '0', 0, 0, '', '', '', 0, 0, 1, '2018-05-02 16:33:36', 596, '2018-05-02 16:33:36', 596, '0000-00-00 00:00:00', 0),
+(4, 1, '0', '0', '0', 0, '0', 0, 0, '', '', '', 0, 0, 1, '2018-05-02 17:14:51', 596, '2018-05-02 17:19:33', 596, '0000-00-00 00:00:00', 0),
+(5, 1, '0', '0', '0', 0, '0', 0, 0, '', '', '', 0, 0, 1, '2018-05-02 17:19:57', 596, '2018-05-02 17:19:57', 596, '0000-00-00 00:00:00', 0),
+(6, 1, '0', '0', '0', 0, '0', 0, 0, '', '', '', 0, 0, 1, '2018-05-02 17:20:19', 596, '2018-05-02 17:20:19', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2321,15 +2338,27 @@ CREATE TABLE `xtqmd_virtuemart_categories` (
 -- Table structure for table `xtqmd_virtuemart_categories_vi_vn`
 --
 
-CREATE TABLE `xtqmd_virtuemart_categories_vi_vn` (
-  `virtuemart_category_id` int(1) UNSIGNED NOT NULL,
-  `category_name` varchar(180) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_categories_vi_vn` (
+  `virtuemart_category_id` int(1) unsigned NOT NULL,
+  `category_name` char(180) NOT NULL DEFAULT '',
   `category_description` varchar(19000) NOT NULL DEFAULT '',
   `metadesc` varchar(400) NOT NULL DEFAULT '',
   `metakey` varchar(400) NOT NULL DEFAULT '',
-  `customtitle` varchar(255) NOT NULL DEFAULT '',
-  `slug` varchar(192) NOT NULL DEFAULT ''
+  `customtitle` char(255) NOT NULL DEFAULT '',
+  `slug` char(192) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `xtqmd_virtuemart_categories_vi_vn`
+--
+
+INSERT INTO `xtqmd_virtuemart_categories_vi_vn` (`virtuemart_category_id`, `category_name`, `category_description`, `metadesc`, `metakey`, `customtitle`, `slug`) VALUES
+(1, 'Sơ mi', '<p><img src="images/ti-xung.jpg" alt="" /></p>', '', '', '', 'sơ-mi'),
+(2, 'Nam', '', '', '', '', 'nam'),
+(3, 'Nữ', '', '', '', '', 'nữ'),
+(4, 'Áo Phông', '<p><img src="images/banner1-phng.jpg" alt="" /></p>', '', '', '', 'áo-phông'),
+(5, 'Nam', '', '', '', '', 'nam-1'),
+(6, 'Nữ', '', '', '', '', 'nữ-1');
 
 -- --------------------------------------------------------
 
@@ -2337,12 +2366,24 @@ CREATE TABLE `xtqmd_virtuemart_categories_vi_vn` (
 -- Table structure for table `xtqmd_virtuemart_category_categories`
 --
 
-CREATE TABLE `xtqmd_virtuemart_category_categories` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `category_parent_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `category_child_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_category_categories` (
+`id` int(1) unsigned NOT NULL,
+  `category_parent_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `category_child_id` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Category child-parent relation list';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Category child-parent relation list';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_category_categories`
+--
+
+INSERT INTO `xtqmd_virtuemart_category_categories` (`id`, `category_parent_id`, `category_child_id`, `ordering`) VALUES
+(1, 0, 1, 0),
+(2, 1, 2, 0),
+(3, 1, 3, 0),
+(4, 0, 4, 0),
+(5, 4, 5, 0),
+(6, 4, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -2350,12 +2391,12 @@ CREATE TABLE `xtqmd_virtuemart_category_categories` (
 -- Table structure for table `xtqmd_virtuemart_category_medias`
 --
 
-CREATE TABLE `xtqmd_virtuemart_category_medias` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_category_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_media_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_category_medias` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_category_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_media_id` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2363,8 +2404,8 @@ CREATE TABLE `xtqmd_virtuemart_category_medias` (
 -- Table structure for table `xtqmd_virtuemart_configs`
 --
 
-CREATE TABLE `xtqmd_virtuemart_configs` (
-  `virtuemart_config_id` tinyint(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_configs` (
+`virtuemart_config_id` tinyint(1) unsigned NOT NULL,
   `config` text,
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(11) NOT NULL DEFAULT '0',
@@ -2372,14 +2413,14 @@ CREATE TABLE `xtqmd_virtuemart_configs` (
   `modified_by` int(11) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds configuration settings';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Holds configuration settings';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_configs`
 --
 
 INSERT INTO `xtqmd_virtuemart_configs` (`virtuemart_config_id`, `config`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
-(1, 'useSSL=\"0\"|dangeroustools=0|debug_enable=\"none\"|vmdev=\"none\"|google_jquery=\"0\"|multix=\"none\"|usefancy=\"1\"|jchosen=\"1\"|enableEnglish=\"1\"|shop_is_offline=\"0\"|offline_message=\"Our Shop is currently down for maintenance. Please check back again soon.\"|use_as_catalog=\"0\"|currency_converter_module=\"convertECB.php\"|order_mail_html=\"1\"|useVendorEmail=\"0\"|pdf_button_enable=\"1\"|show_emailfriend=\"0\"|show_printicon=\"1\"|show_out_of_stock_products=\"1\"|ask_captcha=\"1\"|coupons_enable=\"1\"|show_uncat_products=\"0\"|show_uncat_child_products=\"0\"|show_unpub_cat_products=\"1\"|coupons_default_expire=\"1,M\"|weight_unit_default=\"KG\"|lwh_unit_default=\"m\"|list_limit=\"30\"|showReviewFor=\"all\"|reviewMode=\"bought\"|showRatingFor=\"all\"|ratingMode=\"bought\"|reviews_autopublish=\"1\"|reviews_minimum_comment_length=\"0\"|reviews_maximum_comment_length=\"2000\"|product_navigation=\"1\"|display_stock=\"1\"|vmtemplate=\"0\"|categorytemplate=\"0\"|showcategory=\"1\"|categorylayout=\"0\"|categories_per_row=\"3\"|productlayout=\"0\"|products_per_row=\"3\"|llimit_init_FE=\"24\"|vmlayout=\"0\"|show_store_desc=\"1\"|show_categories=\"1\"|featured_rows=\"1\"|topten=\"1\"|topten_rows=\"1\"|recent=\"1\"|recent_rows=\"1\"|latest=\"1\"|latest_rows=\"1\"|legacylayouts=\"0\"|assets_general_path=\"components\\/com_virtuemart\\/assets\\/\"|media_category_path=\"images\\/virtuemart\\/category\\/\"|media_product_path=\"images\\/virtuemart\\/product\\/\"|media_manufacturer_path=\"images\\/virtuemart\\/manufacturer\\/\"|media_vendor_path=\"images\\/virtuemart\\/vendor\\/\"|forSale_path_thumb=\"images\\/virtuemart\\/forSale\\/resized\\/\"|img_resize_enable=\"1\"|img_width=\"0\"|img_height=\"90\"|no_image_set=\"noimage.gif\"|no_image_found=\"warning.png\"|browse_orderby_field=\"pc.ordering,product_name\"|browse_cat_orderby_field=\"c.ordering,category_name\"|browse_orderby_fields=[\"`p`.product_sku\",\"category_name\",\"mf_name\",\"product_name\",\"pc.ordering\"]|browse_search_fields=[\"`p`.product_sku\",\"category_name\",\"category_description\",\"mf_name\",\"product_name\",\"product_s_desc\",\"product_desc\"]|askprice=\"1\"|roundindig=\"1\"|show_prices=\"1\"|price_show_packaging_pricelabel=\"0\"|show_tax=\"1\"|basePrice=\"0\"|basePriceText=\"1\"|basePriceRounding=\"-1\"|variantModification=\"0\"|variantModificationText=\"1\"|variantModificationRounding=\"-1\"|basePriceVariant=\"1\"|basePriceVariantText=\"1\"|basePriceVariantRounding=\"-1\"|basePriceWithTax=\"0\"|basePriceWithTaxText=\"1\"|basePriceWithTaxRounding=\"-1\"|discountedPriceWithoutTax=\"1\"|discountedPriceWithoutTaxText=\"1\"|discountedPriceWithoutTaxRounding=\"-1\"|salesPriceWithDiscount=\"0\"|salesPriceWithDiscountText=\"1\"|salesPriceWithDiscountRounding=\"-1\"|salesPrice=\"1\"|salesPriceText=\"1\"|salesPriceRounding=\"-1\"|priceWithoutTax=\"1\"|priceWithoutTaxText=\"1\"|priceWithoutTaxRounding=\"-1\"|discountAmount=\"1\"|discountAmountText=\"1\"|discountAmountRounding=\"-1\"|taxAmount=\"1\"|taxAmountText=\"1\"|taxAmountRounding=\"-1\"|unitPrice=\"1\"|unitPriceText=\"1\"|unitPriceRounding=\"-1\"|addtocart_popup=\"1\"|check_stock=\"0\"|automatic_payment=\"0\"|automatic_shipment=\"0\"|oncheckout_opc=\"1\"|oncheckout_ajax=\"1\"|oncheckout_show_legal_info=\"1\"|oncheckout_show_register=\"1\"|oncheckout_show_steps=\"0\"|oncheckout_show_register_text=\"COM_VIRTUEMART_ONCHECKOUT_DEFAULT_TEXT_REGISTER\"|oncheckout_show_images=\"1\"|inv_os=\"C\"|email_os_s=[\"U\",\"C\",\"X\",\"R\",\"S\"]|email_os_v=[\"U\",\"C\",\"X\",\"R\"]|seo_disabled=\"0\"|seo_translate=\"0\"|seo_use_id=\"0\"|sctime=1523457446.810209|vmlang=\"vi_vn\"', '0000-00-00 00:00:00', 0, '2018-04-11 14:37:21', 596, '0000-00-00 00:00:00', 0);
+(1, 'shop_is_offline="0"|offline_message="Our Shop is currently down for maintenance. Please check back again soon."|use_as_catalog="0"|currency_converter_module="convertECB.php"|order_mail_html="1"|useSSL="0"|useVendorEmail="0"|dangeroustools="0"|debug_enable="none"|dev="none"|vmdev="none"|google_jquery="0"|multix="none"|usefancy="1"|jchosen="1"|enableEnglish="1"|pdf_button_enable="1"|show_emailfriend="0"|show_printicon="0"|show_out_of_stock_products="1"|ask_captcha="0"|coupons_enable="0"|show_uncat_products="0"|show_uncat_child_products="0"|show_unpub_cat_products="1"|coupons_default_expire="1,M"|weight_unit_default="KG"|lwh_unit_default="M"|list_limit="30"|showReviewFor="none"|reviewMode="none"|showRatingFor="none"|ratingMode="none"|reviews_autopublish="0"|reviews_minimum_comment_length="0"|reviews_maximum_comment_length="2000"|product_navigation="1"|display_stock="0"|vmtemplate="default"|categorytemplate="default"|showCategory="0"|categorylayout="0"|categories_per_row="3"|productlayout="0"|products_per_row="3"|llimit_init_FE="24"|vmlayout="0"|show_store_desc="1"|show_categories="1"|homepage_categories_per_row="3"|homepage_products_per_row="3"|show_featured="1"|featured_products_rows="1"|show_topTen="1"|topTen_products_rows="1"|show_recent="1"|recent_products_rows="1"|show_latest="1"|latest_products_rows="1"|assets_general_path="components\\/com_virtuemart\\/assets\\/"|media_category_path="images\\/virtuemart\\/category\\/"|media_product_path="images\\/virtuemart\\/product\\/"|media_manufacturer_path="images\\/virtuemart\\/manufacturer\\/"|media_vendor_path="images\\/virtuemart\\/vendor\\/"|forSale_path_thumb="images\\/virtuemart\\/forSale\\/resized\\/"|img_resize_enable="1"|img_width="190"|img_height="190"|no_image_set="noimage.gif"|no_image_found="warning.png"|browse_orderby_field="pc.ordering,product_name"|browse_cat_orderby_field="c.ordering,category_name"|browse_orderby_fields=["product_name","`p`.product_sku","category_name","mf_name","pc.ordering"]|browse_search_fields=["product_name","`p`.product_sku","product_s_desc","product_desc","category_name","category_description","mf_name"]|askprice="1"|roundindig="1"|show_prices="1"|price_show_packaging_pricelabel="0"|show_tax="0"|basePrice="0"|basePriceText="1"|basePriceRounding="-1"|variantModification="0"|variantModificationText="1"|variantModificationRounding="-1"|basePriceVariant="0"|basePriceVariantText="1"|basePriceVariantRounding="-1"|basePriceWithTax="0"|basePriceWithTaxText="1"|basePriceWithTaxRounding="-1"|discountedPriceWithoutTax="0"|discountedPriceWithoutTaxText="1"|discountedPriceWithoutTaxRounding="-1"|salesPriceWithDiscount="0"|salesPriceWithDiscountText="1"|salesPriceWithDiscountRounding="-1"|salesPrice="1"|salesPriceText="1"|salesPriceRounding="-1"|priceWithoutTax="0"|priceWithoutTaxText="1"|priceWithoutTaxRounding="-1"|discountAmount="0"|discountAmountText="1"|discountAmountRounding="-1"|taxAmount="0"|taxAmountText="1"|taxAmountRounding="-1"|unitPrice="1"|unitPriceText="1"|unitPriceRounding="-1"|addtocart_popup="1"|check_stock="0"|automatic_payment="1"|automatic_shipment="1"|agree_to_tos_onorder="1"|oncheckout_opc="1"|oncheckout_show_legal_info="1"|oncheckout_show_register="1"|oncheckout_show_steps="0"|oncheckout_show_register_text="COM_VIRTUEMART_ONCHECKOUT_DEFAULT_TEXT_REGISTER"|inv_os=["C"]|email_os_s=["U","C","X","R","S"]|email_os_v=["U","C","X","R"]|seo_disabled="0"|seo_translate="0"|seo_use_id="0"|enable_content_plugin="0"|reg_captcha="0"|active_languages=["vi-VN"]|revproxvar=""|multixcart="0"|pdf_icon="0"|recommend_unauth="0"|ask_question="0"|asks_minimum_comment_length="50"|asks_maximum_comment_length="2000"|handle_404="1"|cp_rm=["C"]|show_pcustoms="0"|show_uncat_parent_products="0"|latest_products_days="7"|latest_products_orderBy="created_on"|lstockmail="0"|stockhandle="none"|rised_availability=""|image=""|rr_os=["C"]|show_manufacturers="0"|cartlayout="default"|productsublayout="0"|manufacturer_per_row="3"|mediaLimit="20"|llimit_init_BE="30"|pagseq=""|pagseq_1=""|pagseq_2=""|pagseq_3=""|pagseq_4=""|pagseq_5=""|feed_cat_published="0"|feed_cat_show_images="0"|feed_cat_show_prices="0"|feed_cat_show_description="0"|feed_cat_description_type="product_s_desc"|feed_cat_max_text_length="500"|forSale_path=""|add_img_main="0"|feed_latest_published="0"|feed_latest_nb="5"|feed_topten_published="0"|feed_topten_nb="5"|feed_featured_published="0"|feed_featured_nb="5"|feed_home_show_images="1"|feed_home_show_prices="1"|feed_home_show_description="0"|feed_home_description_type="product_s_desc"|feed_home_max_text_length="500"|css="1"|jquery="1"|jprice="1"|jsite="1"|jdynupdate="1"|rappenrundung="0"|cVarswT="0"|popup_rel="1"|oncheckout_ajax="1"|set_automatic_shipment="0"|set_automatic_payment="0"|oncheckout_only_registered="0"|oncheckout_show_images="1"|oncheckout_change_shopper="1"|del_date_type="m"|attach=""|attach_os=["U","C","X","R"]|prd_brws_orderby_dir="ASC"|cat_brws_orderby_dir="ASC"|seo_sufix="-detail"|task="apply"|option="com_virtuemart"|view="config"|122bf07720e0585cb496ee12edcbe974="1"', '0000-00-00 00:00:00', 0, '2018-05-02 16:30:18', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2387,10 +2428,10 @@ INSERT INTO `xtqmd_virtuemart_configs` (`virtuemart_config_id`, `config`, `creat
 -- Table structure for table `xtqmd_virtuemart_countries`
 --
 
-CREATE TABLE `xtqmd_virtuemart_countries` (
-  `virtuemart_country_id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_countries` (
+`virtuemart_country_id` smallint(1) unsigned NOT NULL,
   `virtuemart_worldzone_id` tinyint(1) NOT NULL DEFAULT '1',
-  `country_name` varchar(64) DEFAULT NULL,
+  `country_name` char(64) DEFAULT NULL,
   `country_3_code` char(3) DEFAULT NULL,
   `country_2_code` char(2) DEFAULT NULL,
   `ordering` int(1) NOT NULL DEFAULT '0',
@@ -2401,7 +2442,7 @@ CREATE TABLE `xtqmd_virtuemart_countries` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Country records';
+) ENGINE=MyISAM AUTO_INCREMENT=249 DEFAULT CHARSET=utf8 COMMENT='Country records';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_countries`
@@ -2459,7 +2500,7 @@ INSERT INTO `xtqmd_virtuemart_countries` (`virtuemart_country_id`, `virtuemart_w
 (49, 1, 'Congo', 'COG', 'CG', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (50, 1, 'Cook Islands', 'COK', 'CK', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (51, 1, 'Costa Rica', 'CRI', 'CR', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(52, 1, 'Cote D\'Ivoire', 'CIV', 'CI', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(52, 1, 'Cote D''Ivoire', 'CIV', 'CI', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (53, 1, 'Croatia', 'HRV', 'HR', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (54, 1, 'Cuba', 'CUB', 'CU', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (55, 1, 'Cyprus', 'CYP', 'CY', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -2518,11 +2559,11 @@ INSERT INTO `xtqmd_virtuemart_countries` (`virtuemart_country_id`, `virtuemart_w
 (109, 1, 'Kazakhstan', 'KAZ', 'KZ', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (110, 1, 'Kenya', 'KEN', 'KE', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (111, 1, 'Kiribati', 'KIR', 'KI', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(112, 1, 'Korea, Democratic People\'s Republic of', 'PRK', 'KP', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(112, 1, 'Korea, Democratic People''s Republic of', 'PRK', 'KP', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (113, 1, 'Korea, Republic of', 'KOR', 'KR', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (114, 1, 'Kuwait', 'KWT', 'KW', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (115, 1, 'Kyrgyzstan', 'KGZ', 'KG', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(116, 1, 'Lao People\'s Democratic Republic', 'LAO', 'LA', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(116, 1, 'Lao People''s Democratic Republic', 'LAO', 'LA', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (117, 1, 'Latvia', 'LVA', 'LV', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (118, 1, 'Lebanon', 'LBN', 'LB', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (119, 1, 'Lesotho', 'LSO', 'LS', 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -2660,15 +2701,15 @@ INSERT INTO `xtqmd_virtuemart_countries` (`virtuemart_country_id`, `virtuemart_w
 -- Table structure for table `xtqmd_virtuemart_coupons`
 --
 
-CREATE TABLE `xtqmd_virtuemart_coupons` (
-  `virtuemart_coupon_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL,
-  `coupon_code` varchar(32) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_coupons` (
+`virtuemart_coupon_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` int(1) unsigned NOT NULL,
+  `coupon_code` char(32) NOT NULL DEFAULT '',
   `percent_or_total` enum('percent','total') NOT NULL DEFAULT 'percent',
   `coupon_type` enum('gift','permanent') NOT NULL DEFAULT 'gift',
   `coupon_value` decimal(15,5) NOT NULL DEFAULT '0.00000',
-  `coupon_start_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `coupon_expiry_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `coupon_start_date` datetime DEFAULT NULL,
+  `coupon_expiry_date` datetime DEFAULT NULL,
   `coupon_value_valid` decimal(15,5) NOT NULL DEFAULT '0.00000',
   `coupon_used` varchar(200) NOT NULL DEFAULT '',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -2686,20 +2727,20 @@ CREATE TABLE `xtqmd_virtuemart_coupons` (
 -- Table structure for table `xtqmd_virtuemart_currencies`
 --
 
-CREATE TABLE `xtqmd_virtuemart_currencies` (
-  `virtuemart_currency_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
-  `currency_name` varchar(64) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_currencies` (
+`virtuemart_currency_id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '1',
+  `currency_name` char(64) DEFAULT NULL,
   `currency_code_2` char(2) DEFAULT NULL,
   `currency_code_3` char(3) DEFAULT NULL,
   `currency_numeric_code` int(4) DEFAULT NULL,
-  `currency_exchange_rate` decimal(12,5) DEFAULT NULL,
-  `currency_symbol` varchar(8) DEFAULT NULL,
-  `currency_decimal_place` varchar(8) DEFAULT NULL,
-  `currency_decimal_symbol` varchar(8) DEFAULT NULL,
-  `currency_thousands` varchar(8) DEFAULT NULL,
-  `currency_positive_style` varchar(64) DEFAULT NULL,
-  `currency_negative_style` varchar(64) DEFAULT NULL,
+  `currency_exchange_rate` decimal(10,5) DEFAULT NULL,
+  `currency_symbol` char(4) DEFAULT NULL,
+  `currency_decimal_place` char(4) DEFAULT NULL,
+  `currency_decimal_symbol` char(4) DEFAULT NULL,
+  `currency_thousands` char(4) DEFAULT NULL,
+  `currency_positive_style` char(64) DEFAULT NULL,
+  `currency_negative_style` char(64) DEFAULT NULL,
   `ordering` int(1) NOT NULL DEFAULT '0',
   `shared` tinyint(1) NOT NULL DEFAULT '1',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -2709,7 +2750,7 @@ CREATE TABLE `xtqmd_virtuemart_currencies` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Used to store currencies';
+) ENGINE=MyISAM AUTO_INCREMENT=202 DEFAULT CHARSET=utf8 COMMENT='Used to store currencies';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_currencies`
@@ -2827,7 +2868,7 @@ INSERT INTO `xtqmd_virtuemart_currencies` (`virtuemart_currency_id`, `virtuemart
 (141, 1, 'New Taiwan dollar', '', 'TWD', 901, '0.00000', 'NT$', '2', ',', '', '{number} {symbol}', '{sign}{number} {symbol}', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (142, 1, 'Tanzanian shilling', '', 'TZS', 834, '0.00000', 'Sh', '2', ',', '', '{number} {symbol}', '{sign}{number} {symbol}', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (144, 1, 'United States dollar', '', 'USD', 840, '0.00000', '$', '2', '.', ',', '{symbol}{number}', '{symbol}{sign}{number}', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(147, 1, 'Vietnamese Dong', '', 'VND', 704, '0.00000', '₫', '0', '', '', '{number} {symbol}', '{sign}{number} {symbol}', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(147, 1, 'Vietnamese Dong', '', 'VND', 704, '0.00000', '₫', '0', '.', ',', '{number} {symbol}', '{sign}{number} {symbol}', 0, 0, 1, '0000-00-00 00:00:00', 0, '2018-05-02 16:45:41', 596, '0000-00-00 00:00:00', 0),
 (148, 1, 'Vanuatu vatu', '', 'VUV', 548, '0.00000', 'Vt', '2', ',', '', '{number} {symbol}', '{sign}{number} {symbol}', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (149, 1, 'Samoan tala', '', 'WST', 882, '0.00000', 'T', '2', ',', '', '{number} {symbol}', '{sign}{number} {symbol}', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (151, 1, 'Yemeni rial', '', 'YER', 886, '0.00000', '﷼', '2', ',', '', '{number} {symbol}', '{sign}{number} {symbol}', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -2886,26 +2927,26 @@ INSERT INTO `xtqmd_virtuemart_currencies` (`virtuemart_currency_id`, `virtuemart
 -- Table structure for table `xtqmd_virtuemart_customs`
 --
 
-CREATE TABLE `xtqmd_virtuemart_customs` (
-  `virtuemart_custom_id` int(1) UNSIGNED NOT NULL,
-  `custom_parent_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_customs` (
+`virtuemart_custom_id` int(1) unsigned NOT NULL,
+  `custom_parent_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
   `custom_jplugin_id` int(1) NOT NULL DEFAULT '0',
-  `custom_element` varchar(50) NOT NULL DEFAULT '',
+  `custom_element` char(50) NOT NULL DEFAULT '',
   `admin_only` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:Display in admin only',
-  `custom_title` varchar(255) NOT NULL DEFAULT '' COMMENT 'field title',
+  `custom_title` char(255) NOT NULL DEFAULT '' COMMENT 'FIELD TITLE',
   `show_title` tinyint(1) NOT NULL DEFAULT '1',
-  `custom_tip` varchar(255) NOT NULL DEFAULT '' COMMENT 'tip',
-  `custom_value` varchar(4095) DEFAULT NULL COMMENT 'default value',
-  `custom_desc` varchar(4095) DEFAULT NULL COMMENT 'description or unit',
-  `field_type` varchar(2) NOT NULL DEFAULT '0' COMMENT 'S:string,I:int,P:parent, B:bool,D:date,T:time,H:hidden',
+  `custom_tip` char(255) NOT NULL DEFAULT '' COMMENT 'TIP',
+  `custom_value` varchar(2000) DEFAULT NULL COMMENT 'DEFAULT VALUE',
+  `custom_desc` char(255) DEFAULT NULL COMMENT 'DESCRIPTION OR UNIT',
+  `field_type` char(2) NOT NULL DEFAULT '0' COMMENT 'S:STRING,I:INT,P:PARENT, B:BOOL,D:DATE,T:TIME,H:HIDDEN',
   `is_list` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'list of values',
   `is_hidden` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1:hidden',
   `is_cart_attribute` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Add attributes to cart',
   `is_input` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Add input to cart',
+  `layout_pos` char(24) DEFAULT NULL COMMENT 'LAYOUT POSITION',
+  `custom_params` varchar(17000) NOT NULL DEFAULT '',
   `searchable` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Available as search filter',
-  `layout_pos` varchar(24) DEFAULT NULL COMMENT 'Layout Position',
-  `custom_params` text NOT NULL,
   `shared` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'valid for all vendors?',
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -2915,15 +2956,15 @@ CREATE TABLE `xtqmd_virtuemart_customs` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='custom fields definition';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='custom fields definition';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_customs`
 --
 
-INSERT INTO `xtqmd_virtuemart_customs` (`virtuemart_custom_id`, `custom_parent_id`, `virtuemart_vendor_id`, `custom_jplugin_id`, `custom_element`, `admin_only`, `custom_title`, `show_title`, `custom_tip`, `custom_value`, `custom_desc`, `field_type`, `is_list`, `is_hidden`, `is_cart_attribute`, `is_input`, `searchable`, `layout_pos`, `custom_params`, `shared`, `published`, `created_on`, `created_by`, `ordering`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
-(1, 0, 0, 0, '0', 0, 'COM_VIRTUEMART_RELATED_PRODUCTS', 1, 'COM_VIRTUEMART_RELATED_PRODUCTS_TIP', 'related_products', 'COM_VIRTUEMART_RELATED_PRODUCTS_DESC', 'R', 0, 0, 0, 0, 0, 'related_products', 'wPrice=\"1\"|wImage=\"1\"|wDescr=\"1\"|', 0, 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(2, 0, 0, 0, '0', 0, 'COM_VIRTUEMART_RELATED_CATEGORIES', 1, 'COM_VIRTUEMART_RELATED_CATEGORIES_TIP', 'related_categories', 'COM_VIRTUEMART_RELATED_CATEGORIES_DESC', 'Z', 0, 0, 0, 0, 0, 'related_categories', 'wImage=\"1\"|wDescr=\"1\"|', 0, 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+INSERT INTO `xtqmd_virtuemart_customs` (`virtuemart_custom_id`, `custom_parent_id`, `virtuemart_vendor_id`, `custom_jplugin_id`, `custom_element`, `admin_only`, `custom_title`, `show_title`, `custom_tip`, `custom_value`, `custom_desc`, `field_type`, `is_list`, `is_hidden`, `is_cart_attribute`, `is_input`, `layout_pos`, `custom_params`, `searchable`, `shared`, `published`, `created_on`, `created_by`, `ordering`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(1, 0, 0, 0, '0', 0, 'COM_VIRTUEMART_RELATED_PRODUCTS', 1, 'COM_VIRTUEMART_RELATED_PRODUCTS_TIP', 'related_products', 'COM_VIRTUEMART_RELATED_PRODUCTS_DESC', 'R', 0, 0, 0, 0, 'related_products', 'wPrice="1"|wImage="1"|wDescr="1"|', 0, 0, 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(2, 0, 0, 0, '0', 0, 'COM_VIRTUEMART_RELATED_CATEGORIES', 1, 'COM_VIRTUEMART_RELATED_CATEGORIES_TIP', 'related_categories', 'COM_VIRTUEMART_RELATED_CATEGORIES_DESC', 'Z', 0, 0, 0, 0, 'related_categories', 'wImage="1"|wDescr="1"|', 0, 0, 1, '0000-00-00 00:00:00', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -2931,11 +2972,11 @@ INSERT INTO `xtqmd_virtuemart_customs` (`virtuemart_custom_id`, `custom_parent_i
 -- Table structure for table `xtqmd_virtuemart_invoices`
 --
 
-CREATE TABLE `xtqmd_virtuemart_invoices` (
-  `virtuemart_invoice_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
-  `virtuemart_order_id` int(1) UNSIGNED DEFAULT NULL,
-  `invoice_number` varchar(64) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_invoices` (
+`virtuemart_invoice_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '1',
+  `virtuemart_order_id` int(1) unsigned DEFAULT NULL,
+  `invoice_number` char(64) DEFAULT NULL,
   `order_status` char(2) DEFAULT NULL,
   `xhtml` text,
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -2952,8 +2993,8 @@ CREATE TABLE `xtqmd_virtuemart_invoices` (
 -- Table structure for table `xtqmd_virtuemart_manufacturercategories`
 --
 
-CREATE TABLE `xtqmd_virtuemart_manufacturercategories` (
-  `virtuemart_manufacturercategories_id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_manufacturercategories` (
+`virtuemart_manufacturercategories_id` int(1) unsigned NOT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
@@ -2969,11 +3010,11 @@ CREATE TABLE `xtqmd_virtuemart_manufacturercategories` (
 -- Table structure for table `xtqmd_virtuemart_manufacturercategories_vi_vn`
 --
 
-CREATE TABLE `xtqmd_virtuemart_manufacturercategories_vi_vn` (
-  `virtuemart_manufacturercategories_id` int(1) UNSIGNED NOT NULL,
-  `mf_category_name` varchar(180) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_manufacturercategories_vi_vn` (
+  `virtuemart_manufacturercategories_id` int(1) unsigned NOT NULL,
+  `mf_category_name` char(180) NOT NULL DEFAULT '',
   `mf_category_desc` varchar(19000) NOT NULL DEFAULT '',
-  `slug` varchar(192) NOT NULL DEFAULT ''
+  `slug` char(192) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2982,12 +3023,12 @@ CREATE TABLE `xtqmd_virtuemart_manufacturercategories_vi_vn` (
 -- Table structure for table `xtqmd_virtuemart_manufacturers`
 --
 
-CREATE TABLE `xtqmd_virtuemart_manufacturers` (
-  `virtuemart_manufacturer_id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_manufacturers` (
+`virtuemart_manufacturer_id` smallint(1) unsigned NOT NULL,
   `virtuemart_manufacturercategories_id` int(1) DEFAULT NULL,
   `metarobot` varchar(400) DEFAULT NULL,
   `metaauthor` varchar(400) DEFAULT NULL,
-  `hits` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `hits` int(1) unsigned NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
@@ -3003,16 +3044,16 @@ CREATE TABLE `xtqmd_virtuemart_manufacturers` (
 -- Table structure for table `xtqmd_virtuemart_manufacturers_vi_vn`
 --
 
-CREATE TABLE `xtqmd_virtuemart_manufacturers_vi_vn` (
-  `virtuemart_manufacturer_id` int(1) UNSIGNED NOT NULL,
-  `mf_name` varchar(180) NOT NULL DEFAULT '',
-  `mf_email` varchar(255) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_manufacturers_vi_vn` (
+  `virtuemart_manufacturer_id` int(1) unsigned NOT NULL,
+  `mf_name` char(180) NOT NULL DEFAULT '',
+  `mf_email` char(255) NOT NULL DEFAULT '',
   `mf_desc` varchar(19000) NOT NULL DEFAULT '',
-  `mf_url` varchar(255) NOT NULL DEFAULT '',
+  `mf_url` char(255) NOT NULL DEFAULT '',
+  `slug` char(192) NOT NULL DEFAULT '',
   `metadesc` varchar(400) NOT NULL DEFAULT '',
   `metakey` varchar(400) NOT NULL DEFAULT '',
-  `customtitle` varchar(255) NOT NULL DEFAULT '',
-  `slug` varchar(192) NOT NULL DEFAULT ''
+  `customtitle` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3021,10 +3062,10 @@ CREATE TABLE `xtqmd_virtuemart_manufacturers_vi_vn` (
 -- Table structure for table `xtqmd_virtuemart_manufacturer_medias`
 --
 
-CREATE TABLE `xtqmd_virtuemart_manufacturer_medias` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_manufacturer_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_media_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_manufacturer_medias` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_manufacturer_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_media_id` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -3034,21 +3075,21 @@ CREATE TABLE `xtqmd_virtuemart_manufacturer_medias` (
 -- Table structure for table `xtqmd_virtuemart_medias`
 --
 
-CREATE TABLE `xtqmd_virtuemart_medias` (
-  `virtuemart_media_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
-  `file_title` varchar(126) NOT NULL DEFAULT '',
-  `file_description` varchar(254) NOT NULL DEFAULT '',
-  `file_meta` varchar(254) NOT NULL DEFAULT '',
-  `file_class` varchar(64) NOT NULL DEFAULT '',
-  `file_mimetype` varchar(64) NOT NULL DEFAULT '',
-  `file_type` varchar(32) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_medias` (
+`virtuemart_media_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
+  `file_title` char(126) NOT NULL DEFAULT '',
+  `file_description` char(254) NOT NULL DEFAULT '',
+  `file_meta` char(254) NOT NULL DEFAULT '',
+  `file_class` char(64) NOT NULL DEFAULT '',
+  `file_mimetype` char(64) NOT NULL DEFAULT '',
+  `file_type` char(32) NOT NULL DEFAULT '',
   `file_url` varchar(900) NOT NULL DEFAULT '',
   `file_url_thumb` varchar(900) NOT NULL DEFAULT '',
   `file_is_product_image` tinyint(1) NOT NULL DEFAULT '0',
   `file_is_downloadable` tinyint(1) NOT NULL DEFAULT '0',
   `file_is_forSale` tinyint(1) NOT NULL DEFAULT '0',
-  `file_params` varchar(12287) NOT NULL DEFAULT '',
+  `file_params` varchar(17000) NOT NULL DEFAULT '',
   `file_lang` varchar(500) NOT NULL DEFAULT '',
   `shared` tinyint(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -3058,7 +3099,49 @@ CREATE TABLE `xtqmd_virtuemart_medias` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Additional Images and Files which are assigned to products';
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='Additional Images and Files which are assigned to products';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_medias`
+--
+
+INSERT INTO `xtqmd_virtuemart_medias` (`virtuemart_media_id`, `virtuemart_vendor_id`, `file_title`, `file_description`, `file_meta`, `file_class`, `file_mimetype`, `file_type`, `file_url`, `file_url_thumb`, `file_is_product_image`, `file_is_downloadable`, `file_is_forSale`, `file_params`, `file_lang`, `shared`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(1, 1, 'somitrang.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somitrang.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:37:06', 596, '2018-05-02 16:43:42', 596, '0000-00-00 00:00:00', 0),
+(2, 1, 'somicanhdoi.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somicanhdoi.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:41:23', 596, '2018-05-02 16:42:49', 596, '0000-00-00 00:00:00', 0),
+(3, 1, 'somitrang7.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somitrang7.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:47:07', 596, '2018-05-02 16:47:48', 596, '0000-00-00 00:00:00', 0),
+(4, 1, 'somicanhdoi4.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somicanhdoi4.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:48:31', 596, '2018-05-02 16:48:52', 596, '0000-00-00 00:00:00', 0),
+(5, 1, 'somicaro1.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somicaro1.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:52:21', 596, '2018-05-02 16:56:50', 596, '0000-00-00 00:00:00', 0),
+(6, 1, 'somicaro1.jpg_product', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somicaro2.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:52:35', 596, '2018-05-02 16:52:35', 596, '0000-00-00 00:00:00', 0),
+(7, 1, 'somicaro1.jpg_product', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somicaro28.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:53:13', 596, '2018-05-02 16:53:13', 596, '0000-00-00 00:00:00', 0),
+(8, 1, 'somikesoc.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somikesoc.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:56:29', 596, '2018-05-02 16:56:29', 596, '0000-00-00 00:00:00', 0),
+(9, 1, 'somibo.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somibo.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 16:59:08', 596, '2018-05-02 16:59:27', 596, '0000-00-00 00:00:00', 0),
+(10, 1, 'somihoa.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somihoa.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:01:57', 596, '2018-05-02 17:02:00', 596, '0000-00-00 00:00:00', 0),
+(11, 1, 'somi3d.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somi3d.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:04:41', 596, '2018-05-02 17:04:43', 596, '0000-00-00 00:00:00', 0),
+(12, 1, 'somiren.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somiren.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:06:21', 596, '2018-05-02 17:06:21', 596, '0000-00-00 00:00:00', 0),
+(13, 1, 'somibeo.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somibeo.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:08:02', 596, '2018-05-02 17:08:02', 596, '0000-00-00 00:00:00', 0),
+(14, 1, 'somi2tui.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somi2tui.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:09:50', 596, '2018-05-02 17:09:55', 596, '0000-00-00 00:00:00', 0),
+(15, 1, 'somiphoi.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somiphoi.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:12:18', 596, '2018-05-02 17:12:18', 596, '0000-00-00 00:00:00', 0),
+(16, 1, 'somicokhuy.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/somicokhuy.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:13:16', 596, '2018-05-02 17:13:16', 596, '0000-00-00 00:00:00', 0),
+(17, 1, 'tải xuống.jpg', '', '', '', 'image/jpeg', 'category', 'images/virtuemart/category/tải xuống.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:15:10', 596, '2018-05-02 17:15:10', 596, '0000-00-00 00:00:00', 0),
+(18, 1, 'tải xuống.jpg_category', '', '', '', 'image/jpeg', 'category', 'images/virtuemart/category/tải xuống9.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:15:35', 596, '2018-05-02 17:15:35', 596, '0000-00-00 00:00:00', 0),
+(19, 1, 'tải xuống.jpg_category_category', '', '', '', 'image/jpeg', 'category', 'images/virtuemart/category/banner1 phông.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:15:52', 596, '2018-05-02 17:15:52', 596, '0000-00-00 00:00:00', 0),
+(20, 1, 'tải xuống.jpg_category_category_category', '', '', '', 'image/jpeg', 'category', 'images/virtuemart/category/banner1 phông2.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:16:28', 596, '2018-05-02 17:16:28', 596, '0000-00-00 00:00:00', 0),
+(21, 1, 'tải xuống.jpg_category_category_category_category', '', '', '', 'image/jpeg', 'category', 'images/virtuemart/category/somi2tui.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:16:46', 596, '2018-05-02 17:16:46', 596, '0000-00-00 00:00:00', 0),
+(22, 1, 'phongtronnu.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongtronnu.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:28:58', 596, '2018-05-02 17:28:58', 596, '0000-00-00 00:00:00', 0),
+(23, 1, 'phongconu.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongconu.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:30:43', 596, '2018-05-02 17:30:43', 596, '0000-00-00 00:00:00', 0),
+(24, 1, 'phong3d.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phong3d.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:33:55', 596, '2018-05-02 17:33:55', 596, '0000-00-00 00:00:00', 0),
+(25, 1, 'phongkenu.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongkenu.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:35:18', 596, '2018-05-02 17:35:18', 596, '0000-00-00 00:00:00', 0),
+(26, 1, 'phonggucci1.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phonggucci1.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:39:23', 596, '2018-05-02 17:39:23', 596, '0000-00-00 00:00:00', 0),
+(27, 1, 'phongnamco1.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnamco1.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:47:40', 596, '2018-05-02 17:51:00', 596, '0000-00-00 00:00:00', 0),
+(28, 1, 'phongnamco1.jpg_product', '', '', '', '', 'product', 'images/virtuemart/product/', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:47:57', 596, '2018-05-02 17:47:57', 596, '0000-00-00 00:00:00', 0),
+(29, 1, 'phongnamco1.jpg_product', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnamco5.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:49:33', 596, '2018-05-02 17:49:33', 596, '0000-00-00 00:00:00', 0),
+(30, 1, 'phongnamco1.jpg_product', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnamco2.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:50:00', 596, '2018-05-02 17:50:00', 596, '0000-00-00 00:00:00', 0),
+(31, 1, 'phongnam3d.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnam3d.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:52:09', 596, '2018-05-02 17:52:47', 596, '0000-00-00 00:00:00', 0),
+(32, 1, 'phongnam1.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnam1.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:54:22', 596, '2018-05-02 17:55:16', 596, '0000-00-00 00:00:00', 0),
+(33, 1, 'phongnam1.jpg_product', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnam.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:54:31', 596, '2018-05-02 17:54:31', 596, '0000-00-00 00:00:00', 0),
+(34, 1, 'phongnam1.jpg_product', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnamco.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:54:42', 596, '2018-05-02 17:54:42', 596, '0000-00-00 00:00:00', 0),
+(35, 1, 'phongnamco4.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnamco4.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:56:46', 596, '2018-05-02 17:56:48', 596, '0000-00-00 00:00:00', 0),
+(36, 1, 'phongnamcohinhsaulung.jpg', '', '', '', 'image/jpeg', 'product', 'images/virtuemart/product/phongnamcohinhsaulung.jpg', '', 0, 0, 0, '', '', 0, 1, '2018-05-02 17:58:33', 596, '2018-05-02 17:58:36', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3066,8 +3149,8 @@ CREATE TABLE `xtqmd_virtuemart_medias` (
 -- Table structure for table `xtqmd_virtuemart_migration_oldtonew_ids`
 --
 
-CREATE TABLE `xtqmd_virtuemart_migration_oldtonew_ids` (
-  `id` smallint(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_migration_oldtonew_ids` (
+`id` smallint(1) unsigned NOT NULL,
   `cats` longblob,
   `catsxref` blob,
   `manus` longblob,
@@ -3088,15 +3171,15 @@ CREATE TABLE `xtqmd_virtuemart_migration_oldtonew_ids` (
 -- Table structure for table `xtqmd_virtuemart_modules`
 --
 
-CREATE TABLE `xtqmd_virtuemart_modules` (
-  `module_id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_modules` (
+`module_id` int(1) unsigned NOT NULL,
   `module_name` char(255) DEFAULT NULL,
-  `module_description` varchar(15359) DEFAULT NULL,
+  `module_description` varchar(21000) DEFAULT NULL,
   `module_perms` char(255) DEFAULT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `is_admin` enum('0','1') NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='VirtueMart Core Modules, not: Joomla modules';
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='VirtueMart Core Modules, not: Joomla modules';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_modules`
@@ -3122,10 +3205,10 @@ INSERT INTO `xtqmd_virtuemart_modules` (`module_id`, `module_name`, `module_desc
 -- Table structure for table `xtqmd_virtuemart_orders`
 --
 
-CREATE TABLE `xtqmd_virtuemart_orders` (
-  `virtuemart_order_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_orders` (
+`virtuemart_order_id` int(1) unsigned NOT NULL,
+  `virtuemart_user_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '0',
   `order_number` varchar(64) DEFAULT NULL,
   `customer_number` varchar(32) DEFAULT NULL,
   `order_pass` varchar(34) DEFAULT NULL,
@@ -3137,23 +3220,23 @@ CREATE TABLE `xtqmd_virtuemart_orders` (
   `order_billDiscountAmount` decimal(15,5) NOT NULL DEFAULT '0.00000',
   `order_discountAmount` decimal(15,5) NOT NULL DEFAULT '0.00000',
   `order_subtotal` decimal(15,5) DEFAULT NULL,
-  `order_tax` decimal(12,5) DEFAULT NULL,
-  `order_shipment` decimal(12,5) DEFAULT NULL,
+  `order_tax` decimal(10,5) DEFAULT NULL,
+  `order_shipment` decimal(10,5) DEFAULT NULL,
   `order_shipment_tax` decimal(10,5) DEFAULT NULL,
-  `order_payment` decimal(12,2) DEFAULT NULL,
+  `order_payment` decimal(10,2) DEFAULT NULL,
   `order_payment_tax` decimal(10,5) DEFAULT NULL,
   `coupon_discount` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `coupon_code` varchar(32) DEFAULT NULL,
+  `coupon_code` char(32) DEFAULT NULL,
   `order_discount` decimal(12,2) NOT NULL DEFAULT '0.00',
   `order_currency` smallint(1) DEFAULT NULL,
   `order_status` char(1) DEFAULT NULL,
   `user_currency_id` smallint(1) DEFAULT NULL,
-  `user_currency_rate` decimal(12,6) NOT NULL DEFAULT '1.000000',
+  `user_currency_rate` decimal(10,5) NOT NULL DEFAULT '1.00000',
   `user_shoppergroups` varchar(30) DEFAULT NULL,
   `payment_currency_id` smallint(1) DEFAULT NULL,
   `payment_currency_rate` decimal(12,6) NOT NULL DEFAULT '1.000000',
-  `virtuemart_paymentmethod_id` int(1) UNSIGNED DEFAULT NULL,
-  `virtuemart_shipmentmethod_id` int(1) UNSIGNED DEFAULT NULL,
+  `virtuemart_paymentmethod_id` int(1) unsigned DEFAULT NULL,
+  `virtuemart_shipmentmethod_id` int(1) unsigned DEFAULT NULL,
   `delivery_date` varchar(200) DEFAULT NULL,
   `order_language` varchar(7) DEFAULT NULL,
   `ip_address` char(15) NOT NULL DEFAULT '',
@@ -3171,13 +3254,13 @@ CREATE TABLE `xtqmd_virtuemart_orders` (
 -- Table structure for table `xtqmd_virtuemart_orderstates`
 --
 
-CREATE TABLE `xtqmd_virtuemart_orderstates` (
-  `virtuemart_orderstate_id` tinyint(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_orderstates` (
+`virtuemart_orderstate_id` tinyint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
   `order_status_code` char(1) NOT NULL DEFAULT '',
-  `order_status_name` varchar(64) DEFAULT NULL,
+  `order_status_name` char(64) DEFAULT NULL,
+  `order_status_description` varchar(20000) DEFAULT NULL,
   `order_status_color` varchar(64) DEFAULT NULL,
-  `order_status_description` varchar(15359) DEFAULT NULL,
   `order_stock_handle` char(1) NOT NULL DEFAULT 'A',
   `ordering` int(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -3187,21 +3270,21 @@ CREATE TABLE `xtqmd_virtuemart_orderstates` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='All available order statuses';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='All available order statuses';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_orderstates`
 --
 
-INSERT INTO `xtqmd_virtuemart_orderstates` (`virtuemart_orderstate_id`, `virtuemart_vendor_id`, `order_status_code`, `order_status_name`, `order_status_color`, `order_status_description`, `order_stock_handle`, `ordering`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
-(1, 1, 'P', 'COM_VIRTUEMART_ORDER_STATUS_PENDING', NULL, '', 'R', 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(2, 1, 'U', 'COM_VIRTUEMART_ORDER_STATUS_CONFIRMED_BY_SHOPPER', NULL, '', 'R', 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(3, 1, 'C', 'COM_VIRTUEMART_ORDER_STATUS_CONFIRMED', NULL, '', 'R', 3, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(4, 1, 'X', 'COM_VIRTUEMART_ORDER_STATUS_CANCELLED', NULL, '', 'A', 4, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(5, 1, 'R', 'COM_VIRTUEMART_ORDER_STATUS_REFUNDED', NULL, '', 'A', 5, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(6, 1, 'S', 'COM_VIRTUEMART_ORDER_STATUS_SHIPPED', NULL, '', 'O', 6, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(7, 1, 'F', 'COM_VIRTUEMART_ORDER_STATUS_COMPLETED', NULL, '', 'R', 7, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(8, 1, 'D', 'COM_VIRTUEMART_ORDER_STATUS_DENIED', NULL, '', 'A', 8, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+INSERT INTO `xtqmd_virtuemart_orderstates` (`virtuemart_orderstate_id`, `virtuemart_vendor_id`, `order_status_code`, `order_status_name`, `order_status_description`, `order_status_color`, `order_stock_handle`, `ordering`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(1, 1, 'P', 'COM_VIRTUEMART_ORDER_STATUS_PENDING', '', NULL, 'R', 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(2, 1, 'U', 'COM_VIRTUEMART_ORDER_STATUS_CONFIRMED_BY_SHOPPER', '', NULL, 'R', 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(3, 1, 'C', 'COM_VIRTUEMART_ORDER_STATUS_CONFIRMED', '', NULL, 'R', 3, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(4, 1, 'X', 'COM_VIRTUEMART_ORDER_STATUS_CANCELLED', '', NULL, 'A', 4, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(5, 1, 'R', 'COM_VIRTUEMART_ORDER_STATUS_REFUNDED', '', NULL, 'A', 5, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(6, 1, 'S', 'COM_VIRTUEMART_ORDER_STATUS_SHIPPED', '', NULL, 'O', 6, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(7, 1, 'F', 'COM_VIRTUEMART_ORDER_STATUS_COMPLETED', '', NULL, 'R', 7, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(8, 1, 'D', 'COM_VIRTUEMART_ORDER_STATUS_DENIED', '', NULL, 'A', 8, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3209,20 +3292,20 @@ INSERT INTO `xtqmd_virtuemart_orderstates` (`virtuemart_orderstate_id`, `virtuem
 -- Table structure for table `xtqmd_virtuemart_order_calc_rules`
 --
 
-CREATE TABLE `xtqmd_virtuemart_order_calc_rules` (
-  `virtuemart_order_calc_rule_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_calc_id` int(1) UNSIGNED DEFAULT NULL,
-  `virtuemart_order_id` int(1) UNSIGNED DEFAULT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_order_calc_rules` (
+`virtuemart_order_calc_rule_id` int(1) unsigned NOT NULL,
+  `virtuemart_calc_id` int(1) DEFAULT NULL,
+  `virtuemart_order_id` int(1) DEFAULT NULL,
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
   `virtuemart_order_item_id` int(1) DEFAULT NULL,
-  `calc_rule_name` varchar(64) NOT NULL DEFAULT '' COMMENT 'Name of the rule',
-  `calc_kind` varchar(16) NOT NULL DEFAULT '' COMMENT 'Discount/Tax/Margin/Commission',
-  `calc_mathop` varchar(16) NOT NULL DEFAULT '' COMMENT 'Discount/Tax/Margin/Commission',
+  `calc_rule_name` char(64) NOT NULL DEFAULT '' COMMENT 'NAME OF THE RULE',
+  `calc_kind` char(16) NOT NULL DEFAULT '' COMMENT 'DISCOUNT/TAX/MARGIN/COMMISSION',
+  `calc_mathop` char(16) NOT NULL DEFAULT '' COMMENT 'DISCOUNT/TAX/MARGIN/COMMISSION',
   `calc_amount` decimal(15,5) NOT NULL DEFAULT '0.00000',
   `calc_result` decimal(15,5) NOT NULL DEFAULT '0.00000',
   `calc_value` decimal(15,5) NOT NULL DEFAULT '0.00000',
-  `calc_currency` int(1) DEFAULT NULL,
-  `calc_params` varchar(15359) NOT NULL DEFAULT '',
+  `calc_currency` smallint(1) DEFAULT NULL,
+  `calc_params` varchar(18000) NOT NULL DEFAULT '',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -3237,12 +3320,12 @@ CREATE TABLE `xtqmd_virtuemart_order_calc_rules` (
 -- Table structure for table `xtqmd_virtuemart_order_histories`
 --
 
-CREATE TABLE `xtqmd_virtuemart_order_histories` (
-  `virtuemart_order_history_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_order_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_order_histories` (
+`virtuemart_order_history_id` int(1) unsigned NOT NULL,
+  `virtuemart_order_id` int(1) unsigned NOT NULL DEFAULT '0',
   `order_status_code` char(1) NOT NULL DEFAULT '0',
   `customer_notified` tinyint(1) NOT NULL DEFAULT '0',
-  `comments` varchar(15359) DEFAULT NULL,
+  `comments` varchar(21000) DEFAULT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
@@ -3258,12 +3341,12 @@ CREATE TABLE `xtqmd_virtuemart_order_histories` (
 -- Table structure for table `xtqmd_virtuemart_order_items`
 --
 
-CREATE TABLE `xtqmd_virtuemart_order_items` (
-  `virtuemart_order_item_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_order_id` int(1) UNSIGNED DEFAULT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_order_items` (
+`virtuemart_order_item_id` int(1) unsigned NOT NULL,
+  `virtuemart_order_id` int(1) DEFAULT NULL,
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
   `virtuemart_product_id` int(1) DEFAULT NULL,
-  `order_item_sku` varchar(255) NOT NULL DEFAULT '',
+  `order_item_sku` char(255) NOT NULL DEFAULT '',
   `order_item_name` varchar(4096) NOT NULL DEFAULT '',
   `product_quantity` int(1) DEFAULT NULL,
   `product_item_price` decimal(15,5) DEFAULT NULL,
@@ -3292,30 +3375,30 @@ CREATE TABLE `xtqmd_virtuemart_order_items` (
 -- Table structure for table `xtqmd_virtuemart_order_userinfos`
 --
 
-CREATE TABLE `xtqmd_virtuemart_order_userinfos` (
-  `virtuemart_order_userinfo_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_order_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_order_userinfos` (
+`virtuemart_order_userinfo_id` int(1) unsigned NOT NULL,
+  `virtuemart_order_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_user_id` int(1) unsigned NOT NULL DEFAULT '0',
   `address_type` char(2) DEFAULT NULL,
-  `address_type_name` varchar(32) DEFAULT NULL,
-  `company` varchar(64) DEFAULT NULL,
-  `title` varchar(32) DEFAULT NULL,
-  `last_name` varchar(96) DEFAULT NULL,
-  `first_name` varchar(96) DEFAULT NULL,
-  `middle_name` varchar(96) DEFAULT NULL,
-  `phone_1` varchar(32) DEFAULT NULL,
-  `phone_2` varchar(32) DEFAULT NULL,
-  `fax` varchar(32) DEFAULT NULL,
-  `address_1` varchar(96) NOT NULL DEFAULT '',
-  `address_2` varchar(64) DEFAULT NULL,
-  `city` varchar(96) NOT NULL DEFAULT '',
-  `virtuemart_state_id` smallint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_country_id` smallint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `zip` varchar(32) NOT NULL DEFAULT '',
-  `email` varchar(128) DEFAULT NULL,
+  `address_type_name` char(32) DEFAULT NULL,
+  `company` char(64) DEFAULT NULL,
+  `title` char(32) DEFAULT NULL,
+  `last_name` char(48) DEFAULT NULL,
+  `first_name` char(48) DEFAULT NULL,
+  `middle_name` char(48) DEFAULT NULL,
+  `phone_1` char(32) DEFAULT NULL,
+  `phone_2` char(32) DEFAULT NULL,
+  `fax` char(32) DEFAULT NULL,
+  `address_1` char(64) NOT NULL DEFAULT '',
+  `address_2` char(64) DEFAULT NULL,
+  `city` char(64) NOT NULL DEFAULT '',
+  `virtuemart_state_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_country_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `zip` char(16) NOT NULL DEFAULT '',
+  `email` char(128) DEFAULT NULL,
   `agreed` tinyint(1) NOT NULL DEFAULT '0',
   `tos` tinyint(1) NOT NULL DEFAULT '0',
-  `customer_note` varchar(5000) NOT NULL DEFAULT '',
+  `customer_note` varchar(2500) NOT NULL DEFAULT '',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -3330,13 +3413,13 @@ CREATE TABLE `xtqmd_virtuemart_order_userinfos` (
 -- Table structure for table `xtqmd_virtuemart_paymentmethods`
 --
 
-CREATE TABLE `xtqmd_virtuemart_paymentmethods` (
-  `virtuemart_paymentmethod_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_paymentmethods` (
+`virtuemart_paymentmethod_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
   `payment_jplugin_id` int(1) NOT NULL DEFAULT '0',
-  `payment_element` varchar(50) NOT NULL DEFAULT '',
-  `payment_params` text,
-  `currency_id` int(1) UNSIGNED DEFAULT NULL,
+  `payment_element` char(50) NOT NULL DEFAULT '',
+  `payment_params` varchar(19000) NOT NULL DEFAULT '',
+  `currency_id` int(1) unsigned DEFAULT NULL,
   `shared` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'valide for all vendors?',
   `ordering` int(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -3354,11 +3437,11 @@ CREATE TABLE `xtqmd_virtuemart_paymentmethods` (
 -- Table structure for table `xtqmd_virtuemart_paymentmethods_vi_vn`
 --
 
-CREATE TABLE `xtqmd_virtuemart_paymentmethods_vi_vn` (
-  `virtuemart_paymentmethod_id` int(1) UNSIGNED NOT NULL,
-  `payment_name` varchar(180) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_paymentmethods_vi_vn` (
+  `virtuemart_paymentmethod_id` int(1) unsigned NOT NULL,
+  `payment_name` char(180) NOT NULL DEFAULT '',
   `payment_desc` varchar(19000) NOT NULL DEFAULT '',
-  `slug` varchar(192) NOT NULL DEFAULT ''
+  `slug` char(192) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3367,10 +3450,10 @@ CREATE TABLE `xtqmd_virtuemart_paymentmethods_vi_vn` (
 -- Table structure for table `xtqmd_virtuemart_paymentmethod_shoppergroups`
 --
 
-CREATE TABLE `xtqmd_virtuemart_paymentmethod_shoppergroups` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_paymentmethod_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_paymentmethod_shoppergroups` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_paymentmethod_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='xref table for paymentmethods to shoppergroup';
 
 -- --------------------------------------------------------
@@ -3379,10 +3462,10 @@ CREATE TABLE `xtqmd_virtuemart_paymentmethod_shoppergroups` (
 -- Table structure for table `xtqmd_virtuemart_products`
 --
 
-CREATE TABLE `xtqmd_virtuemart_products` (
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
-  `product_parent_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_products` (
+`virtuemart_product_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '1',
+  `product_parent_id` int(1) unsigned NOT NULL DEFAULT '0',
   `product_sku` varchar(255) DEFAULT NULL,
   `product_gtin` varchar(64) DEFAULT NULL,
   `product_mpn` varchar(64) DEFAULT NULL,
@@ -3396,29 +3479,57 @@ CREATE TABLE `xtqmd_virtuemart_products` (
   `product_in_stock` int(1) NOT NULL DEFAULT '0',
   `product_ordered` int(1) NOT NULL DEFAULT '0',
   `product_stockhandle` varchar(24) NOT NULL DEFAULT '0',
-  `low_stock_notification` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `low_stock_notification` int(1) unsigned NOT NULL DEFAULT '0',
   `product_available_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `product_availability` varchar(32) DEFAULT NULL,
-  `product_special` tinyint(1) NOT NULL DEFAULT '0',
+  `product_availability` char(32) DEFAULT NULL,
+  `product_special` tinyint(1) DEFAULT NULL,
   `product_discontinued` tinyint(1) NOT NULL DEFAULT '0',
-  `product_sales` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `product_sales` int(1) unsigned NOT NULL DEFAULT '0',
   `product_unit` varchar(8) DEFAULT NULL,
-  `product_packaging` decimal(8,4) UNSIGNED DEFAULT NULL,
-  `product_params` varchar(255) NOT NULL,
-  `hits` int(1) UNSIGNED DEFAULT NULL,
-  `intnotes` text,
+  `product_packaging` decimal(8,4) unsigned DEFAULT NULL,
+  `product_params` varchar(2000) NOT NULL DEFAULT '',
+  `hits` int(1) unsigned DEFAULT NULL,
+  `intnotes` varchar(18000) DEFAULT NULL,
   `metarobot` varchar(400) DEFAULT NULL,
   `metaauthor` varchar(400) DEFAULT NULL,
-  `layout` varchar(16) DEFAULT NULL,
-  `published` tinyint(1) NOT NULL DEFAULT '0',
-  `pordering` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `layout` char(16) DEFAULT NULL,
+  `published` tinyint(1) DEFAULT NULL,
+  `pordering` int(1) unsigned NOT NULL DEFAULT '0',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='All products are stored here.';
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='All products are stored here.';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_products`
+--
+
+INSERT INTO `xtqmd_virtuemart_products` (`virtuemart_product_id`, `virtuemart_vendor_id`, `product_parent_id`, `product_sku`, `product_gtin`, `product_mpn`, `product_weight`, `product_weight_uom`, `product_length`, `product_width`, `product_height`, `product_lwh_uom`, `product_url`, `product_in_stock`, `product_ordered`, `product_stockhandle`, `low_stock_notification`, `product_available_date`, `product_availability`, `product_special`, `product_discontinued`, `product_sales`, `product_unit`, `product_packaging`, `product_params`, `hits`, `intnotes`, `metarobot`, `metaauthor`, `layout`, `published`, `pordering`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(3, 1, 0, 'SM001', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 10, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 16:44:22', 596, '2018-05-02 16:47:48', 596, '0000-00-00 00:00:00', 0),
+(4, 1, 0, 'SM002', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 5, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 16:48:31', 596, '2018-05-02 16:48:52', 596, '0000-00-00 00:00:00', 0),
+(5, 1, 0, 'SM003', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 20, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 16:52:21', 596, '2018-05-02 16:56:50', 596, '0000-00-00 00:00:00', 0),
+(6, 1, 0, 'SM004', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 2, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 16:56:29', 596, '2018-05-02 16:56:29', 596, '0000-00-00 00:00:00', 0),
+(7, 1, 0, 'SM005', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 30, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 16:59:08', 596, '2018-05-02 16:59:27', 596, '0000-00-00 00:00:00', 0),
+(8, 1, 0, 'SM006', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 25, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:01:57', 596, '2018-05-02 17:02:00', 596, '0000-00-00 00:00:00', 0),
+(9, 1, 0, 'SM007', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 15, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:04:41', 596, '2018-05-02 17:04:43', 596, '0000-00-00 00:00:00', 0),
+(10, 1, 0, 'SM008', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 10, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:06:21', 596, '2018-05-02 17:06:21', 596, '0000-00-00 00:00:00', 0),
+(11, 1, 0, 'SM009', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 30, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:08:02', 596, '2018-05-02 17:08:02', 596, '0000-00-00 00:00:00', 0),
+(12, 1, 0, 'SM010', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 20, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:09:50', 596, '2018-05-02 17:09:55', 596, '0000-00-00 00:00:00', 0),
+(13, 1, 0, 'SM011', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 3, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:12:18', 596, '2018-05-02 17:12:18', 596, '0000-00-00 00:00:00', 0),
+(14, 1, 0, 'SM012', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 35, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:13:16', 596, '2018-05-02 17:13:16', 596, '0000-00-00 00:00:00', 0),
+(15, 1, 0, 'AP001', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 20, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:28:58', 596, '2018-05-02 17:28:58', 596, '0000-00-00 00:00:00', 0),
+(16, 1, 0, 'AP002', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 25, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:30:43', 596, '2018-05-02 17:30:43', 596, '0000-00-00 00:00:00', 0),
+(17, 1, 0, 'AP003', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 30, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:33:55', 596, '2018-05-02 17:33:55', 596, '0000-00-00 00:00:00', 0),
+(18, 1, 0, 'AP004', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 35, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:35:18', 596, '2018-05-02 17:35:18', 596, '0000-00-00 00:00:00', 0),
+(19, 1, 0, 'AP005', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 30, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:37:23', 596, '2018-05-02 17:39:23', 596, '0000-00-00 00:00:00', 0),
+(20, 1, 0, 'AP006', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 50, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:47:40', 596, '2018-05-02 17:51:00', 596, '0000-00-00 00:00:00', 0),
+(21, 1, 0, 'AP007', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 20, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:52:09', 596, '2018-05-02 17:52:47', 596, '0000-00-00 00:00:00', 0),
+(22, 1, 0, 'AP008', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 50, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:54:22', 596, '2018-05-02 17:55:16', 596, '0000-00-00 00:00:00', 0),
+(23, 1, 0, 'AP009', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 20, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:56:46', 596, '2018-05-02 17:56:48', 596, '0000-00-00 00:00:00', 0),
+(24, 1, 0, 'AP010', '', '', NULL, 'KG', NULL, NULL, NULL, 'M', '', 30, 0, '0', 0, '2018-05-02 00:00:00', '', 0, 0, 0, 'KG', NULL, 'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|', NULL, '', '', '', '0', 1, 0, '2018-05-02 17:58:33', 596, '2018-05-02 17:58:36', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3426,16 +3537,44 @@ CREATE TABLE `xtqmd_virtuemart_products` (
 -- Table structure for table `xtqmd_virtuemart_products_vi_vn`
 --
 
-CREATE TABLE `xtqmd_virtuemart_products_vi_vn` (
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_products_vi_vn` (
+  `virtuemart_product_id` int(1) unsigned NOT NULL,
   `product_s_desc` varchar(2000) NOT NULL DEFAULT '',
   `product_desc` varchar(18400) NOT NULL DEFAULT '',
-  `product_name` varchar(180) NOT NULL DEFAULT '',
+  `product_name` char(180) NOT NULL DEFAULT '',
   `metadesc` varchar(400) NOT NULL DEFAULT '',
   `metakey` varchar(400) NOT NULL DEFAULT '',
-  `customtitle` varchar(255) NOT NULL DEFAULT '',
-  `slug` varchar(192) NOT NULL DEFAULT ''
+  `customtitle` char(255) NOT NULL DEFAULT '',
+  `slug` char(192) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `xtqmd_virtuemart_products_vi_vn`
+--
+
+INSERT INTO `xtqmd_virtuemart_products_vi_vn` (`virtuemart_product_id`, `product_s_desc`, `product_desc`, `product_name`, `metadesc`, `metakey`, `customtitle`, `slug`) VALUES
+(3, 'Chất liệu : Lụa\r\nMàu sắc : Trắng\r\nKích cỡ : S M L', '<p><span style="font-size: 12pt;"><img src="images/somitrang.jpg" alt="" width="224" height="224" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Lụa</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Trắng</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L</span></p>', 'Sơ mi trắng', '', '', '', 'sơ-mi-trắng'),
+(4, 'Chất liệu : Lụa tổng hợp\r\nMàu sắc : Vàng nâu\r\nKích cỡ : S M L', '<p><span style="font-size: 12pt;"><img src="images/somicanhdoi.jpg" alt="" width="286" height="286" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Lụa tổng hợp</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Vàng nâu</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L</span></p>', 'Sơ mi cánh dơi', '', '', '', 'sơ-mi-cánh-dơi'),
+(5, 'Chất liệu : Vải thô\r\nMàu sắc : Đen-Trắng, Đỏ-Đen\r\nKích cỡ : S M L XL', '<p><span style="font-size: 12pt;"><img src="images/somicaro1.jpg" alt="" width="271" height="227" /><img src="images/somicaro2.jpg" alt="" width="220" height="226" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Vải thô</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Đen-Trắng, Đỏ-Đen</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L XL</span></p>', 'Sơ mi caro', '', '', '', 'sơ-mi-caro'),
+(6, 'Chất liệu : Voan\r\nMàu sắc : Trắng-Đen\r\nKích cỡ : S M L', '<p><img src="images/somikesoc.jpg" alt="" width="260" height="260" /></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Voan</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Trắng-Đen</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L</span></p>', 'Sơ mi kẻ sọc', '', '', '', 'sơ-mi-kẻ-sọc'),
+(7, 'Chất liệu : Jean\r\nMàu sắc : Xanh\r\nKích cỡ : S M L XL', '<p><span style="font-size: 12pt;"><img src="images/somibo.jpg" alt="" width="248" height="306" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Jean</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Xanh</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L XL</span></p>', 'Sơ mi bò', '', '', '', 'sơ-mi-bò'),
+(8, 'Chất liệu : Voan\r\nMàu sắc : Trắng, Vàng\r\nKích cỡ : S M L XL', '<p><span style="font-size: 12pt;"><img src="images/somihoa.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Voan</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Trắng, Vàng</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L XL</span></p>', 'Sơ mi hoa', '', '', '', 'sơ-mi-hoa'),
+(9, 'Chất liệu : Voan\r\nMàu sắc : trắng, xanh, đen\r\nKích cỡ : M L', '<p><span style="font-size: 12pt;"><img src="images/somi3d.jpg" alt="" width="452" height="452" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Voan</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : trắng, xanh, đen</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : M L</span></p>', 'Sơ mi in 3D', '', '', '', 'sơ-mi-in-3d'),
+(10, 'Chất liệu : Voan-Ren\r\nMàu sắc : Da, Trắng\r\nKích cỡ : S M ', '<p><span style="font-size: 12pt;"><img src="images/somiren.jpg" alt="" width="340" height="340" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Voan-Ren</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Da, Trắng</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M</span> </p>', 'Sơ mi ren', '', '', '', 'sơ-mi-ren'),
+(11, 'Chất liệu : vải xốp xếp li\r\nMàu sắc : trắng, đen, nude\r\nKích cỡ : M', '<p><span style="font-size: 12pt;"><img src="images/somibeo.jpg" alt="" width="332" height="332" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : vải xốp xếp li</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : trắng, đen, nude</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : M</span></p>', 'Sơ mi bèo', '', '', '', 'sơ-mi-bèo'),
+(12, 'Chất liệu : Ren\r\nMàu sắc : trắng, đen\r\nKích cỡ : S M L', '<p><span style="font-size: 12pt;"><img src="images/somi2tui.jpg" alt="" width="304" height="304" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Ren</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : trắng, đen</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L</span></p>', 'So mi 2 tui', '', '', '', 'so-mi-2-tui'),
+(13, 'Chất liệu : Vải thô - umi\r\nMàu sắc : Trắng-Đen\r\nKích cỡ : S M', '<p><span style="font-size: 12pt;"><img src="images/somiphoi.jpg" alt="" width="334" height="334" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Vải thô - umi</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : Trắng-Đen</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M</span></p>', 'Sơ mi phối', '', '', '', 'sơ-mi-phối'),
+(14, 'Chất liệu : Lụa\r\nMàu sắc : trắng, đen, đỏ, xanh\r\nKích cỡ : S M L', '<p><span style="font-size: 12pt;"><img src="images/somicokhuy.jpg" alt="" width="375" height="375" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu : Lụa</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc : trắng, đen, đỏ, xanh</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ : S M L</span></p>', 'Sơ mi cổ khuy', '', '', '', 'sơ-mi-cổ-khuy'),
+(15, 'Chất liệu: cotton\r\nKích cỡ: Xs, m, l, xl\r\nMàu sắc: Trắng, đỏ, xanh da trời, đen, xám, xanh tím, đỏ đô', '<p><span style="font-size: 12pt;"><img src="images/phongtronnu.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: Xs, m, l, xl</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, đỏ, xanh da trời, đen, xám, xanh tím, đỏ đô</span></p>', 'Áo phông trơn', '', '', '', 'áo-phông-trơn'),
+(16, 'Chất liệu: cotton\r\nKích cỡ: Xs, m, l, xl\r\nMàu sắc: Trắng, đỏ, đen', '<p><span style="font-size: 12pt;"><img src="images/phongconu.jpg" alt="" width="472" height="281" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: Xs, m, l, xl</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, đỏ, đen</span></p>', 'Áo phông có cổ', '', '', '', 'áo-phông-có-cổ'),
+(17, 'Chất liệu: cotton\r\nKích cỡ: free\r\nMàu sắc: Đen', '<p><span style="font-size: 12pt;"><img src="images/phong3d.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: free</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Đen</span></p>', 'Áo phông 3D', '', '', '', 'áo-phông-3d'),
+(18, 'Chất liệu: cotton\r\nKích cỡ: free\r\nMàu sắc: Đen, Trắng, Vàng, Hồng', '<p><span style="font-size: 12pt;"><img src="images/phongkenu.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: free</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Đen, Trắng, Vàng, Hồng</span></p>', 'Áo phông kẻ', '', '', '', 'áo-phông-kẻ'),
+(19, 'Chất liệu: cotton\r\nKích cỡ: free\r\nMàu sắc: Trắng, nude, vàng, đen, xanh lá cây, đỏ đô, hồng đậm', '<p><span style="font-size: 12pt;"><img src="images/phonggucci1.jpg" alt="" width="272" height="295" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: free</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, nude, vàng, đen, xanh lá cây, đỏ đô, hồng đậm</span></p>', 'Áo phông', '', '', '', 'áo-phông'),
+(20, 'Chất liệu: cotton\r\nKích cỡ: Xs, m, l, xl\r\nMàu sắc: Trắng, đen, đỏ, cam', '<p><span style="font-size: 12pt;"><img src="images/phongnamco2.jpg" alt="" width="291" height="291" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: Xs, m, l, xl</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, đen, đỏ, cam</span></p>', 'Áo phông có cổ 1', '', '', '', 'áo-phông-có-cổ-1'),
+(21, 'Chất liệu: cotton\r\nKích cỡ: Xs, m, l, xl\r\nMàu sắc: Trắng, đen', '<p><span style="font-size: 12pt;"><img src="images/phongnam3d.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: Xs, m, l, xl</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, đen</span></p>', 'Áo phông 3D 1', '', '', '', 'áo-phông-3d-1'),
+(22, 'Chất liệu: cotton\r\nKích cỡ: Xs, m, l, xl\r\nMàu sắc: Trắng, xám, đen', '<p><span style="font-size: 12pt;"><img src="images/phongnam1.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: Xs, m, l, xl</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, xám, đen</span></p>', 'Áo phông có cổ 2', '', '', '', 'áo-phông-có-cổ-2'),
+(23, 'Chất liệu: cotton\r\nKích cỡ: free\r\nMàu sắc: Trắng, đen, cam', '<p><span style="font-size: 12pt;"><img src="images/phongnamco4.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: free</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, đen, cam</span></p>', 'Áo phông có cổ pha kẻ caro', '', '', '', 'áo-phông-có-cổ-pha-kẻ-caro'),
+(24, 'Chất liệu: cotton\r\nKích cỡ: Xs, m, l, xl\r\nMàu sắc: Trắng, đen, cam', '<p><span style="font-size: 12pt;"><img src="images/phongnamcohinhsaulung.jpg" alt="" /></span></p>\r\n<p><span style="font-size: 12pt;">Chất liệu: cotton</span></p>\r\n<p><br /><span style="font-size: 12pt;">Kích cỡ: Xs, m, l, xl</span></p>\r\n<p><br /><span style="font-size: 12pt;">Màu sắc: Trắng, đen, cam</span></p>', 'Áo phông nam có cổ in hình sau lưng', '', '', '', 'áo-phông-nam-có-cổ-in-hình-sau-lưng');
 
 -- --------------------------------------------------------
 
@@ -3443,12 +3582,62 @@ CREATE TABLE `xtqmd_virtuemart_products_vi_vn` (
 -- Table structure for table `xtqmd_virtuemart_product_categories`
 --
 
-CREATE TABLE `xtqmd_virtuemart_product_categories` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_category_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_product_categories` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_category_id` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Maps Products to Categories';
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COMMENT='Maps Products to Categories';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_product_categories`
+--
+
+INSERT INTO `xtqmd_virtuemart_product_categories` (`id`, `virtuemart_product_id`, `virtuemart_category_id`, `ordering`) VALUES
+(6, 3, 3, 0),
+(5, 3, 1, 0),
+(8, 4, 3, 0),
+(7, 4, 1, 0),
+(9, 5, 1, 0),
+(10, 5, 3, 0),
+(11, 6, 1, 0),
+(12, 6, 3, 0),
+(13, 7, 1, 0),
+(14, 7, 3, 0),
+(15, 8, 1, 0),
+(16, 8, 3, 0),
+(17, 9, 1, 0),
+(18, 9, 3, 0),
+(19, 10, 1, 0),
+(20, 10, 3, 0),
+(21, 11, 1, 0),
+(22, 11, 3, 0),
+(23, 12, 1, 0),
+(24, 12, 3, 0),
+(25, 13, 1, 0),
+(26, 13, 3, 0),
+(27, 14, 1, 0),
+(28, 14, 3, 0),
+(29, 15, 4, 0),
+(30, 15, 6, 0),
+(31, 16, 4, 0),
+(32, 16, 6, 0),
+(33, 17, 4, 0),
+(34, 17, 6, 0),
+(35, 18, 4, 0),
+(36, 18, 6, 0),
+(37, 19, 4, 0),
+(38, 19, 6, 0),
+(39, 20, 4, 0),
+(40, 20, 5, 0),
+(41, 21, 4, 0),
+(42, 21, 5, 0),
+(43, 22, 4, 0),
+(44, 22, 5, 0),
+(45, 23, 4, 0),
+(46, 23, 5, 0),
+(47, 24, 4, 0),
+(48, 24, 5, 0);
 
 -- --------------------------------------------------------
 
@@ -3456,25 +3645,25 @@ CREATE TABLE `xtqmd_virtuemart_product_categories` (
 -- Table structure for table `xtqmd_virtuemart_product_customfields`
 --
 
-CREATE TABLE `xtqmd_virtuemart_product_customfields` (
-  `virtuemart_customfield_id` int(1) UNSIGNED NOT NULL COMMENT 'field id',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_product_customfields` (
+`virtuemart_customfield_id` int(1) unsigned NOT NULL COMMENT 'field id',
   `virtuemart_product_id` int(1) NOT NULL DEFAULT '0',
   `virtuemart_custom_id` int(1) NOT NULL DEFAULT '1' COMMENT 'custom group id',
   `customfield_value` varchar(2500) DEFAULT NULL COMMENT 'field value',
   `customfield_price` decimal(15,6) DEFAULT NULL COMMENT 'price',
-  `disabler` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `override` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `customfield_params` text COMMENT 'Param for Plugins',
-  `product_sku` varchar(64) DEFAULT NULL,
-  `product_gtin` varchar(64) DEFAULT NULL,
-  `product_mpn` varchar(64) DEFAULT NULL,
+  `disabler` int(1) unsigned NOT NULL DEFAULT '0',
+  `override` int(1) unsigned NOT NULL DEFAULT '0',
+  `customfield_params` varchar(17000) NOT NULL DEFAULT '' COMMENT 'PARAM FOR PLUGINS',
+  `product_sku` char(64) DEFAULT NULL,
+  `product_gtin` char(64) DEFAULT NULL,
+  `product_mpn` char(64) DEFAULT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `created_by` int(1) unsigned NOT NULL DEFAULT '0',
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `modified_by` int(1) unsigned NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `locked_by` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `locked_by` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='custom fields';
 
@@ -3484,10 +3673,10 @@ CREATE TABLE `xtqmd_virtuemart_product_customfields` (
 -- Table structure for table `xtqmd_virtuemart_product_manufacturers`
 --
 
-CREATE TABLE `xtqmd_virtuemart_product_manufacturers` (
-  `id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_product_manufacturers` (
+`id` int(1) unsigned NOT NULL,
   `virtuemart_product_id` int(1) DEFAULT NULL,
-  `virtuemart_manufacturer_id` int(1) UNSIGNED DEFAULT NULL
+  `virtuemart_manufacturer_id` smallint(1) unsigned DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Maps a product to a manufacturer';
 
 -- --------------------------------------------------------
@@ -3496,12 +3685,45 @@ CREATE TABLE `xtqmd_virtuemart_product_manufacturers` (
 -- Table structure for table `xtqmd_virtuemart_product_medias`
 --
 
-CREATE TABLE `xtqmd_virtuemart_product_medias` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_media_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_product_medias` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_media_id` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `xtqmd_virtuemart_product_medias`
+--
+
+INSERT INTO `xtqmd_virtuemart_product_medias` (`id`, `virtuemart_product_id`, `virtuemart_media_id`, `ordering`) VALUES
+(3, 3, 3, 1),
+(4, 4, 4, 1),
+(5, 5, 5, 1),
+(7, 5, 7, 2),
+(8, 6, 8, 1),
+(9, 7, 9, 1),
+(10, 8, 10, 1),
+(11, 9, 11, 1),
+(12, 10, 12, 1),
+(13, 11, 13, 1),
+(14, 12, 14, 1),
+(15, 13, 15, 1),
+(16, 14, 16, 1),
+(17, 15, 22, 1),
+(18, 16, 23, 1),
+(19, 17, 24, 1),
+(20, 18, 25, 1),
+(21, 19, 26, 1),
+(22, 20, 27, 1),
+(26, 21, 31, 1),
+(24, 20, 29, 3),
+(25, 20, 30, 2),
+(27, 22, 32, 1),
+(28, 22, 33, 2),
+(29, 22, 34, 3),
+(30, 23, 35, 1),
+(31, 24, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -3509,10 +3731,10 @@ CREATE TABLE `xtqmd_virtuemart_product_medias` (
 -- Table structure for table `xtqmd_virtuemart_product_prices`
 --
 
-CREATE TABLE `xtqmd_virtuemart_product_prices` (
-  `virtuemart_product_price_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_product_prices` (
+`virtuemart_product_price_id` int(1) unsigned NOT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL DEFAULT '0',
   `product_price` decimal(15,6) DEFAULT NULL,
   `override` tinyint(1) DEFAULT NULL,
   `product_override_price` decimal(15,5) DEFAULT NULL,
@@ -3521,15 +3743,43 @@ CREATE TABLE `xtqmd_virtuemart_product_prices` (
   `product_currency` smallint(1) DEFAULT NULL,
   `product_price_publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `product_price_publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `price_quantity_start` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `price_quantity_end` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `price_quantity_start` int(1) unsigned NOT NULL DEFAULT '0',
+  `price_quantity_end` int(1) unsigned NOT NULL DEFAULT '0',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds price records for a product';
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='Holds price records for a product';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_product_prices`
+--
+
+INSERT INTO `xtqmd_virtuemart_product_prices` (`virtuemart_product_price_id`, `virtuemart_product_id`, `virtuemart_shoppergroup_id`, `product_price`, `override`, `product_override_price`, `product_tax_id`, `product_discount_id`, `product_currency`, `product_price_publish_up`, `product_price_publish_down`, `price_quantity_start`, `price_quantity_end`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(3, 3, 0, '150000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 16:44:22', 596, '2018-05-02 16:47:48', 596, '0000-00-00 00:00:00', 0),
+(4, 4, 0, '200000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 16:48:31', 596, '2018-05-02 16:48:52', 596, '0000-00-00 00:00:00', 0),
+(5, 5, 0, '150000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 16:52:21', 596, '2018-05-02 16:56:50', 596, '0000-00-00 00:00:00', 0),
+(6, 6, 0, '200000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 16:56:29', 596, '2018-05-02 16:56:29', 596, '0000-00-00 00:00:00', 0),
+(7, 7, 0, '250000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 16:59:08', 596, '2018-05-02 16:59:27', 596, '0000-00-00 00:00:00', 0),
+(8, 8, 0, '200000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:01:57', 596, '2018-05-02 17:02:00', 596, '0000-00-00 00:00:00', 0),
+(9, 9, 0, '110000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:04:41', 596, '2018-05-02 17:04:43', 596, '0000-00-00 00:00:00', 0),
+(10, 10, 0, '100000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:06:21', 596, '2018-05-02 17:06:21', 596, '0000-00-00 00:00:00', 0),
+(11, 11, 0, '170000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:08:02', 596, '2018-05-02 17:08:02', 596, '0000-00-00 00:00:00', 0),
+(12, 12, 0, '180000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:09:50', 596, '2018-05-02 17:09:55', 596, '0000-00-00 00:00:00', 0),
+(13, 13, 0, '100000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:12:18', 596, '2018-05-02 17:12:18', 596, '0000-00-00 00:00:00', 0),
+(14, 14, 0, '130000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:13:16', 596, '2018-05-02 17:13:16', 596, '0000-00-00 00:00:00', 0),
+(15, 15, 0, '150000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:28:58', 596, '2018-05-02 17:28:58', 596, '0000-00-00 00:00:00', 0),
+(16, 16, 0, '200000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:30:43', 596, '2018-05-02 17:30:43', 596, '0000-00-00 00:00:00', 0),
+(17, 17, 0, '330000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:33:55', 596, '2018-05-02 17:33:55', 596, '0000-00-00 00:00:00', 0),
+(18, 18, 0, '170000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:35:18', 596, '2018-05-02 17:35:18', 596, '0000-00-00 00:00:00', 0),
+(19, 19, 0, '220000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:37:23', 596, '2018-05-02 17:39:23', 596, '0000-00-00 00:00:00', 0),
+(20, 20, 0, '280000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:47:40', 596, '2018-05-02 17:51:00', 596, '0000-00-00 00:00:00', 0),
+(21, 21, 0, '350000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:52:09', 596, '2018-05-02 17:52:47', 596, '0000-00-00 00:00:00', 0),
+(22, 22, 0, '200000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:54:22', 596, '2018-05-02 17:55:16', 596, '0000-00-00 00:00:00', 0),
+(23, 23, 0, '280000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:56:46', 596, '2018-05-02 17:56:48', 596, '0000-00-00 00:00:00', 0),
+(24, 24, 0, '280000.000000', 0, '0.00000', 0, 0, 147, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2018-05-02 17:58:33', 596, '2018-05-02 17:58:36', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -3537,10 +3787,10 @@ CREATE TABLE `xtqmd_virtuemart_product_prices` (
 -- Table structure for table `xtqmd_virtuemart_product_shoppergroups`
 --
 
-CREATE TABLE `xtqmd_virtuemart_product_shoppergroups` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_product_shoppergroups` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Maps Products to Categories';
 
 -- --------------------------------------------------------
@@ -3549,11 +3799,11 @@ CREATE TABLE `xtqmd_virtuemart_product_shoppergroups` (
 -- Table structure for table `xtqmd_virtuemart_ratings`
 --
 
-CREATE TABLE `xtqmd_virtuemart_ratings` (
-  `virtuemart_rating_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_ratings` (
+`virtuemart_rating_id` int(1) unsigned NOT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
   `rates` int(1) NOT NULL DEFAULT '0',
-  `ratingcount` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `ratingcount` int(1) unsigned NOT NULL DEFAULT '0',
   `rating` decimal(10,1) NOT NULL DEFAULT '0.0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -3568,14 +3818,14 @@ CREATE TABLE `xtqmd_virtuemart_ratings` (
 -- Table structure for table `xtqmd_virtuemart_rating_reviews`
 --
 
-CREATE TABLE `xtqmd_virtuemart_rating_reviews` (
-  `virtuemart_rating_review_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_rating_vote_id` int(1) UNSIGNED DEFAULT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `comment` varchar(15359) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_rating_reviews` (
+`virtuemart_rating_review_id` int(1) unsigned NOT NULL,
+  `virtuemart_rating_vote_id` int(1) unsigned DEFAULT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `comment` varchar(18000) DEFAULT NULL,
   `review_ok` tinyint(1) NOT NULL DEFAULT '0',
-  `review_rates` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `review_ratingcount` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `review_rates` int(1) unsigned NOT NULL DEFAULT '0',
+  `review_ratingcount` int(1) unsigned NOT NULL DEFAULT '0',
   `review_rating` decimal(10,2) NOT NULL DEFAULT '0.00',
   `review_editable` tinyint(1) NOT NULL DEFAULT '1',
   `lastip` char(50) NOT NULL DEFAULT '0',
@@ -3595,9 +3845,9 @@ CREATE TABLE `xtqmd_virtuemart_rating_reviews` (
 -- Table structure for table `xtqmd_virtuemart_rating_votes`
 --
 
-CREATE TABLE `xtqmd_virtuemart_rating_votes` (
-  `virtuemart_rating_vote_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_rating_votes` (
+`virtuemart_rating_vote_id` int(1) unsigned NOT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
   `vote` int(1) NOT NULL DEFAULT '0',
   `lastip` char(50) NOT NULL DEFAULT '0',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -3612,13 +3862,13 @@ CREATE TABLE `xtqmd_virtuemart_rating_votes` (
 -- Table structure for table `xtqmd_virtuemart_shipmentmethods`
 --
 
-CREATE TABLE `xtqmd_virtuemart_shipmentmethods` (
-  `virtuemart_shipmentmethod_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_shipmentmethods` (
+`virtuemart_shipmentmethod_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
   `shipment_jplugin_id` int(1) NOT NULL DEFAULT '0',
-  `shipment_element` varchar(50) NOT NULL DEFAULT '',
-  `shipment_params` text,
-  `currency_id` int(1) UNSIGNED DEFAULT NULL,
+  `shipment_element` char(50) NOT NULL DEFAULT '',
+  `shipment_params` varchar(19000) NOT NULL DEFAULT '',
+  `currency_id` int(1) unsigned DEFAULT NULL,
   `ordering` int(1) NOT NULL DEFAULT '0',
   `shared` tinyint(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -3636,11 +3886,11 @@ CREATE TABLE `xtqmd_virtuemart_shipmentmethods` (
 -- Table structure for table `xtqmd_virtuemart_shipmentmethods_vi_vn`
 --
 
-CREATE TABLE `xtqmd_virtuemart_shipmentmethods_vi_vn` (
-  `virtuemart_shipmentmethod_id` int(1) UNSIGNED NOT NULL,
-  `shipment_name` varchar(180) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_shipmentmethods_vi_vn` (
+  `virtuemart_shipmentmethod_id` int(1) unsigned NOT NULL,
+  `shipment_name` char(180) NOT NULL DEFAULT '',
   `shipment_desc` varchar(19000) NOT NULL DEFAULT '',
-  `slug` varchar(192) NOT NULL DEFAULT ''
+  `slug` char(192) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -3649,10 +3899,10 @@ CREATE TABLE `xtqmd_virtuemart_shipmentmethods_vi_vn` (
 -- Table structure for table `xtqmd_virtuemart_shipmentmethod_shoppergroups`
 --
 
-CREATE TABLE `xtqmd_virtuemart_shipmentmethod_shoppergroups` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_shipmentmethod_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_shipmentmethod_shoppergroups` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_shipmentmethod_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='xref table for shipment to shoppergroup';
 
 -- --------------------------------------------------------
@@ -3661,11 +3911,11 @@ CREATE TABLE `xtqmd_virtuemart_shipmentmethod_shoppergroups` (
 -- Table structure for table `xtqmd_virtuemart_shoppergroups`
 --
 
-CREATE TABLE `xtqmd_virtuemart_shoppergroups` (
-  `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
-  `shopper_group_name` varchar(128) DEFAULT NULL,
-  `shopper_group_desc` varchar(255) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_shoppergroups` (
+`virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) NOT NULL DEFAULT '1',
+  `shopper_group_name` char(128) DEFAULT NULL,
+  `shopper_group_desc` char(255) DEFAULT NULL,
   `custom_price_display` tinyint(1) NOT NULL DEFAULT '0',
   `price_display` blob NOT NULL,
   `default` tinyint(1) NOT NULL DEFAULT '0',
@@ -3679,7 +3929,7 @@ CREATE TABLE `xtqmd_virtuemart_shoppergroups` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Shopper Groups that users can be assigned to';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Shopper Groups that users can be assigned to';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_shoppergroups`
@@ -3695,16 +3945,16 @@ INSERT INTO `xtqmd_virtuemart_shoppergroups` (`virtuemart_shoppergroup_id`, `vir
 -- Table structure for table `xtqmd_virtuemart_states`
 --
 
-CREATE TABLE `xtqmd_virtuemart_states` (
-  `virtuemart_state_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
-  `virtuemart_country_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_worldzone_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `state_name` varchar(64) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_states` (
+`virtuemart_state_id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '1',
+  `virtuemart_country_id` smallint(1) unsigned NOT NULL DEFAULT '1',
+  `virtuemart_worldzone_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `state_name` char(64) DEFAULT NULL,
   `state_3_code` char(3) DEFAULT NULL,
   `state_2_code` char(2) DEFAULT NULL,
   `ordering` int(1) NOT NULL DEFAULT '0',
-  `shared` tinyint(1) NOT NULL DEFAULT '1',
+  `shared` tinyint(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
@@ -3712,7 +3962,7 @@ CREATE TABLE `xtqmd_virtuemart_states` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='States that are assigned to a country';
+) ENGINE=MyISAM AUTO_INCREMENT=892 DEFAULT CHARSET=utf8 COMMENT='States that are assigned to a country';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_states`
@@ -3973,7 +4223,7 @@ INSERT INTO `xtqmd_virtuemart_states` (`virtuemart_state_id`, `virtuemart_vendor
 (252, 1, 105, 0, 'Grosseto', 'GRO', 'GR', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (253, 1, 105, 0, 'Imperia', 'IMP', 'IM', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (254, 1, 105, 0, 'Isernia', 'ISE', 'IS', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(255, 1, 105, 0, 'L\'Aquila', 'AQU', 'AQ', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(255, 1, 105, 0, 'L''Aquila', 'AQU', 'AQ', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (256, 1, 105, 0, 'La Spezia', 'LAS', 'SP', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (257, 1, 105, 0, 'Latina', 'LAT', 'LT', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (258, 1, 105, 0, 'Lecce', 'LEC', 'LE', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -4457,7 +4707,8 @@ INSERT INTO `xtqmd_virtuemart_states` (`virtuemart_state_id`, `virtuemart_vendor
 (765, 1, 215, 0, 'Burdur', 'DRD', '15', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (766, 1, 215, 0, 'Bursa', 'BUR', '16', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (767, 1, 215, 0, 'Çanakkale', 'CNK', '17', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(768, 1, 215, 0, 'Çankırı', 'CAK', '18', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(768, 1, 215, 0, 'Çankırı', 'CAK', '18', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+INSERT INTO `xtqmd_virtuemart_states` (`virtuemart_state_id`, `virtuemart_vendor_id`, `virtuemart_country_id`, `virtuemart_worldzone_id`, `state_name`, `state_3_code`, `state_2_code`, `ordering`, `shared`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
 (769, 1, 215, 0, 'Çorum', 'COR', '19', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (770, 1, 215, 0, 'Denizli', 'DEN', '20', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (771, 1, 215, 0, 'Diyarbakır', 'DYB', '21', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -4488,8 +4739,7 @@ INSERT INTO `xtqmd_virtuemart_states` (`virtuemart_state_id`, `virtuemart_vendor
 (796, 1, 215, 0, 'K.maraş', 'KAH', '46', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (797, 1, 215, 0, 'Mardin', 'MRD', '47', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (798, 1, 215, 0, 'Muğla', 'MGL', '48', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(799, 1, 215, 0, 'Muş', 'MUS', '49', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
-INSERT INTO `xtqmd_virtuemart_states` (`virtuemart_state_id`, `virtuemart_vendor_id`, `virtuemart_country_id`, `virtuemart_worldzone_id`, `state_name`, `state_3_code`, `state_2_code`, `ordering`, `shared`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(799, 1, 215, 0, 'Muş', 'MUS', '49', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (800, 1, 215, 0, 'Nevşehir', 'NEV', '50', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (801, 1, 215, 0, 'Niğde', 'NIG', '51', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (802, 1, 215, 0, 'Ordu', 'ORD', '52', 0, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
@@ -4589,21 +4839,21 @@ INSERT INTO `xtqmd_virtuemart_states` (`virtuemart_state_id`, `virtuemart_vendor
 -- Table structure for table `xtqmd_virtuemart_userfields`
 --
 
-CREATE TABLE `xtqmd_virtuemart_userfields` (
-  `virtuemart_userfield_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '1',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_userfields` (
+`virtuemart_userfield_id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '1',
   `userfield_jplugin_id` int(1) NOT NULL DEFAULT '0',
-  `name` varchar(250) NOT NULL DEFAULT '',
-  `title` varchar(255) NOT NULL DEFAULT '',
+  `name` char(255) NOT NULL DEFAULT '',
+  `title` char(255) NOT NULL DEFAULT '',
   `description` varchar(2048) DEFAULT NULL,
-  `type` varchar(70) NOT NULL DEFAULT '',
+  `type` char(70) NOT NULL DEFAULT '',
   `maxlength` int(1) DEFAULT NULL,
   `size` int(1) DEFAULT NULL,
   `required` tinyint(4) NOT NULL DEFAULT '0',
   `cols` int(1) DEFAULT NULL,
   `rows` int(1) DEFAULT NULL,
-  `value` varchar(255) DEFAULT NULL,
-  `default` varchar(255) DEFAULT NULL,
+  `value` char(255) DEFAULT NULL,
+  `default` char(255) DEFAULT NULL,
   `registration` tinyint(1) NOT NULL DEFAULT '0',
   `shipment` tinyint(1) NOT NULL DEFAULT '0',
   `account` tinyint(1) NOT NULL DEFAULT '1',
@@ -4611,7 +4861,7 @@ CREATE TABLE `xtqmd_virtuemart_userfields` (
   `readonly` tinyint(1) NOT NULL DEFAULT '0',
   `calculated` tinyint(1) NOT NULL DEFAULT '0',
   `sys` tinyint(4) NOT NULL DEFAULT '0',
-  `userfield_params` text,
+  `userfield_params` varchar(17000) NOT NULL DEFAULT '',
   `ordering` int(1) NOT NULL DEFAULT '0',
   `shared` tinyint(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -4621,41 +4871,41 @@ CREATE TABLE `xtqmd_virtuemart_userfields` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds the fields for the user information';
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='Holds the fields for the user information';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_userfields`
 --
 
 INSERT INTO `xtqmd_virtuemart_userfields` (`virtuemart_userfield_id`, `virtuemart_vendor_id`, `userfield_jplugin_id`, `name`, `title`, `description`, `type`, `maxlength`, `size`, `required`, `cols`, `rows`, `value`, `default`, `registration`, `shipment`, `account`, `cart`, `readonly`, `calculated`, `sys`, `userfield_params`, `ordering`, `shared`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
-(5, 0, 0, 'email', 'COM_VIRTUEMART_REGISTER_EMAIL', '', 'emailaddress', 100, 30, 1, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, NULL, 4, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(5, 0, 0, 'email', 'COM_VIRTUEMART_REGISTER_EMAIL', '', 'emailaddress', 100, 30, 1, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, '', 4, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (6, 0, 0, 'name', 'COM_VIRTUEMART_USER_DISPLAYED_NAME', '', 'text', 25, 30, 1, 0, 0, '', NULL, 1, 0, 1, 0, 0, 0, 1, '', 8, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
 (7, 0, 0, 'username', 'COM_VIRTUEMART_USERNAME', '', 'text', 25, 30, 1, 0, 0, '', NULL, 1, 0, 1, 0, 0, 0, 1, '', 6, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(8, 0, 0, 'password', 'COM_VIRTUEMART_SHOPPER_FORM_PASSWORD_1', '', 'password', 25, 30, 1, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, NULL, 10, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(9, 0, 0, 'password2', 'COM_VIRTUEMART_SHOPPER_FORM_PASSWORD_2', '', 'password', 25, 30, 1, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, NULL, 12, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(15, 0, 0, 'agreed', 'COM_VIRTUEMART_I_AGREE_TO_TOS', '', 'checkbox', NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 1, NULL, 13, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(16, 0, 0, 'tos', 'COM_VIRTUEMART_STORE_FORM_TOS', '', 'custom', NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 0, 0, 1, NULL, 14, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(17, 0, 0, 'customer_note', 'COM_VIRTUEMART_CNOTES_CART', '', 'textarea', 2500, NULL, 0, 60, 1, NULL, NULL, 0, 0, 0, 1, 0, 0, 1, NULL, 13, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(20, 0, 0, 'address_type_name', 'COM_VIRTUEMART_USER_FORM_ADDRESS_LABEL', '', 'text', 32, 30, 1, NULL, NULL, NULL, 'COM_VIRTUEMART_USER_FORM_ST_LABEL', 0, 1, 0, 0, 0, 0, 1, NULL, 16, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(21, 0, 0, 'delimiter_billto', 'COM_VIRTUEMART_USER_FORM_BILLTO_LBL', '', 'delimiter', 25, 30, 0, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 0, NULL, 18, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(22, 0, 0, 'company', 'COM_VIRTUEMART_SHOPPER_FORM_COMPANY_NAME', '', 'text', 64, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 20, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(23, 0, 0, 'title', 'COM_VIRTUEMART_SHOPPER_FORM_TITLE', '', 'select', 0, 210, 0, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, NULL, 22, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(24, 0, 0, 'first_name', 'COM_VIRTUEMART_SHOPPER_FORM_FIRST_NAME', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 24, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(25, 0, 0, 'middle_name', 'COM_VIRTUEMART_SHOPPER_FORM_MIDDLE_NAME', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 26, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(26, 0, 0, 'last_name', 'COM_VIRTUEMART_SHOPPER_FORM_LAST_NAME', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 28, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(27, 0, 0, 'address_1', 'COM_VIRTUEMART_SHOPPER_FORM_ADDRESS_1', '', 'text', 64, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 30, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(28, 0, 0, 'address_2', 'COM_VIRTUEMART_SHOPPER_FORM_ADDRESS_2', '', 'text', 64, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 32, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(29, 0, 0, 'zip', 'COM_VIRTUEMART_SHOPPER_FORM_ZIP', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 34, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(35, 0, 0, 'city', 'COM_VIRTUEMART_SHOPPER_FORM_CITY', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 36, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(36, 0, 0, 'virtuemart_country_id', 'COM_VIRTUEMART_SHOPPER_FORM_COUNTRY', '', 'select', 0, 210, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 38, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(37, 0, 0, 'virtuemart_state_id', 'COM_VIRTUEMART_SHOPPER_FORM_STATE', '', 'select', 0, 210, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 40, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(38, 0, 0, 'phone_1', 'COM_VIRTUEMART_SHOPPER_FORM_PHONE', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 42, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(39, 0, 0, 'phone_2', 'COM_VIRTUEMART_SHOPPER_FORM_PHONE2', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 44, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(40, 0, 0, 'fax', 'COM_VIRTUEMART_SHOPPER_FORM_FAX', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, NULL, 46, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(41, 0, 0, 'delimiter_sendregistration', 'COM_VIRTUEMART_BUTTON_SEND_REG', '', 'delimiter', 25, 30, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, NULL, 2, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(42, 0, 0, 'delimiter_userinfo', 'COM_VIRTUEMART_ORDER_PRINT_CUST_INFO_LBL', '', 'delimiter', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 0, NULL, 14, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(50, 0, 0, 'tax_exemption_number', 'COM_VIRTUEMART_SHOPPER_FORM_TAXEXEMPTION_NBR', 'Vendors can set here a tax exemption number for a shopper. This field is only changeable by administrators.', 'text', 10, 0, 0, 0, 0, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, NULL, 48, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(51, 0, 0, 'tax_usage_type', 'COM_VIRTUEMART_SHOPPER_FORM_TAX_USAGE', 'Federal, national, educational, public, or similar often get a special tax. This field is only writable by administrators.', 'select', 0, 0, 0, 0, 0, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, NULL, 50, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+(8, 0, 0, 'password', 'COM_VIRTUEMART_SHOPPER_FORM_PASSWORD_1', '', 'password', 25, 30, 1, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, '', 10, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(9, 0, 0, 'password2', 'COM_VIRTUEMART_SHOPPER_FORM_PASSWORD_2', '', 'password', 25, 30, 1, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, '', 12, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(15, 0, 0, 'agreed', 'COM_VIRTUEMART_I_AGREE_TO_TOS', '', 'checkbox', NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 1, '', 13, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(16, 0, 0, 'tos', 'COM_VIRTUEMART_STORE_FORM_TOS', '', 'custom', NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 0, 0, 1, '', 14, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(17, 0, 0, 'customer_note', 'COM_VIRTUEMART_CNOTES_CART', '', 'textarea', 2500, NULL, 0, 60, 1, NULL, NULL, 0, 0, 0, 1, 0, 0, 1, '', 13, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(20, 0, 0, 'address_type_name', 'COM_VIRTUEMART_USER_FORM_ADDRESS_LABEL', '', 'text', 32, 30, 1, NULL, NULL, NULL, 'COM_VIRTUEMART_USER_FORM_ST_LABEL', 0, 1, 0, 0, 0, 0, 1, '', 16, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(21, 0, 0, 'delimiter_billto', 'COM_VIRTUEMART_USER_FORM_BILLTO_LBL', '', 'delimiter', 25, 30, 0, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 0, '', 18, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(22, 0, 0, 'company', 'COM_VIRTUEMART_SHOPPER_FORM_COMPANY_NAME', '', 'text', 64, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 20, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(23, 0, 0, 'title', 'COM_VIRTUEMART_SHOPPER_FORM_TITLE', '', 'select', 0, 210, 0, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 1, '', 22, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(24, 0, 0, 'first_name', 'COM_VIRTUEMART_SHOPPER_FORM_FIRST_NAME', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 24, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(25, 0, 0, 'middle_name', 'COM_VIRTUEMART_SHOPPER_FORM_MIDDLE_NAME', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 26, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(26, 0, 0, 'last_name', 'COM_VIRTUEMART_SHOPPER_FORM_LAST_NAME', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 28, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(27, 0, 0, 'address_1', 'COM_VIRTUEMART_SHOPPER_FORM_ADDRESS_1', '', 'text', 64, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 30, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(28, 0, 0, 'address_2', 'COM_VIRTUEMART_SHOPPER_FORM_ADDRESS_2', '', 'text', 64, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 32, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(29, 0, 0, 'zip', 'COM_VIRTUEMART_SHOPPER_FORM_ZIP', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 34, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(35, 0, 0, 'city', 'COM_VIRTUEMART_SHOPPER_FORM_CITY', '', 'text', 32, 30, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 36, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(36, 0, 0, 'virtuemart_country_id', 'COM_VIRTUEMART_SHOPPER_FORM_COUNTRY', '', 'select', 0, 210, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 38, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(37, 0, 0, 'virtuemart_state_id', 'COM_VIRTUEMART_SHOPPER_FORM_STATE', '', 'select', 0, 210, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 40, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(38, 0, 0, 'phone_1', 'COM_VIRTUEMART_SHOPPER_FORM_PHONE', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 42, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(39, 0, 0, 'phone_2', 'COM_VIRTUEMART_SHOPPER_FORM_PHONE2', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 44, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(40, 0, 0, 'fax', 'COM_VIRTUEMART_SHOPPER_FORM_FAX', '', 'text', 32, 30, 0, NULL, NULL, NULL, NULL, 1, 1, 1, 0, 0, 0, 1, '', 46, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(41, 0, 0, 'delimiter_sendregistration', 'COM_VIRTUEMART_BUTTON_SEND_REG', '', 'delimiter', 25, 30, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, '', 2, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(42, 0, 0, 'delimiter_userinfo', 'COM_VIRTUEMART_ORDER_PRINT_CUST_INFO_LBL', '', 'delimiter', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 0, 1, 0, 0, 0, 0, '', 14, 0, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(50, 0, 0, 'tax_exemption_number', 'COM_VIRTUEMART_SHOPPER_FORM_TAXEXEMPTION_NBR', 'Vendors can set here a tax exemption number for a shopper. This field is only changeable by administrators.', 'text', 10, 0, 0, 0, 0, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, '', 48, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(51, 0, 0, 'tax_usage_type', 'COM_VIRTUEMART_SHOPPER_FORM_TAX_USAGE', 'Federal, national, educational, public, or similar often get a special tax. This field is only writable by administrators.', 'select', 0, 0, 0, 0, 0, NULL, NULL, 0, 0, 1, 1, 0, 0, 0, '', 50, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -4663,11 +4913,11 @@ INSERT INTO `xtqmd_virtuemart_userfields` (`virtuemart_userfield_id`, `virtuemar
 -- Table structure for table `xtqmd_virtuemart_userfield_values`
 --
 
-CREATE TABLE `xtqmd_virtuemart_userfield_values` (
-  `virtuemart_userfield_value_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_userfield_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `fieldtitle` varchar(255) NOT NULL DEFAULT '',
-  `fieldvalue` varchar(255) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_userfield_values` (
+`virtuemart_userfield_value_id` int(1) unsigned NOT NULL,
+  `virtuemart_userfield_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `fieldtitle` char(255) NOT NULL DEFAULT '',
+  `fieldvalue` char(255) NOT NULL DEFAULT '',
   `sys` tinyint(4) NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -4676,7 +4926,7 @@ CREATE TABLE `xtqmd_virtuemart_userfield_values` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds the different values for dropdown and radio lists';
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='Holds the different values for dropdown and radio lists';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_userfield_values`
@@ -4709,35 +4959,43 @@ INSERT INTO `xtqmd_virtuemart_userfield_values` (`virtuemart_userfield_value_id`
 -- Table structure for table `xtqmd_virtuemart_userinfos`
 --
 
-CREATE TABLE `xtqmd_virtuemart_userinfos` (
-  `virtuemart_userinfo_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_userinfos` (
+`virtuemart_userinfo_id` int(1) unsigned NOT NULL,
+  `virtuemart_user_id` int(1) unsigned NOT NULL DEFAULT '0',
   `address_type` char(2) NOT NULL DEFAULT '',
-  `address_type_name` varchar(32) NOT NULL DEFAULT '',
-  `company` varchar(64) DEFAULT NULL,
-  `title` varchar(32) DEFAULT NULL,
-  `last_name` varchar(96) DEFAULT NULL,
-  `first_name` varchar(96) DEFAULT NULL,
-  `middle_name` varchar(96) DEFAULT NULL,
-  `phone_1` varchar(32) DEFAULT NULL,
-  `phone_2` varchar(32) DEFAULT NULL,
-  `fax` varchar(32) DEFAULT NULL,
-  `address_1` varchar(96) NOT NULL DEFAULT '',
-  `address_2` varchar(64) DEFAULT NULL,
-  `city` varchar(96) NOT NULL DEFAULT '',
-  `virtuemart_state_id` smallint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_country_id` smallint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `zip` varchar(32) NOT NULL DEFAULT '',
+  `address_type_name` char(32) NOT NULL DEFAULT '',
+  `name` char(64) DEFAULT NULL,
+  `company` char(64) DEFAULT NULL,
+  `title` char(32) DEFAULT NULL,
+  `last_name` char(48) DEFAULT NULL,
+  `first_name` char(48) DEFAULT NULL,
+  `middle_name` char(48) DEFAULT NULL,
+  `phone_1` char(32) DEFAULT NULL,
+  `phone_2` char(32) DEFAULT NULL,
+  `fax` char(32) DEFAULT NULL,
+  `address_1` char(64) NOT NULL DEFAULT '',
+  `address_2` char(64) DEFAULT NULL,
+  `city` char(64) NOT NULL DEFAULT '',
+  `virtuemart_state_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_country_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `zip` char(32) NOT NULL DEFAULT '',
   `agreed` tinyint(1) NOT NULL DEFAULT '0',
   `tos` tinyint(1) NOT NULL DEFAULT '0',
-  `customer_note` varchar(5000) NOT NULL DEFAULT '',
+  `customer_note` varchar(2500) NOT NULL DEFAULT '',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Customer Information, BT = BillTo and ST = ShipTo';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Customer Information, BT = BillTo and ST = ShipTo';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_userinfos`
+--
+
+INSERT INTO `xtqmd_virtuemart_userinfos` (`virtuemart_userinfo_id`, `virtuemart_user_id`, `address_type`, `address_type_name`, `name`, `company`, `title`, `last_name`, `first_name`, `middle_name`, `phone_1`, `phone_2`, `fax`, `address_1`, `address_2`, `city`, `virtuemart_state_id`, `virtuemart_country_id`, `zip`, `agreed`, `tos`, `customer_note`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(1, 596, 'BT', '', 'Super User', 'Maxshop online', 'Mr', 'Nguyen', 'Huy', '', '', '', '', '311 A4 Dai hoc hang hai viet nam', '', 'Hai Phong', 0, 230, '180000', 0, 0, '', '2018-05-02 16:22:09', 596, '2018-05-02 16:26:10', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -4745,21 +5003,28 @@ CREATE TABLE `xtqmd_virtuemart_userinfos` (
 -- Table structure for table `xtqmd_virtuemart_vendors`
 --
 
-CREATE TABLE `xtqmd_virtuemart_vendors` (
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL,
-  `vendor_name` varchar(64) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_vendors` (
+`virtuemart_vendor_id` smallint(1) unsigned NOT NULL,
+  `vendor_name` char(64) DEFAULT NULL,
   `vendor_currency` int(1) DEFAULT NULL,
   `vendor_accepted_currencies` varchar(1536) NOT NULL DEFAULT '',
-  `vendor_params` varchar(14335) NOT NULL DEFAULT '',
-  `metarobot` varchar(20) DEFAULT NULL,
-  `metaauthor` varchar(64) DEFAULT NULL,
+  `vendor_params` varchar(17000) NOT NULL DEFAULT '',
+  `metarobot` char(20) DEFAULT NULL,
+  `metaauthor` char(64) DEFAULT NULL,
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
   `modified_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Vendors manage their products in your store';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Vendors manage their products in your store';
+
+--
+-- Dumping data for table `xtqmd_virtuemart_vendors`
+--
+
+INSERT INTO `xtqmd_virtuemart_vendors` (`virtuemart_vendor_id`, `vendor_name`, `vendor_currency`, `vendor_accepted_currencies`, `vendor_params`, `metarobot`, `metaauthor`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
+(1, 'Online Shop', 147, '', 'vendor_min_pov="0"|vendor_min_poq=1|vendor_freeshipment=0|vendor_address_format=""|vendor_date_format=""|vendor_letter_format="A4"|vendor_letter_orientation="P"|vendor_letter_margin_top="55"|vendor_letter_margin_left="25"|vendor_letter_margin_right="25"|vendor_letter_margin_bottom="25"|vendor_letter_margin_header="20"|vendor_letter_margin_footer="20"|vendor_letter_font="helvetica"|vendor_letter_font_size="8"|vendor_letter_header_font_size="7"|vendor_letter_footer_font_size="6"|vendor_letter_header="1"|vendor_letter_header_line="1"|vendor_letter_header_line_color="#000000"|vendor_letter_header_image="1"|vendor_letter_header_imagesize="60"|vendor_letter_header_cell_height_ratio="1"|vendor_letter_footer="1"|vendor_letter_footer_line="1"|vendor_letter_footer_line_color="#000000"|vendor_letter_footer_cell_height_ratio="1"|vendor_letter_add_tos="0"|vendor_letter_add_tos_newpage="1"|vendor_mail_width=640|vendor_mail_header=1|vendor_mail_tos=1|vendor_mail_logo=1|vendor_mail_logo_width=200|vendor_mail_font="helvetica"|vendor_mail_header_font_size=11|vendor_mail_font_size=12|vendor_mail_footer_font_size=10|', '', '', '0000-00-00 00:00:00', 0, '2018-05-02 16:26:10', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -4767,27 +5032,34 @@ CREATE TABLE `xtqmd_virtuemart_vendors` (
 -- Table structure for table `xtqmd_virtuemart_vendors_vi_vn`
 --
 
-CREATE TABLE `xtqmd_virtuemart_vendors_vi_vn` (
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_vendors_vi_vn` (
+  `virtuemart_vendor_id` int(1) unsigned NOT NULL,
   `vendor_store_desc` text NOT NULL,
   `vendor_terms_of_service` text NOT NULL,
   `vendor_legal_info` text NOT NULL,
   `vendor_letter_css` text NOT NULL,
   `vendor_letter_header_html` varchar(8000) NOT NULL DEFAULT '<h1>{vm:vendorname}</h1><p>{vm:vendoraddress}</p>',
   `vendor_letter_footer_html` varchar(8000) NOT NULL DEFAULT '<p>{vm:vendorlegalinfo}<br />Page {vm:pagenum}/{vm:pagecount}</p>',
-  `vendor_store_name` varchar(180) NOT NULL DEFAULT '',
-  `vendor_phone` varchar(26) NOT NULL DEFAULT '',
-  `vendor_url` varchar(255) NOT NULL DEFAULT '',
+  `vendor_store_name` char(180) NOT NULL DEFAULT '',
+  `vendor_phone` char(26) NOT NULL DEFAULT '',
+  `vendor_url` char(255) NOT NULL DEFAULT '',
   `metadesc` varchar(400) NOT NULL DEFAULT '',
   `metakey` varchar(400) NOT NULL DEFAULT '',
-  `customtitle` varchar(255) NOT NULL DEFAULT '',
-  `vendor_invoice_free1` varchar(255) NOT NULL DEFAULT '',
-  `vendor_invoice_free2` varchar(255) NOT NULL DEFAULT '',
-  `vendor_mail_free1` varchar(255) NOT NULL DEFAULT '',
-  `vendor_mail_free2` varchar(255) NOT NULL DEFAULT '',
-  `vendor_mail_css` varchar(255) NOT NULL DEFAULT '',
-  `slug` varchar(192) NOT NULL DEFAULT ''
+  `customtitle` char(255) NOT NULL DEFAULT '',
+  `vendor_invoice_free1` char(255) NOT NULL DEFAULT '',
+  `vendor_invoice_free2` char(255) NOT NULL DEFAULT '',
+  `vendor_mail_free1` char(255) NOT NULL DEFAULT '',
+  `vendor_mail_free2` char(255) NOT NULL DEFAULT '',
+  `vendor_mail_css` char(255) NOT NULL DEFAULT '',
+  `slug` char(192) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `xtqmd_virtuemart_vendors_vi_vn`
+--
+
+INSERT INTO `xtqmd_virtuemart_vendors_vi_vn` (`virtuemart_vendor_id`, `vendor_store_desc`, `vendor_terms_of_service`, `vendor_legal_info`, `vendor_letter_css`, `vendor_letter_header_html`, `vendor_letter_footer_html`, `vendor_store_name`, `vendor_phone`, `vendor_url`, `metadesc`, `metakey`, `customtitle`, `vendor_invoice_free1`, `vendor_invoice_free2`, `vendor_mail_free1`, `vendor_mail_free2`, `vendor_mail_css`, `slug`) VALUES
+(1, '', '', '', '', '', '', 'Online Shop', '', '', '', '', '', '', '', '', '', '', 'online-shop');
 
 -- --------------------------------------------------------
 
@@ -4795,10 +5067,10 @@ CREATE TABLE `xtqmd_virtuemart_vendors_vi_vn` (
 -- Table structure for table `xtqmd_virtuemart_vendor_medias`
 --
 
-CREATE TABLE `xtqmd_virtuemart_vendor_medias` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_media_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_vendor_medias` (
+`id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_media_id` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -4808,10 +5080,10 @@ CREATE TABLE `xtqmd_virtuemart_vendor_medias` (
 -- Table structure for table `xtqmd_virtuemart_vendor_users`
 --
 
-CREATE TABLE `xtqmd_virtuemart_vendor_users` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_vendor_users` (
+`id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_user_id` int(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -4820,13 +5092,13 @@ CREATE TABLE `xtqmd_virtuemart_vendor_users` (
 -- Table structure for table `xtqmd_virtuemart_vmusers`
 --
 
-CREATE TABLE `xtqmd_virtuemart_vmusers` (
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_vmusers` (
+`virtuemart_user_id` int(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) unsigned NOT NULL DEFAULT '0',
   `user_is_vendor` tinyint(1) NOT NULL DEFAULT '0',
-  `customer_number` varchar(32) DEFAULT NULL,
-  `virtuemart_paymentmethod_id` int(1) UNSIGNED DEFAULT NULL,
-  `virtuemart_shipmentmethod_id` int(1) UNSIGNED DEFAULT NULL,
+  `customer_number` char(32) DEFAULT NULL,
+  `virtuemart_paymentmethod_id` int(1) unsigned DEFAULT NULL,
+  `virtuemart_shipmentmethod_id` int(1) unsigned DEFAULT NULL,
   `agreed` tinyint(1) NOT NULL DEFAULT '0',
   `created_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(1) NOT NULL DEFAULT '0',
@@ -4834,14 +5106,14 @@ CREATE TABLE `xtqmd_virtuemart_vmusers` (
   `modified_by` int(1) NOT NULL DEFAULT '0',
   `locked_on` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `locked_by` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Holds the unique user data';
+) ENGINE=InnoDB AUTO_INCREMENT=597 DEFAULT CHARSET=utf8 COMMENT='Holds the unique user data';
 
 --
 -- Dumping data for table `xtqmd_virtuemart_vmusers`
 --
 
 INSERT INTO `xtqmd_virtuemart_vmusers` (`virtuemart_user_id`, `virtuemart_vendor_id`, `user_is_vendor`, `customer_number`, `virtuemart_paymentmethod_id`, `virtuemart_shipmentmethod_id`, `agreed`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`) VALUES
-(596, 1, 1, '0', 0, 0, 0, '0000-00-00 00:00:00', 0, '2018-04-11 14:37:21', 596, '0000-00-00 00:00:00', 0);
+(596, 1, 1, 'AD21232f297', 0, 0, 0, '2018-05-02 16:22:09', 596, '2018-05-02 16:26:10', 596, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -4849,10 +5121,10 @@ INSERT INTO `xtqmd_virtuemart_vmusers` (`virtuemart_user_id`, `virtuemart_vendor
 -- Table structure for table `xtqmd_virtuemart_vmuser_shoppergroups`
 --
 
-CREATE TABLE `xtqmd_virtuemart_vmuser_shoppergroups` (
-  `id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL DEFAULT '0'
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_vmuser_shoppergroups` (
+`id` int(1) unsigned NOT NULL,
+  `virtuemart_user_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='xref table for users to shopper group';
 
 -- --------------------------------------------------------
@@ -4861,11 +5133,11 @@ CREATE TABLE `xtqmd_virtuemart_vmuser_shoppergroups` (
 -- Table structure for table `xtqmd_virtuemart_waitingusers`
 --
 
-CREATE TABLE `xtqmd_virtuemart_waitingusers` (
-  `virtuemart_waitinguser_id` int(1) UNSIGNED NOT NULL,
-  `virtuemart_product_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `virtuemart_user_id` int(1) UNSIGNED NOT NULL DEFAULT '0',
-  `notify_email` varchar(150) NOT NULL DEFAULT '',
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_waitingusers` (
+`virtuemart_waitinguser_id` int(1) unsigned NOT NULL,
+  `virtuemart_product_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `virtuemart_user_id` int(1) unsigned NOT NULL DEFAULT '0',
+  `notify_email` char(150) NOT NULL DEFAULT '',
   `notified` tinyint(1) NOT NULL DEFAULT '0',
   `notify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ordering` int(1) NOT NULL DEFAULT '0',
@@ -4883,14 +5155,14 @@ CREATE TABLE `xtqmd_virtuemart_waitingusers` (
 -- Table structure for table `xtqmd_virtuemart_worldzones`
 --
 
-CREATE TABLE `xtqmd_virtuemart_worldzones` (
-  `virtuemart_worldzone_id` smallint(1) UNSIGNED NOT NULL,
-  `virtuemart_vendor_id` int(1) UNSIGNED DEFAULT NULL,
-  `zone_name` varchar(255) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `xtqmd_virtuemart_worldzones` (
+`virtuemart_worldzone_id` smallint(1) unsigned NOT NULL,
+  `virtuemart_vendor_id` smallint(1) DEFAULT NULL,
+  `zone_name` char(255) DEFAULT NULL,
   `zone_cost` decimal(10,2) DEFAULT NULL,
   `zone_limit` decimal(10,2) DEFAULT NULL,
-  `zone_description` varchar(14335) DEFAULT NULL,
-  `zone_tax_rate` int(1) UNSIGNED NOT NULL DEFAULT '0',
+  `zone_description` varchar(18000) DEFAULT NULL,
+  `zone_tax_rate` int(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(1) NOT NULL DEFAULT '0',
   `shared` tinyint(1) NOT NULL DEFAULT '0',
   `published` tinyint(1) NOT NULL DEFAULT '1',
@@ -4910,1146 +5182,793 @@ CREATE TABLE `xtqmd_virtuemart_worldzones` (
 -- Indexes for table `xtqmd_assets`
 --
 ALTER TABLE `xtqmd_assets`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idx_asset_name` (`name`),
-  ADD KEY `idx_lft_rgt` (`lft`,`rgt`),
-  ADD KEY `idx_parent_id` (`parent_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_asset_name` (`name`), ADD KEY `idx_lft_rgt` (`lft`,`rgt`), ADD KEY `idx_parent_id` (`parent_id`);
 
 --
 -- Indexes for table `xtqmd_associations`
 --
 ALTER TABLE `xtqmd_associations`
-  ADD PRIMARY KEY (`context`,`id`),
-  ADD KEY `idx_key` (`key`);
+ ADD PRIMARY KEY (`context`,`id`), ADD KEY `idx_key` (`key`);
 
 --
 -- Indexes for table `xtqmd_banners`
 --
 ALTER TABLE `xtqmd_banners`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_state` (`state`),
-  ADD KEY `idx_own_prefix` (`own_prefix`),
-  ADD KEY `idx_metakey_prefix` (`metakey_prefix`(100)),
-  ADD KEY `idx_banner_catid` (`catid`),
-  ADD KEY `idx_language` (`language`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_state` (`state`), ADD KEY `idx_own_prefix` (`own_prefix`), ADD KEY `idx_metakey_prefix` (`metakey_prefix`(100)), ADD KEY `idx_banner_catid` (`catid`), ADD KEY `idx_language` (`language`);
 
 --
 -- Indexes for table `xtqmd_banner_clients`
 --
 ALTER TABLE `xtqmd_banner_clients`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_own_prefix` (`own_prefix`),
-  ADD KEY `idx_metakey_prefix` (`metakey_prefix`(100));
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_own_prefix` (`own_prefix`), ADD KEY `idx_metakey_prefix` (`metakey_prefix`(100));
 
 --
 -- Indexes for table `xtqmd_banner_tracks`
 --
 ALTER TABLE `xtqmd_banner_tracks`
-  ADD PRIMARY KEY (`track_date`,`track_type`,`banner_id`),
-  ADD KEY `idx_track_date` (`track_date`),
-  ADD KEY `idx_track_type` (`track_type`),
-  ADD KEY `idx_banner_id` (`banner_id`);
+ ADD PRIMARY KEY (`track_date`,`track_type`,`banner_id`), ADD KEY `idx_track_date` (`track_date`), ADD KEY `idx_track_type` (`track_type`), ADD KEY `idx_banner_id` (`banner_id`);
 
 --
 -- Indexes for table `xtqmd_categories`
 --
 ALTER TABLE `xtqmd_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cat_idx` (`extension`,`published`,`access`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_checkout` (`checked_out`),
-  ADD KEY `idx_path` (`path`(100)),
-  ADD KEY `idx_left_right` (`lft`,`rgt`),
-  ADD KEY `idx_alias` (`alias`(100)),
-  ADD KEY `idx_language` (`language`);
+ ADD PRIMARY KEY (`id`), ADD KEY `cat_idx` (`extension`,`published`,`access`), ADD KEY `idx_access` (`access`), ADD KEY `idx_checkout` (`checked_out`), ADD KEY `idx_path` (`path`(100)), ADD KEY `idx_left_right` (`lft`,`rgt`), ADD KEY `idx_alias` (`alias`(100)), ADD KEY `idx_language` (`language`);
 
 --
 -- Indexes for table `xtqmd_contact_details`
 --
 ALTER TABLE `xtqmd_contact_details`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_checkout` (`checked_out`),
-  ADD KEY `idx_state` (`published`),
-  ADD KEY `idx_catid` (`catid`),
-  ADD KEY `idx_createdby` (`created_by`),
-  ADD KEY `idx_featured_catid` (`featured`,`catid`),
-  ADD KEY `idx_language` (`language`),
-  ADD KEY `idx_xreference` (`xreference`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_access` (`access`), ADD KEY `idx_checkout` (`checked_out`), ADD KEY `idx_state` (`published`), ADD KEY `idx_catid` (`catid`), ADD KEY `idx_createdby` (`created_by`), ADD KEY `idx_featured_catid` (`featured`,`catid`), ADD KEY `idx_language` (`language`), ADD KEY `idx_xreference` (`xreference`);
 
 --
 -- Indexes for table `xtqmd_content`
 --
 ALTER TABLE `xtqmd_content`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_checkout` (`checked_out`),
-  ADD KEY `idx_state` (`state`),
-  ADD KEY `idx_catid` (`catid`),
-  ADD KEY `idx_createdby` (`created_by`),
-  ADD KEY `idx_featured_catid` (`featured`,`catid`),
-  ADD KEY `idx_language` (`language`),
-  ADD KEY `idx_xreference` (`xreference`),
-  ADD KEY `idx_alias` (`alias`(191));
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_access` (`access`), ADD KEY `idx_checkout` (`checked_out`), ADD KEY `idx_state` (`state`), ADD KEY `idx_catid` (`catid`), ADD KEY `idx_createdby` (`created_by`), ADD KEY `idx_featured_catid` (`featured`,`catid`), ADD KEY `idx_language` (`language`), ADD KEY `idx_xreference` (`xreference`), ADD KEY `idx_alias` (`alias`(191));
 
 --
 -- Indexes for table `xtqmd_contentitem_tag_map`
 --
 ALTER TABLE `xtqmd_contentitem_tag_map`
-  ADD UNIQUE KEY `uc_ItemnameTagid` (`type_id`,`content_item_id`,`tag_id`),
-  ADD KEY `idx_tag_type` (`tag_id`,`type_id`),
-  ADD KEY `idx_date_id` (`tag_date`,`tag_id`),
-  ADD KEY `idx_core_content_id` (`core_content_id`);
+ ADD UNIQUE KEY `uc_ItemnameTagid` (`type_id`,`content_item_id`,`tag_id`), ADD KEY `idx_tag_type` (`tag_id`,`type_id`), ADD KEY `idx_date_id` (`tag_date`,`tag_id`), ADD KEY `idx_core_content_id` (`core_content_id`);
 
 --
 -- Indexes for table `xtqmd_content_frontpage`
 --
 ALTER TABLE `xtqmd_content_frontpage`
-  ADD PRIMARY KEY (`content_id`);
+ ADD PRIMARY KEY (`content_id`);
 
 --
 -- Indexes for table `xtqmd_content_rating`
 --
 ALTER TABLE `xtqmd_content_rating`
-  ADD PRIMARY KEY (`content_id`);
+ ADD PRIMARY KEY (`content_id`);
 
 --
 -- Indexes for table `xtqmd_content_types`
 --
 ALTER TABLE `xtqmd_content_types`
-  ADD PRIMARY KEY (`type_id`),
-  ADD KEY `idx_alias` (`type_alias`(100));
+ ADD PRIMARY KEY (`type_id`), ADD KEY `idx_alias` (`type_alias`(100));
 
 --
 -- Indexes for table `xtqmd_extensions`
 --
 ALTER TABLE `xtqmd_extensions`
-  ADD PRIMARY KEY (`extension_id`),
-  ADD KEY `element_clientid` (`element`,`client_id`),
-  ADD KEY `element_folder_clientid` (`element`,`folder`,`client_id`),
-  ADD KEY `extension` (`type`,`element`,`folder`,`client_id`);
+ ADD PRIMARY KEY (`extension_id`), ADD KEY `element_clientid` (`element`,`client_id`), ADD KEY `element_folder_clientid` (`element`,`folder`,`client_id`), ADD KEY `extension` (`type`,`element`,`folder`,`client_id`);
 
 --
 -- Indexes for table `xtqmd_fields`
 --
 ALTER TABLE `xtqmd_fields`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_checkout` (`checked_out`),
-  ADD KEY `idx_state` (`state`),
-  ADD KEY `idx_created_user_id` (`created_user_id`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_context` (`context`(191)),
-  ADD KEY `idx_language` (`language`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_checkout` (`checked_out`), ADD KEY `idx_state` (`state`), ADD KEY `idx_created_user_id` (`created_user_id`), ADD KEY `idx_access` (`access`), ADD KEY `idx_context` (`context`(191)), ADD KEY `idx_language` (`language`);
 
 --
 -- Indexes for table `xtqmd_fields_categories`
 --
 ALTER TABLE `xtqmd_fields_categories`
-  ADD PRIMARY KEY (`field_id`,`category_id`);
+ ADD PRIMARY KEY (`field_id`,`category_id`);
 
 --
 -- Indexes for table `xtqmd_fields_groups`
 --
 ALTER TABLE `xtqmd_fields_groups`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_checkout` (`checked_out`),
-  ADD KEY `idx_state` (`state`),
-  ADD KEY `idx_created_by` (`created_by`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_context` (`context`(191)),
-  ADD KEY `idx_language` (`language`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_checkout` (`checked_out`), ADD KEY `idx_state` (`state`), ADD KEY `idx_created_by` (`created_by`), ADD KEY `idx_access` (`access`), ADD KEY `idx_context` (`context`(191)), ADD KEY `idx_language` (`language`);
 
 --
 -- Indexes for table `xtqmd_fields_values`
 --
 ALTER TABLE `xtqmd_fields_values`
-  ADD KEY `idx_field_id` (`field_id`),
-  ADD KEY `idx_item_id` (`item_id`(191));
+ ADD KEY `idx_field_id` (`field_id`), ADD KEY `idx_item_id` (`item_id`(191));
 
 --
 -- Indexes for table `xtqmd_finder_filters`
 --
 ALTER TABLE `xtqmd_finder_filters`
-  ADD PRIMARY KEY (`filter_id`);
+ ADD PRIMARY KEY (`filter_id`);
 
 --
 -- Indexes for table `xtqmd_finder_links`
 --
 ALTER TABLE `xtqmd_finder_links`
-  ADD PRIMARY KEY (`link_id`),
-  ADD KEY `idx_type` (`type_id`),
-  ADD KEY `idx_title` (`title`(100)),
-  ADD KEY `idx_md5` (`md5sum`),
-  ADD KEY `idx_url` (`url`(75)),
-  ADD KEY `idx_published_list` (`published`,`state`,`access`,`publish_start_date`,`publish_end_date`,`list_price`),
-  ADD KEY `idx_published_sale` (`published`,`state`,`access`,`publish_start_date`,`publish_end_date`,`sale_price`);
+ ADD PRIMARY KEY (`link_id`), ADD KEY `idx_type` (`type_id`), ADD KEY `idx_title` (`title`(100)), ADD KEY `idx_md5` (`md5sum`), ADD KEY `idx_url` (`url`(75)), ADD KEY `idx_published_list` (`published`,`state`,`access`,`publish_start_date`,`publish_end_date`,`list_price`), ADD KEY `idx_published_sale` (`published`,`state`,`access`,`publish_start_date`,`publish_end_date`,`sale_price`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms0`
 --
 ALTER TABLE `xtqmd_finder_links_terms0`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms1`
 --
 ALTER TABLE `xtqmd_finder_links_terms1`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms2`
 --
 ALTER TABLE `xtqmd_finder_links_terms2`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms3`
 --
 ALTER TABLE `xtqmd_finder_links_terms3`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms4`
 --
 ALTER TABLE `xtqmd_finder_links_terms4`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms5`
 --
 ALTER TABLE `xtqmd_finder_links_terms5`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms6`
 --
 ALTER TABLE `xtqmd_finder_links_terms6`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms7`
 --
 ALTER TABLE `xtqmd_finder_links_terms7`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms8`
 --
 ALTER TABLE `xtqmd_finder_links_terms8`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_terms9`
 --
 ALTER TABLE `xtqmd_finder_links_terms9`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_termsa`
 --
 ALTER TABLE `xtqmd_finder_links_termsa`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_termsb`
 --
 ALTER TABLE `xtqmd_finder_links_termsb`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_termsc`
 --
 ALTER TABLE `xtqmd_finder_links_termsc`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_termsd`
 --
 ALTER TABLE `xtqmd_finder_links_termsd`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_termse`
 --
 ALTER TABLE `xtqmd_finder_links_termse`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_links_termsf`
 --
 ALTER TABLE `xtqmd_finder_links_termsf`
-  ADD PRIMARY KEY (`link_id`,`term_id`),
-  ADD KEY `idx_term_weight` (`term_id`,`weight`),
-  ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
+ ADD PRIMARY KEY (`link_id`,`term_id`), ADD KEY `idx_term_weight` (`term_id`,`weight`), ADD KEY `idx_link_term_weight` (`link_id`,`term_id`,`weight`);
 
 --
 -- Indexes for table `xtqmd_finder_taxonomy`
 --
 ALTER TABLE `xtqmd_finder_taxonomy`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `parent_id` (`parent_id`),
-  ADD KEY `state` (`state`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `access` (`access`),
-  ADD KEY `idx_parent_published` (`parent_id`,`state`,`access`);
+ ADD PRIMARY KEY (`id`), ADD KEY `parent_id` (`parent_id`), ADD KEY `state` (`state`), ADD KEY `ordering` (`ordering`), ADD KEY `access` (`access`), ADD KEY `idx_parent_published` (`parent_id`,`state`,`access`);
 
 --
 -- Indexes for table `xtqmd_finder_taxonomy_map`
 --
 ALTER TABLE `xtqmd_finder_taxonomy_map`
-  ADD PRIMARY KEY (`link_id`,`node_id`),
-  ADD KEY `link_id` (`link_id`),
-  ADD KEY `node_id` (`node_id`);
+ ADD PRIMARY KEY (`link_id`,`node_id`), ADD KEY `link_id` (`link_id`), ADD KEY `node_id` (`node_id`);
 
 --
 -- Indexes for table `xtqmd_finder_terms`
 --
 ALTER TABLE `xtqmd_finder_terms`
-  ADD PRIMARY KEY (`term_id`),
-  ADD UNIQUE KEY `idx_term` (`term`),
-  ADD KEY `idx_term_phrase` (`term`,`phrase`),
-  ADD KEY `idx_stem_phrase` (`stem`,`phrase`),
-  ADD KEY `idx_soundex_phrase` (`soundex`,`phrase`);
+ ADD PRIMARY KEY (`term_id`), ADD UNIQUE KEY `idx_term` (`term`), ADD KEY `idx_term_phrase` (`term`,`phrase`), ADD KEY `idx_stem_phrase` (`stem`,`phrase`), ADD KEY `idx_soundex_phrase` (`soundex`,`phrase`);
 
 --
 -- Indexes for table `xtqmd_finder_terms_common`
 --
 ALTER TABLE `xtqmd_finder_terms_common`
-  ADD KEY `idx_word_lang` (`term`,`language`),
-  ADD KEY `idx_lang` (`language`);
+ ADD KEY `idx_word_lang` (`term`,`language`), ADD KEY `idx_lang` (`language`);
 
 --
 -- Indexes for table `xtqmd_finder_tokens`
 --
 ALTER TABLE `xtqmd_finder_tokens`
-  ADD KEY `idx_word` (`term`),
-  ADD KEY `idx_context` (`context`);
+ ADD KEY `idx_word` (`term`), ADD KEY `idx_context` (`context`);
 
 --
 -- Indexes for table `xtqmd_finder_tokens_aggregate`
 --
 ALTER TABLE `xtqmd_finder_tokens_aggregate`
-  ADD KEY `token` (`term`),
-  ADD KEY `keyword_id` (`term_id`);
+ ADD KEY `token` (`term`), ADD KEY `keyword_id` (`term_id`);
 
 --
 -- Indexes for table `xtqmd_finder_types`
 --
 ALTER TABLE `xtqmd_finder_types`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `title` (`title`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `title` (`title`);
 
 --
 -- Indexes for table `xtqmd_languages`
 --
 ALTER TABLE `xtqmd_languages`
-  ADD PRIMARY KEY (`lang_id`),
-  ADD UNIQUE KEY `idx_sef` (`sef`),
-  ADD UNIQUE KEY `idx_langcode` (`lang_code`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_ordering` (`ordering`);
+ ADD PRIMARY KEY (`lang_id`), ADD UNIQUE KEY `idx_sef` (`sef`), ADD UNIQUE KEY `idx_langcode` (`lang_code`), ADD KEY `idx_access` (`access`), ADD KEY `idx_ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_menu`
 --
 ALTER TABLE `xtqmd_menu`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idx_client_id_parent_id_alias_language` (`client_id`,`parent_id`,`alias`(100),`language`),
-  ADD KEY `idx_componentid` (`component_id`,`menutype`,`published`,`access`),
-  ADD KEY `idx_menutype` (`menutype`),
-  ADD KEY `idx_left_right` (`lft`,`rgt`),
-  ADD KEY `idx_alias` (`alias`(100)),
-  ADD KEY `idx_path` (`path`(100)),
-  ADD KEY `idx_language` (`language`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_client_id_parent_id_alias_language` (`client_id`,`parent_id`,`alias`(100),`language`), ADD KEY `idx_componentid` (`component_id`,`menutype`,`published`,`access`), ADD KEY `idx_menutype` (`menutype`), ADD KEY `idx_left_right` (`lft`,`rgt`), ADD KEY `idx_alias` (`alias`(100)), ADD KEY `idx_path` (`path`(100)), ADD KEY `idx_language` (`language`);
 
 --
 -- Indexes for table `xtqmd_menu_types`
 --
 ALTER TABLE `xtqmd_menu_types`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idx_menutype` (`menutype`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_menutype` (`menutype`);
 
 --
 -- Indexes for table `xtqmd_messages`
 --
 ALTER TABLE `xtqmd_messages`
-  ADD PRIMARY KEY (`message_id`),
-  ADD KEY `useridto_state` (`user_id_to`,`state`);
+ ADD PRIMARY KEY (`message_id`), ADD KEY `useridto_state` (`user_id_to`,`state`);
 
 --
 -- Indexes for table `xtqmd_messages_cfg`
 --
 ALTER TABLE `xtqmd_messages_cfg`
-  ADD UNIQUE KEY `idx_user_var_name` (`user_id`,`cfg_name`);
+ ADD UNIQUE KEY `idx_user_var_name` (`user_id`,`cfg_name`);
 
 --
 -- Indexes for table `xtqmd_modules`
 --
 ALTER TABLE `xtqmd_modules`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `published` (`published`,`access`),
-  ADD KEY `newsfeeds` (`module`,`published`),
-  ADD KEY `idx_language` (`language`);
+ ADD PRIMARY KEY (`id`), ADD KEY `published` (`published`,`access`), ADD KEY `newsfeeds` (`module`,`published`), ADD KEY `idx_language` (`language`);
 
 --
 -- Indexes for table `xtqmd_modules_menu`
 --
 ALTER TABLE `xtqmd_modules_menu`
-  ADD PRIMARY KEY (`moduleid`,`menuid`);
+ ADD PRIMARY KEY (`moduleid`,`menuid`);
 
 --
 -- Indexes for table `xtqmd_newsfeeds`
 --
 ALTER TABLE `xtqmd_newsfeeds`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_checkout` (`checked_out`),
-  ADD KEY `idx_state` (`published`),
-  ADD KEY `idx_catid` (`catid`),
-  ADD KEY `idx_createdby` (`created_by`),
-  ADD KEY `idx_language` (`language`),
-  ADD KEY `idx_xreference` (`xreference`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_access` (`access`), ADD KEY `idx_checkout` (`checked_out`), ADD KEY `idx_state` (`published`), ADD KEY `idx_catid` (`catid`), ADD KEY `idx_createdby` (`created_by`), ADD KEY `idx_language` (`language`), ADD KEY `idx_xreference` (`xreference`);
 
 --
 -- Indexes for table `xtqmd_overrider`
 --
 ALTER TABLE `xtqmd_overrider`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `xtqmd_postinstall_messages`
 --
 ALTER TABLE `xtqmd_postinstall_messages`
-  ADD PRIMARY KEY (`postinstall_message_id`);
+ ADD PRIMARY KEY (`postinstall_message_id`);
 
 --
 -- Indexes for table `xtqmd_redirect_links`
 --
 ALTER TABLE `xtqmd_redirect_links`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_old_url` (`old_url`(100)),
-  ADD KEY `idx_link_modifed` (`modified_date`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_old_url` (`old_url`(100)), ADD KEY `idx_link_modifed` (`modified_date`);
 
 --
 -- Indexes for table `xtqmd_schemas`
 --
 ALTER TABLE `xtqmd_schemas`
-  ADD PRIMARY KEY (`extension_id`,`version_id`);
+ ADD PRIMARY KEY (`extension_id`,`version_id`);
 
 --
 -- Indexes for table `xtqmd_session`
 --
 ALTER TABLE `xtqmd_session`
-  ADD PRIMARY KEY (`session_id`),
-  ADD KEY `userid` (`userid`),
-  ADD KEY `time` (`time`);
+ ADD PRIMARY KEY (`session_id`), ADD KEY `userid` (`userid`), ADD KEY `time` (`time`);
 
 --
 -- Indexes for table `xtqmd_tags`
 --
 ALTER TABLE `xtqmd_tags`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tag_idx` (`published`,`access`),
-  ADD KEY `idx_access` (`access`),
-  ADD KEY `idx_checkout` (`checked_out`),
-  ADD KEY `idx_path` (`path`(100)),
-  ADD KEY `idx_left_right` (`lft`,`rgt`),
-  ADD KEY `idx_alias` (`alias`(100)),
-  ADD KEY `idx_language` (`language`);
+ ADD PRIMARY KEY (`id`), ADD KEY `tag_idx` (`published`,`access`), ADD KEY `idx_access` (`access`), ADD KEY `idx_checkout` (`checked_out`), ADD KEY `idx_path` (`path`(100)), ADD KEY `idx_left_right` (`lft`,`rgt`), ADD KEY `idx_alias` (`alias`(100)), ADD KEY `idx_language` (`language`);
 
 --
 -- Indexes for table `xtqmd_template_styles`
 --
 ALTER TABLE `xtqmd_template_styles`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_template` (`template`),
-  ADD KEY `idx_home` (`home`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_template` (`template`), ADD KEY `idx_home` (`home`);
 
 --
 -- Indexes for table `xtqmd_ucm_base`
 --
 ALTER TABLE `xtqmd_ucm_base`
-  ADD PRIMARY KEY (`ucm_id`),
-  ADD KEY `idx_ucm_item_id` (`ucm_item_id`),
-  ADD KEY `idx_ucm_type_id` (`ucm_type_id`),
-  ADD KEY `idx_ucm_language_id` (`ucm_language_id`);
+ ADD PRIMARY KEY (`ucm_id`), ADD KEY `idx_ucm_item_id` (`ucm_item_id`), ADD KEY `idx_ucm_type_id` (`ucm_type_id`), ADD KEY `idx_ucm_language_id` (`ucm_language_id`);
 
 --
 -- Indexes for table `xtqmd_ucm_content`
 --
 ALTER TABLE `xtqmd_ucm_content`
-  ADD PRIMARY KEY (`core_content_id`),
-  ADD KEY `tag_idx` (`core_state`,`core_access`),
-  ADD KEY `idx_access` (`core_access`),
-  ADD KEY `idx_alias` (`core_alias`(100)),
-  ADD KEY `idx_language` (`core_language`),
-  ADD KEY `idx_title` (`core_title`(100)),
-  ADD KEY `idx_modified_time` (`core_modified_time`),
-  ADD KEY `idx_created_time` (`core_created_time`),
-  ADD KEY `idx_content_type` (`core_type_alias`(100)),
-  ADD KEY `idx_core_modified_user_id` (`core_modified_user_id`),
-  ADD KEY `idx_core_checked_out_user_id` (`core_checked_out_user_id`),
-  ADD KEY `idx_core_created_user_id` (`core_created_user_id`),
-  ADD KEY `idx_core_type_id` (`core_type_id`);
+ ADD PRIMARY KEY (`core_content_id`), ADD KEY `tag_idx` (`core_state`,`core_access`), ADD KEY `idx_access` (`core_access`), ADD KEY `idx_alias` (`core_alias`(100)), ADD KEY `idx_language` (`core_language`), ADD KEY `idx_title` (`core_title`(100)), ADD KEY `idx_modified_time` (`core_modified_time`), ADD KEY `idx_created_time` (`core_created_time`), ADD KEY `idx_content_type` (`core_type_alias`(100)), ADD KEY `idx_core_modified_user_id` (`core_modified_user_id`), ADD KEY `idx_core_checked_out_user_id` (`core_checked_out_user_id`), ADD KEY `idx_core_created_user_id` (`core_created_user_id`), ADD KEY `idx_core_type_id` (`core_type_id`);
 
 --
 -- Indexes for table `xtqmd_ucm_history`
 --
 ALTER TABLE `xtqmd_ucm_history`
-  ADD PRIMARY KEY (`version_id`),
-  ADD KEY `idx_ucm_item_id` (`ucm_type_id`,`ucm_item_id`),
-  ADD KEY `idx_save_date` (`save_date`);
+ ADD PRIMARY KEY (`version_id`), ADD KEY `idx_ucm_item_id` (`ucm_type_id`,`ucm_item_id`), ADD KEY `idx_save_date` (`save_date`);
 
 --
 -- Indexes for table `xtqmd_updates`
 --
 ALTER TABLE `xtqmd_updates`
-  ADD PRIMARY KEY (`update_id`);
+ ADD PRIMARY KEY (`update_id`);
 
 --
 -- Indexes for table `xtqmd_update_sites`
 --
 ALTER TABLE `xtqmd_update_sites`
-  ADD PRIMARY KEY (`update_site_id`);
+ ADD PRIMARY KEY (`update_site_id`);
 
 --
 -- Indexes for table `xtqmd_update_sites_extensions`
 --
 ALTER TABLE `xtqmd_update_sites_extensions`
-  ADD PRIMARY KEY (`update_site_id`,`extension_id`);
+ ADD PRIMARY KEY (`update_site_id`,`extension_id`);
 
 --
 -- Indexes for table `xtqmd_usergroups`
 --
 ALTER TABLE `xtqmd_usergroups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idx_usergroup_parent_title_lookup` (`parent_id`,`title`),
-  ADD KEY `idx_usergroup_title_lookup` (`title`),
-  ADD KEY `idx_usergroup_adjacency_lookup` (`parent_id`),
-  ADD KEY `idx_usergroup_nested_set_lookup` (`lft`,`rgt`) USING BTREE;
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_usergroup_parent_title_lookup` (`parent_id`,`title`), ADD KEY `idx_usergroup_title_lookup` (`title`), ADD KEY `idx_usergroup_adjacency_lookup` (`parent_id`), ADD KEY `idx_usergroup_nested_set_lookup` (`lft`,`rgt`) USING BTREE;
 
 --
 -- Indexes for table `xtqmd_users`
 --
 ALTER TABLE `xtqmd_users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_name` (`name`(100)),
-  ADD KEY `idx_block` (`block`),
-  ADD KEY `username` (`username`),
-  ADD KEY `email` (`email`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_name` (`name`(100)), ADD KEY `idx_block` (`block`), ADD KEY `username` (`username`), ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `xtqmd_user_keys`
 --
 ALTER TABLE `xtqmd_user_keys`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `series` (`series`),
-  ADD KEY `user_id` (`user_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `series` (`series`), ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `xtqmd_user_notes`
 --
 ALTER TABLE `xtqmd_user_notes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idx_user_id` (`user_id`),
-  ADD KEY `idx_category_id` (`catid`);
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_user_id` (`user_id`), ADD KEY `idx_category_id` (`catid`);
 
 --
 -- Indexes for table `xtqmd_user_profiles`
 --
 ALTER TABLE `xtqmd_user_profiles`
-  ADD UNIQUE KEY `idx_user_id_profile_key` (`user_id`,`profile_key`);
+ ADD UNIQUE KEY `idx_user_id_profile_key` (`user_id`,`profile_key`);
 
 --
 -- Indexes for table `xtqmd_user_usergroup_map`
 --
 ALTER TABLE `xtqmd_user_usergroup_map`
-  ADD PRIMARY KEY (`user_id`,`group_id`);
+ ADD PRIMARY KEY (`user_id`,`group_id`);
 
 --
 -- Indexes for table `xtqmd_viewlevels`
 --
 ALTER TABLE `xtqmd_viewlevels`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idx_assetgroup_title_lookup` (`title`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_assetgroup_title_lookup` (`title`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_adminmenuentries`
 --
 ALTER TABLE `xtqmd_virtuemart_adminmenuentries`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `module_id` (`module_id`),
-  ADD KEY `published` (`published`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`id`), ADD KEY `module_id` (`module_id`), ADD KEY `published` (`published`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_calcs`
 --
 ALTER TABLE `xtqmd_virtuemart_calcs`
-  ADD PRIMARY KEY (`virtuemart_calc_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `published` (`published`),
-  ADD KEY `calc_kind` (`calc_kind`),
-  ADD KEY `shared` (`shared`),
-  ADD KEY `publish_up` (`publish_up`),
-  ADD KEY `publish_down` (`publish_down`);
+ ADD PRIMARY KEY (`virtuemart_calc_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `published` (`published`), ADD KEY `calc_kind` (`calc_kind`), ADD KEY `shared` (`shared`), ADD KEY `publish_up` (`publish_up`), ADD KEY `publish_down` (`publish_down`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_calc_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_category_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_category_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_calc_countries`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_countries`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_country_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_country_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_calc_manufacturers`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_manufacturers`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_manufacturer_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_manufacturer_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_calc_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_shoppergroups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_shoppergroup_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_shoppergroup_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_calc_states`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_states`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_state_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_calc_id` (`virtuemart_calc_id`,`virtuemart_state_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_carts`
 --
 ALTER TABLE `xtqmd_virtuemart_carts`
-  ADD PRIMARY KEY (`virtuemart_cart_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `virtuemart_user_id` (`virtuemart_user_id`);
+ ADD PRIMARY KEY (`virtuemart_cart_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `virtuemart_user_id` (`virtuemart_user_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_categories`
-  ADD PRIMARY KEY (`virtuemart_category_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `published` (`published`),
-  ADD KEY `shared` (`shared`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`virtuemart_category_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `published` (`published`), ADD KEY `shared` (`shared`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_categories_vi_vn`
 --
 ALTER TABLE `xtqmd_virtuemart_categories_vi_vn`
-  ADD PRIMARY KEY (`virtuemart_category_id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+ ADD PRIMARY KEY (`virtuemart_category_id`), ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_category_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_category_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `category_parent_id` (`category_parent_id`,`category_child_id`),
-  ADD KEY `category_child_id` (`category_child_id`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `category_parent_id` (`category_parent_id`,`category_child_id`), ADD KEY `category_child_id` (`category_child_id`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_category_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_category_medias`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_category_id` (`virtuemart_category_id`,`virtuemart_media_id`),
-  ADD KEY `ordering` (`virtuemart_category_id`,`ordering`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_category_id` (`virtuemart_category_id`,`virtuemart_media_id`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_configs`
 --
 ALTER TABLE `xtqmd_virtuemart_configs`
-  ADD PRIMARY KEY (`virtuemart_config_id`);
+ ADD PRIMARY KEY (`virtuemart_config_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_countries`
 --
 ALTER TABLE `xtqmd_virtuemart_countries`
-  ADD PRIMARY KEY (`virtuemart_country_id`),
-  ADD KEY `country_3_code` (`country_3_code`),
-  ADD KEY `country_2_code` (`country_2_code`),
-  ADD KEY `country_name` (`country_name`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_country_id`), ADD KEY `country_3_code` (`country_3_code`), ADD KEY `country_2_code` (`country_2_code`), ADD KEY `country_name` (`country_name`), ADD KEY `ordering` (`ordering`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_coupons`
 --
 ALTER TABLE `xtqmd_virtuemart_coupons`
-  ADD PRIMARY KEY (`virtuemart_coupon_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `coupon_code` (`coupon_code`),
-  ADD KEY `coupon_type` (`coupon_type`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_coupon_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `coupon_code` (`coupon_code`), ADD KEY `coupon_type` (`coupon_type`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_currencies`
 --
 ALTER TABLE `xtqmd_virtuemart_currencies`
-  ADD PRIMARY KEY (`virtuemart_currency_id`),
-  ADD UNIQUE KEY `currency_code_3` (`currency_code_3`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `currency_name` (`currency_name`),
-  ADD KEY `published` (`published`),
-  ADD KEY `shared` (`shared`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `currency_numeric_code` (`currency_numeric_code`);
+ ADD PRIMARY KEY (`virtuemart_currency_id`), ADD UNIQUE KEY `currency_code_3` (`currency_code_3`), ADD KEY `ordering` (`ordering`), ADD KEY `currency_name` (`currency_name`), ADD KEY `published` (`published`), ADD KEY `shared` (`shared`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `currency_numeric_code` (`currency_numeric_code`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_customs`
 --
 ALTER TABLE `xtqmd_virtuemart_customs`
-  ADD PRIMARY KEY (`virtuemart_custom_id`),
-  ADD KEY `custom_parent_id` (`custom_parent_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `custom_element` (`custom_element`),
-  ADD KEY `field_type` (`field_type`),
-  ADD KEY `is_cart_attribute` (`is_cart_attribute`),
-  ADD KEY `is_input` (`is_input`),
-  ADD KEY `searchable` (`searchable`),
-  ADD KEY `shared` (`shared`),
-  ADD KEY `published` (`published`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`virtuemart_custom_id`), ADD KEY `custom_parent_id` (`custom_parent_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `custom_element` (`custom_element`), ADD KEY `field_type` (`field_type`), ADD KEY `is_cart_attribute` (`is_cart_attribute`), ADD KEY `is_input` (`is_input`), ADD KEY `shared` (`shared`), ADD KEY `published` (`published`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_invoices`
 --
 ALTER TABLE `xtqmd_virtuemart_invoices`
-  ADD PRIMARY KEY (`virtuemart_invoice_id`),
-  ADD UNIQUE KEY `invoice_number` (`invoice_number`,`virtuemart_vendor_id`),
-  ADD KEY `virtuemart_order_id` (`virtuemart_order_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`);
+ ADD PRIMARY KEY (`virtuemart_invoice_id`), ADD UNIQUE KEY `invoice_number` (`invoice_number`,`virtuemart_vendor_id`), ADD KEY `virtuemart_order_id` (`virtuemart_order_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_manufacturercategories`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturercategories`
-  ADD PRIMARY KEY (`virtuemart_manufacturercategories_id`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_manufacturercategories_id`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_manufacturercategories_vi_vn`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturercategories_vi_vn`
-  ADD PRIMARY KEY (`virtuemart_manufacturercategories_id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+ ADD PRIMARY KEY (`virtuemart_manufacturercategories_id`), ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_manufacturers`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturers`
-  ADD PRIMARY KEY (`virtuemart_manufacturer_id`),
-  ADD UNIQUE KEY `virtuemart_manufacturercategories_id` (`virtuemart_manufacturer_id`,`virtuemart_manufacturercategories_id`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_manufacturer_id`), ADD UNIQUE KEY `virtuemart_manufacturercategories_id` (`virtuemart_manufacturer_id`,`virtuemart_manufacturercategories_id`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_manufacturers_vi_vn`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturers_vi_vn`
-  ADD PRIMARY KEY (`virtuemart_manufacturer_id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+ ADD PRIMARY KEY (`virtuemart_manufacturer_id`), ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_manufacturer_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturer_medias`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_manufacturer_id` (`virtuemart_manufacturer_id`,`virtuemart_media_id`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_manufacturer_id` (`virtuemart_manufacturer_id`,`virtuemart_media_id`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_medias`
-  ADD PRIMARY KEY (`virtuemart_media_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `published` (`published`),
-  ADD KEY `file_type` (`file_type`),
-  ADD KEY `shared` (`shared`);
+ ADD PRIMARY KEY (`virtuemart_media_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `published` (`published`), ADD KEY `file_type` (`file_type`), ADD KEY `shared` (`shared`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_migration_oldtonew_ids`
 --
 ALTER TABLE `xtqmd_virtuemart_migration_oldtonew_ids`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_modules`
 --
 ALTER TABLE `xtqmd_virtuemart_modules`
-  ADD PRIMARY KEY (`module_id`),
-  ADD KEY `module_name` (`module_name`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`module_id`), ADD KEY `module_name` (`module_name`), ADD KEY `ordering` (`ordering`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_orders`
 --
 ALTER TABLE `xtqmd_virtuemart_orders`
-  ADD PRIMARY KEY (`virtuemart_order_id`),
-  ADD KEY `virtuemart_user_id` (`virtuemart_user_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `order_number` (`order_number`),
-  ADD KEY `virtuemart_paymentmethod_id` (`virtuemart_paymentmethod_id`),
-  ADD KEY `virtuemart_shipmentmethod_id` (`virtuemart_shipmentmethod_id`),
-  ADD KEY `created_on` (`created_on`);
+ ADD PRIMARY KEY (`virtuemart_order_id`), ADD KEY `virtuemart_user_id` (`virtuemart_user_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `order_number` (`order_number`), ADD KEY `virtuemart_paymentmethod_id` (`virtuemart_paymentmethod_id`), ADD KEY `virtuemart_shipmentmethod_id` (`virtuemart_shipmentmethod_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_orderstates`
 --
 ALTER TABLE `xtqmd_virtuemart_orderstates`
-  ADD PRIMARY KEY (`virtuemart_orderstate_id`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_orderstate_id`), ADD KEY `ordering` (`ordering`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_order_calc_rules`
 --
 ALTER TABLE `xtqmd_virtuemart_order_calc_rules`
-  ADD PRIMARY KEY (`virtuemart_order_calc_rule_id`),
-  ADD KEY `virtuemart_calc_id` (`virtuemart_calc_id`),
-  ADD KEY `virtuemart_order_id` (`virtuemart_order_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`);
+ ADD PRIMARY KEY (`virtuemart_order_calc_rule_id`), ADD KEY `virtuemart_calc_id` (`virtuemart_calc_id`), ADD KEY `virtuemart_order_id` (`virtuemart_order_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_order_histories`
 --
 ALTER TABLE `xtqmd_virtuemart_order_histories`
-  ADD PRIMARY KEY (`virtuemart_order_history_id`),
-  ADD KEY `virtuemart_order_id` (`virtuemart_order_id`);
+ ADD PRIMARY KEY (`virtuemart_order_history_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_order_items`
 --
 ALTER TABLE `xtqmd_virtuemart_order_items`
-  ADD PRIMARY KEY (`virtuemart_order_item_id`),
-  ADD KEY `virtuemart_product_id` (`virtuemart_product_id`),
-  ADD KEY `virtuemart_order_id` (`virtuemart_order_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `order_status` (`order_status`);
+ ADD PRIMARY KEY (`virtuemart_order_item_id`), ADD KEY `virtuemart_product_id` (`virtuemart_product_id`), ADD KEY `virtuemart_order_id` (`virtuemart_order_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `order_status` (`order_status`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_order_userinfos`
 --
 ALTER TABLE `xtqmd_virtuemart_order_userinfos`
-  ADD PRIMARY KEY (`virtuemart_order_userinfo_id`),
-  ADD KEY `virtuemart_order_id` (`virtuemart_order_id`),
-  ADD KEY `virtuemart_user_id` (`virtuemart_user_id`,`address_type`),
-  ADD KEY `address_type` (`address_type`);
+ ADD PRIMARY KEY (`virtuemart_order_userinfo_id`), ADD KEY `virtuemart_order_id` (`virtuemart_order_id`), ADD KEY `virtuemart_user_id` (`virtuemart_user_id`,`address_type`), ADD KEY `address_type` (`address_type`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_paymentmethods`
 --
 ALTER TABLE `xtqmd_virtuemart_paymentmethods`
-  ADD PRIMARY KEY (`virtuemart_paymentmethod_id`),
-  ADD KEY `payment_jplugin_id` (`payment_jplugin_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `payment_element` (`payment_element`,`virtuemart_vendor_id`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`virtuemart_paymentmethod_id`), ADD KEY `payment_jplugin_id` (`payment_jplugin_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `payment_element` (`payment_element`,`virtuemart_vendor_id`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_paymentmethods_vi_vn`
 --
 ALTER TABLE `xtqmd_virtuemart_paymentmethods_vi_vn`
-  ADD PRIMARY KEY (`virtuemart_paymentmethod_id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+ ADD PRIMARY KEY (`virtuemart_paymentmethod_id`), ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_paymentmethod_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_paymentmethod_shoppergroups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_paymentmethod_id` (`virtuemart_paymentmethod_id`,`virtuemart_shoppergroup_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_paymentmethod_id` (`virtuemart_paymentmethod_id`,`virtuemart_shoppergroup_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_products`
 --
 ALTER TABLE `xtqmd_virtuemart_products`
-  ADD PRIMARY KEY (`virtuemart_product_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `product_parent_id` (`product_parent_id`),
-  ADD KEY `product_special` (`product_special`),
-  ADD KEY `product_discontinued` (`product_discontinued`),
-  ADD KEY `product_in_stock` (`product_in_stock`),
-  ADD KEY `product_ordered` (`product_ordered`),
-  ADD KEY `published` (`published`),
-  ADD KEY `pordering` (`pordering`),
-  ADD KEY `created_on` (`created_on`),
-  ADD KEY `modified_on` (`modified_on`);
+ ADD PRIMARY KEY (`virtuemart_product_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `product_parent_id` (`product_parent_id`), ADD KEY `product_special` (`product_special`), ADD KEY `published` (`published`), ADD KEY `pordering` (`pordering`), ADD KEY `created_on` (`created_on`), ADD KEY `modified_on` (`modified_on`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_products_vi_vn`
 --
 ALTER TABLE `xtqmd_virtuemart_products_vi_vn`
-  ADD PRIMARY KEY (`virtuemart_product_id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+ ADD PRIMARY KEY (`virtuemart_product_id`), ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_product_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_product_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_category_id`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_category_id`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_product_customfields`
 --
 ALTER TABLE `xtqmd_virtuemart_product_customfields`
-  ADD PRIMARY KEY (`virtuemart_customfield_id`),
-  ADD KEY `virtuemart_product_id` (`virtuemart_product_id`,`ordering`),
-  ADD KEY `virtuemart_custom_id` (`virtuemart_custom_id`),
-  ADD KEY `published` (`published`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`virtuemart_customfield_id`), ADD KEY `virtuemart_product_id` (`virtuemart_product_id`), ADD KEY `virtuemart_custom_id` (`virtuemart_custom_id`), ADD KEY `published` (`published`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_product_manufacturers`
 --
 ALTER TABLE `xtqmd_virtuemart_product_manufacturers`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_manufacturer_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_manufacturer_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_product_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_product_medias`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_media_id`),
-  ADD KEY `virtuemart_media_id` (`virtuemart_media_id`),
-  ADD KEY `ordering` (`virtuemart_product_id`,`ordering`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_media_id`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_product_prices`
 --
 ALTER TABLE `xtqmd_virtuemart_product_prices`
-  ADD PRIMARY KEY (`virtuemart_product_price_id`),
-  ADD KEY `virtuemart_product_id` (`virtuemart_product_id`),
-  ADD KEY `product_price` (`product_price`),
-  ADD KEY `virtuemart_shoppergroup_id` (`virtuemart_shoppergroup_id`),
-  ADD KEY `product_price_publish_up` (`product_price_publish_up`),
-  ADD KEY `product_price_publish_down` (`product_price_publish_down`),
-  ADD KEY `price_quantity_start` (`price_quantity_start`),
-  ADD KEY `price_quantity_end` (`price_quantity_end`);
+ ADD PRIMARY KEY (`virtuemart_product_price_id`), ADD KEY `virtuemart_product_id` (`virtuemart_product_id`), ADD KEY `product_price` (`virtuemart_product_id`), ADD KEY `virtuemart_shoppergroup_id` (`virtuemart_shoppergroup_id`), ADD KEY `product_price_publish_up` (`product_price_publish_up`), ADD KEY `product_price_publish_down` (`product_price_publish_down`), ADD KEY `price_quantity_start` (`price_quantity_start`), ADD KEY `price_quantity_end` (`price_quantity_end`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_product_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_product_shoppergroups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_shoppergroup_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_shoppergroup_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_ratings`
 --
 ALTER TABLE `xtqmd_virtuemart_ratings`
-  ADD PRIMARY KEY (`virtuemart_rating_id`),
-  ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_rating_id`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_rating_id`), ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`virtuemart_rating_id`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_rating_reviews`
 --
 ALTER TABLE `xtqmd_virtuemart_rating_reviews`
-  ADD PRIMARY KEY (`virtuemart_rating_review_id`),
-  ADD KEY `virtuemart_rating_vote_id` (`virtuemart_rating_vote_id`),
-  ADD KEY `virtuemart_product_id` (`virtuemart_product_id`,`created_by`),
-  ADD KEY `created_on` (`created_on`),
-  ADD KEY `created_by` (`created_by`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_rating_review_id`), ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`created_by`), ADD KEY `created_on` (`created_on`), ADD KEY `created_by` (`created_by`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_rating_votes`
 --
 ALTER TABLE `xtqmd_virtuemart_rating_votes`
-  ADD PRIMARY KEY (`virtuemart_rating_vote_id`),
-  ADD KEY `virtuemart_product_id` (`virtuemart_product_id`,`created_by`),
-  ADD KEY `created_by` (`created_by`),
-  ADD KEY `created_on` (`created_on`);
+ ADD PRIMARY KEY (`virtuemart_rating_vote_id`), ADD UNIQUE KEY `virtuemart_product_id` (`virtuemart_product_id`,`created_by`), ADD KEY `created_by` (`created_by`), ADD KEY `created_on` (`created_on`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_shipmentmethods`
 --
 ALTER TABLE `xtqmd_virtuemart_shipmentmethods`
-  ADD PRIMARY KEY (`virtuemart_shipmentmethod_id`),
-  ADD KEY `shipment_jplugin_id` (`shipment_jplugin_id`),
-  ADD KEY `shipment_element` (`shipment_element`,`virtuemart_vendor_id`),
-  ADD KEY `ordering` (`ordering`);
+ ADD PRIMARY KEY (`virtuemart_shipmentmethod_id`), ADD KEY `shipment_jplugin_id` (`shipment_jplugin_id`), ADD KEY `shipment_element` (`shipment_element`,`virtuemart_vendor_id`), ADD KEY `ordering` (`ordering`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_shipmentmethods_vi_vn`
 --
 ALTER TABLE `xtqmd_virtuemart_shipmentmethods_vi_vn`
-  ADD PRIMARY KEY (`virtuemart_shipmentmethod_id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+ ADD PRIMARY KEY (`virtuemart_shipmentmethod_id`), ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_shipmentmethod_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_shipmentmethod_shoppergroups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_shipmentmethod_id` (`virtuemart_shipmentmethod_id`,`virtuemart_shoppergroup_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_shipmentmethod_id` (`virtuemart_shipmentmethod_id`,`virtuemart_shoppergroup_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_shoppergroups`
-  ADD PRIMARY KEY (`virtuemart_shoppergroup_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `shopper_group_name` (`shopper_group_name`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `shared` (`shared`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_shoppergroup_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `shopper_group_name` (`shopper_group_name`), ADD KEY `ordering` (`ordering`), ADD KEY `shared` (`shared`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_states`
 --
 ALTER TABLE `xtqmd_virtuemart_states`
-  ADD PRIMARY KEY (`virtuemart_state_id`),
-  ADD UNIQUE KEY `state_3_code` (`virtuemart_vendor_id`,`virtuemart_country_id`,`state_3_code`),
-  ADD UNIQUE KEY `state_2_code` (`virtuemart_vendor_id`,`virtuemart_country_id`,`state_2_code`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `virtuemart_country_id` (`virtuemart_country_id`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `shared` (`shared`),
-  ADD KEY `published` (`published`);
+ ADD PRIMARY KEY (`virtuemart_state_id`), ADD UNIQUE KEY `state_3_code` (`virtuemart_vendor_id`,`virtuemart_country_id`,`state_3_code`), ADD UNIQUE KEY `state_2_code` (`virtuemart_vendor_id`,`virtuemart_country_id`,`state_2_code`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `virtuemart_country_id` (`virtuemart_country_id`), ADD KEY `ordering` (`ordering`), ADD KEY `shared` (`shared`), ADD KEY `published` (`published`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_userfields`
 --
 ALTER TABLE `xtqmd_virtuemart_userfields`
-  ADD PRIMARY KEY (`virtuemart_userfield_id`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `ordering` (`ordering`),
-  ADD KEY `shared` (`shared`),
-  ADD KEY `published` (`published`),
-  ADD KEY `account` (`account`),
-  ADD KEY `shipment` (`shipment`),
-  ADD KEY `cart` (`cart`);
+ ADD PRIMARY KEY (`virtuemart_userfield_id`), ADD UNIQUE KEY `name` (`name`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `ordering` (`ordering`), ADD KEY `shared` (`shared`), ADD KEY `published` (`published`), ADD KEY `account` (`account`), ADD KEY `shipment` (`shipment`), ADD KEY `cart` (`cart`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_userfield_values`
 --
 ALTER TABLE `xtqmd_virtuemart_userfield_values`
-  ADD PRIMARY KEY (`virtuemart_userfield_value_id`),
-  ADD KEY `virtuemart_userfield_id` (`virtuemart_userfield_id`);
+ ADD PRIMARY KEY (`virtuemart_userfield_value_id`), ADD KEY `virtuemart_userfield_id` (`virtuemart_userfield_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_userinfos`
 --
 ALTER TABLE `xtqmd_virtuemart_userinfos`
-  ADD PRIMARY KEY (`virtuemart_userinfo_id`),
-  ADD KEY `i_virtuemart_user_id` (`virtuemart_userinfo_id`,`virtuemart_user_id`),
-  ADD KEY `virtuemart_user_id` (`virtuemart_user_id`,`address_type`),
-  ADD KEY `address_type` (`address_type`),
-  ADD KEY `address_type_name` (`address_type_name`);
+ ADD PRIMARY KEY (`virtuemart_userinfo_id`), ADD KEY `i_virtuemart_user_id` (`virtuemart_userinfo_id`,`virtuemart_user_id`), ADD KEY `virtuemart_user_id` (`virtuemart_user_id`,`address_type`), ADD KEY `address_type` (`address_type`), ADD KEY `address_type_name` (`address_type_name`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_vendors`
 --
 ALTER TABLE `xtqmd_virtuemart_vendors`
-  ADD PRIMARY KEY (`virtuemart_vendor_id`),
-  ADD KEY `vendor_name` (`vendor_name`),
-  ADD KEY `vendor_currency` (`vendor_currency`);
+ ADD PRIMARY KEY (`virtuemart_vendor_id`), ADD KEY `vendor_name` (`vendor_name`), ADD KEY `vendor_currency` (`vendor_currency`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_vendors_vi_vn`
 --
 ALTER TABLE `xtqmd_virtuemart_vendors_vi_vn`
-  ADD PRIMARY KEY (`virtuemart_vendor_id`),
-  ADD UNIQUE KEY `slug` (`slug`);
+ ADD PRIMARY KEY (`virtuemart_vendor_id`), ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_vendor_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_vendor_medias`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`,`virtuemart_media_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`,`virtuemart_media_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_vendor_users`
 --
 ALTER TABLE `xtqmd_virtuemart_vendor_users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`,`virtuemart_user_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`,`virtuemart_user_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_vmusers`
 --
 ALTER TABLE `xtqmd_virtuemart_vmusers`
-  ADD PRIMARY KEY (`virtuemart_user_id`),
-  ADD UNIQUE KEY `u_virtuemart_user_id` (`virtuemart_user_id`,`virtuemart_vendor_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`),
-  ADD KEY `user_is_vendor` (`user_is_vendor`);
+ ADD PRIMARY KEY (`virtuemart_user_id`), ADD UNIQUE KEY `u_virtuemart_user_id` (`virtuemart_user_id`,`virtuemart_vendor_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`), ADD KEY `user_is_vendor` (`user_is_vendor`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_vmuser_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_vmuser_shoppergroups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `virtuemart_user_id` (`virtuemart_user_id`,`virtuemart_shoppergroup_id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `virtuemart_user_id` (`virtuemart_user_id`,`virtuemart_shoppergroup_id`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_waitingusers`
 --
 ALTER TABLE `xtqmd_virtuemart_waitingusers`
-  ADD PRIMARY KEY (`virtuemart_waitinguser_id`),
-  ADD KEY `virtuemart_product_id` (`virtuemart_product_id`),
-  ADD KEY `notify_email` (`notify_email`);
+ ADD PRIMARY KEY (`virtuemart_waitinguser_id`), ADD KEY `virtuemart_product_id` (`virtuemart_product_id`), ADD KEY `notify_email` (`notify_email`);
 
 --
 -- Indexes for table `xtqmd_virtuemart_worldzones`
 --
 ALTER TABLE `xtqmd_virtuemart_worldzones`
-  ADD PRIMARY KEY (`virtuemart_worldzone_id`),
-  ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`);
+ ADD PRIMARY KEY (`virtuemart_worldzone_id`), ADD KEY `virtuemart_vendor_id` (`virtuemart_vendor_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -6059,543 +5978,452 @@ ALTER TABLE `xtqmd_virtuemart_worldzones`
 -- AUTO_INCREMENT for table `xtqmd_assets`
 --
 ALTER TABLE `xtqmd_assets`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=78;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT for table `xtqmd_banners`
 --
 ALTER TABLE `xtqmd_banners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_banner_clients`
 --
 ALTER TABLE `xtqmd_banner_clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_categories`
 --
 ALTER TABLE `xtqmd_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `xtqmd_contact_details`
 --
 ALTER TABLE `xtqmd_contact_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_content`
 --
 ALTER TABLE `xtqmd_content`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `xtqmd_content_types`
 --
 ALTER TABLE `xtqmd_content_types`
-  MODIFY `type_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
+MODIFY `type_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `xtqmd_extensions`
 --
 ALTER TABLE `xtqmd_extensions`
-  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10009;
-
+MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10012;
 --
 -- AUTO_INCREMENT for table `xtqmd_fields`
 --
 ALTER TABLE `xtqmd_fields`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_fields_groups`
 --
 ALTER TABLE `xtqmd_fields_groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_finder_filters`
 --
 ALTER TABLE `xtqmd_finder_filters`
-  MODIFY `filter_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `filter_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_finder_links`
 --
 ALTER TABLE `xtqmd_finder_links`
-  MODIFY `link_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `link_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_finder_taxonomy`
 --
 ALTER TABLE `xtqmd_finder_taxonomy`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `xtqmd_finder_terms`
 --
 ALTER TABLE `xtqmd_finder_terms`
-  MODIFY `term_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `term_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_finder_types`
 --
 ALTER TABLE `xtqmd_finder_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_languages`
 --
 ALTER TABLE `xtqmd_languages`
-  MODIFY `lang_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+MODIFY `lang_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `xtqmd_menu`
 --
 ALTER TABLE `xtqmd_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
-
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=137;
 --
 -- AUTO_INCREMENT for table `xtqmd_menu_types`
 --
 ALTER TABLE `xtqmd_menu_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `xtqmd_messages`
 --
 ALTER TABLE `xtqmd_messages`
-  MODIFY `message_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `message_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_modules`
 --
 ALTER TABLE `xtqmd_modules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
-
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=100;
 --
 -- AUTO_INCREMENT for table `xtqmd_newsfeeds`
 --
 ALTER TABLE `xtqmd_newsfeeds`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_overrider`
 --
 ALTER TABLE `xtqmd_overrider`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
-
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 --
 -- AUTO_INCREMENT for table `xtqmd_postinstall_messages`
 --
 ALTER TABLE `xtqmd_postinstall_messages`
-  MODIFY `postinstall_message_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
+MODIFY `postinstall_message_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `xtqmd_redirect_links`
 --
 ALTER TABLE `xtqmd_redirect_links`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_tags`
 --
 ALTER TABLE `xtqmd_tags`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `xtqmd_template_styles`
 --
 ALTER TABLE `xtqmd_template_styles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `xtqmd_ucm_content`
 --
 ALTER TABLE `xtqmd_ucm_content`
-  MODIFY `core_content_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `core_content_id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_ucm_history`
 --
 ALTER TABLE `xtqmd_ucm_history`
-  MODIFY `version_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+MODIFY `version_id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `xtqmd_updates`
 --
 ALTER TABLE `xtqmd_updates`
-  MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
-
+MODIFY `update_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT for table `xtqmd_update_sites`
 --
 ALTER TABLE `xtqmd_update_sites`
-  MODIFY `update_site_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
+MODIFY `update_site_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `xtqmd_usergroups`
 --
 ALTER TABLE `xtqmd_usergroups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=10;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `xtqmd_users`
 --
 ALTER TABLE `xtqmd_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=597;
-
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=597;
 --
 -- AUTO_INCREMENT for table `xtqmd_user_keys`
 --
 ALTER TABLE `xtqmd_user_keys`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_user_notes`
 --
 ALTER TABLE `xtqmd_user_notes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_viewlevels`
 --
 ALTER TABLE `xtqmd_viewlevels`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
-
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_adminmenuentries`
 --
 ALTER TABLE `xtqmd_virtuemart_adminmenuentries`
-  MODIFY `id` tinyint(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
+MODIFY `id` tinyint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_calcs`
 --
 ALTER TABLE `xtqmd_virtuemart_calcs`
-  MODIFY `virtuemart_calc_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_calc_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_calc_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_categories`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_calc_countries`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_countries`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_calc_manufacturers`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_manufacturers`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_calc_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_shoppergroups`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_calc_states`
 --
 ALTER TABLE `xtqmd_virtuemart_calc_states`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_carts`
 --
 ALTER TABLE `xtqmd_virtuemart_carts`
-  MODIFY `virtuemart_cart_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_cart_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_categories`
-  MODIFY `virtuemart_category_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_category_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_category_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_category_categories`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_category_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_category_medias`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_configs`
 --
 ALTER TABLE `xtqmd_virtuemart_configs`
-  MODIFY `virtuemart_config_id` tinyint(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+MODIFY `virtuemart_config_id` tinyint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_countries`
 --
 ALTER TABLE `xtqmd_virtuemart_countries`
-  MODIFY `virtuemart_country_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
-
+MODIFY `virtuemart_country_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=249;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_coupons`
 --
 ALTER TABLE `xtqmd_virtuemart_coupons`
-  MODIFY `virtuemart_coupon_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_coupon_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_currencies`
 --
 ALTER TABLE `xtqmd_virtuemart_currencies`
-  MODIFY `virtuemart_currency_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
-
+MODIFY `virtuemart_currency_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=202;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_customs`
 --
 ALTER TABLE `xtqmd_virtuemart_customs`
-  MODIFY `virtuemart_custom_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+MODIFY `virtuemart_custom_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_invoices`
 --
 ALTER TABLE `xtqmd_virtuemart_invoices`
-  MODIFY `virtuemart_invoice_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_invoice_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_manufacturercategories`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturercategories`
-  MODIFY `virtuemart_manufacturercategories_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_manufacturercategories_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_manufacturers`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturers`
-  MODIFY `virtuemart_manufacturer_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_manufacturer_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_manufacturer_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_manufacturer_medias`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_medias`
-  MODIFY `virtuemart_media_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_media_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_migration_oldtonew_ids`
 --
 ALTER TABLE `xtqmd_virtuemart_migration_oldtonew_ids`
-  MODIFY `id` smallint(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` smallint(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_modules`
 --
 ALTER TABLE `xtqmd_virtuemart_modules`
-  MODIFY `module_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
+MODIFY `module_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_orders`
 --
 ALTER TABLE `xtqmd_virtuemart_orders`
-  MODIFY `virtuemart_order_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_order_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_orderstates`
 --
 ALTER TABLE `xtqmd_virtuemart_orderstates`
-  MODIFY `virtuemart_orderstate_id` tinyint(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+MODIFY `virtuemart_orderstate_id` tinyint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_order_calc_rules`
 --
 ALTER TABLE `xtqmd_virtuemart_order_calc_rules`
-  MODIFY `virtuemart_order_calc_rule_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_order_calc_rule_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_order_histories`
 --
 ALTER TABLE `xtqmd_virtuemart_order_histories`
-  MODIFY `virtuemart_order_history_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_order_history_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_order_items`
 --
 ALTER TABLE `xtqmd_virtuemart_order_items`
-  MODIFY `virtuemart_order_item_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_order_item_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_order_userinfos`
 --
 ALTER TABLE `xtqmd_virtuemart_order_userinfos`
-  MODIFY `virtuemart_order_userinfo_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_order_userinfo_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_paymentmethods`
 --
 ALTER TABLE `xtqmd_virtuemart_paymentmethods`
-  MODIFY `virtuemart_paymentmethod_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_paymentmethod_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_paymentmethod_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_paymentmethod_shoppergroups`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_products`
 --
 ALTER TABLE `xtqmd_virtuemart_products`
-  MODIFY `virtuemart_product_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_product_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_product_categories`
 --
 ALTER TABLE `xtqmd_virtuemart_product_categories`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_product_customfields`
 --
 ALTER TABLE `xtqmd_virtuemart_product_customfields`
-  MODIFY `virtuemart_customfield_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'field id';
-
+MODIFY `virtuemart_customfield_id` int(1) unsigned NOT NULL AUTO_INCREMENT COMMENT 'field id';
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_product_manufacturers`
 --
 ALTER TABLE `xtqmd_virtuemart_product_manufacturers`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_product_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_product_medias`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_product_prices`
 --
 ALTER TABLE `xtqmd_virtuemart_product_prices`
-  MODIFY `virtuemart_product_price_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_product_price_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_product_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_product_shoppergroups`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_ratings`
 --
 ALTER TABLE `xtqmd_virtuemart_ratings`
-  MODIFY `virtuemart_rating_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_rating_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_rating_reviews`
 --
 ALTER TABLE `xtqmd_virtuemart_rating_reviews`
-  MODIFY `virtuemart_rating_review_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_rating_review_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_rating_votes`
 --
 ALTER TABLE `xtqmd_virtuemart_rating_votes`
-  MODIFY `virtuemart_rating_vote_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_rating_vote_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_shipmentmethods`
 --
 ALTER TABLE `xtqmd_virtuemart_shipmentmethods`
-  MODIFY `virtuemart_shipmentmethod_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_shipmentmethod_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_shipmentmethod_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_shipmentmethod_shoppergroups`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_shoppergroups`
-  MODIFY `virtuemart_shoppergroup_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+MODIFY `virtuemart_shoppergroup_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_states`
 --
 ALTER TABLE `xtqmd_virtuemart_states`
-  MODIFY `virtuemart_state_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=892;
-
+MODIFY `virtuemart_state_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=892;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_userfields`
 --
 ALTER TABLE `xtqmd_virtuemart_userfields`
-  MODIFY `virtuemart_userfield_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
+MODIFY `virtuemart_userfield_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_userfield_values`
 --
 ALTER TABLE `xtqmd_virtuemart_userfield_values`
-  MODIFY `virtuemart_userfield_value_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
+MODIFY `virtuemart_userfield_value_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_userinfos`
 --
 ALTER TABLE `xtqmd_virtuemart_userinfos`
-  MODIFY `virtuemart_userinfo_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_userinfo_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_vendors`
 --
 ALTER TABLE `xtqmd_virtuemart_vendors`
-  MODIFY `virtuemart_vendor_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_vendor_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_vendor_medias`
 --
 ALTER TABLE `xtqmd_virtuemart_vendor_medias`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` smallint(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_vendor_users`
 --
 ALTER TABLE `xtqmd_virtuemart_vendor_users`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` smallint(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_vmusers`
 --
 ALTER TABLE `xtqmd_virtuemart_vmusers`
-  MODIFY `virtuemart_user_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=597;
-
+MODIFY `virtuemart_user_id` int(1) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=597;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_vmuser_shoppergroups`
 --
 ALTER TABLE `xtqmd_virtuemart_vmuser_shoppergroups`
-  MODIFY `id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_waitingusers`
 --
 ALTER TABLE `xtqmd_virtuemart_waitingusers`
-  MODIFY `virtuemart_waitinguser_id` int(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-
+MODIFY `virtuemart_waitinguser_id` int(1) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xtqmd_virtuemart_worldzones`
 --
 ALTER TABLE `xtqmd_virtuemart_worldzones`
-  MODIFY `virtuemart_worldzone_id` smallint(1) UNSIGNED NOT NULL AUTO_INCREMENT;
-COMMIT;
-
+MODIFY `virtuemart_worldzone_id` smallint(1) unsigned NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

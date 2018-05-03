@@ -42,17 +42,20 @@ class Migrator extends VmModel{
 			@ini_set( 'max_execution_time', 60 );
 		}
 
-		$this->maxScriptTime = VmConfig::getExecutionTime()*0.95-3;	//Lets use 3 seconds of the execution time as reserve to store the progress
+		$this->maxScriptTime = VmConfig::getExecutionTime()*0.80-1;	//Lets use 30% of the execution time as reserve to store the progress
 
 		$jrmemory_limit= vRequest::getInt('memory_limit');
 		if(!empty($jrmemory_limit)){
-			VmConfig::ensureMemoryLimit($jrmemory_limit);
+			@ini_set( 'memory_limit', $jrmemory_limit.'M' );
 		} else {
 			VmConfig::ensureMemoryLimit(128);
 		}
 
-		$this->maxMemoryLimit = VmConfig::getMemoryLimitBytes() - (14 * 1024 * 1024)  ;		//Lets use 14MB for joomla
+		$this->maxMemoryLimit = $this->return_bytes(ini_get('memory_limit')) - (14 * 1024 * 1024)  ;		//Lets use 11MB for joomla
+		// 		vmdebug('$this->maxMemoryLimit',$this->maxMemoryLimit); //134217728
+		//$this->maxMemoryLimit = $this -> return_bytes('20M');
 
+		// 		ini_set('memory_limit','35M');
 		$q = 'SELECT `id` FROM `#__virtuemart_migration_oldtonew_ids` ';
 		$this->_db->setQuery($q);
 		$res = $this->_db->loadResult();
@@ -66,6 +69,22 @@ class Migrator extends VmModel{
 		}
 
 		$this->_keepOldProductIds = VmConfig::get('keepOldProductIds',FALSE);
+	}
+
+	private function return_bytes($val) {
+		$val = trim($val);
+		$last = strtolower($val[strlen($val)-1]);
+		switch($last) {
+			// The 'G' modifier is available since PHP 5.1.0
+			case 'g':
+				$val *= 1024;
+			case 'm':
+				$val *= 1024;
+			case 'k':
+				$val *= 1024;
+		}
+
+		return $val;
 	}
 
 	function getMigrationProgress($group){
@@ -295,7 +314,7 @@ class Migrator extends VmModel{
 			if($media->file_type == $type){
 				//Somehow we must use here the right char encoding, so that it works below
 				// in line 320
-				$knownNames[$media->file_url] = 1;
+				$knownNames[] = $media->file_url;
 			}
 		}
 
@@ -338,11 +357,11 @@ class Migrator extends VmModel{
 
 							//We port all type of media, regardless the extension
 							if($filetype == 'file'){
-								if(!isset($knownNames[$relUrlName])){
+								if(!in_array($relUrlName, $knownNames)){
 									$filesInDir[] = array('filename' => $file, 'url' => $relUrl);
 								}
 							}else {
-								if($filetype == 'dir' && $file != 'resized' && $file != 'invoices' && $file != 'keys'){
+								if($filetype == 'dir' && $file != 'resized' && $file != 'invoices'){
 									$subfoldersInDir[] = $dir.$file.DS;
 									// 									vmdebug('my sub folder ',$dir.$file);
 								}
@@ -1338,7 +1357,7 @@ class Migrator extends VmModel{
 					$q = 'SELECT * FROM `#__vm_order_item` WHERE `order_id` = "'.$order['order_id'].'" ';
 					$this->_db->setQuery($q);
 					$oldItems = $this->_db->loadAssocList();
-
+					//$this->_app->enqueueMessage('Migration orderhistories: ' . $newId);
 					foreach($oldItems as $item){
 						$item['virtuemart_order_id'] = $newId;
 						if(!empty($newproductIds[$item['product_id']])){
@@ -1652,6 +1671,41 @@ class Migrator extends VmModel{
 		return $weightUnitMigrate;
 	}
 
+	/**
+	 * Helper function, was used to determine the difference of an loaded array (from vm19
+	 * and a loaded object of vm2
+	 */
+	private function showVmDiff(){
+
+		$productModel = VmModel::getModel('product');
+		$product = $productModel->getProduct(0);
+
+		$productK = array();
+		$attribsImage = get_object_vars($product);
+
+		foreach($attribsImage as $k => $v){
+			$productK[] = $k;
+		}
+
+		$oldproductK = array();
+		foreach($oldProducts[0] as $k => $v){
+			$oldproductK[] = $k;
+		}
+
+		$notSame = array_diff($productK, $oldproductK);
+		$names = '';
+		foreach($notSame as $name){
+			$names .= $name . ' ';
+		}
+		$this->_app->enqueueMessage('_productPorter  array_intersect ' . $names);
+
+		$notSame = array_diff($oldproductK, $productK);
+		$names = '';
+		foreach($notSame as $name){
+			$names .= $name . ' ';
+		}
+		$this->_app->enqueueMessage('_productPorter  ViceVERSA array_intersect ' . $names);
+	}
 
 	function loadCountListContinue($q,$startLimit,$maxItems,$msg){
 
@@ -1906,7 +1960,7 @@ class Migrator extends VmModel{
 		vmSetStartTime('relatedproducts');
 
 	    $maxItems = $this->_getMaxItems('relatedproducts');
-		$startLimit = $this->_getStartLimit('relatedproducts');;
+		$startLimit = $this->_getStartLimit('relatedproducts_start');;
 		$i=0;
 		$continue = true;
 

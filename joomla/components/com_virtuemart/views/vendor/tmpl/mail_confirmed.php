@@ -6,7 +6,7 @@
  * @package	VirtueMart
  * @subpackage
  * @author KOHL Patrick
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -23,7 +23,7 @@ defined ( '_JEXEC' ) or die ( 'Restricted access' );
 
  ?>
 
-<div class="vm-question-thanks-view productdetails-view">
+<div class="productdetails-view">
 	<div><?php echo vmText::_('COM_VIRTUEMART_ASK_QUESTION_THANK_YOU'); ?></div><br />
 	<div><a class="general-bg" href="<?php echo JRoute::_('index.php?option=com_virtuemart') ?>" ><?php echo vmText::_('COM_VIRTUEMART_CONTINUE_SHOPPING') ?></a></div>
 </div>

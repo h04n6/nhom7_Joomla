@@ -76,7 +76,7 @@ class vRequest {
 		// Replace double byte whitespaces by single byte (East Asian languages)
 		$str = preg_replace('/\xE3\x80\x80/', ' ', $str);
 
-		$unicodeslugs = VmConfig::get('transliteratePaths',false);
+		$unicodeslugs = VmConfig::get('transliterateSlugs',false);
 		if($unicodeslugs){
 			$lang = JFactory::getLanguage();
 			$str = $lang->transliterate($str);
@@ -164,20 +164,6 @@ class vRequest {
 		return self::get($name, $default, FILTER_VALIDATE_EMAIL,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH);
 	}
 
-	public static function filterUrl($url){
-
-		if(!is_array($url)){
-			$url = urldecode($url);
-		} else {
-			foreach($url as $k => $u){
-				$url[$k] = self::filterUrl($u);
-			}
-		}
-		$url = strip_tags($url);
-
-		//$url = self::filter($url,FILTER_SANITIZE_URL,'');
-		return self::filter($url,FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_LOW);
-	}
 
 	/**
 	 * Main filter function, called by the others with set Parameters
@@ -209,11 +195,11 @@ class vRequest {
 				$source = $_POST;
 			}
 
-			if(isset($source[$name])){
-				return self::filter($source[$name],$filter,$flags);
-			} else {
+			if(!isset($source[$name])){
 				return $default;
 			}
+
+			return self::filter($source[$name],$filter,$flags);
 
 		} else {
 			vmTrace('empty name in vRequest::get');
@@ -224,30 +210,11 @@ class vRequest {
 
 	public static function filter($var,$filter,$flags,$array=false){
 		if($array or is_array($var)){
-			if(!is_array($var)) $var = array($var);
-			self::recurseFilter($var,$filter);
-			return $var;
+			return filter_var_array($var, $filter);
 		}
 		else {
 			return filter_var($var, $filter, $flags);
 		}
-	}
-
-	public static function recurseFilter(&$var,$filter){
-		foreach($var as $k=>&$v){
-			if(!empty($k) and !is_numeric($k)){
-				$t = filter_var($k, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW);
-				if($t!=$k){
-					$var[$t] = $v;
-					unset($var[$k]);
-					//vmdebug('unset invalid key',$k,$t);
-				}
-			}
-			if(!empty($v) and is_array($v) and count($v)>1){
-				self::recurseFilter($v,$filter);
-			}
-		}
-		//filter_var_array($var, $filter);
 	}
 
 	/**
@@ -259,12 +226,11 @@ class vRequest {
 	 * @return mixed cleaned $_REQUEST
 	 */
 	public static function getRequest( $filter = FILTER_SANITIZE_SPECIAL_CHARS, $flags = FILTER_FLAG_ENCODE_LOW ){
-		return self::filter($_REQUEST, $filter, $flags,true);
-		//return  filter_var_array($_REQUEST, $filter);
+		return  self::filter($_REQUEST, $filter, $flags,true);
 	}
 	
 	public static function getPost( $filter = FILTER_SANITIZE_SPECIAL_CHARS, $flags = FILTER_FLAG_ENCODE_LOW ){
-		return self::filter($_POST, $filter, $flags,true);
+		return  self::filter($_POST, $filter, $flags,true);
 	}
 	
 	public static function getGet( $filter = FILTER_SANITIZE_SPECIAL_CHARS, $flags = FILTER_FLAG_ENCODE_LOW ){
@@ -280,7 +246,6 @@ class vRequest {
 	}
 	
 	public static function getFiles( $name, $filter = FILTER_SANITIZE_STRING, $flags = FILTER_FLAG_STRIP_LOW){
-		if(empty($_FILES[$name])) return false;
 		return  self::filter($_FILES[$name], $filter, $flags);
 	}
 

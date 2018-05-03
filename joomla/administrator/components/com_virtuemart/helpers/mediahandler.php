@@ -8,7 +8,7 @@
  * @package	VirtueMart
  * @subpackage Helpers
  * @author Max Milbers
- * @copyright Copyright (c) 2011-2016 VirtueMart Team. All rights reserved by the author.
+ * @copyright Copyright (c) 2011 VirtueMart Team. All rights reserved by the author.
  */
 
 defined('_JEXEC') or die();
@@ -99,16 +99,14 @@ class VmMediaHandler {
 			vmInfo('COM_VIRTUEMART_MEDIA_NO_PATH_TYPE',$type,$link );
 			//Todo add general media_path to config
 			//$relUrl = VmConfig::get('media_path');
-			$relUrl = self::getStoriesFb().'/';
+			$relUrl = 'images/stories/virtuemart/';
 			$this->setRole=true;
 			// 		} else if(!$choosed and empty($relUrl) and $this->file_is_forSale==0){
 		} else if(!$choosed and empty($relUrl) ){
 
-			if(empty($this->file_type) and !empty($this->file_url)){
-				vmAdminInfo('COM_VIRTUEMART_MEDIA_CHOOSE_TYPE',$this->file_title );
-				// 	vmError('Ignore this message, when it appears while the media synchronisation process, else report to http://forum.virtuemart.net/index.php?board=127.0 : cant create media of unknown type, a programmers error, used type ',$type);
-			}
-			$relUrl = self::getStoriesFb('typeless').'/';
+			vmWarn('COM_VIRTUEMART_MEDIA_CHOOSE_TYPE',$this->file_title );
+			// 	vmError('Ignore this message, when it appears while the media synchronisation process, else report to http://forum.virtuemart.net/index.php?board=127.0 : cant create media of unknown type, a programmers error, used type ',$type);
+			$relUrl = 'images/stories/virtuemart/typeless/';
 			$this->setRole=true;
 
 		} else if(!$choosed and $this->file_is_forSale==1){
@@ -117,29 +115,6 @@ class VmMediaHandler {
 		}
 
 		return $relUrl;
-	}
-
-	static function getStoriesFb($suffix = ''){
-
-		if(!class_exists('JFolder')){
-			require(VMPATH_LIBS.DS.'joomla'.DS.'filesystem'.DS.'folder.php');
-		}
-		$url = 'images/virtuemart/'. $suffix ;
-
-		if(JFolder::exists(VMPATH_ROOT .'/'.$url)) {
-			return $url;
-		} else {
-			$urlOld = 'images/stories/virtuemart/'. $suffix;
-			if(JFolder::exists(VMPATH_ROOT .'/'.$urlOld)){
-				return $urlOld;
-			}
-		}
-
-		if(JFolder::create(VMPATH_ROOT .'/'.$url)) {
-			return $url;
-		} else {
-			return false;
-		}
 	}
 
 	/**
@@ -167,7 +142,8 @@ class VmMediaHandler {
 			$media = new VmMediaHandler();
 		}
 
-		$attribsImage = $table->getProperties();
+		$attribsImage = get_object_vars($table);
+
 		foreach($attribsImage as $k=>$v){
 			$media->$k = $v;
 		}
@@ -198,7 +174,7 @@ class VmMediaHandler {
 
 		$data = $media->processAttributes($data);
 		$data = $media->processAction($data);
-		if($data===false) return false;
+
 		$attribsImage = get_object_vars($media);
 		foreach($attribsImage as $k=>$v){
 			$data[$k] = $v;
@@ -277,14 +253,14 @@ class VmMediaHandler {
 					if(JFile::exists($file_url)){
 						$this->file_url = $file_url;
 					} else {
-						//	vmdebug('MediaHandler, file does not exist in safepath '.$file_url);
+					//	vmdebug('MediaHandler, file does not exist in safepath '.$file_url);
 					}
 				} else {
 					$pathToTest = VMPATH_ROOT.DS.str_replace('/',DS,$file_url);
 					if(JFile::exists($pathToTest)){
 						$this->file_url = $file_url;
 					} else {
-						//	vmdebug('MediaHandler, file does not exist in '.$pathToTest);
+					//	vmdebug('MediaHandler, file does not exist in '.$pathToTest);
 					}
 				}
 
@@ -296,13 +272,13 @@ class VmMediaHandler {
 		if($this->file_is_downloadable) $this->media_role = 'file_is_downloadable';
 		if($this->file_is_forSale) $this->media_role = 'file_is_forSale';
 		if(empty($this->media_role)) $this->media_role = 'file_is_displayable';
+		// 		vmdebug('$this->media_role',$this->media_role);
 
 		$this->determineFoldersToTest();
 
-		//Do we need this?
-		/*if(!empty($this->file_url) && empty($this->file_url_thumb)){
+		if(!empty($this->file_url) && empty($this->file_url_thumb)){
 			$this->displayMediaThumb('',true,'',false);
-		}*/
+		}
 
 
 	}
@@ -355,10 +331,6 @@ class VmMediaHandler {
 	 */
 	public function determineFoldersToTest(){
 
-		if(VmAccess::manager('core')){
-			$r = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
-			$this->addFoldersToTest($r);
-		}
 		$file_path = str_replace('/',DS,$this->file_url_folder);
 		if($this->file_is_forSale){
 			$this->addFoldersToTest($file_path);
@@ -392,7 +364,6 @@ class VmMediaHandler {
 
 		$style = 'text-align:left;margin-left:20px;';
 		$result = '<div class="vmquote" style="'.$style.'">';
-
 		foreach( $this->_foldersToTest as $dir ) {
 			$result .= $dir . ' :: ';
 			$result .= is_writable( $dir )
@@ -499,18 +470,15 @@ class VmMediaHandler {
 			}
 		}
 
+		if(!empty($this->file_url_thumb)){
+			$file_url_thumb = $this->file_url_thumb;
+		} else if(is_a($this,'VmImage')) {
 
-		if($this->file_is_forSale){
-			$toChk = $this->file_url;
+			$file_url_thumb = $this->createThumbFileUrl();
+
 		} else {
-			$toChk = VMPATH_ROOT.'/'.$this->file_url;
+			$file_url_thumb = '';
 		}
-		if(!JFile::exists($toChk)){
-			vmdebug('Media file does not exists',$toChk);
-			vmError(vmText::sprintf('COM_VIRTUEMART_FILE_NOT_FOUND',$toChk));
-		}
-
-		$file_url_thumb = $this -> getFileUrlThumb($width, $height);
 
 		$media_path = VMPATH_ROOT.DS.str_replace('/',DS,$file_url_thumb);
 
@@ -528,33 +496,21 @@ class VmMediaHandler {
 
 		if ((empty($file_url_thumb) || !file_exists($media_path)) && is_a($this,'VmImage')) {
 
+			if(empty($width)) $width = VmConfig::get('img_width', 90);
+			if(empty($height)) $height = VmConfig::get('img_height', 90);
 			$file_url_thumb = $this->createThumb($width,$height);
 			$media_path = VMPATH_ROOT.DS.str_replace('/',DS,$file_url_thumb);
 
 		}
-		//$this->file_url_thumb = $file_url_thumb;
+		$this->file_url_thumb = $file_url_thumb;
 
 		if($withDescr) $withDescr = $this->file_description;
-
-		if (empty($file_url_thumb) || !file_exists($media_path)) {
+		if (empty($this->file_url_thumb) || !file_exists($media_path)) {
 			return $this->getIcon($imageArgs,$lightbox,$return,$withDescr,$absUrl);
 		}
 
 		if($return) return $this->displayIt($file_url_thumb, $file_alt, $imageArgs,$lightbox,$effect,$withDescr,$absUrl);
 
-	}
-
-	function getFileUrlThumb($width = 0,$height = 0){
-
-		if(!empty($this->file_url_thumb)){
-			$file_url_thumb = $this->file_url_thumb;
-		} else if(is_a($this,'VmImage')) {
-			$file_url_thumb = $this->createThumbFileUrl($width,$height);
-		} else {
-			$file_url_thumb = '';
-		}
-
-		return $file_url_thumb;
 	}
 
 	/**
@@ -618,8 +574,7 @@ class VmMediaHandler {
 			$image = '<img src="' . $root.$file_url . '" alt="' . $file_alt . '" ' . $args . ' />';//JHtml::image($file_url, $file_alt, $imageArgs);
 			if ($file_alt ) $file_alt = 'title="'.$file_alt.'"';
 			if ($this->file_url and pathinfo($this->file_url, PATHINFO_EXTENSION) and substr( $this->file_url, 0, 4) != "http") $href = JURI::root() .$this->file_url ;
-			else $href = $root.$file_url ;
-
+			else $href = $file_url ;
 			if ($this->file_is_downloadable) {
 				$lightboxImage = '<a '.$file_alt.' '.$effect.' href="'.$href.'">'.$image.$desc.'</a>';
 			} else {
@@ -642,43 +597,92 @@ class VmMediaHandler {
 	 * @return name of the uploaded file
 	 */
 	function uploadFile($urlfolder,$overwrite = false){
-		if(!class_exists('vmUploader')) require(VMPATH_ADMIN . DS . 'helpers' . DS . 'vmuploader.php');
-		$r = vmUploader::uploadFile($urlfolder,$this,$overwrite);
-		return $r;
-	}
 
+		if(empty($urlfolder) OR strlen($urlfolder)<2){
+			vmError('Not able to upload file, give path/url empty/too short '.$urlfolder.' please correct path in your virtuemart config');
+			return false;
+		}
+		if(!class_exists('JFile')) require(VMPATH_LIBS.DS.'joomla'.DS.'filesystem'.DS.'file.php');
+		$media = vRequest::getFiles('upload');
+		if(empty($media)){
+			vmError('Recieved no data for upload','Recieved no data for upload');
+			vmdebug('no data in uploadFile ',$_FILES);
+			return false;
+		}
+
+		$app = JFactory::getApplication();
+		switch ($media['error']) {
+			case 0:
+				$path_folder = str_replace('/',DS,$urlfolder);
+
+				//Sadly it does not work to upload unicode files,
+				// the ä for example is stored on windows as Ã¤, this seems to be a php issue (maybe a config setting)
+			/*	$dotPos = strrpos($media['name'],'.');
+				$safeMediaName = vmFile::makeSafe( $media['name'] );
+				if($dotPos!==FALSE){
+					$mediaPure = substr($media['name'],0,$dotPos);
+					$mediaExtension = strtolower(substr($media['name'],$dotPos));
+				}
+			*/
+
+				$safeMediaName = vmFile::makeSafe( $media['name'] );
+				$media['name'] = $safeMediaName;
+
+				$mediaPure = JFile::stripExt($media['name']);
+				$mediaExtension = '.'.strtolower(JFile::getExt($media['name']));
+				vmdebug('uploadFile $safeMediaName',$media['name'],$safeMediaName,$mediaPure,$mediaExtension);
+
+				if(!$overwrite){
+					while (file_exists(VMPATH_ROOT.DS.$path_folder.$mediaPure.$mediaExtension)) {
+						$mediaPure = $mediaPure.rand(1,9);
+					}
+				}
+
+				$media['name'] = $this->file_name =$mediaPure.$mediaExtension;
+				if($this->file_is_forSale==0){
+					JFile::upload($media['tmp_name'],VMPATH_ROOT.DS.$path_folder.$media['name']);
+				} else {
+					JFile::upload($media['tmp_name'],$path_folder.$media['name']);
+				}
+
+				$this->file_mimetype = $media['type'];
+				$this->media_published = 1;
+				$app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_FILE_UPLOAD_OK',VMPATH_ROOT.DS.$path_folder.$media['name']));
+				return $media['name'];
+
+			case 1: //uploaded file exceeds the upload_max_filesize directive in php.ini
+				$app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_PRODUCT_FILES_ERR_UPLOAD_MAX_FILESIZE',$media['name'],$media['tmp_name']), 'warning');
+				break;
+			case 2: //uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form
+				$app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_PRODUCT_FILES_ERR_MAX_FILE_SIZE',$media['name'],$media['tmp_name']), 'warning');
+				break;
+			case 3: //uploaded file was only partially uploaded
+				$app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_PRODUCT_FILES_ERR_PARTIALLY',$media['name'],$media['tmp_name']), 'warning');
+				break;
+			case 4: //no file was uploaded
+				//$vmLogger->warning( "You have not selected a file/image for upload." );
+				break;
+			default: //a default error, just in case!  :)
+				//$vmLogger->warning( "There was a problem with your upload." );
+				break;
+		}
+		return false;
+	}
 
 	/**
 	 * Deletes a file
 	 *
 	 * @param string $url relative Url, gets adjusted to path
 	 */
-	function deleteFile($url, $absPathGiv = 0){
+	function deleteFile($url){
 
 		if(!vmAccess::manager('media.delete')){
 			vmWarn('Insufficient permissions to delete the media');
 			return false;
 		}
 
-		if(empty($url)){
-			vmTrace('deleteFile empty url was given');
-			return false;
-		}
 		if(!class_exists('JFile')) require(VMPATH_LIBS.DS.'joomla'.DS.'filesystem'.DS.'file.php');
-
-		$file_path = str_replace('/',DS,$url);
-		if($absPathGiv){
-			//vmdebug('deleteFile absolut Path given',$file_path);
-		} else {
-			$file_path = VMPATH_ROOT.DS.$file_path;
-			//vmdebug('deleteFile relative Path given',$file_path);
-		}
-
-		if(is_dir($file_path)){
-			vmTrace('deleteFile path given '.$file_path);
-			return false;
-		}
-
+		$file_path = VMPATH_ROOT.DS.str_replace('/',DS,$url);
 		$app = JFactory::getApplication();
 
 		$msg_path = '';
@@ -687,55 +691,12 @@ class VmMediaHandler {
 			$msg_path = $file_path;
 		}
 
-
 		if($res = JFile::delete( $file_path )){
 			$app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_FILE_DELETE_OK',$msg_path));
-			return true;
 		} else {
 			$app->enqueueMessage(vmText::sprintf('COM_VIRTUEMART_FILE_DELETE_ERR',$res.' '.$msg_path));
 		}
-		return false;
-	}
-
-	function deleteThumbs(){
-
-		$oldFileUrlThumb = $this->getFileUrlThumb();
-
-		if(empty($oldFileUrlThumb)) return true;
-		$filename = $this->file_name;
-		if($this->file_is_forSale!=1){
-
-			$dir = VMPATH_ROOT.DS.$this->file_url_folder.'resized';
-			if($p = strpos($this->file_name,'/')){
-				$dir .= DS.substr($this->file_name,0,$p);
-				$filename = substr($this->file_name,$p+1);
-			}
-
-		} else {
-			$dir = VmConfig::get('forSale_path_thumb', false);
-			$dir = VMPATH_ROOT.DS.rtrim($dir,'/');
-		}
-
-		if(!is_dir($dir)){
-			$m = 'deleteThumbs: Attention directoy is not accessible (does not exists or wrong rights) ';
-			vmError($m.$dir,$m);
-			//continue;
-		}
-
-		if ($handle = opendir($dir)) {
-			while (false !== ($file = readdir($handle))) {
-				if(!empty($file) and strpos($file,'.')!==0 and $file != 'index.html' and !is_dir($dir.DS.$file)){
-					$hits = array();
-					$regex = "/".$filename.'_\d{1,4}x\d{1,4}.\S{1,3}'."/";
-					$res = preg_match($regex, $file, $hits);
-					foreach($hits as $name){
-						$this->deleteFile($dir.DS.$name,true);
-					}
-				}
-			}
-		}
-
-		$this->deleteFile($oldFileUrlThumb, false);
+		return ;
 	}
 
 	/**
@@ -755,44 +716,36 @@ class VmMediaHandler {
 			$this->file_url='';
 			$this->file_url_thumb='';
 			$file_name = $this->uploadFile($this->file_url_folder);
-			if ($file_name===false) return false;
 			$this->file_name = $file_name;
 			$this->file_url = $this->file_url_folder.$this->file_name;
 		}
 		else if( $data['media_action'] == 'replace' ){
-
-			//always delete the thumb
-			$this->deleteThumbs();
-
 			$oldFileUrl = $this->file_url;
+			$oldFileUrlThumb = $this->file_url_thumb;
 			$file_name = $this->uploadFile($this->file_url_folder,true);
-			if ($file_name===false) return false;
 			$this->file_name = $file_name;
 			$this->file_url = $this->file_url_folder.$this->file_name;
-
 			if($this->file_url!=$oldFileUrl && !empty($this->file_name)){
-				$this->deleteFile($oldFileUrl,$this->file_is_forSale);
+				$this->deleteFile($oldFileUrl);
 			}
-
-
+			//always delete the thumb
+			$this->deleteFile($oldFileUrlThumb);
 		}
 		else if( $data['media_action'] == 'replace_thumb' ){
 
-			$oldFileUrlThumb = $this->getFileUrlThumb();
+			$oldFileUrlThumb = $this->file_url_thumb;
 			$oldFileUrl = $this->file_url_folder_thumb;
 			$file_name = $this->uploadFile($this->file_url_folder_thumb,true);
-			if ($file_name===false) return false;
 			$this->file_name = $file_name;
 			$this->file_url_thumb = $this->file_url_folder_thumb.$this->file_name;
 			if($this->file_url_thumb!=$oldFileUrl&& !empty($this->file_name)){
 				$this->deleteFile($oldFileUrlThumb);
 			}
+
 		}
 		else if( $data['media_action'] == 'delete' ){
 			//TODO this is complex, we must assure that the media entry gets also deleted.
-			$mediaM = VmModel::getModel('media');
-			$mediaM->removeFiles($this->virtuemart_media_id);
-			//unset($data['active_media_id']);
+			unset($data['active_media_id']);
 
 		}
 
@@ -962,25 +915,67 @@ class VmMediaHandler {
 	 * @author Max Milbers
 	 * @param array $fileIds
 	 */
-	public function displayFilesHandler($fileIds,$type,$vendorId = 0){
+	public function displayFilesHandler($fileIds,$type){
 
-		vmLanguage::loadJLang('com_virtuemart_media');
+		VmConfig::loadJLang('com_virtuemart_media');
 		$html = $this->displayFileSelection($fileIds,$type);
-		$html .= $this->displayFileHandler($vendorId);
+		$html .= $this->displayFileHandler();
 
 		if(empty($this->_db)) $this->_db = JFactory::getDBO();
 		$this->_db->setQuery('SELECT FOUND_ROWS()');
 		$imagetotal = $this->_db->loadResult();
 		//vmJsApi::jQuery(array('easing-1.3.pack','mousewheel-3.0.4.pack','fancybox-1.3.4.pack'),'','fancybox');
-		//$j = "jQuery(document).ready(function(){ jQuery('#ImagesContainer').vm2admin('media','".$type."','0') }); " ;
+		$j = "
+		jQuery(document).ready(function(){ jQuery('#ImagesContainer').vm2admin('media','".$type."','0') }); " ;
+
+		$j .="
+		jQuery(document).ready(function($){
+		var medialink = '". JURI::root(false) ."administrator/index.php?option=com_virtuemart&view=media&task=viewJson&format=json&mediatype=".$type."';
+		var media = $('#searchMedia').data();
+		var searchMedia = $('input#searchMedia');
+		searchMedia.click(function () {
+			if (media.start>0) media.start=0;
+		});
+		searchMedia.autocomplete({
+
+			source: medialink,
+			select: function(event, ui){
+				$('#ImagesContainer').append(ui.item.label);
+				//$(this).autocomplete( 'option' , 'source' , '". JURI::root(false) ."administrator/index.php?option=com_virtuemart&view=product&task=getData&format=json&type=relatedcategories&row='+nextCustom )
+
+			},
+			minLength:1,
+			html: true
+		});
+		 $('.js-pages').click(function (e) {
+			e.preventDefault();
+			if (searchMedia.val() =='') {
+				searchMedia.val(' ');
+				media.start = 0;
+			} else if ($(this).hasClass('js-next')) media.start = media.start+16 ;
+			else if (media.start > 0) media.start = media.start-16 ;
+
+			searchMedia.autocomplete( 'option' , 'source' , medialink+'&start='+media.start );
+			searchMedia.autocomplete( 'search');
+		});
+		$('#ImagesContainer').sortable({
+			update: function(event, ui) {
+				$(this).find('.ordering').each(function(index,element) {
+					$(element).val(index);
+					//console.log(index+' ');
+
+				});
+
+			}
+		});
+		$('#upload').change( function (){
+				if ($('#media_action0').is(':checked') ) $('#media_actionupload').attr('checked', true);
+			});
 
 
-		$j = 'if (typeof Virtuemart === "undefined")
-	var Virtuemart = {};
-	Virtuemart.medialink = "'. JURI::root(false) .'administrator/index.php?option=com_virtuemart&view=media&task=viewJson&format=json&mediatype='.$type.'";';
-		$j .= "jQuery(document).ready(function(){ jQuery('#ImagesContainer').vmmedia('media','".$type."','0') }); " ;
-		vmJsApi::addJScript('mediahandler.vars',$j);
-		vmJsApi::addJScript('mediahandler');
+	});
+	";
+		vmJsApi::addJScript('mediahandler',$j);
 
 		return $html;
 	}
@@ -1026,18 +1021,11 @@ class VmMediaHandler {
 		if (isset($image->file_url)) {
 			$image->file_root = JURI::root(true).'/';
 			$image->msg =  'OK';
-			$file_url_thumb = $image->getFileUrlThumb();
-
-			$media_path = VMPATH_ROOT.DS.str_replace('/',DS,$image->file_url_thumb);
-			if ((empty($image->file_url_thumb) || !file_exists($media_path)) && is_a($image,'VmImage')) {
-				$file_url_thumb = $image->createThumb();
-			}
-
 			return  '<div  class="vm_thumb_image"><input type="hidden" value="'.$image->virtuemart_media_id.'" name="virtuemart_media_id[]">
 			<input class="ordering" type="hidden" name="mediaordering['.$image->virtuemart_media_id.']" value="'.$key.'">
 		<a class="vm_thumb" rel="group1" title ="'.$image->file_title.'" href="'.JURI::root(true).'/'.$image->file_url.'" >
-		<img src="' . JURI::root(true).'/'.$file_url_thumb . '" alt="' . $image->file_title . '"  />
-		</a><div class="vmicon vmicon-16-remove 4remove" title="'.vmText::_('COM_VIRTUEMART_IMAGE_REMOVE').'"></div><div class="edit-24-grey" title="'.vmText::_('COM_VIRTUEMART_IMAGE_EDIT_INFO').'"></div></div>';
+		<img src="' . JURI::root(true).'/'.$image->file_url_thumb . '" alt="' . $image->file_title . '"  />
+		</a><div class="vmicon vmicon-16-remove" title="'.vmText::_('COM_VIRTUEMART_IMAGE_REMOVE').'"></div><div class="edit-24-grey" title="'.vmText::_('COM_VIRTUEMART_IMAGE_EDIT_INFO').'"></div></div>';
 		} else {
 			$fileTitle = empty($image->file_title)? 'no  title':$image->file_title;
 			return  '<div  class="vm_thumb_image"><b>'.vmText::_('COM_VIRTUEMART_NO_IMAGE_SET').'</b><br />'.$fileTitle.'</div>';
@@ -1051,26 +1039,22 @@ class VmMediaHandler {
 		$Images = array();
 		$list = VmMediaHandler::getImagesList($types,$page,$max);
 		if (empty($list['images'])){
-			$Images[0]['label'] = vmText::_('COM_VIRTUEMART_NO_MEDIA_FILES');
-			$Images[0 ]['value'] = '';
-			return $Images;
+			return vmText::_('COM_VIRTUEMART_NO_MEDIA_FILES');
 		}
 
 		foreach ($list['images'] as $key =>$image) {
 			$htmlImages ='';
-			$image->file_url_thumb = $image->getFileUrlThumb();
-
-			$media_path = VMPATH_ROOT.DS.str_replace('/',DS,$image->file_url_thumb);
-			if ((empty($image->file_url_thumb) || !file_exists($media_path)) && is_a($image,'VmImage')) {
-				$file_url_thumb = $image->createThumb();
-			}
 			if ($image->file_url_thumb > "0" ) {
+				/*$htmlImages .= '<div class="vm_thumb_image">
+				<span><a class="vm_thumb" rel="group1" title ="'.$image->file_title.'"href="'.JURI::root(true).'/'.$image->file_url.'" >'
+				.JHtml::image($image->file_url_thumb,$image->file_title, 'class="vm_thumb" ').'</span></a>';*/
 				$htmlImages .= '<div class="vm_thumb_image">
-				<span>'.JHtml::image($image->file_url_thumb,$image->file_title, ' title="'.$image->file_title.'" class="vm_thumb" ').'</span>';
+				<span>'
+					.JHtml::image($image->file_url_thumb,$image->file_title, 'class="vm_thumb" ').'</span>';
 			} else {
 				$htmlImages .=  '<div class="vm_thumb_image">'.vmText::_('COM_VIRTUEMART_NO_IMAGE_SET').'<br />'.$image->file_title ;
 			}
-			$Images[$key ]['label'] = $htmlImages.'<input type="hidden" value="'.$image->virtuemart_media_id.'" name="virtuemart_media_id['.$image->virtuemart_media_id.']"><input class="ordering" type="hidden" name="mediaordering['.$image->virtuemart_media_id.']" value=""><div class="vmicon vmicon-16-remove 4remove" title="remove"></div><div title="edit image information" class="edit-24-grey"></div></div>';
+			$Images[$key ]['label'] = $htmlImages.'<input type="hidden" value="'.$image->virtuemart_media_id.'" name="virtuemart_media_id['.$image->virtuemart_media_id.']"><input class="ordering" type="hidden" name="mediaordering['.$image->virtuemart_media_id.']" value=""><div class="vmicon vmicon-16-remove" title="remove"></div><div title="edit image information" class="edit-24-grey"></div></div>';
 			$Images[$key ]['value'] = $image->file_title.' :: '.$image->virtuemart_media_id;
 		}
 		//$list['htmlImages'] = $htmlImages;
@@ -1113,6 +1097,7 @@ class VmMediaHandler {
 			$list['total'] = $db->loadResult();
 
 			$list['images'] = $model->createMediaByIds($virtuemart_media_ids, $type);
+
 			return $list;
 		}
 		else return array();
@@ -1125,9 +1110,9 @@ class VmMediaHandler {
 	 *
 	 * @param string $imageArgs html atttributes, Just for displaying the fullsized image
 	 */
-	public function displayFileHandler($vendorId = 0){
+	public function displayFileHandler(){
 
-		vmLanguage::loadJLang('com_virtuemart_media');
+		VmConfig::loadJLang('com_virtuemart_media');
 
 		$this->addHiddenByType();
 
@@ -1155,11 +1140,11 @@ class VmMediaHandler {
 	<label for="published">'. vmText::_('COM_VIRTUEMART_FILES_FORM_FILE_PUBLISHED') .'</label>
 </td>
 <td>';
-		if(!class_exists('VmHtml')) require(VMPATH_ADMIN.DS.'helpers'.DS.'html.php');
-		$html .= VmHtml::checkbox('media[media_published]',$checked,1,0,'class="inputbox"','media[media_published]') ;
-		//<input type="checkbox" class="inputbox" id="media_published'.$identify.'" name="media_published'.$identify.'" '.$checked.' size="16" value="1" />
+	if(!class_exists('VmHtml')) require(VMPATH_ADMIN.DS.'helpers'.DS.'html.php');
+	$html .= VmHtml::checkbox('media[media_published]',$checked,1,0,'class="inputbox"','media[media_published]') ;
+	//<input type="checkbox" class="inputbox" id="media_published'.$identify.'" name="media_published'.$identify.'" '.$checked.' size="16" value="1" />
 
-		$html .='</td>';
+$html .='</td>';
 		$imgWidth = VmConfig::get('img_width','');
 		if(!empty($imgWidth)){
 			$imgWidth = 'width:'.VmConfig::get('img_width',90).'px;';
@@ -1182,7 +1167,7 @@ class VmMediaHandler {
 
 		$html .= '</tr>';
 
-		if(!vmAccess::manager('media')){
+		if(vmAccess::manager('media')){
 			$readonly = 'readonly';
 		} else {
 			$readonly = '';
@@ -1196,23 +1181,15 @@ class VmMediaHandler {
 		$html .= $this->displayRow('COM_VIRTUEMART_FILES_FORM_FILE_URL','file_url',$readonly);
 
 		//remove the file_url_thumb in case it is standard
-		$file_url_thumb = $this->getFileUrlThumb();
-		if(empty($this->file_url_thumb) and is_a($this,'VmImage')) {
-			$file_url_thumb = vmText::sprintf('COM_VIRTUEMART_DEFAULT_URL',$file_url_thumb);
-			$html .= '<tr>
-	<td class="labelcell">'.vmText::_('COM_VIRTUEMART_FILES_FORM_FILE_URL_THUMB').'</td>
-	<td>
-		<span class="hasTip" title="'.$file_url_thumb.'">
-			<input type="text" '.$readonly.' class="inputbox" name="media[file_url_thumb]" size="50" value="" />
-			<span>'.vmText::sprintf('COM_VIRTUEMART_DEFAULT_URL','').'</span>
-		</span>
-	</td>
-</tr>';
+		if(!empty($this->file_url_thumb) and is_a($this,'VmImage')) {
+			$file_url_thumb = $this->createThumbFileUrl();
+			//vmdebug('my displayFileHandler ',$this,$file_url_thumb);
 
-		} else {
-			$html .= $this->displayRow('COM_VIRTUEMART_FILES_FORM_FILE_URL_THUMB','file_url_thumb',$readonly,$file_url_thumb);
+			if($this->file_url_thumb == $file_url_thumb){
+				$this->file_url_thumb = vmText::sprintf('COM_VIRTUEMART_DEFAULT_URL',$file_url_thumb);
+			}
 		}
-
+		$html .= $this->displayRow('COM_VIRTUEMART_FILES_FORM_FILE_URL_THUMB','file_url_thumb',$readonly);
 
 		$this->addMediaAttributesByType();
 
@@ -1240,7 +1217,7 @@ class VmMediaHandler {
 
 
 		// select language for image
-		$active_languages = VmConfig::get('active_languages',array(VmConfig::$jDefLang));
+		$active_languages = VmConfig::get('active_languages');
 		if (count($active_languages)>1) {
 			$selectedImageLangue = explode(",", $this->file_lang);
 			$configM = VmModel::getModel('config');
@@ -1252,9 +1229,9 @@ class VmMediaHandler {
 		}
 
 		if(VmConfig::get('multix','none')!='none'){
-			if(empty($this->virtuemart_vendor_id) and $vendorId === 0){
+			if(empty($this->virtuemart_vendor_id)){
 				$vendorId = vmAccess::isSuperVendor();
-			} else if(empty($vendorId)) {
+			} else {
 				$vendorId = $this->virtuemart_vendor_id;
 			}
 			if (!class_exists('ShopFunctions'))
@@ -1308,11 +1285,10 @@ class VmMediaHandler {
 	 * @param string $descr
 	 * @param string $name
 	 */
-	private function displayRow($descr, $name,$readonly='',$value = null){
-		$v = (isset($value))? $value: $this->$name;
+	private function displayRow($descr, $name,$readonly=''){
 		$html = '<tr>
 	<td class="labelcell">'.vmText::_($descr).'</td>
-	<td> <input type="text" '.$readonly.' class="inputbox" name="media['.$name.']" size="70" value="'.$v.'" /></td>
+	<td> <input type="text" '.$readonly.' class="inputbox" name="media['.$name.']" size="70" value="'.$this->$name.'" /></td>
 </tr>';
 		return $html;
 	}

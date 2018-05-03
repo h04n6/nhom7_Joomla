@@ -7,7 +7,7 @@ defined ('_JEXEC') or die('Restricted access');
  * @package    VirtueMart
  * @subpackage Plugins
  * @author Valérie Isaksen
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2011 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -17,7 +17,20 @@ defined ('_JEXEC') or die('Restricted access');
  * @version $Id: vmplugin.php 4599 2011-11-02 18:29:04Z alatak $
  */
 
+if (!class_exists( 'VmConfig' )) {
+	if(file_exists(VMPATH_ADMIN.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php')){
+		require(VMPATH_ADMIN.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php');
+	} else {
+		echo 'Install VirtueMart first'; return;
+	}
+}
 
+// Load the helper functions that are needed by all plugins
+if (!class_exists ('ShopFunctions')) {
+	require(VMPATH_ADMIN . DS . 'helpers' . DS . 'shopfunctions.php');
+}
+// if (!class_exists('DbScheme'))
+// require(VMPATH_ADMIN . DS . 'helpers' . DS . 'dbscheme.php');
 // Get the plugin library
 jimport ('joomla.plugin.plugin');
 
@@ -50,7 +63,7 @@ abstract class vmPlugin extends JPlugin {
 	protected $_debug = FALSE;
 	protected $_loggable = FALSE;
 	protected $_cryptedFields = false;
-	protected $_toConvertDec = false;
+
 	/**
 	 * Constructor
 	 *
@@ -60,49 +73,18 @@ abstract class vmPlugin extends JPlugin {
 	 */
 	function __construct (& $subject, $config) {
 
-		parent::__construct( $subject, $config );
-
-		//systemplugins must not load the language
-		$wLang = ($this->_type != 'system');
-
-		if (!class_exists( 'VmConfig' )) {
-			require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
-			VmConfig::loadConfig(FALSE, FALSE, $wLang);
-		}
-
+		parent::__construct ($subject, $config);
 
 		$this->_psType = substr ($this->_type, 2);
 
 		$filename = 'plg_' . $this->_type . '_' . $this->_name;
 
-		if($wLang)$this->loadJLangThis($filename);
+		$this->loadJLangThis($filename);
 
 		$this->_tablename = '#__virtuemart_' . $this->_psType . '_plg_' . $this->_name;
 		$this->_tableChecked = FALSE;
 		$this->_xmlFile	= vRequest::filterPath( VMPATH_ROOT .DS. 'plugins' .DS. $this->_type .DS.  $this->_name . DS. $this->_name . '.xml');
 
-		// Load the helper functions that are needed by all plugins
-		if (!class_exists ('ShopFunctions')) {
-			require(VMPATH_ADMIN . DS . 'helpers' . DS . 'shopfunctions.php');
-		}
-
-	}
-
-	public function setConvertDecimal($toConvert) {
-		$this->_toConvertDec = $toConvert;
-	}
-
-	public function convertDec(&$data){
-
-		if($this->_toConvertDec){
-			foreach($this->_toConvertDec as $f){
-				if(!empty($data[$f])){
-					$data[$f] = str_replace(array(',',' '),array('.',''),$data[$f]);
-				} else if(isset($data[$f])){
-					$data[$f] = 0.0;
-				}
-			}
-		}
 	}
 
 	public function loadJLangThis($fname,$type=0,$name=0){
@@ -113,36 +95,28 @@ abstract class vmPlugin extends JPlugin {
 
 	static public function loadJLang($fname,$type,$name){
 
-		//$jlang = JFactory::getLanguage();
-		//$tag = $jlang->getTag();
-		//if(empty($tag)) {
-			$tag = vmLanguage::$currLangTag;
-		//}
-		$cvalue = $fname.';'.$type;
-		if(!isset(vmLanguage::$_loaded['plg'][$cvalue])){
-			vmLanguage::$_loaded['plg'][$cvalue] = $name;
-		}
+		$jlang =JFactory::getLanguage();
+		$tag = $jlang->getTag();
 
-		vmLanguage::getLanguage($tag);
 
 		$path = $basePath = VMPATH_ROOT .DS. 'plugins' .DS.$type.DS.$name;
 
 		if(VmConfig::get('enableEnglish', true) and $tag!='en-GB'){
 			$testpath = $basePath.DS.'language'.DS.'en-GB'.DS.'en-GB.'.$fname.'.ini';
 			if(!file_exists($testpath)){
-				$epath = VMPATH_ADMINISTRATOR;
+				$epath = JPATH_ADMINISTRATOR;
 			} else {
 				$epath = $path;
 			}
-			vmLanguage::$languages[$tag]->load($fname, $epath, 'en-GB', true, false);
+			$jlang->load($fname, $epath, 'en-GB');
 		}
 
 		$testpath = $basePath.DS.'language'.DS.$tag.DS.$tag.'.'.$fname.'.ini';
 		if(!file_exists($testpath)){
-			$path = VMPATH_ADMINISTRATOR;
+			$path = JPATH_ADMINISTRATOR;
 		}
 
-		vmLanguage::$languages[$tag]->load($fname, $path,$tag, true, true);
+		$jlang->load($fname, $path,$tag,true);
 	}
 
 	function setPluginLoggable($set=TRUE){
@@ -153,6 +127,13 @@ abstract class vmPlugin extends JPlugin {
 		$this->_cryptedFields = $fieldNames;
 	}
 
+	/**
+	 * @return array
+	 */
+	function getTableSQLFields () {
+
+		return false;
+	}
 
 	function getOwnUrl(){
 
@@ -345,7 +326,7 @@ abstract class vmPlugin extends JPlugin {
 		$db = JFactory::getDBO ();
 
 		$q = 'SELECT j.`extension_id` AS c FROM #__extensions AS j
-					WHERE j.element = "' . $this->_name . '" AND j.`folder` = "' . $this->_type . '" and `enabled`= "1" and `state`="0" ';
+					WHERE j.element = "' . $this->_name . '" AND j.`folder` = "' . $this->_type . '"';
 
 		$db->setQuery ($q);
 		$this->_jid = $db->loadResult ();
@@ -390,7 +371,7 @@ abstract class vmPlugin extends JPlugin {
 			vmdebug('onStoreInstallPluginTable result of table already exists? ',$result);
 			if ($result) {
 				$update[$this->_tablename] = array($tablesFields, array(), array());
-				vmdebug(get_class($this) . ':: VirtueMart update ' . $this->_tablename);
+				vmdebug(get_class($this) . ':: VirtueMart2 update ' . $this->_tablename);
 				if (!class_exists('GenericTableUpdater'))
 					require(VMPATH_ADMIN . DS . 'helpers' . DS . 'tableupdater.php');
 				$updater = new GenericTableUpdater();
@@ -458,14 +439,6 @@ abstract class vmPlugin extends JPlugin {
 	}
 
 	/**
-	 * @return array
-	 */
-	function getTableSQLFields () {
-
-		return false;
-	}
-
-	/**
 	 * Set with this function the provided plugin parameters
 	 *
 	 * @param string $paramsFieldName
@@ -528,14 +501,14 @@ abstract class vmPlugin extends JPlugin {
 	 * @return bool
 	 */
 	protected function declarePluginParams ($psType, &$data, $blind=0, $blind2=0) {
-		
+
 		if(!empty($this->_psType)){
 			$element = $this->_psType.'_element';
 			$jplugin_id = $this->_psType.'_jplugin_id';
 			if(empty($data->$element)) $data->$element = 0;
 			if(empty($data->$jplugin_id)) $data->$jplugin_id = 0;
 
-			if(!$this->selectedThis($psType,$data->$element)){
+			if(!$this->selectedThis($psType,$data->$element,$data->$jplugin_id)){
 				return FALSE;
 			}
 
@@ -662,7 +635,6 @@ abstract class vmPlugin extends JPlugin {
 		}
 
 		if($this->_cryptedFields){
-			//I think that should be set on $table, not _vmpCtable
 			$this->_vmpCtable->setCryptedFields($this->_cryptedFields);
 		}
 

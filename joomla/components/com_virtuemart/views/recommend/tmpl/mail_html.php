@@ -5,7 +5,7 @@ defined('_JEXEC') or die('');
 	* @package	VirtueMart
 	* @subpackage product details
 	* @author Maik Künnemann
-	* @link https://virtuemart.net
+	* @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -66,7 +66,7 @@ defined('_JEXEC') or die('');
 									?>
 									<td width="30%" align="center">
 										<a href="<?php  echo $product_link ?>">
-											<?php echo $this->product->images[0]->displayMediaThumb('',false,'',true,false,true); ?>
+											<img src="<?php  echo JURI::root () . $this->product->file_url_thumb ?>" />
 										</a>
 									</td>
 									<td width="70%" valign="top">

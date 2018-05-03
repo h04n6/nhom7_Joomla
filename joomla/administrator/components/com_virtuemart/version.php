@@ -2,7 +2,7 @@
 if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not allowed.' );
 /**
 *
-* @version $Id: version.php 9702 2017-12-20 13:26:06Z Milbo $
+* @version $Id: version.php 8508 2014-10-22 18:57:14Z Milbo $
 * @package VirtueMart
 * @subpackage core
 * @copyright Copyright (C) 2005-2011 VirtueMart Team - All rights reserved.
@@ -17,27 +17,27 @@ if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not 
 */
 
 
-
+if( !class_exists( 'vmVersion' ) ) {
 	/** Version information */
 	class vmVersion {
 		/** @var string Product */
 		static $PRODUCT = 'VirtueMart';
 		/** @var int Release Number */
-		static $RELEASE = '3.2.12';
+		static $RELEASE = '3.0.10';
 		/** @var string Development Status */
-		static $DEV_STATUS = 'MAYOR';
+		static $DEV_STATUS = 'MINOR';
 		/** @var string Codename */
-		static $CODENAME = 'Blue Corvus';
+		static $CODENAME = 'Corvus';
 		/** @var string Date */
-		static $RELDATE = 'December 21 2017';
+		static $RELDATE = 'September 18 2015';
 		/** @var string Time */
-		static $RELTIME = '1503';
+		static $RELTIME = '1023';
 		/** @var string Timezone */
 		static $RELTZ = 'GMT';
 		/** @var string Revision */
-		static $REVISION = '9708';
+		static $REVISION = '8996';
 		/** @var string Copyright Text */
-		static $COPYRIGHT = 'Copyright (C) 2004 - 2017 Virtuemart Team. All rights reserved.';
+		static $COPYRIGHT = 'Copyright (C) 2005-2014 VirtueMart Development Team  - All rights reserved.';
 		/** @var string URL */
 		static $URL = '<a href="http://virtuemart.net">VirtueMart</a> is a Free ecommerce framework released under the GNU/GPL2 License.';
 
@@ -52,7 +52,7 @@ if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not 
 				. vmVersion::$RELTIME . " " . vmVersion::$RELTZ;
 		}
 	}
-
+}
 
 
 

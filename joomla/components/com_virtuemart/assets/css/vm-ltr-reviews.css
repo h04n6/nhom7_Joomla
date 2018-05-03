@@ -197,6 +197,10 @@
   position: static;
 }
 
+.ratingbox span {
+  display: inline-block;
+}
+
 .browse-view .ratingbox{
   margin: 0 auto 15px;
 }

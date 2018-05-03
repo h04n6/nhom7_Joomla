@@ -1,11 +1,12 @@
 <?php
 /**
+ *TODO Improve the CSS , ADD CATCHA ?
  * Show the form Ask a Question
  *
  * @package	VirtueMart
  * @subpackage
  * @author Kohl Patrick, Maik K�nnemann
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -34,7 +35,7 @@ vmJsApi::addJScript('askform','
 
 $vendorModel = VmModel::getModel ('vendor');
 $this->vendor = $vendorModel->getVendor ($this->product->virtuemart_vendor_id);
-$ask_comment="";
+
 /* Let's see if we found the product */
 if (empty ( $this->product )) {
 	echo vmText::_ ( 'COM_VIRTUEMART_PRODUCT_NOT_FOUND' );
@@ -94,7 +95,14 @@ if (empty ( $this->product )) {
 
 					<div class="submit">
 						<?php // captcha addition
-							echo $this->captcha;
+						if(VmConfig::get ('ask_captcha')){
+							JHTML::_('behavior.framework');
+							JPluginHelper::importPlugin('captcha');
+							$dispatcher = JDispatcher::getInstance(); $dispatcher->trigger('onInit','dynamic_recaptcha_1');
+							?>
+							<div id="dynamic_recaptcha_1"></div>
+						<?php
+						}
 						// end of captcha addition
 						?>
             <div>

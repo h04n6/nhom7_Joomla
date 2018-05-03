@@ -6,14 +6,14 @@
  * @package	VirtueMart
  * @subpackage
  * @author
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2011 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 9560 2017-05-30 14:13:21Z Milbo $
+ * @version $Id: view.html.php 8933 2015-07-30 10:17:11Z Milbo $
  */
 
 # Check to ensure this file is included in Joomla!
@@ -30,33 +30,24 @@ class VirtueMartViewVirtueMart extends VmView {
 
 	public function display($tpl = null) {
 
-		//For BC, we convert first the new config param names to the old ones
-		VmConfig::set('show_featured', VmConfig::get('featured'));
-		VmConfig::set('show_discontinued', VmConfig::get('discontinued'));
-		VmConfig::set('show_topTen', VmConfig::get('topten'));
-		VmConfig::set('show_recent', VmConfig::get('recent'));
-		VmConfig::set('show_latest', VmConfig::get('latest'));
-
-		VmConfig::set('featured_products_rows', VmConfig::get('featured_rows'));
-		VmConfig::set('discontinued_products_rows', VmConfig::get('discontinued_rows'));
-		VmConfig::set('topTen_products_rows', VmConfig::get('topten_rows'));
-		VmConfig::set('recent_products_rows', VmConfig::get('recent_rows'));
-		VmConfig::set('latest_products_rows', VmConfig::get('latest_rows'));
-		VmConfig::set('omitLoaded_topTen', VmConfig::get('omitLoaded_topten'));
-		VmConfig::set('showCategory', VmConfig::get('showcategory'));
-
 		$vendorId = vRequest::getInt('vendorid', 1);
 
 		$vendorModel = VmModel::getModel('vendor');
 
+		$vendorIdUser = vmAccess::isSuperVendor();
 		$vendorModel->setId($vendorId);
 		$this->vendor = $vendorModel->getVendor();
+
+		if(!class_exists('shopFunctionsF'))require(VMPATH_SITE.DS.'helpers'.DS.'shopfunctionsf.php');
+		if (VmConfig::get ('enable_content_plugin', 0)) {
+			shopFunctionsF::triggerContentPlugin($this->vendor, 'vendor','vendor_store_desc');
+			shopFunctionsF::triggerContentPlugin($this->vendor, 'vendor','vendor_terms_of_service');
+		}
 
 		$app = JFactory::getApplication();
 		$menus = $app->getMenu();
 		$menu = $menus->getActive();
 
-		if(!class_exists('shopFunctionsF'))require(VMPATH_SITE.DS.'helpers'.DS.'shopfunctionsf.php');
 		if(!empty($menu->id)){
 			ShopFunctionsF::setLastVisitedItemId($menu->id);
 		} else if($itemId = vRequest::getInt('Itemid',false)){
@@ -67,13 +58,7 @@ class VirtueMartViewVirtueMart extends VmView {
 
 		if(!VmConfig::get('shop_is_offline',0)){
 
-
-			if (VmConfig::get ('enable_content_plugin', 0)) {
-				shopFunctionsF::triggerContentPlugin($this->vendor, 'vendor','vendor_store_desc');
-				shopFunctionsF::triggerContentPlugin($this->vendor, 'vendor','vendor_terms_of_service');
-			}
-
-			if( ShopFunctionsF::isFEmanager('product.edit') ){
+			if( ShopFunctionsF::isFEmanager('vm.product.edit') ){
 				$add_product_link = JURI::root() . 'index.php?option=com_virtuemart&tmpl=component&view=product&task=edit&virtuemart_product_id=0&manage=1' ;
 				$add_product_link = $this->linkIcon($add_product_link, 'COM_VIRTUEMART_PRODUCT_FORM_NEW_PRODUCT', 'edit', false, false);
 			} else {
@@ -100,35 +85,35 @@ class VirtueMartViewVirtueMart extends VmView {
 			
 			$products_per_row = VmConfig::get('homepage_products_per_row',3);
 			
-			$featured_products_rows = VmConfig::get('featured_rows',1);
+			$featured_products_rows = VmConfig::get('featured_products_rows',1);
 			$featured_products_count = $products_per_row * $featured_products_rows;
 
-			if (!empty($featured_products_count) and VmConfig::get('featured', 1)) {
+			if (!empty($featured_products_count) and VmConfig::get('show_featured', 1)) {
 				$this->products['featured'] = $productModel->getProductListing('featured', $featured_products_count);
 				$productModel->addImages($this->products['featured'],1);
 			}
 			
-			$latest_products_rows = VmConfig::get('latest_rows');
+			$latest_products_rows = VmConfig::get('latest_products_rows');
 			$latest_products_count = $products_per_row * $latest_products_rows;
 
-			if (!empty($latest_products_count) and VmConfig::get('latest', 1)) {
+			if (!empty($latest_products_count) and VmConfig::get('show_latest', 1)) {
 				$this->products['latest']= $productModel->getProductListing('latest', $latest_products_count);
 				$productModel->addImages($this->products['latest'],1);
 			}
 
-			$topTen_products_rows = VmConfig::get('topten_rows');
+			$topTen_products_rows = VmConfig::get('topTen_products_rows');
 			$topTen_products_count = $products_per_row * $topTen_products_rows;
 			
-			if (!empty($topTen_products_count) and VmConfig::get('topten', 1)) {
+			if (!empty($topTen_products_count) and VmConfig::get('show_topTen', 1)) {
 				$this->products['topten']= $productModel->getProductListing('topten', $topTen_products_count);
 				$productModel->addImages($this->products['topten'],1);
 			}
 			
-			$recent_products_rows = VmConfig::get('recent_rows');
+			$recent_products_rows = VmConfig::get('recent_products_rows');
 			$recent_products_count = $products_per_row * $recent_products_rows;
 
 			
-			if (!empty($recent_products_count) and VmConfig::get('recent', 1) ) {
+			if (!empty($recent_products_count) and VmConfig::get('show_recent', 1) ) {
 				$recent_products = $productModel->getProductListing('recent');
 				if(!empty($recent_products)){
 					$this->products['recent']= $productModel->getProductListing('recent', $recent_products_count);
@@ -150,7 +135,7 @@ class VirtueMartViewVirtueMart extends VmView {
 						}
 					} else {
 						if (!class_exists ('vmCustomPlugin')) {
-							require(VMPATH_PLUGINLIBS . DS . 'vmcustomplugin.php');
+							require(JPATH_VM_PLUGINS . DS . 'vmcustomplugin.php');
 						}
 						foreach($this->products as $pType => $productSeries) {
 							shopFunctionsF::sortLoadProductCustomsStockInd($this->products[$pType],$productModel);

@@ -27,22 +27,17 @@ class VmImage extends VmMediaHandler {
 			$oldFileUrl = $this->file_url;
 			$file_name = $this->uploadFile($this->file_url_folder);
 			if($file_name){
-
 				if($file_name!=$oldFileUrl && !empty($this->filename)){
 					$this->deleteFile($oldFileUrl);
 				}
 				$this->file_url = $this->file_url_folder.$file_name;
 				$this->filename = $file_name;
 
-				if(!empty($this->file_url_thumb)){
-					$oldFileUrlThumb = $this->file_url_thumb;
-
-					$this->file_url_thumb = $this->createThumb();
-					if($this->file_url_thumb!=$oldFileUrlThumb){
-						$this->deleteFile($oldFileUrlThumb);
-					}
+				$oldFileUrlThumb = $this->file_url_thumb;
+				$this->file_url_thumb = $this->createThumb();
+				if($this->file_url_thumb!=$oldFileUrlThumb){
+					$this->deleteFile($oldFileUrlThumb);
 				}
-
 			}
 		} //creating the thumbnail image
 		else if( $data['media_action'] == 'create_thumb' ){
@@ -89,16 +84,14 @@ class VmImage extends VmMediaHandler {
 	}
 
 
-	public function createThumbFileUrl($width=0,$height=0){
+	public function createThumbFileUrl(){
 
-		$file_name = $this->createThumbName($width,$height);
+		$file_name = $this->createThumbName();
 		if(empty($this->file_name_thumb)) {
 			vmdebug('createThumbFileUrl empty file_name_thumb ',$this);
 			return false;
 		}
-		$file_url_thumb = $this->file_url_folder_thumb.$this->file_name_thumb.'.'.$this->file_extension;
-
-
+		$file_url_thumb = $this->file_url_folder.'resized/'.$this->file_name_thumb.'.'.$this->file_extension;
 		return $file_url_thumb;
 	}
 
@@ -108,26 +101,11 @@ class VmImage extends VmMediaHandler {
 	public function createThumbName($width=0,$height=0){
 
 		if(empty($this->file_name)) return false;
+		if(empty($width)) $width = VmConfig::get('img_width', 90);
+		if(empty($height)) $height = VmConfig::get('img_height', 90);
 
-		$dim = self::determineWH($width, $height);
-
-		$this->file_name_thumb = $this->file_name.'_'.$dim['width'].'x'.$dim['height'];
+		$this->file_name_thumb = $this->file_name.'_'.$width.'x'.$height;
 		return $this->file_name_thumb;
-	}
-
-	public function determineWH($width,$height){
-
-		$dim = array();
-		$dim['width'] = $width;
-		$dim['height'] = $height;
-		if(!$width and !$height){
-			$dim['width'] = VmConfig::get('img_width',90);
-			$dim['height'] = VmConfig::get('img_height',90);
-		}
-		$dim['width'] = (int)$dim['width'];
-		$dim['height'] = (int)$dim['height'];;
-
-		return $dim;
 	}
 
 	/**
@@ -155,11 +133,9 @@ class VmImage extends VmMediaHandler {
 		$synchronise = vRequest::getString('synchronise',false);
 
 		if(!VmConfig::get('img_resize_enable') || $synchronise) return;
-
 		//now lets create the thumbnail, saving is done in this function
-		$dim = self::determineWH($width, $height);
-		$width = $dim['width'];
-		$height = $dim['height'];
+		if(empty($width)) $width = VmConfig::get('img_width', 90);
+		if(empty($height)) $height = VmConfig::get('img_height', 90);
 
 		// Don't allow sizes beyond 2000 pixels //I dont think that this is good, should be config
 //		$width = min($width, 2000);

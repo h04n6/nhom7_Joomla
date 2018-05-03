@@ -6,7 +6,7 @@
  * @package	VirtueMart
  * @subpackage
  * @author Kohl Patrick, Maik K�nnemann
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -23,8 +23,8 @@ $max = VmConfig::get('asks_maximum_comment_length', 2000) ;
 vmJsApi::JvalideForm();
 vmJsApi::addJScript('askform','
 	jQuery(function($){
-			jQuery("#askform").validationEngine("attach");
-			jQuery("#comment").keyup( function () {
+			$("#askform").validationEngine("attach");
+			$("#comment").keyup( function () {
 				var result = $(this).val();
 					$("#counter").val( result.length );
 			});
@@ -89,7 +89,14 @@ if (empty ( $this->product )) {
 
 					<div class="submit">
 						<?php // captcha addition
-							echo $this->captcha;
+						if(VmConfig::get ('ask_captcha')){
+							JHTML::_('behavior.framework');
+							JPluginHelper::importPlugin('captcha');
+							$dispatcher = JDispatcher::getInstance(); $dispatcher->trigger('onInit','dynamic_recaptcha_1');
+							?>
+							<div id="dynamic_recaptcha_1"></div>
+						<?php 
+						}
 						// end of captcha addition 
 						?>
             <div>

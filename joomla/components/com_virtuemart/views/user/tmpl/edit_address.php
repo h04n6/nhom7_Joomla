@@ -6,21 +6,21 @@
  * @package    VirtueMart
  * @subpackage User
  * @author Oscar van Eijk, Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: edit_address.php 9578 2017-06-13 13:03:32Z Milbo $
+ * @version $Id: edit_address.php 8768 2015-03-02 12:22:14Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined ('_JEXEC') or die('Restricted access');
 
 // Implement Joomla's form validation
-vmJsApi::vmValidator();
-vmJsApi::css('vmpanels');
+JHtml::_ ('behavior.formvalidation');
+JHtml::stylesheet ('vmpanels.css', JURI::root () . 'components/com_virtuemart/assets/css/');
 
 if (!class_exists('VirtueMartCart')) require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
 $this->cart = VirtueMartCart::getCart();
@@ -81,15 +81,10 @@ function renderControlButtons($view,$rview){
 
 $task = '';
 if ($this->cart->getInCheckOut()){
-	$task = '&task=checkout';
+	//$task = '&task=checkout';
 }
-$url = 'index.php?option=com_virtuemart&view='.$rview.$task;
+$url = JRoute::_ ('index.php?option=com_virtuemart&view='.$rview.$task, $this->useXHTML, $this->useSSL);
 
-?>
-<div class="width30 floatleft vm-cart-header">
-    <div class="payments-signin-button" ></div>
-</div>
-<?php
 echo shopFunctionsF::getLoginForm (TRUE, FALSE, $url);
 
 ?>
@@ -110,16 +105,18 @@ echo shopFunctionsF::getLoginForm (TRUE, FALSE, $url);
 	<?php renderControlButtons($this,$rview); ?>
 
 <?php // captcha addition
-	if(VmConfig::get ('reg_captcha') && JFactory::getUser()->guest == 1){
+	if(VmConfig::get ('reg_captcha')){
+		JHTML::_('behavior.framework');
+		JPluginHelper::importPlugin('captcha');
 		$captcha_visible = vRequest::getVar('captcha');
+		$dispatcher = JDispatcher::getInstance(); $dispatcher->trigger('onInit','dynamic_recaptcha_1');
 		$hide_captcha = (VmConfig::get ('oncheckout_only_registered') or $captcha_visible) ? '' : 'style="display: none;"';
 		?>
 		<fieldset id="recaptcha_wrapper" <?php echo $hide_captcha ?>>
 			<?php if(!VmConfig::get ('oncheckout_only_registered')) { ?>
 				<span class="userfields_info"><?php echo vmText::_ ('COM_VIRTUEMART_USER_FORM_CAPTCHA'); ?></span>
 			<?php } ?>
-			<?php
-			echo $this->captcha; ?>
+			<div id="dynamic_recaptcha_1"></div>
 		</fieldset>
 <?php }
 	// end of captcha addition

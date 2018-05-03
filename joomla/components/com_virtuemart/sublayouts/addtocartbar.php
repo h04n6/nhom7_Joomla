@@ -7,7 +7,7 @@
  * @subpackage
  * @author Max Milbers
  * @todo handle child products
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2015 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -38,14 +38,6 @@ if(!empty($product->min_order_level) and $init<$product->min_order_level){
 $step=1;
 if (!empty($product->step_order_level)){
 	$step=$product->step_order_level;
-	if(!empty($init)){
-		if($init<$step){
-			$init = $step;
-		} else {
-			$init = ceil($init/$step) * $step;
-
-		}
-	}
 	if(empty($product->min_order_level) and !isset($viewData['init'])){
 		$init = $step;
 	}
@@ -74,7 +66,7 @@ if (!VmConfig::get('use_as_catalog', 0)  ) { ?>
 	<div class="addtocart-bar">
 	<?php
 	// Display the quantity box
-	$stockhandle = VmConfig::get('stockhandle_products', false) && $product->product_stockhandle ? $product->product_stockhandle : VmConfig::get('stockhandle','none');
+	$stockhandle = VmConfig::get ('stockhandle', 'none');
 	if (($stockhandle == 'disableit' or $stockhandle == 'disableadd') and ($product->product_in_stock - $product->product_ordered) < 1) { ?>
 		<a href="<?php echo JRoute::_ ('index.php?option=com_virtuemart&view=productdetails&layout=notify&virtuemart_product_id=' . $product->virtuemart_product_id); ?>" class="notify"><?php echo vmText::_ ('COM_VIRTUEMART_CART_NOTIFY') ?></a><?php
 	} else {

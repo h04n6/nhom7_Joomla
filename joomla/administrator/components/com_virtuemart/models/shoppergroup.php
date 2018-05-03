@@ -7,14 +7,14 @@
 * @subpackage ShopperGroup
 * @author Markus Öhler
 * @author Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: shoppergroup.php 9420 2017-01-12 09:35:36Z Milbo $
+* @version $Id: shoppergroup.php 8953 2015-08-19 10:30:52Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -64,7 +64,7 @@ class VirtueMartModelShopperGroup extends VmModel {
      */
     function getShopperGroups($onlyPublished=false, $noLimit = false) {
 
-		vmLanguage::loadJLang('com_virtuemart_shoppers',TRUE);
+		VmConfig::loadJLang('com_virtuemart_shoppers',TRUE);
 	    $query = 'SELECT * FROM `#__virtuemart_shoppergroups`  ';
 		if($onlyPublished){
 			$query .= ' WHERE `published` = "1" ';
@@ -81,6 +81,23 @@ class VirtueMartModelShopperGroup extends VmModel {
 	    return $this->_data;
     }
 
+/*	function makeDefault($id,$kind = 1) {
+
+		//Prevent making anonymous Shoppergroup as default
+		$adId = $this->getDefault(1);
+		 $anonymous_sg_id = $adId->virtuemart_shoppergroup_id;
+		if($adId == $id){
+			$group = $this->getShoppergroupById($id);
+			vmError(vmText::sprintf('COM_VIRTUEMART_SHOPPERGROUP_CANT_MAKE_DEFAULT',$group->shopper_group_name,$id));
+			return false;
+		}
+		$db = JFactory::getDBO();
+		$db->setQuery('UPDATE  `#__virtuemart_shoppergroups`  SET `default` = 0 WHERE `default`<"2"');
+		if (!$db->execute()) return ;
+		$db->setQuery('UPDATE  `#__virtuemart_shoppergroups`  SET `default` = "'.$kind.'" WHERE virtuemart_shoppergroup_id='.(int)$id);
+		if (!$db->execute()) return ;
+		return true;
+	}/*
 
 	/**
 	 *
@@ -107,7 +124,7 @@ class VirtueMartModelShopperGroup extends VmModel {
 				if(!$res = $this->getShopperGroup($res->virtuemart_shoppergroup_id)){
 
 				}
-				vmLanguage::loadJLang('com_virtuemart_shoppers',TRUE);
+				VmConfig::loadJLang('com_virtuemart_shoppers',TRUE);
 				$res->shopper_group_name = vmText::_($res->shopper_group_name);
 				$res->shopper_group_desc = vmText::_($res->shopper_group_desc);
 				//vmdebug('my default shoppergroup ',$res);

@@ -17,7 +17,7 @@
 * @subpackage Cart
 * @author Max Milbers, Valerie Isaksen
 *
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -29,12 +29,6 @@
 
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
-$orderlink = JURI::root().'index.php?option=com_virtuemart&view=orders&layout=details&order_number='.$this->orderDetails['details']['BT']->order_number;
-$ordertracking = VmConfig::get('ordertracking','guests');
-if( VmConfig::get('ordertracking','guests') == 'guestlink' or (VmConfig::get('ordertracking','guests') == 'guests' and empty($this->orderDetails['details']['BT']->virtuemart_user_id))){
-	$orderlink .= '&order_pass='.$this->orderDetails['details']['BT']->order_pass;
-}
-
 ?>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="html-email">
@@ -46,22 +40,19 @@ if( VmConfig::get('ordertracking','guests') == 'guestlink' or (VmConfig::get('or
 
 	</td>
     <td width="30%">
-		<?php
-		if( VmConfig::get('ordertracking','guests') == 'guestlink' or (VmConfig::get('ordertracking','guests') == 'guests' and empty($this->orderDetails['details']['BT']->virtuemart_user_id))){
-		    echo vmText::_('COM_VIRTUEMART_MAIL_SHOPPER_YOUR_PASSWORD'); ?><br />
-		    <strong><?php echo $this->orderDetails['details']['BT']->order_pass ?></strong>
-		<?php } ?>
+		<?php echo vmText::_('COM_VIRTUEMART_MAIL_SHOPPER_YOUR_PASSWORD'); ?><br />
+		<strong><?php echo $this->orderDetails['details']['BT']->order_pass ?></strong>
 	</td>
     <td width="40%">
     	<p>
- 			<a class="default" title="<?php echo $this->vendor->vendor_store_name ?>" href="<?php echo $orderlink ?>">
+ 			<a class="default" title="<?php echo $this->vendor->vendor_store_name ?>" href="<?php echo JURI::root().'index.php?option=com_virtuemart&view=orders&layout=details&order_number='.$this->orderDetails['details']['BT']->order_number.'&order_pass='.$this->orderDetails['details']['BT']->order_pass; ?>">
 			<?php echo vmText::_('COM_VIRTUEMART_MAIL_SHOPPER_YOUR_ORDER_LINK'); ?></a>
 		</p>
 	</td>
   </tr>
   <tr>
     <td colspan="3"><p>
-				<?php echo vmText::sprintf('COM_VIRTUEMART_MAIL_SHOPPER_TOTAL_ORDER',$this->currency->priceDisplay($this->orderDetails['details']['BT']->order_total,$this->user_currency_id) ); ?></p></td>
+				<?php echo vmText::sprintf('COM_VIRTUEMART_MAIL_SHOPPER_TOTAL_ORDER',$this->currency->priceDisplay($this->orderDetails['details']['BT']->order_total,$this->currency) ); ?></p></td>
   </tr>
 	<tr>
   <td colspan="3"><p>

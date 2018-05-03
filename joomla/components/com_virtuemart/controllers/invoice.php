@@ -7,7 +7,7 @@
  * @subpackage User
  * @author Oscar van Eijk
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -36,8 +36,10 @@ class VirtueMartControllerInvoice extends JControllerLegacy
 	public function __construct()
 	{
 		parent::__construct();
-		$this->useSSL = vmURI::useSSL();
+		$this->useSSL = VmConfig::get('useSSL',0);
 		$this->useXHTML = false;
+		VmConfig::loadJLang('com_virtuemart_shoppers',TRUE);
+		VmConfig::loadJLang('com_virtuemart_orders',TRUE);
 	}
 
 	/**
@@ -52,8 +54,7 @@ class VirtueMartControllerInvoice extends JControllerLegacy
 		if ($format != 'pdf') {
 			$viewName='invoice';
 
-			$view = $this->getViewWithTemplate($viewName, $format);
-			//$view = $this->getView($viewName, $format);
+			$view = $this->getView($viewName, $format);
 			$view->headFooter = true;
 			$view->display();
 		} else {
@@ -73,7 +74,6 @@ class VirtueMartControllerInvoice extends JControllerLegacy
 			if(!$fileLocation){
 				$app->redirect(JRoute::_('/index.php?option=com_virtuemart'),'Invoice not created');
 			}
-
 			$fileName = basename ($fileLocation);
 
 			if (file_exists ($fileLocation)) {
@@ -142,7 +142,42 @@ class VirtueMartControllerInvoice extends JControllerLegacy
 
 		$orderModel = VmModel::getModel('orders');
 
-		return $orderModel->getMyOrderDetails(0,false,false,true);
+		return $orderModel->getMyOrderDetails();
+		/*$orderDetails = 0;
+
+		// If the user is not logged in, we will check the order number and order pass
+		if ($orderPass = vRequest::getString('order_pass',false) and $orderNumber = vRequest::getString('order_number',false)){
+
+			$orderId = $orderModel->getOrderIdByOrderPass($orderNumber,$orderPass);
+			if(empty($orderId)){
+				vmDebug ('Invalid order_number/password '.vmText::_('COM_VIRTUEMART_RESTRICTED_ACCESS'));
+				return 0;
+			}
+			$orderDetails = $orderModel->getOrder($orderId);
+		}
+
+		if($orderDetails==0) {
+
+			$_currentUser = JFactory::getUser();
+			$cuid = $_currentUser->get('id');
+
+			// If the user is logged in, we will check if the order belongs to him
+			$virtuemart_order_id = vRequest::getInt('virtuemart_order_id',0) ;
+			if (!$virtuemart_order_id) {
+				$virtuemart_order_id = VirtueMartModelOrders::getOrderIdByOrderNumber(vRequest::getString('order_number'));
+			}
+			$orderDetails = $orderModel->getOrder($virtuemart_order_id);
+
+			if(!vmAccess::manager('orders') ) {
+				if(!empty($orderDetails['details']['BT']->virtuemart_user_id)){
+					if ($orderDetails['details']['BT']->virtuemart_user_id != $cuid) {
+						echo 'view '.vmText::_('COM_VIRTUEMART_RESTRICTED_ACCESS');
+						return ;
+					}
+				}
+			}
+		}
+		return $orderDetails;*/
 	}
 
 
@@ -159,29 +194,8 @@ class VirtueMartControllerInvoice extends JControllerLegacy
 		JFactory::getApplication()->close();
 	}
 
-	function getViewWithTemplate($viewName, $format){
-
-		$this->addViewPath( VMPATH_SITE.DS.'views' );
-		$view = $this->getView($viewName, $format);
-		$this->writeJs = false;
-		$view->addTemplatePath( VMPATH_SITE.DS.'views'.DS.$viewName.DS.'tmpl' );
-
-		if(!class_exists('VmTemplate')) require(VMPATH_SITE.DS.'helpers'.DS.'vmtemplate.php');
-		$template = VmTemplate::loadVmTemplateStyle();
-		$templateName = VmTemplate::setTemplate($template);
-
-		if(!empty($templateName)){
-			$TemplateOverrideFolder = JPATH_SITE.DS."templates".DS.$templateName.DS."html".DS."com_virtuemart".DS."invoice";
-			if(file_exists($TemplateOverrideFolder)){
-				$view->addTemplatePath( $TemplateOverrideFolder);
-			}
-		}
-		return $view;
-	}
-
-	function getInvoicePDF($orderDetails, $viewName='invoice', $layout='invoice', $format='html', $force = false){
-
-		vmLanguage::loadJLang('com_virtuemart',1);
+	function getInvoicePDF($orderDetails = 0, $viewName='invoice', $layout='invoice', $format='html', $force = false){
+// 		$force = true;
 
 		$path = VmConfig::get('forSale_path',0);
 		if(empty($path) ){
@@ -225,9 +239,24 @@ class VirtueMartControllerInvoice extends JControllerLegacy
 			return $path;
 		}
 
+		//We come from the be, so we need to load the FE language
+		VmConfig::loadJLang('com_virtuemart',true);
 
+		$this->addViewPath( VMPATH_SITE.DS.'views' );
+		$view = $this->getView($viewName, $format);
+		$this->writeJs = false;
+		$view->addTemplatePath( VMPATH_SITE.DS.'views'.DS.$viewName.DS.'tmpl' );
 
-		$view = $this->getViewWithTemplate($viewName, $format);
+		if(!class_exists('VmTemplate')) require(VMPATH_SITE.DS.'helpers'.DS.'vmtemplate.php');
+		$template = VmTemplate::loadVmTemplateStyle();
+		$templateName = VmTemplate::setTemplate($template);
+
+		if(!empty($templateName)){
+			$TemplateOverrideFolder = JPATH_SITE.DS."templates".DS.$templateName.DS."html".DS."com_virtuemart".DS."invoice";
+			if(file_exists($TemplateOverrideFolder)){
+				$view->addTemplatePath( $TemplateOverrideFolder);
+			}
+		}
 
 		$view->invoiceNumber = $invoiceNumberDate[0];
 		$view->invoiceDate = $invoiceNumberDate[1];

@@ -62,9 +62,9 @@ class VmHtml{
 			$quote_style = constant($quote_style);
 		}
 		if( $use_entities ) {
-			$string = @htmlentities( $string, constant($quote_style), 'UTF-8' );
+			$string = @htmlentities( $string, constant($quote_style), self::vmGetCharset() );
 		} else {
-			$string = @htmlspecialchars( $string, $quote_style, 'UTF-8' );
+			$string = @htmlspecialchars( $string, $quote_style, self::vmGetCharset() );
 		}
 		return $string;
 	}
@@ -73,14 +73,18 @@ class VmHtml{
 	/**
 	 * Returns the charset string from the global _ISO constant
 	 *
-	 * @deprecated
 	 * @return string UTF-8 by default
 	 * @since 1.0.5
 	 */
-	static function vmGetCharset() {
-		return 'UTF-8';
+static function vmGetCharset() {
+		$iso = explode( '=', @constant('_ISO') );
+		if( !empty( $iso[1] )) {
+			return $iso[1];
+		}
+		else {
+			return 'UTF-8';
+		}
 	}
-
 
     /**
      * Generate HTML code for a row using VmHTML function
@@ -114,9 +118,7 @@ class VmHtml{
 		} else {
 			$label = vmText::_($label);
 		}
-		if ($func[1]=="checkbox" OR $func[1]=="input") {
-			$label = "\n\t" . '<label for="' . $args[0] . '" id="' . $args[0] . '-lbl"  >'.$label."</label>";
-		}
+
 		$html = '
 		<tr>
 			<td class="key">
@@ -161,7 +163,7 @@ class VmHtml{
      */
     static function checkbox($name, $value, $checkedValue=1, $uncheckedValue=0, $extraAttribs = '', $id = null) {
 		if (!$id){
-			$id ='id="' . $name.'"';
+			$id ='';
 		} else {
 			$id = 'id="' . $id.'"';
 		}
@@ -372,21 +374,21 @@ class VmHtml{
 			}
 			elseif (is_object($element))
 			{
-				$key = $options['option.key'] === null ? $elementKey : $element->{$options['option.key']};
-				$text = $element->{$options['option.text']};
-				if (isset($element->{$options['option.attr']}))
+				$key = $options['option.key'] === null ? $elementKey : $element->$options['option.key'];
+				$text = $element->$options['option.text'];
+				if (isset($element->$options['option.attr']))
 				{
-					$attr = $element->{$options['option.attr']};
+					$attr = $element->$options['option.attr'];
 				}
-				if (isset($element->{$options['option.id']}))
+				if (isset($element->$options['option.id']))
 				{
-					$id = $element->{$options['option.id']};
+					$id = $element->$options['option.id'];
 				}
-				if (isset($element->{$options['option.label']}))
+				if (isset($element->$options['option.label']))
 				{
-					$label = $element->{$options['option.label']};
+					$label = $element->$options['option.label'];
 				}
-				if (isset($element->{$options['option.disable']}) && $element->{$options['option.disable']})
+				if (isset($element->$options['option.disable']) && $element->$options['option.disable'])
 				{
 					$extra .= ' disabled="disabled"';
 				}
@@ -435,7 +437,7 @@ class VmHtml{
 			{
 				foreach ($options['list.select'] as $val)
 				{
-					$key2 = is_object($val) ? $val->{$options['option.key']} : $val;
+					$key2 = is_object($val) ? $val->$options['option.key'] : $val;
 					if ($key == $key2)
 					{
 						$extra .= ' selected="selected"';
@@ -522,39 +524,6 @@ class VmHtml{
 	}
 
 	/**
-	 * @author Joomla
-	 */
-	static function color($name, $value) {
-
-		$color = strtolower($value);
-
-		if (!$color || in_array($color, array('none', 'transparent'))) {
-			$color = 'none';
-		} elseif ($color['0'] != '#') {
-			$color = '#' . $color;
-		}
-
-		// Including fallback code for HTML5 non supported browsers.
-		vmJsApi::jQuery();
-
-		if (JVM_VERSION > 1) {
-			$class = ' class="minicolors"';
-		} else {
-			$class = ' class="input-colorpicker"';
-			JHtml::_('script', 'system/html5fallback.js', false, true);
-		}
-
-		JHtml::_('behavior.colorpicker');
-
-		return '<input type="text" name="' . $name . '" ' . ' value="'
-		. htmlspecialchars($color, ENT_COMPAT, 'UTF-8') . '"' . $class
-		. '/>';
-
-	}
-
-
-
-	/**
 	 * Creates a Radio Input List
 	 *
 	 * @param string $name
@@ -568,7 +537,7 @@ class VmHtml{
 		if( empty( $arr ) ) {
 			$arr = array();
 		}
-		$html = '<div class="controls">';
+		$html = '';
 		$i = 0;
 		foreach($arr as $key => $val) {
 			$checked = '';
@@ -582,16 +551,9 @@ class VmHtml{
 					$checked = 'checked="checked"';
 				}
 			}
-			$id = $name.$key;
-			$html .= "\n\t" . '<label for="' . $id . '" id="' . $id . '-lbl" class="radio">';
-			$html .= "\n\t\n\t" . '<input type="radio" name="' . $name . '" id="' . $id . '" value="' . htmlspecialchars($key, ENT_QUOTES) . '" '.$checked.' ' . $extra. ' />' . $val;
-			$html .= "\n\t" . "</label>".$separator."\n";
-
+			$html .= '<input type="radio" name="'.$name.'" id="'.$name.$i.'" value="'.htmlspecialchars($key, ENT_QUOTES).'" '.$checked.' '.$extra." />\n";
+			$html .= '<label for="'.$name.$i++.'">'.$val."</label>".$separator."\n";
 		}
-
-		$html .= "\n";
-		$html .= '</div>';
-		$html .= "\n";
 
 		return $html;
 	}

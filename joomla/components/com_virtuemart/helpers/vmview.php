@@ -28,15 +28,12 @@ class VmView extends JViewLegacy{
 	var $isMail = false;
 	var $isPdf = false;
 	var $writeJs = true;
-	var $useSSL = 0;
 
 	public function display($tpl = null) {
 
 		if($this->isMail or $this->isPdf){
 			$this->writeJs = false;
 		}
-		$this->useSSL = vmURI::useSSL();
-
 		$result = $this->loadTemplate($tpl);
 		if ($result instanceof Exception) {
 			return $result;
@@ -49,7 +46,7 @@ class VmView extends JViewLegacy{
 				echo vmJsApi::writeJS();
 			}
 		}
-
+		vmTime('vm view Finished task ','Start');
 	}
 
 	public function withKeepAlive(){
@@ -127,32 +124,15 @@ class VmView extends JViewLegacy{
 			$ItemidStr = '&Itemid='.$Itemid;
 		}
 
-		if(VmConfig::get('sef_for_cart_links', false)){
-			$this->useSSL = vmURI::useSSL();
-			$this->continue_link = JRoute::_('index.php?option=com_virtuemart&view=category' . $categoryStr.$ItemidStr);
-			$this->cart_link = JRoute::_('index.php?option=com_virtuemart&view=cart',false,$this->useSSL);
-		} else {
-			$lang = '';
-			if(VmLanguage::$jLangCount>1 and !empty(VmConfig::$vmlangSef)){
-				$lang = '&lang='.VmConfig::$vmlangSef;
-			}
-
-			$this->continue_link = JURI::root() .'index.php?option=com_virtuemart&view=category' . $categoryStr.$lang.$ItemidStr;
-
-			$juri = JUri::getInstance();
-			$uri = $juri->toString(array( 'host', 'port'));
-
-			$scheme = $juri->toString(array( 'scheme'));
-			$scheme = substr($scheme,0,-3);
-			if($scheme!='https' and $this->useSSL){
-				$scheme .='s';
-			}
-			$this->cart_link = $scheme.'://'.$uri. JURI::root(true).'/index.php?option=com_virtuemart&view=cart'.$lang;
+		$lang = '';
+		if(VmConfig::$langCount>1 and !empty(VmConfig::$vmlangSef)){
+			$lang = '&lang='.VmConfig::$vmlangSef;
 		}
 
+		$this->continue_link = JURI::root() .'/index.php?option=com_virtuemart&view=category' . $categoryStr.$lang.$ItemidStr;
 		$this->continue_link_html = '<a class="continue_link" href="' . $this->continue_link . '">' . vmText::_ ('COM_VIRTUEMART_CONTINUE_SHOPPING') . '</a>';
 
-
+		$this->cart_link = JURI::root().'index.php?option=com_virtuemart&view=cart'.$lang;
 
 		return;
 	}

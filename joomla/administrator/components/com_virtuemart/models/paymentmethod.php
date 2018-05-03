@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage  Payment
 * @author Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: paymentmethod.php 9559 2017-05-29 16:15:32Z Milbo $
+* @version $Id: paymentmethod.php 8976 2015-09-09 08:44:39Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -26,11 +26,7 @@ class VirtueMartModelPaymentmethod extends VmModel{
 	function __construct() {
 		parent::__construct();
 		$this->setMainTable('paymentmethods');
-		$this->_validOrderingFieldName = array();
-		$this->_validOrderingFieldName = array('i.virtuemart_paymentmethod_id','i.virtuemart_vendor_id',
-		'l.payment_name','l.payment_desc','i.currency_id','i.ordering','i.shared', 'i.published');
-
-		$this->_selectedOrdering = 'i.ordering';
+		$this->_selectedOrdering = 'ordering';
 		$this->setToggleName('shared');
 	}
 
@@ -61,8 +57,8 @@ class VirtueMartModelPaymentmethod extends VmModel{
 			$this->_cache[$this->_id]->load((int)$this->_id);
 
 			if(empty($this->_cache->virtuemart_vendor_id)){
-				//if(!class_exists('VirtueMartModelVendor')) require(VMPATH_ADMIN.DS.'models'.DS.'vendor.php');
-				$this->_cache[$this->_id]->virtuemart_vendor_id = vmAccess::getVendorId('paymentmethod.edit');
+				if(!class_exists('VirtueMartModelVendor')) require(VMPATH_ADMIN.DS.'models'.DS.'vendor.php');
+				$this->_cache[$this->_id]->virtuemart_vendor_id = VirtueMartModelVendor::getLoggedVendor();
 			}
 
 			if($this->_cache[$this->_id]->payment_jplugin_id){
@@ -109,29 +105,22 @@ class VirtueMartModelPaymentmethod extends VmModel{
 	 * Retireve a list of calculation rules from the database.
 	 *
      * @author Max Milbers
-     * @param string $onlyPublished True to only retreive the publish Calculation rules, false otherwise
+     * @param string $onlyPuiblished True to only retreive the publish Calculation rules, false otherwise
      * @param string $noLimit True if no record count limit is used, false otherwise
 	 * @return object List of calculation rule objects
 	 */
 	public function getPayments($onlyPublished=false, $noLimit=false) {
-
 		$where = array();
-
-		$langFields = array('payment_name','payment_desc');
-
-		$select = 'i.*, '.implode(', ',self::joinLangSelectFields($langFields));
-
-		$joins = ' FROM `#__virtuemart_paymentmethods` as i ';
-		$joins .= implode(' ',self::joinLangTables($this->_maintable,'i','virtuemart_paymentmethod_id'));
-
 		if ($onlyPublished) {
-			$where[] = ' `published` = 1';
+			$where[] = ' `#__virtuemart_paymentmethods`.`published` = 1';
 		}
 
 		$whereString = '';
 		if (count($where) > 0) $whereString = ' WHERE '.implode(' AND ', $where) ;
 
-		$datas =$this->exeSortSearchListQuery(0,$select,$joins,$whereString,' ',$this->_getOrdering() );
+		$select = ' * FROM `#__virtuemart_paymentmethods_'.VmConfig::$vmlang.'` as l ';
+		$joinedTables = ' JOIN `#__virtuemart_paymentmethods`   USING (`virtuemart_paymentmethod_id`) ';
+		$datas =$this->exeSortSearchListQuery(0,$select,$joinedTables,$whereString,' ',$this->_getOrdering() );
 
 		if(isset($datas)){
 
@@ -181,13 +170,6 @@ class VirtueMartModelPaymentmethod extends VmModel{
 	   		$data['virtuemart_vendor_id'] = VirtueMartModelVendor::getLoggedVendor();
 	  	}
 
-		$tCon = array('min_amount','max_amount','cost_per_transaction','cost_min_transaction','cost_percent_total');
-		foreach($tCon as $f){
-			if(!empty($data[$f])){
-				$data[$f] = str_replace(array(',',' '),array('.',''),$data[$f]);
-			}
-		}
-
 		$table = $this->getTable('paymentmethods');
 
 		if(isset($data['payment_jplugin_id'])){
@@ -204,7 +186,7 @@ class VirtueMartModelPaymentmethod extends VmModel{
 			JPluginHelper::importPlugin('vmpayment');
 			$dispatcher = JDispatcher::getInstance();
 			$retValue = $dispatcher->trigger('plgVmSetOnTablePluginParamsPayment',array( $data['payment_element'],$data['payment_jplugin_id'],&$table));
-			$retValue = $dispatcher->trigger('plgVmSetOnTablePluginPayment',array( &$data,&$table));
+
 		}
 
 		$table->bindChecknStore($data);
@@ -215,7 +197,7 @@ class VirtueMartModelPaymentmethod extends VmModel{
 
 		if (!class_exists('vmPSPlugin')) require(VMPATH_PLUGINLIBS . DS . 'vmpsplugin.php');
 			JPluginHelper::importPlugin('vmpayment');
-			//Add a hook here for other payment methods, checking the data of the choosed plugin
+			//Add a hook here for other shipment methods, checking the data of the choosed plugin
 			$dispatcher = JDispatcher::getInstance();
 			$retValues = $dispatcher->trigger('plgVmOnStoreInstallPaymentPluginTable', array(  $data['payment_jplugin_id']));
 
@@ -269,7 +251,7 @@ class VirtueMartModelPaymentmethod extends VmModel{
 
 	function remove($ids){
 		if(!vmAccess::manager('paymentmethod.delete')){
-			vmWarn('Insufficient permissions to remove paymentmethod');
+			vmWarn('Insufficient permissions to remove shipmentmethod');
 			return false;
 		}
 		return parent::remove($ids);

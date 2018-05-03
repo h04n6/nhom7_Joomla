@@ -6,7 +6,7 @@
  * @package	VirtueMart
  * @subpackage Orders
  * @author Oscar van Eijk, Valerie Isaksen
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -80,7 +80,7 @@ if ($this->doctype == 'invoice') {
 <?php if ($this->doctype == 'invoice') { ?>
      <tr>
 	<td class="orders-key"><strong><?php echo vmText::_('COM_VIRTUEMART_ORDER_PRINT_TOTAL') ?></strong></td>
-	<td class="orders-key" align="left"><strong><?php echo $this->currency->priceDisplay($this->orderDetails['details']['BT']->order_total,$this->user_currency_id); ?></strong></td>
+	<td class="orders-key" align="left"><strong><?php echo $this->currency->priceDisplay($this->orderDetails['details']['BT']->order_total,$this->currency); ?></strong></td>
     </tr>
 <?php } ?>
 
@@ -101,20 +101,14 @@ if ($this->doctype == 'invoice') {
 	</td>
 	<td valign="top" ><strong>
 	    <?php echo vmText::_('COM_VIRTUEMART_ORDER_PRINT_SHIP_TO_LBL') ?></strong><br/>
-			<?php if(!empty($this->orderDetails['details']['has_ST'])){
-				echo "<table border='0'>";
-				foreach ($this->shipmentfields['fields'] as $field) {
-					if (!empty($field['value'])) {
-						echo '<tr><td class="key">' . $field['title'] . '</td>'
-						. '<td>' . $field['value'] . '</td></tr>';
-					}
-				}
-				echo "</table>";
-			} else {
-				echo "<br/>".vmText::_('COM_VM_ST_SAME_AS_BT');
-			}
-
-			?>
-        </td>
+	    <table border="0"><?php
+	    foreach ($this->shipmentfields['fields'] as $field) {
+		if (!empty($field['value'])) {
+		    echo '<tr><td class="key">' . $field['title'] . '</td>'
+		    . '<td>' . $field['value'] . '</td></tr>';
+		}
+	    }
+	    ?></table>
+	</td>
     </tr>
 </table>

@@ -23,7 +23,6 @@ defined('_JEXEC') or die();
 
 class calculationHelper {
 
-
 	protected $_db;
 	protected $_shopperGroupId;
 	var $_cats;
@@ -32,8 +31,8 @@ class calculationHelper {
 
 	protected $_debug;
 	protected $_manufacturerId;
-	public $_deliveryCountry;
-	public $_deliveryState;
+	protected $_deliveryCountry;
+	protected $_deliveryState;
 	public $_currencyDisplay;
 	var $_cart = null;
 
@@ -103,7 +102,7 @@ class calculationHelper {
 	static public function getInstance() {
 		if (!is_object(self::$_instance)) {
 			self::$_instance = new calculationHelper();
-			//vmdebug('Created new Calculator Instance');
+			vmdebug('Created new Calculator Instance');
 		} else {
 			//We store in UTC and use here of course also UTC
 			$jnow = JFactory::getDate();
@@ -124,6 +123,7 @@ class calculationHelper {
 			$this->_calcModel = VmModel::getModel('calc');
 		}
 		$this->productVendorId = (int)$id;
+		//vmdebug('setVendorId $allrules '.$this->productVendorId,count($this->allrules));
 		if(empty($this->allrules[$this->productVendorId])){
 			$epoints = array("'Marge'","'Tax'","'VatTax'","'DBTax'","'DATax'");
 			$this->allrules[$this->productVendorId]['Marge'] = array();
@@ -131,13 +131,18 @@ class calculationHelper {
 			$this->allrules[$this->productVendorId]['VatTax'] 	= array();
 			$this->allrules[$this->productVendorId]['DBTax'] = array();
 			$this->allrules[$this->productVendorId]['DATax'] = array();
-
-			$select = 'SELECT c.*';
-			$q = ' FROM #__virtuemart_calcs as c ';
+			/*$qOld = 'SELECT * FROM #__virtuemart_calcs WHERE
+		                    `calc_kind` IN (' . implode(",",$epoints). ' )
+		                     AND `published`="1"
+		                     AND (`virtuemart_vendor_id`="' . $this->productVendorId . '" OR `shared`="1" )
+		                     AND ( ( publish_up = "' . $this->_nullDate . '" OR publish_up <= "' . $this->_now . '" )
+		                        AND ( publish_down = "' . $this->_nullDate . '" OR publish_down >= "' . $this->_now . '" )
+										OR `for_override` = "1" )';
+			//*/
+			$q = 'SELECT * FROM #__virtuemart_calcs ';
 			$shopperGrpJoin = '';
 			if(!empty($this->_shopperGroupId) and count($this->_shopperGroupId)>0){
-				//$select .= ', cs.virtuemart_shoppergroup_id';
-				$q .= ' LEFT JOIN #__virtuemart_calc_shoppergroups as cs ON cs.virtuemart_calc_id=c.virtuemart_calc_id ';
+				$q .= ' LEFT JOIN #__virtuemart_calc_shoppergroups using(virtuemart_calc_id)';
 				$shopperGrpJoin = "\n AND (";
 				foreach($this->_shopperGroupId as $gr){
 					$shopperGrpJoin .= ' virtuemart_shoppergroup_id = '.(int)$gr. ' OR';
@@ -147,19 +152,21 @@ class calculationHelper {
 
 			$countryGrpJoin = '';
 			if(!empty($this->_deliveryCountry)){
-				//$select .= ', cc.virtuemart_country_id';
-				$q .= ' LEFT JOIN #__virtuemart_calc_countries as cc ON cc.virtuemart_calc_id=c.virtuemart_calc_id ';
-				$countryGrpJoin = "\n".' AND ( virtuemart_country_id = "'.(int)$this->_deliveryCountry.'" OR (virtuemart_country_id) IS NULL) ';
+				$q .= ' LEFT JOIN #__virtuemart_calc_countries using(virtuemart_calc_id) ';
+				$countryGrpJoin = "\n AND (";
+				$countryGrpJoin .= ' virtuemart_country_id = '.(int)$this->_deliveryCountry;
+				$countryGrpJoin .=' OR (virtuemart_country_id) IS NULL) ';
 			}
 
 			$stateGrpJoin = '';
 			if(!empty($this->_deliveryState)){
-				//$select .= ', cst.virtuemart_state_id';
-				$q .= ' LEFT JOIN #__virtuemart_calc_states as cst ON cst.virtuemart_calc_id=c.virtuemart_calc_id ';
-				$stateGrpJoin = "\n".' AND ( virtuemart_state_id = "'.(int)$this->_deliveryState.'" OR (virtuemart_state_id) IS NULL) ';
+				$q .= ' LEFT JOIN #__virtuemart_calc_states using(virtuemart_calc_id) ';
+				$stateGrpJoin = "\n AND (";
+				$stateGrpJoin .= ' virtuemart_state_id = '.(int)$this->_deliveryState;
+				$stateGrpJoin .=' OR (virtuemart_state_id) IS NULL) ';
 			}
 
-			$q .= ' WHERE `calc_kind` IN (' . implode(",",$epoints). ' )
+			$q .= 'WHERE `calc_kind` IN (' . implode(",",$epoints). ' )
                 AND `published`="1"
                 AND (`virtuemart_vendor_id`="' . $id . '" OR `shared`="1" )
 				AND ( publish_up = "' . $this->_db->escape($this->_nullDate) . '" OR publish_up <= "' . $this->_db->escape($this->_now) . '" )
@@ -167,17 +174,15 @@ class calculationHelper {
 
 			$q .= $shopperGrpJoin . $countryGrpJoin . $stateGrpJoin;
 
-			$this->_db->setQuery($select . $q);
+			$this->_db->setQuery($q);
 
 			$allrules = $this->_db->loadAssocList();
 
-			if(!$allrules) return;
-
 			//By Maik, key of array is directly virtuemart_calc_id
 			foreach ($allrules as $rule){
+				//$rul = $this->_calcModel->getCalc($rule['virtuemart_calc_id']);
 				$this->allrules[$this->productVendorId][$rule['calc_kind']][$rule['virtuemart_calc_id']] = $rule;
 			}
-			if ($this->_debug) vmdebug('Calculation rules',$select . $q, $allrules);
 		}
 
 	}
@@ -234,35 +239,8 @@ class calculationHelper {
 
 	protected function setCountryState() {
 
-		if ($this->_app->isAdmin()) {
-			$userModel = VmModel::getModel('user');
-			$userDetails = $userModel->getUser();
-			$virtuemart_userinfo_id_BT = $userModel->getBTuserinfo_id($userDetails->JUser->get('id'));
-			if ($virtuemart_userinfo_id_BT) {
-				$userFieldsArray = $userModel->getUserInfoInUserFields(NULL,'BT',$virtuemart_userinfo_id_BT,false);
-				$userFieldsBT = $userFieldsArray[$virtuemart_userinfo_id_BT];
-				if ($userFieldsBT) {
-					if (isset($userFieldsBT['fields']['virtuemart_country_id']) and isset($userFieldsBT['fields']['virtuemart_country_id']['virtuemart_country_id'])) {
-						$this->_deliveryCountry = $userFieldsBT['fields']['virtuemart_country_id']['virtuemart_country_id'];
-					}
-					if (isset($userFieldsBT['fields']['virtuemart_state_id']) and isset($userFieldsBT['fields']['virtuemart_state_id']['virtuemart_state_id'])) {
-						$this->_deliveryState = $userFieldsBT['fields']['virtuemart_state_id']['virtuemart_state_id'];
-					}
-				}
-			} else {
-				if(!class_exists('VirtueMartModelVendor')) require(VMPATH_ADMIN.DS.'models'.DS.'vendor.php');
-				$vendorModel = VmModel::getModel ('vendor');
-				$vendorAddress = $vendorModel->getVendorAdressBT (1);
-				if (isset( $vendorAddress->virtuemart_country_id)){
-					$this->_deliveryCountry = $vendorAddress->virtuemart_country_id;
-				}
-				if (isset( $vendorAddress->virtuemart_state_id)) {
-					$this->_deliveryState = $vendorAddress->virtuemart_state_id;
-				}
-			}
+		if ($this->_app->isAdmin())
 			return;
-		}
-
 
 		if(empty($this->_cart)){
 			if (!class_exists('VirtueMartCart')) require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
@@ -286,6 +264,7 @@ class calculationHelper {
 		} else if (!empty($this->_cart->BT['virtuemart_state_id'])) {
 			$this->_deliveryState = (int)$this->_cart->BT['virtuemart_state_id'];
 		}
+
 	}
 
 	/** function to start the calculation, here it is for the product
@@ -294,7 +273,7 @@ class calculationHelper {
 	 * After that the function gatherEffectingRulesForProductPrice writes the queries and gets the ids of the rules which affect the product
 	 * The function executeCalculation makes the actual calculation according to the rules
 	 *
-	 * @copyright Copyright (c) 2009 - 2015 VirtueMart Team. All rights reserved.
+	 * @copyright Copyright (c) 2009 VirtueMart Team. All rights reserved.
 	 * @author Max Milbers
 	 * @param int $product 	    The product
 	 * @param int $catIds 		When the category is already determined, then it makes sense to pass it, if not the function does it for you
@@ -321,7 +300,8 @@ class calculationHelper {
 		if (is_object($product)) {
 
 			if(!empty($product->allPrices[$product->selectedPrice])){
-				$prices = $this->productPrices = $product->allPrices[$product->selectedPrice];
+				$prices = $product->allPrices[$product->selectedPrice];
+				//mdebug('my prices in getProductPrices',$prices);
 				$costPrice = $prices['product_price'];
 				$this->productCurrency = $prices['product_currency'];
 				$override = $prices['override'];
@@ -335,7 +315,7 @@ class calculationHelper {
 			$this->_cats = isset($product->categories)? $product->categories: array();
 			$this->_product = $product;
 			$this->_product->amount = $amount;	//temporary quantity
-			//$this->productPrices = array();
+			$this->productPrices = array();
 			if(!isset($this->_product->quantity)) $this->_product->quantity = 1;
 
 			$this->_manufacturerId = !empty($product->virtuemart_manufacturer_id) ? $product->virtuemart_manufacturer_id:0;
@@ -474,11 +454,6 @@ class calculationHelper {
 			$this->productPrices['DATax'][$datax['virtuemart_calc_id']] =  array($datax['calc_name'],$datax['calc_value'],$datax['calc_value_mathop'],$datax['calc_shopper_published'],$datax['calc_currency'],$datax['calc_params'], $datax['virtuemart_vendor_id'], $datax['virtuemart_calc_id']);
 		}
 
-		$this->productPrices['Marge'] = array();
-		foreach($this->rules['Marge'] as $marge){
-			$this->productPrices['Marge'][$marge['virtuemart_calc_id']] =  array($marge['calc_name'],$marge['calc_value'],$marge['calc_value_mathop'],$marge['calc_shopper_published'],$marge['calc_currency'],$marge['calc_params'], $marge['virtuemart_vendor_id'], $marge['virtuemart_calc_id']);
-		}
-
 		if(!empty($this->rules['VatTax'])){
 			if(empty($this->_cart->cartData['VatTax'])){
 				$this->_cart->cartData['VatTax'] = array();
@@ -501,21 +476,11 @@ class calculationHelper {
 			}
 		}
 
-		$tots = array('salesPrice', 'discountedPriceWithoutTax', 'priceWithoutTax', 'discountAmount', 'taxAmount');
-		foreach($tots as $name){
-			if(isset($this->productPrices[$name])){
-				$this->productPrices[$name.'Tt'] = $this->productPrices[$name] * $amount;
-			} else {
-				$this->productPrices[$name.'Tt'] = 0.0;
-			}
-		}
-
 		foreach($this->productPrices as $k => &$price){
-			if(!is_array($price) and !empty($price) and is_numeric($price)){
+			if(!is_array($price)){
 				$price = round($price,$this->_internalDigits-4);
 			}
 		}
-
 		$this->productPrices = array_merge($prices,$this->productPrices);
 
 		return $this->productPrices;
@@ -750,7 +715,6 @@ class calculationHelper {
 			foreach($this->_cart->cartData['DBTaxRulesBill'] as &$dbrule){
 				$applyRule = FALSE;
 				if(!empty($dbrule['calc_categories']) || !empty($dbrule['virtuemart_manufacturers'])){
-					if(!isset($dbrule['subTotal'])) $dbrule['subTotal'] = 0.0;
 					$setCat = !empty($dbrule['calc_categories']) ? array_intersect($dbrule['calc_categories'],$product->categories) : array();
 					$setMan = !empty($dbrule['virtuemart_manufacturers']) ? array_intersect($dbrule['virtuemart_manufacturers'],$product->virtuemart_manufacturer_id) : array();
 					if(!empty($dbrule['calc_categories']) && !empty($dbrule['virtuemart_manufacturers'])) {
@@ -869,7 +833,7 @@ class calculationHelper {
 		}
 
 		// calculate the new subTotal with discounts before tax, necessary for billTotal
-		$this->_cart->cartPrices['toTax'] = $this->_cart->cartPrices['salesPrice'] + $cartdiscountBeforeTax;
+		$toTax = $this->_cart->cartPrices['salesPrice'] + $cartdiscountBeforeTax;
 
 		//Avalara wants to calculate the tax of the shipment. Only disadvantage to set shipping here is that the discounts per bill respectivly the tax per bill
 		// is not considered. Todo create a generic system, for example a param for billing rules, excluding/including shipment/payment
@@ -890,7 +854,7 @@ class calculationHelper {
 			$this->couponHandler($this->_cart->couponCode);
 		}
 
-		// now calculate the discount for whole cart and reduce subTotal for each taxRulesBill, to calculate correct tax, also if there are more than one tax rules
+		// now calculate the discount for hole cart and reduce subTotal for each taxRulesBill, to calculate correct tax, also if there are more than one tax rules	
 		$totalDiscountBeforeTax = $this->_cart->cartPrices['salesPriceCoupon'];
 		foreach ($this->_cart->cartData['taxRulesBill'] as $k=>&$rule) {
 
@@ -905,15 +869,15 @@ class calculationHelper {
 				}
 				$rule['subTotal'] += $totalDiscountBeforeTax * $rule['percentage'];
 			} else {
-				$rule['subTotal'] = $this->_cart->cartPrices['toTax'];
+				$rule['subTotal'] = $toTax;
 			}
 		}
 
 		// now each taxRule subTotal is reduced with DBTax and we can calculate the cartTax
-		$this->_cart->cartPrices['cartTax'] = $this->roundInternal($this->cartRuleCalculation($this->_cart->cartData['taxRulesBill'], $this->_cart->cartPrices['toTax']));
+		$cartTax = $this->roundInternal($this->cartRuleCalculation($this->_cart->cartData['taxRulesBill'], $toTax));
 
 		// toDisc is new subTotal after tax, now it comes discount afterTax and we can calculate the final cart price with tax.
-		$toDisc = $this->_cart->cartPrices['toTax'] + $this->_cart->cartPrices['cartTax'];
+		$toDisc = $toTax + $cartTax;
 		$cartdiscountAfterTax = $this->roundInternal($this->cartRuleCalculation($this->_cart->cartData['DATaxRulesBill'], $toDisc));
 		$this->_cart->cartPrices['withTax'] = $toDisc + $cartdiscountAfterTax;
 
@@ -928,7 +892,7 @@ class calculationHelper {
 		if($this->_currencyDisplay->_priceConfig['discountAmount']) $this->_cart->cartPrices['billDiscountAmount'] = $this->_cart->cartPrices['discountAmount'] + $cartdiscountBeforeTax + $cartdiscountAfterTax;// + $this->_cart->cartPrices['shipmentValue'] + $this->_cart->cartPrices['paymentValue'] ;
 		if($this->_cart->cartPrices['salesPriceShipment'] < 0) $this->_cart->cartPrices['billDiscountAmount'] += $this->_cart->cartPrices['salesPriceShipment'];
 		if($this->_cart->cartPrices['salesPricePayment'] < 0) $this->_cart->cartPrices['billDiscountAmount'] += $this->_cart->cartPrices['salesPricePayment'];
-		if($this->_currencyDisplay->_priceConfig['taxAmount']) $this->_cart->cartPrices['billTaxAmount'] = $this->_cart->cartPrices['taxAmount'] + $this->_cart->cartPrices['shipmentTax'] + $this->_cart->cartPrices['paymentTax'] + $this->_cart->cartPrices['cartTax'];
+		if($this->_currencyDisplay->_priceConfig['taxAmount']) $this->_cart->cartPrices['billTaxAmount'] = $this->_cart->cartPrices['taxAmount'] + $this->_cart->cartPrices['shipmentTax'] + $this->_cart->cartPrices['paymentTax'] + $cartTax; //+ $this->_cart->cartPrices['withTax'] - $toTax
 
 		//The coupon handling is only necessary if a salesPrice is displayed, otherwise we have a kind of catalogue mode
 		if($this->_currencyDisplay->_priceConfig['salesPrice']){
@@ -999,7 +963,7 @@ class calculationHelper {
 
 		foreach ($this->_cart->cartData['taxRulesBill'] as &$rule) {
 			$this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['result'] = isset($this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['result']) ? $this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['result'] : 0;
-			$this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['result'] += $this->roundInternal($this->_cart->cartPrices[$rule['virtuemart_calc_id'] . 'Diff']);
+			$this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['result'] += round($this->_cart->cartPrices[$rule['virtuemart_calc_id'] . 'Diff'],$this->_currencyDisplay->_priceConfig['salesPrice'][1]);
 			if(!isset($this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['virtuemart_calc_id'])) $this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['virtuemart_calc_id'] = $rule['virtuemart_calc_id'];
 			if(!isset($this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['calc_name'])) $this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['calc_name'] = $rule['calc_name'];
 			if(!isset($this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['calc_value'])) $this->_cart->cartData['VatTax'][$rule['virtuemart_calc_id']]['calc_value'] = $rule['calc_value'];
@@ -1092,8 +1056,7 @@ class calculationHelper {
 				$cOut = $this->interpreteMathOp($rule, $cIn);
 				//vmdebug('my cout ',$cIn,$cOut,$TaxID,$rule);
 				$this->_cart->cartPrices[$rule['virtuemart_calc_id'] . 'Diff'] = $this->roundInternal($this->roundInternal($cOut) - $cIn);
-				//$discount += round($this->_cart->cartPrices[$rule['virtuemart_calc_id'] . 'Diff'],$this->_currencyDisplay->_priceConfig['salesPrice'][1]);
-				$discount += $this->roundInternal($this->_cart->cartPrices[$rule['virtuemart_calc_id'] . 'Diff']);
+				$discount += round($this->_cart->cartPrices[$rule['virtuemart_calc_id'] . 'Diff'],$this->_currencyDisplay->_priceConfig['salesPrice'][1]);
 				//vmdebug('my cout ',$cOut,$discount,$rule['subTotal'],$TaxID);
 				if(isset($rule['subTotal']) and $TaxID != 0 and $DBTax == true) {
 					if(isset($rule['subTotalPerTaxID'][$TaxID])) {
@@ -1199,7 +1162,6 @@ class calculationHelper {
 				}
 				continue;
 			}
-
 			if(!empty($rule['for_override'])){
 				continue;
 			}
@@ -1211,9 +1173,9 @@ class calculationHelper {
 				//vmdebug('loaded cat rules '.$rule['virtuemart_calc_id']);
 			}
 
+//vmdebug('my rule ',$this->allrules[$this->productVendorId][$entrypoint][$i]);
 			$hitsCategory = true;
 			if (isset($this->_cats)) {
-				if ($this->_debug) vmdebug('loaded cat rules ',$this->_cats,$rule['calc_categories']);
 				$hitsCategory = $this->testRulePartEffecting($rule['calc_categories'], $this->_cats);
 			}
 
@@ -1275,8 +1237,6 @@ class calculationHelper {
 					echo '<br/ >Add rule ForProductPrice ' . $rule["virtuemart_calc_id"];
 
 				$testedRules[$rule['virtuemart_calc_id']] = $rule;
-			} else {
-				if ($this->_debug) vmdebug('plgVmInGatherEffectRulesProduct $hitsCategory '.(int)$hitsCategory.' $hitsShopper'.(int)$hitsShopper.' $hitsDeliveryArea'.(int)$hitsDeliveryArea.' '.(int)$hitsManufacturer,$rule);
 			}
 		}
 
@@ -1285,7 +1245,6 @@ class calculationHelper {
 			JPluginHelper::importPlugin('vmcalculation');
 			$dispatcher = JDispatcher::getInstance();
 			$dispatcher->trigger('plgVmInGatherEffectRulesProduct',array(&$this,&$testedRules));
-			if ($this->_debug) vmdebug('plgVmInGatherEffectRulesProduct rules',$testedRules);
 		}
 
 		return $testedRules;
@@ -1375,7 +1334,7 @@ class calculationHelper {
 					echo '<br/ >Add Checkout rule ' . $rule["virtuemart_calc_id"] . '<br/ >';
 				$testedRules[$rule['virtuemart_calc_id']] = $rule;
 			} else {
-				if ($this->_debug) vmdebug(' NO HIT my _deliveryCountry _deliveryState',(int)$hitsDeliveryArea, (int)$hitsShopper,$this->_shopperGroupId);
+				vmdebug(' NO HIT my _deliveryCountry _deliveryState',(int)$hitsDeliveryArea, (int)$hitsShopper,$this->_shopperGroupId);
 			}
 		}
 
@@ -1478,7 +1437,7 @@ class calculationHelper {
 		if (!$shipmentValid) {
 			vmdebug('calculateShipmentPrice $shipment INVALID set cart->virtuemart_shipmentmethod_id = 0 ',$this->_cart->virtuemart_shipmentmethod_id);
 			$this->_cart->virtuemart_shipmentmethod_id = 0;
-			$this->_cart->setCartIntoSession(false,true);
+			$this->_cart->setCartIntoSession();
 		}
 
 		return $this->_cart->cartPrices;

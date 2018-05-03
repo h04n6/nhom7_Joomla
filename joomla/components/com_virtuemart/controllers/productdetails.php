@@ -6,14 +6,14 @@
  * @package    VirtueMart
  * @subpackage
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: productdetails.php 9413 2017-01-04 17:20:58Z Milbo $
+ * @version $Id: productdetails.php 8963 2015-09-01 15:56:03Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -66,7 +66,7 @@ class VirtueMartControllerProductdetails extends JControllerLegacy {
 		JSession::checkToken () or jexit ('Invalid Token');
 
 		$app = JFactory::getApplication ();
-		if(!VmConfig::get('ask_question',false) and !VmConfig::get ('askprice', 1)){
+		if(!VmConfig::get('ask_question',false)){
 			$app->redirect (JRoute::_ ('index.php?option=com_virtuemart&tmpl=component&view=productdetails&task=askquestion&virtuemart_product_id=' . vRequest::getInt ('virtuemart_product_id', 0)), 'Function disabled');
 		}
 
@@ -258,8 +258,8 @@ class VirtueMartControllerProductdetails extends JControllerLegacy {
 				shopFunctionsF::sendRatingEmailToVendor($data);
 			}
 		}
-		$virtuemart_category_id = vRequest::getInt('virtuemart_category_id',0);
-		$this->setRedirect (JRoute::_ ('index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $virtuemart_product_id.'&virtuemart_category_id='.$virtuemart_category_id, FALSE), $msg);
+
+		$this->setRedirect (JRoute::_ ('index.php?option=com_virtuemart&view=productdetails&virtuemart_product_id=' . $virtuemart_product_id, FALSE), $msg);
 
 	}
 
@@ -305,12 +305,18 @@ class VirtueMartControllerProductdetails extends JControllerLegacy {
 		}
 		$currency = CurrencyDisplay::getInstance ();
 
-		foreach (CurrencyDisplay::$priceNames as $name) {
+		$priceFieldsRoots = array('basePrice','variantModification','basePriceVariant',
+			'basePriceWithTax','discountedPriceWithoutTax',
+			'salesPrice','priceWithoutTax',
+			'salesPriceWithDiscount','discountAmount','taxAmount','unitPrice');
+
+		foreach ($priceFieldsRoots as $name) {
 			if(isset($prices[$name])){
 				$priceFormated[$name] = $currency->createPriceDiv ($name, '', $prices, TRUE);
 			}
 		}
 
+		// Get the document object.
 		$document = JFactory::getDocument ();
 		// stAn: setName works in JDocumentHTML and not JDocumentRAW
 		if (method_exists($document, 'setName')){
@@ -353,7 +359,6 @@ class VirtueMartControllerProductdetails extends JControllerLegacy {
 
 		$model = VmModel::getModel ('waitinglist');
 		if (!$model->adduser ($data)) {
-			$msg = 'Notify Customer; Could not add user to waiting list';
 			$this->setRedirect (JRoute::_ ('index.php?option=com_virtuemart&view=productdetails&layout=notify&virtuemart_product_id=' . $data['virtuemart_product_id'], FALSE), $msg);
 		} else {
 			$msg = vmText::sprintf ('COM_VIRTUEMART_STRING_SAVED', vmText::_ ('COM_VIRTUEMART_CART_NOTIFY'));

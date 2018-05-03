@@ -6,14 +6,14 @@
  * @packageVirtueMart
  * @subpackage Config
  * @author RickG
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: default_shopfront.php 9694 2017-12-06 17:41:34Z StefanSTS $
+ * @version $Id: default_shopfront.php 8667 2015-01-24 22:45:39Z kkmediaproduction $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -24,35 +24,32 @@ defined('_JEXEC') or die('Restricted access');?>
 <fieldset>
 <legend><?php echo vmText::_('COM_VIRTUEMART_ADMIN_CFG_MORE_CORE_SETTINGS'); ?></legend>
 <table class="admintable">
-	<?php
-	echo VmHTML::row('raw','COM_VIRTUEMART_WEIGHT_UNIT_DEFAULT',ShopFunctions::renderWeightUnitList('weight_unit_default', VmConfig::get('weight_unit_default')));
-	echo VmHTML::row('raw','COM_VIRTUEMART_LWH_UNIT_DEFAULT',ShopFunctions::renderLWHUnitList('lwh_unit_default', VmConfig::get('lwh_unit_default')));
-	echo VmHtml::row('input','COM_VM_PROVIDED_UNITS','norm_units',VmConfig::get('norm_units', 'KG,100G,M,SM,CUBM,L,100ML,P'));
+<?php
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_ADMIN_SHOW_PRINTICON','show_printicon',VmConfig::get('show_printicon',1));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_PDF_ICON_SHOW','pdf_icon',VmConfig::get('pdf_icon',0));
-?>
-</table>
-</fieldset>
-<fieldset>
-<legend><?php echo vmText::_('COM_VIRTUEMART_CFG_RECOMMEND_ASK'); ?></legend>
-<table class="admintable">
-<?php
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_ADMIN_SHOW_EMAILFRIEND','show_emailfriend',VmConfig::get('show_emailfriend',0));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_RECCOMEND_UNATUH','recommend_unauth',VmConfig::get('recommend_unauth',0));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_ASK_QUESTION_CAPTCHA','ask_captcha',VmConfig::get('ask_captcha',0));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_ASK_QUESTION_SHOW','ask_question',VmConfig::get('ask_question',0));
+
 	echo VmHTML::row('input','COM_VIRTUEMART_ASK_QUESTION_MIN_LENGTH','asks_minimum_comment_length',VmConfig::get('asks_minimum_comment_length',50),'class="inputbox"','',4,4);
 	echo VmHTML::row('input','COM_VIRTUEMART_ASK_QUESTION_MAX_LENGTH','asks_maximum_comment_length',VmConfig::get('asks_maximum_comment_length',2000),'class="inputbox"','',5,5);
+	echo VmHTML::row('checkbox','COM_VIRTUEMART_COUPONS_ENABLE','coupons_enable',VmConfig::get('coupons_enable',0));
+	echo VmHTML::row('checkbox','COM_VIRTUEMART_VM_ERROR_HANDLING_ENABLE','handle_404',VmConfig::get('handle_404',1));
 ?>
-</table>
-</fieldset>
-<fieldset>
-<legend><?php echo vmText::_('COM_VIRTUEMART_COUPONS_ENABLE'); ?></legend>
-	<table class="admintable">
-		<?php echo VmHTML::row('checkbox','COM_VIRTUEMART_COUPONS_ENABLE','coupons_enable',VmConfig::get('coupons_enable',0));
-
+<tr>
+	<td class="key">
+<span class="hasTip" title="<?php echo vmText::_('COM_VIRTUEMART_COUPONS_EXPIRE_EXPLAIN'); ?>">
+	<label for="coupons_default_expire">
+		<?php echo vmText::_('COM_VIRTUEMART_COUPONS_EXPIRE'); ?>
+	</label>
+</span>
+	</td>
+	<td>
+		<?php
+		// TODO This must go to the view.html.php.... but then... that goes for most of the config sruff I'ld say :-S
 		$_defaultExpTime = array(
-		'1,D' => '1 ' . vmText::_('COM_VIRTUEMART_DAY')
+			'1,D' => '1 ' . vmText::_('COM_VIRTUEMART_DAY')
 		, '1,W' => '1 ' . vmText::_('COM_VIRTUEMART_WEEK')
 		, '2,W' => '2 ' . vmText::_('COM_VIRTUEMART_WEEK_S')
 		, '1,M' => '1 ' . vmText::_('COM_VIRTUEMART_MONTH')
@@ -60,11 +57,41 @@ defined('_JEXEC') or die('Restricted access');?>
 		, '6,M' => '6 ' . vmText::_('COM_VIRTUEMART_MONTH_S')
 		, '1,Y' => '1 ' . vmText::_('COM_VIRTUEMART_YEAR')
 		);
-		echo VmHTML::row('raw','COM_VIRTUEMART_COUPONS_EXPIRE',VmHTML::selectList('coupons_default_expire', VmConfig::get('coupons_default_expire'), $_defaultExpTime));
-		$attrlist = 'class="inputbox" multiple="multiple" ';
-		echo VmHTML::row('genericlist','COM_VIRTUEMART_COUPONS_REMOVE',$this->os_Options,'cp_rm[]',$attrlist, 'order_status_code', 'order_status_name', VmConfig::get('cp_rm',array('C')), 'cp_rm',true);
+		echo VmHTML::selectList('coupons_default_expire', VmConfig::get('coupons_default_expire'), $_defaultExpTime);
+		?>
+	</td>
+</tr>
+	<?php
+	$attrlist = 'class="inputbox" multiple="multiple" ';
+	echo VmHTML::row('genericlist','COM_VIRTUEMART_COUPONS_REMOVE',$this->os_Options,'cp_rm[]',$attrlist, 'order_status_code', 'order_status_name', VmConfig::get('cp_rm',array('C')), 'cp_rm',true);
+
 	?>
-	</table>
+
+<tr>
+	<td class="key">
+<span class="hasTip" title="<?php echo vmText::_('COM_VIRTUEMART_WEIGHT_UNIT_DEFAULT_EXPLAIN'); ?>">
+	<label for="weight_unit_default">
+		<?php echo vmText::_('COM_VIRTUEMART_WEIGHT_UNIT_DEFAULT'); ?>
+	</label>
+</span>
+	</td>
+	<td>
+		<?php echo ShopFunctions::renderWeightUnitList('weight_unit_default', VmConfig::get('weight_unit_default')); ?>
+	</td>
+</tr>
+<tr>
+	<td class="key">
+<span class="hasTip" title="<?php echo vmText::_('COM_VIRTUEMART_LWH_UNIT_DEFAULT_EXPLAIN'); ?>">
+	<label for="weight_unit_default">
+		<?php echo vmText::_('COM_VIRTUEMART_LWH_UNIT_DEFAULT'); ?>
+	</label>
+</span>
+	</td>
+	<td>
+		<?php echo ShopFunctions::renderLWHUnitList('lwh_unit_default', VmConfig::get('lwh_unit_default')); ?>
+	</td>
+</tr>
+</table>
 </fieldset>
 <fieldset>
 <legend><?php echo vmText::_('COM_VIRTUEMART_ADMIN_CFG_PRODUCT_LISTING'); ?></legend>
@@ -73,11 +100,9 @@ defined('_JEXEC') or die('Restricted access');?>
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_PRODUCT_NAVIGATION_SHOW','product_navigation',VmConfig::get('product_navigation',1));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_DISPLAY_STOCK','display_stock',VmConfig::get('display_stock',1));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_SHOW_PRODUCT_CUSTOMS','show_pcustoms',VmConfig::get('show_pcustoms',1));
-    echo VmHTML::row('checkbox','COM_VIRTUEMART_SUBCAT_PRODUCTS_SHOW','show_subcat_products',VmConfig::get('show_subcat_products',0));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_UNCAT_PARENT_PRODUCTS_SHOW','show_uncat_parent_products',VmConfig::get('show_uncat_parent_products',0));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_UNCAT_CHILD_PRODUCTS_SHOW','show_uncat_child_products',VmConfig::get('show_uncat_child_products',0));
 	echo VmHTML::row('checkbox','COM_VIRTUEMART_SHOW_PRODUCTS_UNPUBLISHED_CATEGORIES','show_unpub_cat_products',VmConfig::get('show_unpub_cat_products',1));
-	echo VmHTML::row('checkbox','COM_VM_PRODUCTDETAILS_DISPL_CATS','cat_productdetails', VmConfig::get('cat_productdetails',0));
 	echo VmHTML::row('input','COM_VIRTUEMART_LATEST_PRODUCTS_DAYS','latest_products_days',VmConfig::get('latest_products_days',7),'class="inputbox"','',4,4);
 	$latest_products_orderBy = array(
 		'modified_on' => vmText::_('COM_VIRTUEMART_LATEST_PRODUCTS_ORDERBY_MODIFIED'),
@@ -103,14 +128,6 @@ defined('_JEXEC') or die('Restricted access');?>
 				</label>
 			</span>
 		</div>
-		<div>
-			<?php echo VmHTML::checkbox('stockhandle_products', VmConfig::get('stockhandle_products')); ?>
-			<span class="hasTip" title="<?php echo vmText::_('COM_VIRTUEMART_CFG_POOS_DISCONTINUED_PRODUCTS_TIP'); ?>">
-				<label for="stockhandle_products">
-					<?php echo vmText::_('COM_VIRTUEMART_CFG_POOS_DISCONTINUED_PRODUCTS'); ?>
-				</label>
-			</span>
-		</div>
 		<?php
 		$options = array(
 			'none' => vmText::_('COM_VIRTUEMART_ADMIN_CFG_POOS_NONE'),
@@ -130,15 +147,11 @@ defined('_JEXEC') or die('Restricted access');?>
 		<span class="icon-nofloat vmicon vmicon-16-info tooltip" title="<?php echo '<b>' . vmText::_('COM_VIRTUEMART_AVAILABILITY') . '</b><br/ >' . vmText::_('COM_VIRTUEMART_PRODUCT_FORM_AVAILABILITY_TOOLTIP1') ?>"></span>
 
 		<div class="clr"></div>
-		<?php if(!empty($this->imagePath) and JFolder::exists(VMPATH_ROOT . $this->imagePath)) {
-			echo JHtml::_('list.images', 'image', VmConfig::get('rised_availability'), " ", $this->imagePath);
-		} else {
-			echo vmText::_('COM_VIRTUEMART_ADMIN_CFG_ASSETS_GENERAL_PATH_MISSING');
-		}?>
+		<?php echo JHtml::_('list.images', 'image', VmConfig::get('rised_availability'), " ", $this->imagePath); ?>
 		<span class="icon-nofloat vmicon vmicon-16-info tooltip" title="<?php echo '<b>' . vmText::_('COM_VIRTUEMART_AVAILABILITY') . '</b><br/ >' . vmText::sprintf('COM_VIRTUEMART_PRODUCT_FORM_AVAILABILITY_TOOLTIP2', $this->imagePath) ?>"></span>
 
 		<div class="clr"></div>
-		<img id="imagelib" alt="<?php echo vmText::_('COM_VIRTUEMART_PREVIEW'); ?>" name="imagelib" src="<?php if (VmConfig::get('rised_availability')) {
+		<img border="0" id="imagelib" alt="<?php echo vmText::_('COM_VIRTUEMART_PREVIEW'); ?>" name="imagelib" src="<?php if (VmConfig::get('rised_availability')) {
 			echo JURI::root(true) . $this->imagePath . VmConfig::get('rised_availability');
 		}?>"/>
 	</fieldset>
@@ -149,7 +162,6 @@ defined('_JEXEC') or die('Restricted access');?>
 			echo VmHTML::row('checkbox','COM_VIRTUEMART_REVIEWS_AUTOPUBLISH','reviews_autopublish',VmConfig::get('reviews_autopublish',0));
 			echo VmHTML::row('input','COM_VIRTUEMART_ADMIN_CFG_REVIEW_MINIMUM_COMMENT_LENGTH','reviews_minimum_comment_length',VmConfig::get('reviews_minimum_comment_length',0));
 			echo VmHTML::row('input','COM_VIRTUEMART_ADMIN_CFG_REVIEW_MAXIMUM_COMMENT_LENGTH','reviews_maximum_comment_length',VmConfig::get('reviews_maximum_comment_length',0));
-			echo VmHTML::row('input','COM_VM_ADMIN_CFG_NUM_RATINGS','vm_num_ratings_show',VmConfig::get('vm_num_ratings_show',3));
 			$showReviewFor = array('none' => vmText::_('COM_VIRTUEMART_ADMIN_CFG_REVIEW_SHOW_NONE'),
 				'registered' => vmText::_('COM_VIRTUEMART_ADMIN_CFG_REVIEW_SHOW_REGISTERED'),
 				'all' => vmText::_('COM_VIRTUEMART_ADMIN_CFG_REVIEW_SHOW_ALL')

@@ -7,14 +7,14 @@
  * @package	VirtueMart
  * @subpackage updatesMigration
  * @author Max Milbers, RickG
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: updatesmigration.php 9651 2017-10-18 12:16:59Z Milbo $
+ * @version $Id: updatesmigration.php 8981 2015-09-12 11:24:47Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -30,6 +30,8 @@ require(VMPATH_ADMIN . DS . 'helpers' . DS . 'vmcontroller.php');
  * @author Max Milbers
  */
 class VirtuemartControllerUpdatesMigration extends VmController{
+
+	private $installer;
 
 	/**
 	 * Method to display the view
@@ -49,6 +51,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 	private function checkPermissionForTools(){
 		vRequest::vmCheckToken();
 		//Hardcore Block, we may do that better later
+		$user = JFactory::getUser();
 		if(!vmAccess::manager('core') ){
 			$msg = 'Forget IT';
 			$this->setRedirect('index.php?option=com_virtuemart', $msg);
@@ -57,22 +60,27 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 		return true;
 	}
 
-	function setsafepathupper(){
+	/**
+	 * Akeeba release system tasks
+	 * Update
+	 * @author Max Milbers
+	 */
+	function liveUpdate(){
 
-		$this->checkPermissionForTools();
-
-		$model = $this->getModel('updatesMigration');
-		$model->setSafePathCreateFolders();
-		$this->setRedirect($this->redirectPath);
+		$this->setRedirect('index.php?option=com_virtuemart&view=liveupdate.', 'Akeeba release system');
 	}
 
-	function setsafepathcom(){
-
-		$this->checkPermissionForTools();
-
+	/**
+	 * Install sample data into the database
+	 *
+	 * @author RickG
+	 */
+	function checkForLatestVersion(){
 		$model = $this->getModel('updatesMigration');
-		$model->setSafePathCreateFolders(vRequest::getVar('safepathToken'));
-		$this->setRedirect($this->redirectPath);
+		vRequest::setVar('latestverison', $model->getLatestVersion());
+		vRequest::setVar('view', 'updatesMigration');
+
+		parent::display();
 	}
 
 	/**
@@ -86,9 +94,9 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 
 		$model = $this->getModel('updatesMigration');
 
-		$model->installSampleData();
+		$msg = $model->installSampleData();
 
-		$this->setRedirect($this->redirectPath);
+		$this->setRedirect($this->redirectPath, $msg);
 	}
 
 	/**
@@ -146,23 +154,21 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 
 		foreach($rows as $fields){
 			$store = '';
-			if(empty($fields['customfield_params'])) continue;
-
 			$json = @json_decode($fields['customfield_params']);
 
 			if($json){
 
 				$vars = get_object_vars($json);
+
 				foreach($vars as $key=>$value){
-					if(!empty($key)){
-						$store .= $key . '=' . vmJsApi::safe_json_encode($value) . '|';
-					}
+					$store .= $key . '=' . vmJsApi::safe_json_encode($value) . '|';
 				}
 
 				if(!empty($store)){
 					$q = 'UPDATE `#__virtuemart_product_customfields` SET `customfield_params` = "'.$db->escape($store).'" WHERE `virtuemart_customfield_id` = "'.$fields['virtuemart_customfield_id'].'" ';
 					$db->setQuery($q);
 					$db->execute();
+
 				}
 
 			}
@@ -296,6 +302,39 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 		$this->setRedirect($this->redirectPath, $msg);
 	}
 
+	function deleteAll(){
+
+		$this->checkPermissionForTools();
+
+		$msg = vmText::_('COM_VIRTUEMART_SYSTEM_ALLVMDATA_DELETED');
+		if(VmConfig::get('dangeroustools', false)){
+
+			$this->installer->populateVmDatabase("delete_essential.sql");
+			$this->installer->populateVmDatabase("delete_data.sql");
+			$this->setDangerousToolsOff();
+		}else {
+			$msg = $this->_getMsgDangerousTools();
+		}
+
+		$this->setRedirect($this->redirectPath, $msg);
+	}
+
+	function deleteRestorable(){
+
+		$this->checkPermissionForTools();
+
+		$msg = vmText::_('COM_VIRTUEMART_SYSTEM_RESTVMDATA_DELETED');
+		if(VmConfig::get('dangeroustools', false)){
+			$this->installer->populateVmDatabase("delete_restoreable.sql");
+			$this->setDangerousToolsOff();
+		}else {
+			$msg = $this->_getMsgDangerousTools();
+		}
+
+
+		$this->setRedirect($this->redirectPath, $msg);
+	}
+
 	function refreshCompleteInstallAndSample(){
 
 		$this->refreshCompleteInstall(true);
@@ -310,54 +349,15 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 
 			$model = $this->getModel('updatesMigration');
 
-			$safePath = VmConfig::get('forSale_path');
-
 			$model->restoreSystemTablesCompletly();
+
 			$sid = $model->setStoreOwner();
 
 			$sampletxt = '';
 			if($sample){
-
 				$model->installSampleData($sid);
-
-				if(!class_exists('VmConfig')) require_once(VMPATH_ADMIN .'/models/config.php');
-				VirtueMartModelConfig::installVMconfigTable();
-
-				if(!class_exists('VirtueMartModelConfig')) require(VMPATH_ADMIN .'/models/config.php');
-				$res  = VirtueMartModelConfig::checkConfigTableExists();
-
-				if($res) {
-					$config = VmConfig::loadConfig(true);
-					$config->set('forSale_path', $safePath);
-
-					$data['virtuemart_config_id'] = 1;
-					$data['config'] = $config->toString();
-
-					$confTable = $model->getTable( 'configs' );
-					$confTable->bindChecknStore( $data );
-
-					VmConfig::loadConfig( true );
-				}
-
 				$sampletxt = ' and sampledata installed';
 			}
-
-			VirtueMartModelConfig::installLanguageTables();
-
-			$cache = VmConfig::getCache();
-			//$cache = JFactory::getCache();
-			$cache->clean('com_virtuemart_cats');
-			$cache->clean('com_virtuemart_cat_childs');
-			$cache->clean('mod_virtuemart_product');
-			$cache->clean('mod_virtuemart_category');
-			$cache->clean('com_virtuemart_rss');
-			$cache->clean('com_virtuemart_cat_manus');
-			$cache->clean('com_virtuemart_revenue');
-			$cache->clean('convertECB');
-			$cache->clean('_virtuemart');
-			$cache->clean('com_plugins');
-			$cache->clean('_system');
-			$cache->clean('page');
 
 			$msg = '';
 			if(empty($errors)){
@@ -401,14 +401,14 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 
 			if($sample) $model->installSampleData($sid);
 
-			if(!class_exists('VirtueMartModelConfig')) require_once(VMPATH_ADMIN .'/models/config.php');
+			if(!class_exists('VmConfig')) require_once(VMPATH_ADMIN .'/models/config.php');
 			VirtueMartModelConfig::installVMconfigTable();
 
 			//Now lets set some joomla variables
 			//Caching should be enabled, set to files and for 15 minutes
 			if(JVM_VERSION>2){
 				if (!class_exists( 'ConfigModelCms' )) require(VMPATH_ROOT.DS.'components'.DS.'com_config'.DS.'model'.DS.'cms.php');
-				if (!class_exists( 'ConfigModelForm' )) require(VMPATH_ROOT.DS.'components'.DS.'com_config'.DS.'model'.DS.'form.php');
+				if (!class_exists( 'ConfigModelForm' )) require(VMPATH_ROOT.DS.'components'.DS.'com_config'.DS.'model'.DS.'application.php');
 				if (!class_exists( 'ConfigModelApplication' )) require(VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_config'.DS.'model'.DS.'application.php');
 			} else {
 				if (!class_exists( 'ConfigModelApplication' )) require(VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_config'.DS.'models'.DS.'application.php');
@@ -421,7 +421,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 			$jConfig['lifetime'] = 60;
 			$jConfig['list_limit'] = 25;
 			$jConfig['MetaDesc'] = 'VirtueMart works with Joomla! - the dynamic portal engine and content management system';
-			$jConfig['MetaKeys'] = 'virtuemart, vm3, joomla, Joomla';
+			$jConfig['MetaKeys'] = 'virtuemart, vm2, joomla, Joomla';
 
 			$app = JFactory::getApplication();
 			$return = $jConfModel->save($jConfig);
@@ -440,7 +440,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 			$msg = $this->_getMsgDangerousTools();
 		}
 
-		$this->setRedirect('index.php?option=com_virtuemart&view=updatesmigration&layout=insfinished&nosafepathcheck=1', $msg);
+		$this->setRedirect('index.php?option=com_virtuemart&view=updatesmigration&layout=insfinished', $msg);
 	}
 
 	/**
@@ -452,21 +452,6 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 		if(!class_exists('com_virtuemartInstallerScript')) require(VMPATH_ADMIN . DS . 'install' . DS . 'script.virtuemart.php');
 		$updater = new com_virtuemartInstallerScript();
 		$updater->update(false);
-		$this->setRedirect($this->redirectPath, 'Database updated');
-	}
-
-	function optimizeDatabase(){
-		vRequest::vmCheckToken();
-		$db = JFactory::getDbo();
-
-		$tables = array('virtuemart_products','virtuemart_product_categories','virtuemart_product_manufacturers','virtuemart_categories');
-
-		foreach($tables as $table){
-			$q = 'OPTIMIZE TABLE' . $db->quoteName('#__'.$table);
-			$db->setQuery($q);
-			$db->execute();
-		}
-
 		$this->setRedirect($this->redirectPath, 'Database updated');
 	}
 
@@ -531,7 +516,7 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 	 * @author Max Milbers
 	 */
 	function _getMsgDangerousTools(){
-		vmLanguage::loadJLang('com_virtuemart_config');
+		VmConfig::loadJLang('com_virtuemart_config');
 		$link = JURI::root() . 'administrator/index.php?option=com_virtuemart&view=config';
 		$msg = vmText::sprintf('COM_VIRTUEMART_SYSTEM_DANGEROUS_TOOL_DISABLED', vmText::_('COM_VIRTUEMART_ADMIN_CFG_DANGEROUS_TOOLS'), $link);
 		return $msg;
@@ -689,6 +674,23 @@ class VirtuemartControllerUpdatesMigration extends VmController{
 		$this->setRedirect($this->redirectPath, $msg);
 	}
 
+	function reOrderChilds(){
+
+		$this->checkPermissionForTools();
+
+		if(!VmConfig::get('dangeroustools', true)){
+			$msg = $this->_getMsgDangerousTools();
+			$this->setRedirect($this->redirectPath, $msg);
+			return false;
+		}
+
+		$this->storeMigrationOptionsInSession();
+		if(!class_exists('GenericTableUpdater')) require(VMPATH_ADMIN . DS . 'helpers' . DS . 'tableupdater.php');
+		$updater = new GenericTableUpdater();
+		$result = $updater->reOrderChilds();
+
+		$this->setRedirect($this->redirectPath, $result);
+	}
 
 	function storeMigrationOptionsInSession(){
 

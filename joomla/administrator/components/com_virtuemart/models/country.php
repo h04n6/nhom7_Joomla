@@ -7,14 +7,14 @@
 * @subpackage Country
 * @author Max Milbers
 * @author RickG
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: country.php 9413 2017-01-04 17:20:58Z Milbo $
+* @version $Id: country.php 8953 2015-08-19 10:30:52Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -51,7 +51,7 @@ class VirtueMartModelCountry extends VmModel {
      * @param string $code Country code to lookup
      * @return object Country object from database
      */
-    static function getCountryByCode($code) {
+    function getCountryByCode($code) {
 
 		if(empty($code)) return false;
 		$db = JFactory::getDBO();
@@ -59,13 +59,13 @@ class VirtueMartModelCountry extends VmModel {
 		$countryCodeLength = strlen($code);
 		switch ($countryCodeLength) {
 			case 2:
-				$fieldname = 'country_2_code';
+			$countryCodeFieldname = 'country_2_code';
 			break;
 			case 3:
-				$fieldname = 'country_3_code';
+			$countryCodeFieldname = 'country_3_code';
 			break;
 			default:
-				$fieldname = 'country_name';
+			return false;
 		}
 
 		static $countries = array();
@@ -73,7 +73,7 @@ class VirtueMartModelCountry extends VmModel {
 		if(!isset($countries[$code])){
 			$query = 'SELECT *';
 			$query .= ' FROM `#__virtuemart_countries`';
-			$query .= ' WHERE `' . $fieldname . '` = "' . $db->escape ($code) . '"';
+			$query .= ' WHERE `' . $countryCodeFieldname . '` = "' . $code . '"';
 			$db->setQuery($query);
 			$countries[$code] = $db->loadObject();
 		}
@@ -108,7 +108,7 @@ class VirtueMartModelCountry extends VmModel {
 		if (count($where) > 0) $whereString = ' WHERE '.implode(' AND ', $where) ;
 
 		$ordering = $this->_getOrdering();
-		$hash = $filterCountry.(int)$onlyPublished.$ordering.(int)$noLimit;
+		$hash = $filterCountry.$this->_selectedOrderingDir.(int)$onlyPublished.$this->_selectedOrdering.(int)$noLimit;
 		if(!isset($countries[$hash])){
 			$countries[$hash] = $this->_data = $this->exeSortSearchListQuery(0,'*',' FROM `#__virtuemart_countries`',$whereString,'',$ordering);
 		}

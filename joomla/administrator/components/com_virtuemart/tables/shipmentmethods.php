@@ -7,7 +7,7 @@
  * @package	VirtueMart
  * @subpackage Shipment
  * @author RickG
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -49,8 +49,6 @@ class TableShipmentmethods extends VmTable {
     /** @var string Element of shipmentmethod */
     var $shipment_element = '';
 
-    var $currency_id = 0;
-
     /** @var string parameter of the shipmentmethod */
     var $shipment_params = 0;
 
@@ -73,7 +71,7 @@ class TableShipmentmethods extends VmTable {
 	$this->setLoggable();
 	$this->setTranslatable(array('shipment_name', 'shipment_desc'));
 	$this->setSlug('shipment_name');
-        $this->setTableShortCut('shipm');
+
     }
 
 }

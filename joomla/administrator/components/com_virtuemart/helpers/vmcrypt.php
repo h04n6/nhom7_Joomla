@@ -26,7 +26,7 @@ class vmCrypt {
 
 		$key = self::_getKey ();
 
-		if(!empty($key) and function_exists('mcrypt_encrypt')){
+		if(function_exists('mcrypt_encrypt')){
 			// create a random IV to use with CBC encoding
 			$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC);
 			$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
@@ -59,6 +59,7 @@ class vmCrypt {
 					return $string;
 				} else {
 					$mcrypt_decrypt = mcrypt_decrypt (MCRYPT_RIJNDAEL_256, $key, $ciphertext_dec, MCRYPT_MODE_CBC, $iv_dec);
+					//vmdebug('vmCrypt mcrypt_decrypt available '.$mcrypt_decrypt,$ciphertext_dec);
 					return rtrim ($mcrypt_decrypt, "\0");
 				}
 
@@ -84,10 +85,10 @@ class vmCrypt {
 	private static function _checkCreateKeyFile($date){
 		jimport('joomla.filesystem.file');
 
-		vmSetStartTime('_checkCreateKeyFile');
+		vmSetStartTime('check');
 		static $existingKeys = false;
 
-		$keyPath = self::getEncryptSafepath ();
+		$keyPath = self::_getEncryptSafepath ();
 
 		if(!$existingKeys){
 			$dir = opendir($keyPath);
@@ -96,13 +97,13 @@ class vmCrypt {
 				while(false !== ( $file = readdir($dir)) ) {
 					if (( $file != '.' ) && ( $file != '..' )) {
 						if ( !is_dir($keyPath .DS. $file)) {
-							$ext = JFile::getExt($file);
-							if($ext=='ini' and $file!='vmm.ini' and file_exists($keyPath .DS. $file)){
+							$ext = Jfile::getExt($file);
+							if($ext=='ini' and file_exists($keyPath .DS. $file)){
 								$content = parse_ini_file($keyPath .DS. $file);
 								if($content and is_array($content) and isset($content['unixtime'])){
-									$k = $content['unixtime'];
+									$key = $content['unixtime'];
 									unset($content['unixtime']);
-									$existingKeys[$k] = $content;
+									$existingKeys[$key] = $content;
 									//vmdebug('Reading '.$keyPath .DS. $file,$content);
 								}
 
@@ -125,59 +126,42 @@ class vmCrypt {
 
 		if($existingKeys and is_array($existingKeys) and count($existingKeys)>0){
 			ksort($existingKeys);
-			$key = '';
-			$usedKey = '';
-			$uDate = 0;
-
-			if(empty($date)){
-				$date = new JDate('now');
-				$date = $date->toSQL();
-			}
 
 			if(!empty($date)){
-
+				$key = '';
 				foreach($existingKeys as $unixDate=>$values){
 					if(($unixDate-30) >= $date ){
 						vmdebug('$unixDate '.$unixDate.' >= $date '.$date);
 						continue;
 					}
-					vmdebug('$unixDate < $date '.$date. ' '.$unixDate);
+					vmdebug('$unixDate < $date '.$date);
+					$key = $values['key'];
 					$usedKey = $values;
-					$uDate = $unixDate;
 				}
-			}
+				if(!isset($usedKey['b64']) or $usedKey['b64']){
+					vmdebug('Doing base64_decode ',$usedKey);
+					$key = base64_decode($key);
+				}
 
-			if(empty($usedKey)){
+			} else {
 				$usedKey = end($existingKeys);
-				$uDate = key($existingKeys);
-				//No key means, we wanna encrypt something, when it has not the new size,
+				$key = $usedKey['key'];
+				//No key means, we wanna encrypt something, when it has not the new attribute,
 				//it is an old key and must be replaced
 				$ksize = VmConfig::get('keysize',24);
-				if(empty($usedKey['key']) or !isset($usedKey['b64']) or !isset($usedKey['size']) or $usedKey['size']!=$ksize){
+				if(empty($key) or !isset($usedKey['b64']) or !isset($usedKey['size']) or $usedKey['size']!=$ksize){
 					$key = self::_createKeyFile($keyPath,$ksize);
-					$k = $key['unixtime'];
-					unset($key['unixtime']);
-					$existingKeys[$k] = $key;
+					$existingKeys[$key['unixtime']] = $key;
 					return $key['key'];
 				}
 			}
 
-			if(!empty($usedKey['key']) and (!isset($usedKey['b64']) or $usedKey['b64']=='1')){
-
-				$key = base64_decode($usedKey['key']);
-				$existingKeys[$uDate]['key'] = $key;
-				$existingKeys[$uDate]['b64'] = 0;
-				//vmdebug('Doing base64_decode '.$usedKey['key']. ' '.$key);
-			} else {
-				$key = $usedKey['key'];
-			}
-
+			//vmdebug('Length of key',strlen($key));
+			//vmTime('my time','check');
 			return $key;
 		} else {
 			$key = self::_createKeyFile($keyPath,VmConfig::get('keysize',24));
-			$k = $key['unixtime'];
-			unset($key['unixtime']);
-			$existingKeys[$k] = $key;
+			$existingKeys[$key['unixtime']] = $key;
 			return $key['key'];
 		}
 	}
@@ -191,28 +175,27 @@ class vmCrypt {
 
 			$key = self::crypto_rand_secure($size);
 
-			vmdebug('create key file '.$size.' '.$key);
+			vmdebug('create key file ',$size);
 			$date = JFactory::getDate();
 			$today = $date->toUnix();
 			$dat = date("Y-m-d H:i:s");
-			$encb64 = 1;
 			$content = ';<?php die(); */
 						[keys]
-						key = "'.base64_encode($key).'"
+						key = "'.$key.'"
 						unixtime = "'.$today.'"
 						date = "'.$dat.'"
-						b64 = "'.$encb64.'"
+						b64 = "0"
 						size = "'.$size.'"
 						; */ ?>';
 			$result = JFile::write($filename, $content);
-			//b64 must be 0, else it will be b64 decoded again
+
 			return array('key'=>$key,'unixtime'=>$today,'date'=>$dat,'b64'=>0,'size'=>$size);
 		} else {
 			return false;
 		}
 	}
 
-	public static function getEncryptSafepath () {
+	private static function _getEncryptSafepath () {
 
 		if (!class_exists('ShopFunctions'))
 			require(VMPATH_ADMIN . DS . 'helpers' . DS . 'shopfunctions.php');
@@ -221,13 +204,14 @@ class vmCrypt {
 			return NULL;
 		}
 		$encryptSafePath = $safePath . self::ENCRYPT_SAFEPATH;
-		self::createEncryptFolder($encryptSafePath);
-
+		//echo 'my $encryptSafePath '.$encryptSafePath;
+		//if(!JFolder::exists($encryptSafePath)){
+			self::createEncryptFolder($encryptSafePath);
+		//}
 		return $encryptSafePath;
 	}
 
 	private static function createEncryptFolder ($folderName) {
-		jimport('joomla.filesystem.folder');
 
 		//$folderName = self::_getEncryptSafepath ();
 

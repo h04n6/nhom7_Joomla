@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage Shipment
 * @author RickG
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: shipmentmethod.php 9478 2017-03-16 09:33:17Z Milbo $
+* @version $Id: shipmentmethod.php 8953 2015-08-19 10:30:52Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -37,7 +37,7 @@ class VirtuemartControllerShipmentmethod extends VmController {
 	 * @access	public
 	 */
 	function __construct() {
-		vmLanguage::loadJLang('com_virtuemart_orders',TRUE);
+		VmConfig::loadJLang('com_virtuemart_orders',TRUE);
 		parent::__construct();
 	}
 
@@ -73,8 +73,10 @@ class VirtuemartControllerShipmentmethod extends VmController {
 	 * @author Valérie Isaksen
 	 */
 	public function CloneShipment() {
+		$mainframe = Jfactory::getApplication();
 
-		$app = JFactory::getApplication();
+		/* Load the view object */
+		$view = $this->getView('shipmentmethod', 'html');
 
 		$model = VmModel::getModel('shipmentmethod');
 		$msgtype = '';
@@ -89,7 +91,7 @@ class VirtuemartControllerShipmentmethod extends VmController {
 			}
 		}
 
-		$app->redirect('index.php?option=com_virtuemart&view=shipmentmethod', $msg, $msgtype);
+		$mainframe->redirect('index.php?option=com_virtuemart&view=shipmentmethod', $msg, $msgtype);
 	}
 }
 // pure php no closing tag

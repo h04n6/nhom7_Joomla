@@ -5,7 +5,7 @@ if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not 
 
 /**
  *
- * @version $Id: currencydisplay.php 9573 2017-06-07 15:06:51Z kkmediaproduction $
+ * @version $Id: currencydisplay.php 8941 2015-08-03 15:52:38Z Milbo $
  * @package VirtueMart
  * @subpackage classes
  *
@@ -40,13 +40,9 @@ class CurrencyDisplay {
 	var $_vendorCurrency_code_3 = 0;
 	var $_vendorCurrency_numeric = 0;
 
-	public static $priceNames = array('basePrice','variantModification','basePriceVariant',
-	'basePriceWithTax','discountedPriceWithoutTax', 'discountedPriceWithoutTaxTt',
-	'salesPrice', 'salesPriceTt', 'priceWithoutTax', 'priceWithoutTaxTt',
-	'salesPriceWithDiscount','discountAmount','discountAmountTt','taxAmount', 'taxAmountTt','unitPrice');
-
 	private function __construct ($vendorId = 0){
 
+		$this->_app = JFactory::getApplication();
 		if(empty($vendorId)) $vendorId = 1;
 
 		$vendorM = VmModel::getModel('vendor');
@@ -71,7 +67,6 @@ class CurrencyDisplay {
 			$this->_currencyConverter = new convertECB();
 
 		}
-
 
 	}
 
@@ -103,9 +98,9 @@ class CurrencyDisplay {
 			self::$_instance[$h] = new CurrencyDisplay($vendorId);
 
 			if(empty($currencyId)){
-				$app = JFactory::getApplication();
-				if($app->isSite()){
-					self::$_instance[$h]->_currency_id = $app->getUserStateFromRequest( "virtuemart_currency_id", 'virtuemart_currency_id',vRequest::getInt('virtuemart_currency_id', 0));
+
+				if(self::$_instance[$h]->_app->isSite()){
+					self::$_instance[$h]->_currency_id = self::$_instance[$h]->_app->getUserStateFromRequest( "virtuemart_currency_id", 'virtuemart_currency_id',vRequest::getInt('virtuemart_currency_id', 0));
 				}
 				if(empty(self::$_instance[$h]->_currency_id)){
 					self::$_instance[$h]->_currency_id = self::$_instance[$h]->_vendorCurrency;
@@ -115,13 +110,13 @@ class CurrencyDisplay {
 				self::$_instance[$h]->_currency_id = $currencyId;
 			}
 
-			$curM = VmModel::getModel('currency');
-			$style = $curM->getData((int)self::$_instance[$h]->_currency_id);
+			$vendorM = VmModel::getModel('currency');
+			$style = $vendorM->getData((int)self::$_instance[$h]->_currency_id);
 
 			if(!empty($style)){
 				self::$_instance[$h]->setCurrencyDisplayToStyleStr($style);
 			} else {
-				vmLanguage::loadJLang('com_virtuemart');
+				VmConfig::loadJLang('com_virtuemart');
 
 				if(empty(self::$_instance[$h]->_currency_id)){
 					$link = JURI::root().'administrator/index.php?option=com_virtuemart&view=user&task=editshop';
@@ -184,11 +179,16 @@ class CurrencyDisplay {
 
 		}
 
+		$priceFieldsRoots = array('basePrice','variantModification','basePriceVariant',
+			'basePriceWithTax','discountedPriceWithoutTax',
+			'salesPrice','priceWithoutTax',
+			'salesPriceWithDiscount','discountAmount','taxAmount','unitPrice');
+
 		if($sprgrp){
 
 			if($sprgrp->custom_price_display){
 				if($sprgrp->show_prices){
-					foreach(self::$priceNames as $name){
+					foreach($priceFieldsRoots as $name){
 						$show = (int)$sprgrp->$name;
 						$text = (int)$sprgrp->{$name.'Text'};
 						$round = (int)$sprgrp->{$name.'Rounding'};
@@ -200,7 +200,7 @@ class CurrencyDisplay {
 				}
 			} else {
 				if(VmConfig::get('show_prices', 1)){
-					foreach(self::$priceNames as $name){
+					foreach($priceFieldsRoots as $name){
 						$show = VmConfig::get($name,0);
 						$text = VmConfig::get($name.'Text',0);
 						$round = VmConfig::get($name.'Rounding',$this->_nbDecimal);
@@ -214,7 +214,7 @@ class CurrencyDisplay {
 		}
 
 		if(!count($this->_priceConfig)){
-			foreach(self::$priceNames as $name){
+			foreach($priceFieldsRoots as $name){
 				$this->_priceConfig[$name] = array(0,0,0);
 			}
 		}
@@ -230,8 +230,14 @@ class CurrencyDisplay {
 	 */
 	public function getCurrencyForDisplay( $currencyId=0 ){
 
+		if(empty($currencyId)){
+			$currencyId = (int)$this->_app->getUserStateFromRequest( 'virtuemart_currency_id', 'virtuemart_currency_id',$this->_vendorCurrency );
+			if(empty($currencyId)){
+				$currencyId = $this->_vendorCurrency;
+			}
+		}
 
-		return $this->_currency_id;
+		return $currencyId;
 	}
 
 	/**
@@ -250,8 +256,7 @@ class CurrencyDisplay {
 
 	public function roundForDisplay($price, $currencyId=0,$quantity = 1.0,$inToShopCurrency = false,$nb= -1){
 
-		if(empty($currencyId)) $currencyId = $this->getCurrencyForDisplay($currencyId);
-
+		$currencyId = $this->getCurrencyForDisplay($currencyId);
 		if($nb==-1){
 			$nb = $this->_nbDecimal;
 		}
@@ -286,16 +291,13 @@ class CurrencyDisplay {
 			$nb = abs($nb);
 		}
 
+		//$res = $this->formatNumber($nb, $nbDecimal, $this->_thousands, $this->_decimal);
 		$res = number_format((float)$nb,(int)$nbDecimal,$this->_decimal,$this->_thousands);
 		$search = array('{sign}', '{number}', '{symbol}');
 		$replace = array($sign, $res, $this->_symbol);
 		$formattedRounded = str_replace ($search,$replace,$format);
 
 		return $formattedRounded;
-	}
-
-	public function getFormattedNumber($n,$dec){
-		return number_format((float)$n,(int)$dec,$this->_decimal,$this->_thousands);
 	}
 
 	/**
@@ -319,11 +321,7 @@ class CurrencyDisplay {
 
 		//This is a fallback because we removed the "salesPriceWithDiscount" ;
 		if(is_array($product_price)){
-			if(isset($product_price[$name])){
-				$price = $product_price[$name] ;
-			} else {
-				return '';
-			}
+			$price = $product_price[$name] ;
 		} else {
 			$price = $product_price;
 		}
@@ -340,15 +338,16 @@ class CurrencyDisplay {
 			if($priceOnly){
 				return $priceFormatted;
 			}
-			if($this->_priceConfig[$name][2] and !$forceNoLabel) {
-				$descr = vmText::_($description);
-				if($switchSequel){
-					return '<div class="Price'.$name.$vis.'"><span class="Price'.$name.'">'.$priceFormatted.'</span>'.$descr.'</div>';
-				} else {
-					return '<div class="Price'.$name.$vis.'"><span class="vm-price-desc">'.$descr.'</span><span class="Price'.$name.'">'.$priceFormatted.'</span></div>';
-				}
+			if($forceNoLabel) {
+				return '<div class="Price'.$name.$vis.'" ><span class="Price'.$name.'" >'.$priceFormatted.'</span></div>';
+			}
+			$descr = '';
+			if($this->_priceConfig[$name][2]) $descr = vmText::_($description);
+			// 			vmdebug('createPriceDiv $name '.$name.' '.$product_price[$name]);
+			if($switchSequel){
+				return '<div class="Price'.$name.$vis.'"  ><span class="Price'.$name.'" >'.$priceFormatted.'</span>'.$descr.'</div>';
 			} else {
-				return '<div class="Price'.$name.$vis.'"><span class="Price'.$name.'">'.$priceFormatted.'</span></div>';
+				return '<div class="Price'.$name.$vis.'"><span class="vm-price-desc">'.$descr.'</span><span class="Price'.$name.'">'.$priceFormatted.'</span></div>';
 			}
 		}
 

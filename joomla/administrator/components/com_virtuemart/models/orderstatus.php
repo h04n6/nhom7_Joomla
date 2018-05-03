@@ -7,14 +7,14 @@
  * @subpackage OrderStatus
  * @author Oscar van Eijk
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: orderstatus.php 9420 2017-01-12 09:35:36Z Milbo $
+ * @version $Id: orderstatus.php 8953 2015-08-19 10:30:52Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -39,30 +39,25 @@ class VirtueMartModelOrderstatus extends VmModel {
 	 */
 	function __construct() {
 		parent::__construct();
-		vmLanguage::loadJLang('com_virtuemart_orders',TRUE);
+		VmConfig::loadJLang('com_virtuemart_orders',TRUE);
 		$this->setMainTable('orderstates');
 	}
 
 	function getVMCoreStatusCode(){
-		return array( 'P','S','X');
+		return array( 'P','S');
 	}
 
 	/**
 	 * Retrieve a list of order statuses from the database.
 	 * @return object List of order status objects
 	 */
-	function getOrderStatusList($published=true)
+	function getOrderStatusList()
 	{
 
 		if (vRequest::getCmd('view') !== 'orderstatus') $ordering = ' order by `ordering` ';
 		else $ordering = $this->_getOrdering();
 		$this->_noLimit=true;
-		if($published){	
-			$published = 'WHERE published = "1"';
-		} else {
-			$published = '';
-		}
-		$this->_data = $this->exeSortSearchListQuery(0,'*',' FROM `#__virtuemart_orderstates`',$published,'',$ordering);
+		$this->_data = $this->exeSortSearchListQuery(0,'*',' FROM `#__virtuemart_orderstates`','','',$ordering);
 		// 		vmdebug('order data',$this->_data);
 		return $this->_data ;
 	}
@@ -75,15 +70,10 @@ class VirtueMartModelOrderstatus extends VmModel {
 	 * @param char $_code Order status code
 	 * @return string The name of the order status
 	 */
-	public function getOrderStatusNames ($published = true) {
+	public function getOrderStatusNames () {
 		static $orderStatusNames=0;
 		if(empty($orderStatusNames)){
-			if($published){
-				$published = 'WHERE published = "1"';
-			} else {
-				$published = '';
-			}
-			$q = 'SELECT `order_status_name`,`order_status_code` FROM `#__virtuemart_orderstates` '.$published.'order by `ordering` ';
+			$q = 'SELECT `order_status_name`,`order_status_code` FROM `#__virtuemart_orderstates` order by `ordering` ';
 			$db = JFactory::getDBO();
 			$db->setQuery($q);
 			$orderStatusNames = $db->loadAssocList('order_status_code');

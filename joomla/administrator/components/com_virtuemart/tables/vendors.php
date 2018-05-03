@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage Vendor
 * @author Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2009 - 2014 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: vendors.php 9413 2017-01-04 17:20:58Z Milbo $
+* @version $Id: vendors.php 8749 2015-02-24 10:31:08Z Milbo $
 */
 
 defined('_JEXEC') or die('Restricted access');
@@ -78,7 +78,6 @@ class TableVendors extends VmTableData {
 		);
 
 		$varsToPushParam = array(
-			'max_cats_per_product'=>array(-1,'int'),
 			'vendor_min_pov'=>array(0.0,'float'),
 			'vendor_min_poq'=>array(1,'int'),
 			'vendor_freeshipment'=>array(0.0,'float'),
@@ -114,7 +113,6 @@ class TableVendors extends VmTableData {
 			
 			'vendor_letter_add_tos' => array(0,'int'),
 			'vendor_letter_add_tos_newpage' => array(1,'int'),
-			'vendor_letter_for_product_pdf' => array(0,'int'),
 
 			'vendor_mail_width' => array(640, 'int'),
 			'vendor_mail_header' => array(1, 'int'),

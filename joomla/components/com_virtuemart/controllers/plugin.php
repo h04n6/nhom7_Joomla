@@ -6,7 +6,7 @@
  * @package    VirtueMart
  * @subpackage Core
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2011 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -68,8 +68,6 @@ class VirtuemartControllerPlugin extends JControllerLegacy {
 				$document->setMimeEncoding ('application/json');
 				// Change the suggested filename.
 				JResponse::setHeader ('Content-Disposition', 'attachment;filename="' . $type . '.json"');
-				JResponse::setHeader("Content-type","application/json");
-				JResponse::sendHeaders();
 				echo json_encode ($render);
 				jExit();
 			}

@@ -7,8 +7,8 @@
  * @subpackage Cart
  * @author Max Milbers
  *
- * @link https://virtuemart.net
- * @copyright Copyright (c) 2004 - 2016 VirtueMart Team. All rights reserved.
+ * @link http://www.virtuemart.net
+ * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -20,41 +20,35 @@
 // Check to ensure this file is included in Joomla!
 defined ('_JEXEC') or die('Restricted access');
 
-vmJsApi::vmValidator();
+JHtml::_ ('behavior.formvalidation');
 
 ?>
 
-<div class="vm-cart-header-container">
-	<div class="width50 floatleft vm-cart-header">
-		<h1><?php echo vmText::_ ('COM_VIRTUEMART_CART_TITLE'); ?></h1>
-		<div class="payments-signin-button" ></div>
-	</div>
-	<?php if (VmConfig::get ('oncheckout_show_steps', 1) ){
-		if($this->checkout_task == 'checkout') {
-			echo '<div class="checkoutStep" id="checkoutStep1">' . vmText::_ ('COM_VIRTUEMART_USER_FORM_CART_STEP1') . '</div>';
-		} else { //if($this->checkout_task == 'confirm') {
-			echo '<div class="checkoutStep" id="checkoutStep4">' . vmText::_ ('COM_VIRTUEMART_USER_FORM_CART_STEP4') . '</div>';
-		}
-	}  ?>
-	<div class="width50 floatleft right vm-continue-shopping">
-		<?php // Continue Shopping Button
-		if (!empty($this->continue_link_html)) {
-			echo $this->continue_link_html;
-		} ?>
-	</div>
-	<div class="clear"></div>
-</div>
-
 <div id="cart-view" class="cart-view">
-
+	<div class="vm-cart-header-container">
+		<div class="width50 floatleft vm-cart-header">
+			<h1><?php echo vmText::_ ('COM_VIRTUEMART_CART_TITLE'); ?></h1>
+			<div class="payments-signin-button" ></div>
+		</div>
+		<?php if (VmConfig::get ('oncheckout_show_steps', 1) && $this->checkout_task === 'confirm') {
+			echo '<div class="checkoutStep" id="checkoutStep4">' . vmText::_ ('COM_VIRTUEMART_USER_FORM_CART_STEP4') . '</div>';
+		} ?>
+		<div class="width50 floatleft right vm-continue-shopping">
+			<?php // Continue Shopping Button
+			if (!empty($this->continue_link_html)) {
+				echo $this->continue_link_html;
+			} ?>
+		</div>
+		<div class="clear"></div>
+	</div>
 
 	<?php
-	$uri = vmUri::getCurrentUrlBy('get');
-	$uri = str_replace(array('?tmpl=component','&tmpl=component'),'',$uri);
+	$uri = vmURI::getCleanUrl();
+	$uri = str_replace('&tmpl=component','',$uri);
 	echo shopFunctionsF::getLoginForm ($this->cart, FALSE,$uri);
 
 	// This displays the form to change the current shopper
-	if ($this->allowChangeShopper and !$this->isPdf){
+	if ($this->allowChangeShopper){
 		echo $this->loadTemplate ('shopperform');
 	}
 
@@ -62,7 +56,7 @@ vmJsApi::vmValidator();
 	$taskRoute = '';
 	?><form method="post" id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_ ('index.php?option=com_virtuemart&view=cart' . $taskRoute, $this->useXHTML, $this->useSSL); ?>">
 		<?php
-		if(!$this->isPdf and VmConfig::get('multixcart')=='byselection'){
+		if(VmConfig::get('multixcart')=='byselection'){
 			if (!class_exists('ShopFunctions')) require(VMPATH_ADMIN . DS . 'helpers' . DS . 'shopfunctions.php');
 			echo shopFunctions::renderVendorFullVendorList($this->cart->vendorId);
 			?><input type="submit" name="updatecart" title="<?php echo vmText::_('COM_VIRTUEMART_SAVE'); ?>" value="<?php echo vmText::_('COM_VIRTUEMART_SAVE'); ?>" class="button"  style="margin-left: 10px;"/><?php
@@ -134,32 +128,33 @@ jQuery(document).ready(function($) {
 });
 	");
 
-if( !VmConfig::get('oncheckout_ajax',false)) {
-	vmJsApi::addJScript('vm.STisBT',"
-		jQuery(document).ready(function($) {
+vmJsApi::addJScript('vm.STisBT',"
+	jQuery(document).ready(function($) {
 
-			if ( $('#STsameAsBTjs').is(':checked') ) {
+		if ( $('#STsameAsBTjs').is(':checked') ) {
+			$('#output-shipto-display').hide();
+		} else {
+			$('#output-shipto-display').show();
+		}
+		$('#STsameAsBTjs').click(function(event) {
+			if($(this).is(':checked')){
+				$('#STsameAsBT').val('1') ;
 				$('#output-shipto-display').hide();
 			} else {
+				$('#STsameAsBT').val('0') ;
 				$('#output-shipto-display').show();
 			}
-			$('#STsameAsBTjs').click(function(event) {
-				if($(this).is(':checked')){
-					$('#STsameAsBT').val('1') ;
-					$('#output-shipto-display').hide();
-				} else {
-					$('#STsameAsBT').val('0') ;
-					$('#output-shipto-display').show();
-				}
-				var form = jQuery('#checkoutFormSubmit');
-				form.submit();
-			});
+			var form = jQuery('#checkoutFormSubmit');
+			form.submit();
 		});
-	");
-}
+	});
+");
 
 $this->addCheckRequiredJs();
-?><div style="display:none;" id="cart-js">
-<?php echo vmJsApi::writeJS(); ?>
-</div>
+
+
+
+echo vmJsApi::writeJS();
+
+?>
 </div>

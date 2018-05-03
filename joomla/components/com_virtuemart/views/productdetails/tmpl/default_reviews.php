@@ -6,14 +6,14 @@
  * @package    VirtueMart
  * @subpackage
  * @author Max Milbers, Valerie Isaksen
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: default_reviews.php 9640 2017-09-27 14:26:39Z Milbo $
+ * @version $Id: default_reviews.php 8508 2014-10-22 18:57:14Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -26,7 +26,7 @@ if ($this->allowRating || $this->allowReview || $this->showRating || $this->show
 	$maxrating = VmConfig::get( 'vm_maximum_rating_scale', 5 );
 	$ratingsShow = VmConfig::get( 'vm_num_ratings_show', 3 ); // TODO add  vm_num_ratings_show in vmConfig
 	$stars = array();
-	//$showall = vRequest::getBool( 'showall', FALSE );
+	$showall = vRequest::getBool( 'showall', FALSE );
 	$ratingWidth = $maxrating*24;
 	for( $num = 0; $num<=$maxrating; $num++ ) {
 		$stars[] = '
@@ -141,20 +141,10 @@ function refresh_counter() {
 		<span><?php echo vmText::_( 'COM_VIRTUEMART_REVIEW_COUNT' ) ?>
 			<input type="text" value="0" size="4" name="counter" maxlength="4" readonly="readonly"/>
 				</span>
-                <br/><br/>
-                <input class="highlight-button" type="submit" onclick="return( check_reviewform());"
-                       name="submit_review" title="<?php echo vmText::_( 'COM_VIRTUEMART_REVIEW_SUBMIT' ) ?>"
-                       value="<?php echo vmText::_( 'COM_VIRTUEMART_REVIEW_SUBMIT' ) ?>"/>
-				<?php } else if($review_editable and $this->allowRating) { ?>
-                    <input class="highlight-button" type="submit" name="submit_review"
-                           title="<?php echo vmText::_( 'COM_VIRTUEMART_REVIEW_SUBMIT' ) ?>"
-                           value="<?php echo vmText::_( 'COM_VIRTUEMART_REVIEW_SUBMIT' ) ?>"/>
-
-                </div>
-					<?php
+				<?php
 				}
 
-				/*if($review_editable and $this->allowReview) {
+				if($review_editable and $this->allowReview) {
 					?>
 					<br/><br/>
 					<input class="highlight-button" type="submit" onclick="return( check_reviewform());"
@@ -165,9 +155,9 @@ function refresh_counter() {
 						   title="<?php echo vmText::_( 'COM_VIRTUEMART_REVIEW_SUBMIT' ) ?>"
 						   value="<?php echo vmText::_( 'COM_VIRTUEMART_REVIEW_SUBMIT' ) ?>"/>
 				<?php
-				}*/
+				}
 
-				?>
+				?>    </div>
 			<input type="hidden" name="virtuemart_product_id"
 				   value="<?php echo $this->product->virtuemart_product_id; ?>"/>
 			<input type="hidden" name="option" value="com_virtuemart"/>
@@ -178,7 +168,7 @@ function refresh_counter() {
 		</form>
 	<?php
 	} else if(!$review_editable) {
-		echo '<strong>'.vmText::_( 'COM_VIRTUEMART_DEAR' ).$this->user->name.',</strong><br>';
+		echo '<strong>'.vmText::_( 'COM_VIRTUEMART_DEAR' ).$this->user->name.',</strong><br />';
 		echo vmText::_( 'COM_VIRTUEMART_REVIEW_ALREADYDONE' );
 	}
 }
@@ -218,7 +208,7 @@ if ($this->showReview) {
 					<?php
 				}
 				$i++;
-				if ($i == $ratingsShow && !$this->showall) {
+				if ($i == $ratingsShow && !$showall) {
 					/* Show all reviews ? */
 					if ($reviews_published >= $ratingsShow) {
 						$attribute = array('class'=> 'details', 'title'=> vmText::_ ('COM_VIRTUEMART_MORE_REVIEWS'));

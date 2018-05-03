@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage updatesMigration
 * @author Max Milbers, RickG
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: updatesmigration.php 9621 2017-08-14 12:20:48Z Milbo $
+* @version $Id: updatesmigration.php 8852 2015-05-17 13:17:52Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -67,10 +67,6 @@ class VirtueMartModelUpdatesMigration extends VmModel {
      */
     function setStoreOwner($userId=-1) {
 
-		if(!vmAccess::manager('core')){
-			vmError('You have no rights to performe this action');
-			return false;
-		}
 	    $allowInsert=FALSE;
 
 	    if($userId===-1){
@@ -83,33 +79,31 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 			vmdebug('setStoreOwner $userId = '.$userId.' by determineStoreOwner');
 		}
 
-		$utable = $this->getTable('vmusers');
-		$utable->load($userId);
+		$db = JFactory::getDBO();
+		$db->setQuery('SELECT * FROM  `#__virtuemart_vmusers` WHERE `virtuemart_user_id`= "' . $userId . '" ');
+		$oldUserId = $db->loadResult();
 
-		if(empty($utable->virtuemart_user_id)){
-			$juser=JFactory::getUser($userId);
-			if(!empty($juser->id)){
-				$allowInsert = TRUE;
-			}
-		} else {
-			$oldUserId = $utable->virtuemart_user_id;
-		}
+		if (!empty($oldUserId) and !empty($userId)) {
+		    $db->setQuery( 'UPDATE `#__virtuemart_vmusers` SET `virtuemart_vendor_id` = "0", `user_is_vendor` = "0" WHERE `virtuemart_vendor_id` ="1" ');
+		    if ($db->execute() == false ) {
+			    vmWarn( 'UPDATE __vmusers failed for virtuemart_user_id '.$userId);
+			    return false;
+		    }
 
-		if ( (!empty($oldUserId) and !empty($userId)) or $allowInsert) {
-			$db = JFactory::getDBO();
-			$db->setQuery( 'UPDATE `#__virtuemart_vmusers` SET `virtuemart_vendor_id` = "0", `user_is_vendor` = "0" WHERE `virtuemart_vendor_id` ="1" ');
-			if ($db->execute() == false ) {
+			$db->setQuery( 'UPDATE `#__virtuemart_vmusers` SET `virtuemart_vendor_id` = "1", `user_is_vendor` = "1" WHERE `virtuemart_user_id` ="'.$userId.'" ');
+			if ($db->execute() === false ) {
 				vmWarn( 'UPDATE __vmusers failed for virtuemart_user_id '.$userId);
 				return false;
-			}
-		}
-
-		$data = array('virtuemart_user_id' => $userId, 'virtuemart_vendor_id' => "1", 'user_is_vendor' => "1");
-		if($utable->bindChecknStore($data)){
-			if($allowInsert){
-				//vmInfo('setStoreOwner VmUser inserted new main vendor has user id  '.$userId);
 			} else {
 				vmInfo('setStoreOwner VmUser updated new main vendor has user id  '.$userId);
+			}
+		} else if($allowInsert){
+			$db->setQuery('INSERT `#__virtuemart_vmusers` (`virtuemart_user_id`, `user_is_vendor`, `virtuemart_vendor_id`) VALUES ("' . $userId . '", "1","1")');
+			if ($db->execute() === false ) {
+				vmWarn( 'setStoreOwner was not possible to execute INSERT __vmusers for virtuemart_user_id '.$userId);
+				return false;
+			} else {
+				vmInfo('setStoreOwner VmUser inserted new main vendor has user id  '.$userId);
 			}
 		}
 
@@ -177,24 +171,14 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 		vmError(vmText::_('COM_VIRTUEMART_NOT_ABLE_TO_SAVE_USER_DATA')  );
 	}
 
-	if(!VmConfig::$vmlang){
-		vmLanguage::initialise();
-	}
-
-	$lang = VmConfig::$vmlang;
-
-	$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_sample_data_'.$lang.'.sql';
-	if (!file_exists($filename)) {
-		$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_sample_data.sql';
-	}
-
-	//copy sampel media
-	$src = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart' .DS. 'assets' .DS. 'images' .DS. 'vmsampleimages';
-	// 			if(version_compare(JVERSION,'1.6.0','ge')) {
-	$dst = VMPATH_ROOT .DS. 'images' .DS. 'virtuemart';
-
-	$this->recurse_copy($src,$dst);
-
+	$filename = VMPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'install'.DS.'install_sample_data.sql';
+	    if(!VmConfig::$vmlang){
+		    $params = JComponentHelper::getParams('com_languages');
+		    $lang = $params->get('site', 'en-GB');//use default joomla
+		    $lang = strtolower(strtr($lang,'-','_'));
+	    } else {
+		    $lang = VmConfig::$vmlang;
+	    }
 	if(!$this->execSQLFile($filename)){
 		vmError(vmText::_('Problems execution of SQL File '.$filename));
 	} else {
@@ -251,58 +235,6 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 	return true;
 
     }
-
-	/**
-	 * copy all $src to $dst folder and remove it
-	 *
-	 * @author Max Milbers
-	 * @param String $src path
-	 * @param String $dst path
-	 * @param String $type modules, plugins, languageBE, languageFE
-	 */
-	static public function recurse_copy($src,$dst,$delete = true ) {
-
-		if(!class_exists('JFolder'))
-			require(VMPATH_LIBS.DS.'joomla'.DS.'filesystem'.DS.'folder.php');
-		$dir = '';
-		if(JFolder::exists($src)){
-			$dir = opendir($src);
-			JFolder::create($dst);
-
-			if(is_resource($dir)){
-				while(false !== ( $file = readdir($dir)) ) {
-					if (( $file != '.' ) && ( $file != '..' )) {
-						if ( is_dir($src .DS. $file) ) {
-							if(!JFolder::create($dst . DS . $file)){
-								$app = JFactory::getApplication ();
-								$app->enqueueMessage ('Couldnt create folder ' . $dst . DS . $file);
-							}
-							self::recurse_copy($src .DS. $file,$dst .DS. $file);
-						}
-						else {
-							if($delete and JFile::exists($dst .DS. $file)){
-								if(!JFile::delete($dst .DS. $file)){
-									$app = JFactory::getApplication();
-									$app -> enqueueMessage('Couldnt delete '.$dst .DS. $file);
-								}
-							}
-							if(!JFile::copy($src .DS. $file,$dst .DS. $file)){
-								$app = JFactory::getApplication();
-								$app -> enqueueMessage('Couldnt move '.$src .DS. $file.' to '.$dst .DS. $file);
-							}
-						}
-					}
-				}
-				closedir($dir);
-				//if (is_dir($src)) JFolder::delete($src);
-				return true;
-			}
-		}
-
-		$app = JFactory::getApplication();
-		$app -> enqueueMessage('Couldnt read dir '.$dir.' source '.$src);
-
-	}
 
 	function installPluginTable ($className,$tablename,$tableComment) {
 
@@ -496,11 +428,6 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 			return false;
 		}
 
-		//Delete VM menues
-		$q = 'DELETE FROM #__menu WHERE `link` = "%option=com_virtuemart%" ';
-		$db->setQuery($q);
-		$db->execute();
-
 		return true;
     }
 
@@ -603,7 +530,7 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 				$query="SELECT * FROM `#__update_sites` WHERE `update_site_id`=".$update_sites_extensions->update_site_id;
 				$db->setQuery($query);
 				$update_sites= $db->loadAssocList();
-				//vmdebug('updateJoomlaUpdateServer',$update_sites);
+				vmdebug('updateJoomlaUpdateServer',$update_sites);
 				if(empty($update_sites)){
 					vmdebug('No update sites found, they should be inserted');
 					return false;
@@ -640,45 +567,6 @@ class VirtueMartModelUpdatesMigration extends VmModel {
 			$extensionXmlFileName = $dst;//;. DS . $element.DS . $element. '.xml';
 		}
 		return $extensionXmlFileName;
-	}
-
-	public function setSafePathCreateFolders($token = ''){
-
-		if(!class_exists('JFolder')){
-			require(VMPATH_LIBS.DS.'joomla'.DS.'filesystem'.DS.'folder.php');
-		}
-
-		if(empty($token)){
-			$safePath = shopFunctions::getSuggestedSafePath();
-		} else {
-			$safePath = VMPATH_ADMIN.'/'.$token.'/';
-		}
-		$safePath = str_replace('/',DS,$safePath);
-
-		if(!class_exists('ShopFunctionsF')) require(VMPATH_SITE.DS.'helpers'.DS.'shopfunctionsf.php');
-		$invoice = $safePath.ShopFunctionsF::getInvoiceFolderName();
-
-		//$invoice = shopFunctions::getInvoicePath($safePath);
-		$encryptSafePath = $safePath. vmCrypt::ENCRYPT_SAFEPATH;
-
-		JFolder::create($safePath,0755);vmdebug('setSafePathCreateFolders $safePath',$safePath);
-		JFolder::create($invoice,0755);vmdebug('setSafePathCreateFolders $invoice',$invoice);
-		JFolder::create($encryptSafePath,0755);vmdebug('setSafePathCreateFolders $encryptSafePath',$encryptSafePath);
-
-		$config = VmConfig::loadConfig();
-		//vmdebug('setSafePathCreateFolders set forSale_path ',$safePath,$config);
-		$config->set('forSale_path', $safePath);
-
-		$data['virtuemart_config_id'] = 1;
-		$data['config'] = $config->toString();
-
-		$confTable = $this->getTable('configs');
-		//vmdebug('setSafePathCreateFolders set forSale_path ',$safePath,$data['config']);
-		$confTable->bindChecknStore($data);
-
-		VmConfig::loadConfig(true);
-
-		return true;
 	}
 
 	/**

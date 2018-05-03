@@ -6,7 +6,7 @@
 * @package	VirtueMart
 * @subpackage vendor
 * @author Patrick Kohl, Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -28,7 +28,7 @@ defined('_JEXEC') or die('Restricted access');
 		</div>
 	<?php
 	}
-?>	</h1>
+?>	</h1></div>
 
 
 	<?php // vendor Description
@@ -49,4 +49,3 @@ defined('_JEXEC') or die('Restricted access');
 	<?php echo $this->linkcontact ?>
 
 	<br class="clear" />
-</div>

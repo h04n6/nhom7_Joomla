@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage Userfields
 * @author Oscar van Eijk
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 9463 2017-03-06 10:45:33Z Milbo $
+* @version $Id: view.html.php 8857 2015-05-20 18:30:22Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -33,7 +33,7 @@ class VirtuemartViewUserfields extends VmViewAdmin {
 
 	function display($tpl = null) {
 
-		vmLanguage::loadJLang('com_virtuemart_shoppers',TRUE);
+		VmConfig::loadJLang('com_virtuemart_shoppers',TRUE);
 		$option = vRequest::getCmd( 'option');
 		$mainframe = JFactory::getApplication() ;
 
@@ -88,8 +88,7 @@ class VirtuemartViewUserfields extends VmViewAdmin {
 			$notoggle = ''; // (in_array($this->userField->name, $lists['coreFields']) ? 'class="readonly"' : '');
 
 			// Vendor selection
-			$this->lists['vendors'] = '';
-			if($this->showVendors()){
+			if(Vmconfig::get('multix','none')!=='none'){
 				$lists['vendors']= ShopFunctions::renderVendorList($this->userField->virtuemart_vendor_id);
 			}
 
@@ -229,7 +228,7 @@ class VirtuemartViewUserfields extends VmViewAdmin {
 
 		if(!class_exists('vmUserfieldPlugin')) require(VMPATH_PLUGINLIBS.DS.'vmuserfieldtypeplugin.php');
 
-		vmLanguage::loadJLang('plg_vmpsplugin', false);
+		VmConfig::loadJLang('plg_vmpsplugin', false);
 		JForm::addFieldPath(VMPATH_ADMIN . DS . 'fields');
 		//$selected = $this->userField->userfield_jplugin_id;
 		//vmdebug('renderUserfieldPlugin $this->userField->element',$this->userField->type,$this->userField->element);
@@ -268,7 +267,7 @@ class VirtuemartViewUserfields extends VmViewAdmin {
 		$enable = 'enabled';
 
 		$db = JFactory::getDBO();
- 		$q = 'SELECT * FROM `'.$table.'` WHERE `folder` = "vmuserfield" and state="0"';
+ 		$q = 'SELECT * FROM `'.$table.'` WHERE `folder` = "vmuserfield" ';
 		$db->setQuery($q);
 		$userfieldplugins = $db->loadAssocList($ext_id);
 		if(empty($userfieldplugins)){

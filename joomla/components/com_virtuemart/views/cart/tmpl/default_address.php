@@ -9,7 +9,7 @@
 * @subpackage Cart
 * @author Max Milbers
 *
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2014 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -78,7 +78,7 @@ defined('_JEXEC') or die('Restricted access');
 			if($this->cart->user->virtuemart_user_id==0){
 
 				echo vmText::_ ('COM_VIRTUEMART_USER_FORM_ST_SAME_AS_BT');
-				echo VmHtml::checkbox ('STsameAsBT', $this->cart->STsameAsBT,1,0,'id="STsameAsBTjs" data-dynamic-update=1') . '<br />';
+				echo VmHtml::checkbox ('STsameAsBT', $this->cart->STsameAsBT,1,0,'id="STsameAsBTjs"') . '<br />';
 			} else if(!empty($this->cart->lists['shipTo'])){
 				echo $this->cart->lists['shipTo'];
 			}
@@ -87,8 +87,6 @@ defined('_JEXEC') or die('Restricted access');
 				<div id="output-shipto-display">
 					<?php
 					foreach ($this->cart->STaddress['fields'] as $item) {
-
-						if($item['name']=='shipto_address_type_name') continue;
 						if (!empty($item['value'])) {
 							?>
 							<!-- <span class="titles"><?php echo $item['title'] ?></span> -->

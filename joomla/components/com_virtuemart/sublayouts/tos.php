@@ -5,7 +5,7 @@
  * @package	VirtueMart
  * @subpackage Cart
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2014 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL2, see LICENSE.php
  * @version $Id: cart.php 7682 2014-02-26 17:07:20Z Milbo $
@@ -30,13 +30,9 @@ if($app->isSite()){
 }
 
 if(!class_exists('VmHtml')) require(VMPATH_ADMIN.DS.'helpers'.DS.'html.php');
-$class = 'terms-of-service';
-if(!empty($field['required'])){
-	$class .= ' required';
-}
-echo VmHtml::checkbox ($_prefix.$field['name'], $tos, 1, 0, 'class="'.$class.'"', 'tos');
+echo VmHtml::checkbox ($_prefix.$field['name'], $tos, 1, 0, 'class="terms-of-service required"', 'tos');
 
-if ( $app->isSite() ) {
+if (VmConfig::get ('oncheckout_show_legal_info', 1) and $app->isSite()) {
 ?>
 <div class="terms-of-service">
 	<label for="tos">

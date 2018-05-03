@@ -8,14 +8,14 @@
  * @author Oscar van Eijk
  * @author Max Milbers
  * @author	RickG
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: user.php 9705 2017-12-20 13:55:51Z Milbo $
+ * @version $Id: user.php 8970 2015-09-06 23:19:17Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -66,25 +66,23 @@ class VirtueMartModelUser extends VmModel {
 		//anonymous sets to 0 for a new entry
 		if(empty($user->id)){
 			$userId = 0;
-			//vmdebug('Recognized anonymous case');
+			//echo($this->_id,'Recognized anonymous case');
 		} else {
 			//not anonymous, but no cid means already registered user edit own data
 			if(empty($cid)){
 				$userId = $user->id;
-				//vmdebug('setId setCurrent $user',$user->get('id'));
+				// vmdebug('setId setCurrent $user',$user->get('id'));
 			} else {
 				if($cid != $user->id){
 					$user = JFactory::getUser();
-					if(vmAccess::manager(array('user','user.edit'))){
+					if(vmAccess::manager('user')){
 						$userId = $cid;
-						//vmdebug('setId is Manager',$userId);
 					} else {
 						vmError('Blocked attempt setId '.$cid.' '.$user->id);
 						$userId = $user->id;
 					}
 				}else {
 					$userId = $user->id;
-					//vmdebug('setId setCurrent $user',$user->get('id'));
 				}
 			}
 		}
@@ -238,6 +236,9 @@ class VirtueMartModelUser extends VmModel {
 	public function store(&$data){
 
 		$message = '';
+		$user = '';
+		$newId = 0;
+
 		vRequest::vmCheckToken('Invalid Token, while trying to save user');
 
 		if(empty($data)){
@@ -263,7 +264,6 @@ class VirtueMartModelUser extends VmModel {
 		$gid = $user->get('gid'); // Save original gid
 
 		// Preformat and control user datas by plugin
-		JPluginHelper::importPlugin('vmextended');
 		JPluginHelper::importPlugin('vmuserfield');
 		$dispatcher = JDispatcher::getInstance();
 
@@ -285,7 +285,7 @@ class VirtueMartModelUser extends VmModel {
 				$data['email'] = $email;
 			}
 		} else {
-			$data['email'] =  vRequest::filter($data['email'],FILTER_VALIDATE_EMAIL,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_STRIP_HIGH);
+			$data['email'] =  vRequest::getEmail('email', '');
 		}
 		//$data['email'] = str_replace(array('\'','"',',','%','*','/','\\','?','^','`','{','}','|','~'),array(''),$data['email']);
 
@@ -300,7 +300,7 @@ class VirtueMartModelUser extends VmModel {
 			}
 
 		} else {
-			$data['name'] = vRequest::filter($data['name'],FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
+			$data['name'] = vRequest::getWord('name', '');
 
 		}
 		$data['name'] = str_replace(array('\'','"',',','%','*','/','\\','?','^','`','{','}','|','~'),array(''),$data['name']);
@@ -310,7 +310,7 @@ class VirtueMartModelUser extends VmModel {
 			if(!empty($username)){
 				$data['username'] = $username;
 			} else {
-				$data['username'] = vRequest::filter($data['username'],FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW);
+				$data['username'] = vRequest::getWord('username', '');
 			}
 		}
 
@@ -335,7 +335,7 @@ class VirtueMartModelUser extends VmModel {
 			unset($data['password2']);
 		}
 
-		if(!vmAccess::manager('core')){
+		if(!$user->authorise('core.admin','com_virtuemart')){
 			$whiteDataToBind = array();
 			if(isset($data['name'])) $whiteDataToBind['name'] = $data['name'];
 			if(isset($data['username'])) $whiteDataToBind['username'] = $data['username'];
@@ -344,7 +344,6 @@ class VirtueMartModelUser extends VmModel {
 			if(isset($data['editor'])) $whiteDataToBind['editor'] = $data['editor'];
 			if(isset($data['password'])) $whiteDataToBind['password'] = $data['password'];
 			if(isset($data['password2'])) $whiteDataToBind['password2'] = $data['password2'];
-			unset($data['isRoot']);
 		} else {
 			$whiteDataToBind = $data;
 		}
@@ -362,9 +361,8 @@ class VirtueMartModelUser extends VmModel {
 
 			$cUser = JFactory::getUser();
 			if($usersConfig->get('allowUserRegistration') == '0' and !(vmAccess::manager('user')) ) {
-				vmLanguage::loadJLang('com_virtuemart');
-				$msg = vmText::_ ('COM_VIRTUEMART_ACCESS_FORBIDDEN'). ' allowUserRegistration in joomla disabled';
-				vmError($msg, $msg);
+				VmConfig::loadJLang('com_virtuemart');
+				vmError( vmText::_('COM_VIRTUEMART_ACCESS_FORBIDDEN'));
 				return;
 			}
 			// Initialize new usertype setting
@@ -392,9 +390,6 @@ class VirtueMartModelUser extends VmModel {
 				jimport('joomla.user.helper');
 				$user->set('activation', vRequest::getHash( JUserHelper::genRandomPassword()) );
 				$user->set('block', '1');
-				if ($useractivation == '2') {
-					$user->set('guest', '1');
-				}
 				//$user->set('lastvisitDate', '0000-00-00 00:00:00');
 			}
 		}
@@ -411,9 +406,6 @@ class VirtueMartModelUser extends VmModel {
 		if(isset($data['language'])){
 			$user->setParam('language',$data['language']);
 		}
-
-		// Load the users plugin group.
-		JPluginHelper::importPlugin('user');
 
 		// Save the JUser object
 		if (!$user->save()) {
@@ -445,9 +437,6 @@ class VirtueMartModelUser extends VmModel {
 				if ($usersConfig->get('sendpassword', 1)) {
 					$password=$user->password_clear;
 				}
-
-				//$doVendor = (boolean) $usersConfig->get('mail_to_admin', true);
-
 				$this->sendRegistrationEmail($user,$password, $doUserActivation);
 				if ($doUserActivation ) {
 					vmInfo('COM_VIRTUEMART_REG_COMPLETE_ACTIVATE');
@@ -462,7 +451,7 @@ class VirtueMartModelUser extends VmModel {
 			}
 		}
 
-		//The extra check for isset vendor_currency prevents storing of the vendor if there is no form (edit address cart)
+		//The extra check for isset vendor_name prevents storing of the vendor if there is no form (edit address cart)
 		if((int)$data['user_is_vendor']==1 and isset($data['vendor_currency'])){
 			vmdebug('vendor recognised '.$data['virtuemart_vendor_id']);
 			if($this ->storeVendorData($data)){
@@ -478,7 +467,6 @@ class VirtueMartModelUser extends VmModel {
 			}
 		}
 
-		if(!isset($data['password'])) $data['password'] = '';
 		return array('user'=>$user,'password'=>$data['password'],'message'=>$message,'newId'=>$newId,'success'=>true);
 
 	}
@@ -526,23 +514,21 @@ class VirtueMartModelUser extends VmModel {
 			}
 		}
 
-		if(!vmAccess::manager('user.edit')){
-			unset($data['customer_number']);
-		}
+		unset($data['customer_number']);
 		if(empty($alreadyStoredUserData->customer_number)){
-			if(empty($data['customer_number'])){
-				$data['customer_number'] = strtoupper(substr($data['username'],0,2)).substr(md5($data['username']),0,7);
-				//We set this data so that vmshopper plugin know if they should set the customer number
-				$data['customer_number_bycore'] = 1;
-			}
+			//if(!class_exists('vmUserPlugin')) require(VMPATH_SITE.DS.'helpers'.DS.'vmuserplugin.php');
+			///if(!$returnValues){
+			$data['customer_number'] = strtoupper(substr($data['username'],0,2)).substr(md5($data['username']),0,9);
+			//We set this data so that vmshopper plugin know if they should set the customer nummer
+			$data['customer_number_bycore'] = 1;
+			//}
 		} else {
-			if(!vmAccess::manager('user.edit')){
+			if(!vmAccess::manager()){
 				$data['customer_number'] = $alreadyStoredUserData->customer_number;
 			}
 		}
 
 		if($trigger){
-			JPluginHelper::importPlugin('vmextended');
 			JPluginHelper::importPlugin('vmshopper');
 			$dispatcher = JDispatcher::getInstance();
 
@@ -558,32 +544,26 @@ class VirtueMartModelUser extends VmModel {
 			$noError = false;
 		}
 
-		if(vmAccess::manager('user.edit') and !empty($data['virtuemart_shoppergroup_set'])){
-
+		if(vmAccess::manager()){
 			$shoppergroupmodel = VmModel::getModel('ShopperGroup');
 			if(empty($this->_defaultShopperGroup)){
 				$this->_defaultShopperGroup = $shoppergroupmodel->getDefault(0);
 			}
 
-			$user_shoppergroups_table = $this->getTable('vmuser_shoppergroups');
 			if(empty($data['virtuemart_shoppergroup_id']) or $data['virtuemart_shoppergroup_id']==$this->_defaultShopperGroup->virtuemart_shoppergroup_id){
 				$data['virtuemart_shoppergroup_id'] = array();
 			}
 
-			//We can't do that here, because we could else not set "no shoppergroup"
-			/*if(!isset($data['virtuemart_shoppergroup_id'])){
-				$data['virtuemart_shoppergroup_id'] = array();
-			}*/
-
-
-			$shoppergroupData = array('virtuemart_user_id'=>$this->_id,'virtuemart_shoppergroup_id'=>$data['virtuemart_shoppergroup_id']);
-
-			$res = $user_shoppergroups_table -> bindChecknStore($shoppergroupData);
-			if(!$res){
-				vmError('Set shoppergroup error');
-				$noError = false;
+			// Bind the form fields to the table
+			if(!empty($data['virtuemart_shoppergroup_id'])){
+				$shoppergroupData = array('virtuemart_user_id'=>$this->_id,'virtuemart_shoppergroup_id'=>$data['virtuemart_shoppergroup_id']);
+				$user_shoppergroups_table = $this->getTable('vmuser_shoppergroups');
+				$res = $user_shoppergroups_table -> bindChecknStore($shoppergroupData);
+				if(!$res){
+					vmError('Set shoppergroup error');
+					$noError = false;
+				}
 			}
-
 		}
 
 		if($trigger){
@@ -612,7 +592,7 @@ class VirtueMartModelUser extends VmModel {
 
 	public function storeVendorData($data){
 
-		if($data['user_is_vendor'] and vmAccess::manager('user.editshop')){
+		if($data['user_is_vendor']){
 
 			$vendorModel = VmModel::getModel('vendor');
 
@@ -698,13 +678,11 @@ class VirtueMartModelUser extends VmModel {
 		// Check for fields with the the 'shipto_' prefix; that means a (new) shipto address.
 		if($data['address_type'] == 'ST' or isset($data['shipto_address_type_name'])){
 			$dataST = array();
-			//$_pattern = '/^shipto_/';
+			$_pattern = '/^shipto_/';
 
 			foreach ($data as $_k => $_v) {
-				//if (preg_match($_pattern, $_k)) {
-				if (strpos($_k,'shipto_')===0) {
-					//$_new = preg_replace($_pattern, '', $_k);
-					$_new = substr($_k,7);
+				if (preg_match($_pattern, $_k)) {
+					$_new = preg_replace($_pattern, '', $_k);
 					$dataST[$_new] = $_v;
 				}
 			}
@@ -743,7 +721,7 @@ class VirtueMartModelUser extends VmModel {
 				return false;
 			}
 			$dataST['address_type'] = 'ST';
-			$userfielddata = self::_prepareUserFields($dataST, 'ST',$userinfo,'shipto_');
+			$userfielddata = self::_prepareUserFields($dataST, 'ST',$userinfo);
 
 			$userinfo->bindChecknStore($userfielddata);
 
@@ -791,22 +769,21 @@ class VirtueMartModelUser extends VmModel {
 		$i = 0;
 
 		$return = true;
-		$untested = true;
+
 		$required  = 0;
 		$missingFields = array();
 		$lang = JFactory::getLanguage();
 		foreach ($neededFields as $field) {
 
 			//This is a special test for the virtuemart_state_id. There is the speciality that the virtuemart_state_id could be 0 but is valid.
-			if ($field->name == 'virtuemart_state_id' or $field->name == 'virtuemart_country_id' and $untested) {
-				$untested = false;
+			if ($field->name == 'virtuemart_state_id') {
 				if (!class_exists('VirtueMartModelState')) require(VMPATH_ADMIN . DS . 'models' . DS . 'state.php');
 				if(!empty($data['virtuemart_country_id'])){
 					if(!isset($data['virtuemart_state_id'])) $data['virtuemart_state_id'] = 0;
 
 					if (!$msg = VirtueMartModelState::testStateCountry($data['virtuemart_country_id'], $data['virtuemart_state_id'])) {
 						//The state is invalid, so we set the state 0 here.
-						//$data['virtuemart_state_id'] = 0;
+						$data['virtuemart_state_id'] = 0;
 						vmdebug('State was not fitting to country, set virtuemart_state_id to 0');
 					} else if(empty($data['virtuemart_state_id'])){
 						vmdebug('virtuemart_state_id is empty, but valid (country has not states, set to unrequired');
@@ -855,7 +832,7 @@ class VirtueMartModelUser extends VmModel {
 	}
 
 
-	function _prepareUserFields(&$data, $type, $userinfo = 0, $prefix = '')
+	function _prepareUserFields(&$data, $type,$userinfo = 0)
 	{
 		if(!class_exists('VirtueMartModelUserfields')) require(VMPATH_ADMIN.DS.'models'.DS.'userfields.php' );
 		$userFieldsModel = VmModel::getModel('userfields');
@@ -893,7 +870,7 @@ class VirtueMartModelUser extends VmModel {
 					}
 				}
 			} else {
-				$data[$fld->name] = $userFieldsModel->prepareFieldDataSave($fld, $data, $prefix);
+				$data[$fld->name] = $userFieldsModel->prepareFieldDataSave($fld, $data);
 			}
 		}
 
@@ -908,16 +885,9 @@ class VirtueMartModelUser extends VmModel {
 			vmdebug('getBTuserinfo_id is '.$this->_id);
 		}
 
-		static $c = array();
-
-		if(isset($c[$id])){
-			return $c[$id];
-		} else {
-			$q = 'SELECT `virtuemart_userinfo_id` FROM `#__virtuemart_userinfos` WHERE `virtuemart_user_id` = "' .(int)$id .'" AND `address_type`="BT" ';
-			$db->setQuery($q);
-			$c[$id] = $db->loadResult();
-			return $c[$id];
-		}
+		$q = 'SELECT `virtuemart_userinfo_id` FROM `#__virtuemart_userinfos` WHERE `virtuemart_user_id` = "' .(int)$id .'" AND `address_type`="BT" ';
+		$db->setQuery($q);
+		return $db->loadResult();
 	}
 
 	/**
@@ -939,14 +909,11 @@ class VirtueMartModelUser extends VmModel {
 		/*
 		 * JUser  or $this->_id is the logged user
 		 */
-		if(!empty($this->_data->JUser) and $this->_data->JUser->id==$this->_id){
+
+		if(!empty($this->_data->JUser)){
 			$JUser = $this->_data->JUser;
 		} else {
-			if(empty($this->_data)){
-				$JUser = JUser::getInstance($this->_id);
-			} else {
-				$JUser = $this->_data->JUser = JUser::getInstance($this->_id);
-			}
+			$JUser = JUser::getInstance($this->_id);
 		}
 
 		$data = null;
@@ -1046,7 +1013,7 @@ class VirtueMartModelUser extends VmModel {
 
 	/**
 	 * This stores the userdata given in userfields
-	 * @deprecated seems unused
+	 *
 	 * @author Max Milbers
 	 */
 	function storeUserDataByFields($data,$type, $toggles, $skips){
@@ -1096,16 +1063,11 @@ class VirtueMartModelUser extends VmModel {
 
 			$vars['activationLink'] = $activationLink;
 		}
-
-		$usersConfig = JComponentHelper::getParams( 'com_users' );
-		$adminMail = $usersConfig->get('mail_to_admin',false);
-		if(empty($adminMail)){
-			unset($vars['doVendor']);	//The construction is due the nasty construction in renderMail
-		} else {
-			$vars['doVendor'] = 1;
-		}
-
+		$vars['doVendor']=true;
+		// public function renderMail ($viewName, $recipient, $vars=array(),$controllerName = null)
 		shopFunctionsF::renderMail('user', $user->get('email'), $vars);
+
+
 
 	}
 
@@ -1170,7 +1132,7 @@ class VirtueMartModelUser extends VmModel {
 			$q = 'DELETE FROM #__virtuemart_userinfos  WHERE virtuemart_user_id="'. $this->_id .'" AND virtuemart_userinfo_id="'. (int)$virtuemart_userinfo_id .'"';
 			$db->setQuery($q);
 			if($db->execute()){
-				vmInfo('COM_VIRTUEMART_ADDRESS_DELETED');
+				vmInfo('Address has been successfully deleted.');
 				return true;
 			}
 		}
@@ -1194,17 +1156,16 @@ class VirtueMartModelUser extends VmModel {
 		if ($search) {
 			$where = ' WHERE ';
 			$db = JFactory::getDbo();
-			$searchArray = array('ju.name','ju.username','ju.email','shopper_group_name');	// removed ,'usertype' should be handled by extra dropdown
-			$userFieldsValid = array();
+			$searchArray = array('ju.name','username','email','shopper_group_name');	// removed ,'usertype' should be handled by extra dropdown
 			if($tableToUse!='juser'){
 
 				if(!class_exists('TableUserinfos'))require(VMPATH_ADMIN.DS.'tables'.DS.'userinfos.php');
 
 				$userfieldTable = new TableUserinfos($db);
-				$userfieldFields = $userfieldTable->getProperties();
-				$userFieldSearchArray = array('company','first_name','last_name','address_1','zip','city','phone_1');
+				$userfieldFields = get_object_vars($userfieldTable);
+				$userFieldSearchArray = array('company','first_name','last_name');
 				//We must validate if the userfields actually exists, they could be removed
-
+				$userFieldsValid = array();
 				foreach($userFieldSearchArray as $ufield){
 					if(array_key_exists($ufield,$userfieldFields)){
 						$userFieldsValid[] = $ufield;
@@ -1233,7 +1194,7 @@ class VirtueMartModelUser extends VmModel {
 				$select .= ' , ui.name as uiname ';
 			}
 
-			foreach($userFieldsValid as $ufield){
+			foreach($searchArray as $ufield){
 				$select .= ' , '.$ufield;
 			}
 		}

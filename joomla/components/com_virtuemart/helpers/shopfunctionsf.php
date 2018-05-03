@@ -7,14 +7,14 @@
  * @subpackage Helpers
  *
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2015 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: shopfunctionsf.php 9682 2017-11-30 12:16:43Z Milbo $
+ * @version $Id: shopfunctionsf.php 8991 2015-09-15 18:47:28Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -23,7 +23,7 @@ defined( '_JEXEC' ) or die('Restricted access');
 
 class shopFunctionsF {
 
-	static public function getLoginForm ($cart = FALSE, $order = FALSE, $url = '', $layout = 'login') {
+	static public function getLoginForm ($cart = FALSE, $order = FALSE, $url = '') {
 
 		$body = '';
 		$show = TRUE;
@@ -32,12 +32,21 @@ class shopFunctionsF {
 			$show = VmConfig::get( 'oncheckout_show_register', 1 );
 		}
 		if($show == 1) {
-			//This is deprecated and will be replaced by the commented lines below (vmView instead of VirtuemartViewUser)
+
 			if(!class_exists( 'VirtuemartViewUser' )) require(VMPATH_SITE.DS.'views'.DS.'user'.DS.'view.html.php');
 			$view = new VirtuemartViewUser();
-			//if(!class_exists( 'vmView' )) require(VMPATH_SITE.DS.'helpers'.DS.'vmview.php');
-			//$view = new vmView();
-			$body = $view->renderVmSubLayout($layout,array('show' => $show, 'order' => $order, 'from_cart' => $cart, 'url' => $url));
+			$view->setLayout( 'login' );
+			$view->assignRef( 'show', $show );
+
+			$view->assignRef( 'order', $order );
+			$view->assignRef( 'from_cart', $cart );
+			$view->assignRef( 'url', $url );
+			$view->writeJs = false;
+
+			ob_start();
+			$view->display();
+			$body = ob_get_contents();
+			ob_end_clean();
 		}
 
 		return $body;
@@ -55,12 +64,12 @@ class shopFunctionsF {
 
 	static public function getLastVisitedItemId ($default = 0) {
 		$session = JFactory::getSession();
-		return $session->get( 'vmlastvisitedItemid', $default, 'vm' );
+		return $session->get( 'vmlastvisItemid', $default, 'vm' );
 	}
 
 	static public function setLastVisitedItemId ($id) {
 		$session = JFactory::getSession();
-		return $session->set( 'vmlastvisitedItemid', (int)$id, 'vm' );
+		return $session->set( 'vmlastvisItemid', (int)$id, 'vm' );
 	}
 
 	static public function getLastVisitedManuId () {
@@ -83,7 +92,6 @@ class shopFunctionsF {
 	}
 
 	static public function isFEmanager ($task = 0) {
-		if(JFactory::getUser()->guest) return false;
 		return vmAccess::manager($task);
 	}
 
@@ -140,21 +148,20 @@ class shopFunctionsF {
 	 * @param string $_prefix Optional prefix for the formtag name attribute
 	 * @return string HTML containing the <select />
 	 */
-	static public function renderCountryList ($countryId = 0, $multiple = FALSE, $_attrib = array(), $_prefix = '', $required = 0, $idTag = 'virtuemart_country_id') {
+	static public function renderCountryList ($countryId = 0, $multiple = FALSE, $_attrib = array(), $_prefix = '', $required = 0) {
 
 		$countryModel = VmModel::getModel ('country');
 		$countries = $countryModel->getCountries (TRUE, TRUE, FALSE);
 		$attrs = array();
-		$optText = 'country_name';
-		$optKey = 'virtuemart_country_id';
-		$name = $_prefix.'virtuemart_country_id';
-		$idTag = $_prefix.$idTag;
+		$name = 'country_name';
+		$id = 'virtuemart_country_id';
+		$idA = $_prefix . 'virtuemart_country_id';
 		$attrs['class'] = 'virtuemart_country_id';
 		$attrs['class'] = 'vm-chzn-select';
 		// Load helpers and  languages files
 		if (!class_exists( 'VmConfig' )) require(JPATH_COMPONENT_ADMINISTRATOR .'/helpers/config.php');
 		VmConfig::loadConfig();
-		vmLanguage::loadJLang('com_virtuemart_countries');
+		VmConfig::loadJLang('com_virtuemart_countries');
 		vmJsApi::jQuery();
 		vmJsApi::chosenDropDowns();
 
@@ -172,8 +179,8 @@ class shopFunctionsF {
 		$i=0;
 		foreach ($sorted_countries as  $key=>$value) {
 			$countries_list[$i] = new stdClass();
-			$countries_list[$i]->$optKey = $key;
-			$countries_list[$i]->$optText = $value;
+			$countries_list[$i]->$id = $key;
+			$countries_list[$i]->$name = $value;
 			$i++;
 		}
 
@@ -183,9 +190,9 @@ class shopFunctionsF {
 
 		if ($multiple) {
 			$attrs['multiple'] = 'multiple';
-			$name .= '[]';
+			$idA .= '[]';
 		} else {
-			$emptyOption = JHtml::_ ('select.option', '', vmText::_ ('COM_VIRTUEMART_LIST_EMPTY_OPTION'), $optKey, $optText);
+			$emptyOption = JHtml::_ ('select.option', '', vmText::_ ('COM_VIRTUEMART_LIST_EMPTY_OPTION'), $id, $name);
 			array_unshift ($countries_list, $emptyOption);
 		}
 
@@ -196,7 +203,7 @@ class shopFunctionsF {
 			$attrs[$_a[0]] = $_a[1];
 		}
 
-		return JHtml::_ ('select.genericlist', $countries_list, $name, $attrs, $optKey, $optText, $countryId, $idTag);
+		return JHtml::_ ('select.genericlist', $countries_list, $idA, $attrs, $id, $name, $countryId);
 	}
 
 	/**
@@ -210,21 +217,15 @@ class shopFunctionsF {
 	 * @param string $_prefix Optional prefix for the formtag name attribute
 	 * @return string HTML containing the <select />
 	 */
-	static public function renderStateList ($stateId = '0', $_prefix = '', $multiple = FALSE, $required = 0,$attribs=array(),$idTag = 'virtuemart_state_id', $suffix='_field') {
+	static public function renderStateList ($stateId = '0', $_prefix = '', $multiple = FALSE, $required = 0,$attribs=array()) {
 
 		if (is_array ($stateId)) {
 			$stateId = implode (",", $stateId);
 		}
 
-		vmJsApi::JcountryStateList ($stateId,$_prefix, $suffix);
+		vmJsApi::JcountryStateList ($stateId,$_prefix);
 
-		if(!isset($attrs['class'])){
-			$attrs['class'] = '';
-		}
-		if(!empty($required)){
-			$attrs['class'] .= ' required';
-		}
-		$attrs['class'] .= ' vm-chzn-select';
+		$attrs['class'] = 'vm-chzn-select';
 		if ($multiple) {
 			$attrs['name'] = $_prefix . 'virtuemart_state_id[]';
 			$attrs['multiple'] = 'multiple';
@@ -237,7 +238,7 @@ class shopFunctionsF {
 		}
 
 		$attrString= JArrayHelper::toString($attrs);
-		$listHTML = '<select  id="'.$_prefix.$idTag.'" ' . $attrString . '>
+		$listHTML = '<select  id="'.$_prefix.'virtuemart_state_id" ' . $attrString . '>
 						<option value="">' . vmText::_ ('COM_VIRTUEMART_LIST_EMPTY_OPTION') . '</option>
 						</select>';
 
@@ -279,10 +280,12 @@ class shopFunctionsF {
 					. '&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id
 					. '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id
 					. '">' . $_addressList[$_i]->address_type_name . '</a> ' ;
-				$_shipTo[] = '&nbsp;&nbsp;<a href="'.JRoute::_ ('index.php?option=com_virtuemart&view=user&task=removeAddressST&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id . '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id.'&'.JSession::getFormToken().'=1', $useXHTTML, $useSSL ). '" >'.'<i class="icon-delete"></i>'.vmText::_('COM_VIRTUEMART_USER_DELETE_ST').'</a></li>';
+
+				/*$_shipTo[] = '&nbsp;&nbsp;<a href="'.JRoute::_ ('index.php?option=com_virtuemart&view=user&task=removeAddressST&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id . '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id, $useXHTTML, $useSSL ). '" class="icon_delete">'.vmText::_('COM_VIRTUEMART_USER_DELETE_ST').'</a></li>';*/
+				$_shipTo[] = '&nbsp;&nbsp;<a href="'.JRoute::_ ('index.php?option=com_virtuemart&view=user&task=removeAddressST&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id . '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id, $useXHTTML, $useSSL ). '" >'.'<i class="icon-delete"></i>'.vmText::_('COM_VIRTUEMART_USER_DELETE_ST').'</a></li>';
 			}
 
-			$addLink = '<a href="' . JRoute::_ ('index.php?option=com_virtuemart&view=user&task=' . $task . '&new=1&addrtype=ST&virtuemart_user_id[]=' . $userModel->getId ().'&'.JSession::getFormToken().'=1', $useXHTTML, $useSSL) . '"><span class="vmicon vmicon-16-editadd"></span> ';
+			$addLink = '<a href="' . JRoute::_ ('index.php?option=com_virtuemart&view=user&task=' . $task . '&new=1&addrtype=ST&virtuemart_user_id[]=' . $userModel->getId (), $useXHTTML, $useSSL) . '"><span class="vmicon vmicon-16-editadd"></span> ';
 			$addLink .= vmText::_ ('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL') . ' </a>';
 
 			return $addLink . '<ul>' . join ('', $_shipTo) . '</ul>';
@@ -336,7 +339,9 @@ class shopFunctionsF {
 		array_unshift( $products_ids, $productId );
 		$products_ids = array_unique( $products_ids );
 
-		$maxSize = (int)VmConfig::get('max_recent_products', 10);
+		$recent_products_rows = (int)VmConfig::get('recent_products_rows', 1);
+		$products_per_row = (int)VmConfig::get('homepage_products_per_row',3);
+		$maxSize = (int)$products_per_row * $recent_products_rows;
 		if(count( $products_ids )>$maxSize) {
 			array_splice( $products_ids, $maxSize );
 		}
@@ -349,22 +354,17 @@ class shopFunctionsF {
 	 *
 	 * @author Max Milbers
 	 */
-	static public function getRecentProductIds ($nbr = 3) {
+	public function getRecentProductIds () {
 
 		$session = JFactory::getSession();
-		$ids = $session->get( 'vmlastvisitedproductids', array(), 'vm' );
-		if(count( $ids )>$nbr) {
-			array_splice( $ids, $nbr );
-		}
-		return $ids;
+		return $session->get( 'vmlastvisitedproductids', array(), 'vm' );
 	}
 
 	static public function sortLoadProductCustomsStockInd(&$products,$pModel){
 
-		if(!$products) return;
 		$customfieldsModel = VmModel::getModel ('Customfields');
 		if (!class_exists ('vmCustomPlugin')) {
-			require(VMPATH_PLUGINLIBS . DS . 'vmcustomplugin.php');
+			require(JPATH_VM_PLUGINS . DS . 'vmcustomplugin.php');
 		}
 		foreach($products as $i => $productItem){
 
@@ -391,7 +391,6 @@ class shopFunctionsF {
 				unset($product->customfields);
 				$products[$i] = $product;
 			} else {
-
 				$productItem->stock = $pModel->getStockIndicator($productItem);
 				$products[$i] = $productItem;
 			}
@@ -400,15 +399,12 @@ class shopFunctionsF {
 
 	static public function calculateProductRowsHeights($products,$currency,$products_per_row){
 
-		$rowsHeight = array();
-		if(!$products) return $rowsHeight;
-
 		$col = 1;
 		$nb = 1;
 		$row = 1;
 		$BrowseTotalProducts = count($products);
 		$rowHeights = array();
-
+		$rowsHeight = array();
 
 		foreach($products as $product){
 
@@ -441,15 +437,6 @@ class shopFunctionsF {
 			} else {
 				$customs = 0;
 			}
-			$position = 'ontop';
-			if(!empty($product->customfieldsSorted[$position])){
-				foreach($product->customfieldsSorted[$position] as $custom){
-					if($custom->field_type=='A'){
-						$customs++;
-					}
-				}
-			}
-
 			$rowHeights[$row]['customfields'][] = $customs;
 			$rowHeights[$row]['product_s_desc'][] = empty($product->product_s_desc)? 0:1;
 			$rowHeights[$row]['avail'][] = empty($product->product_availability)? 0:1;
@@ -514,26 +501,6 @@ class shopFunctionsF {
 	//TODO this is quirk, why it is using here $noVendorMail, but everywhere else it is using $doVendor => this make logic trouble
 	static public function renderMail ($viewName, $recipient, $vars = array(), $controllerName = NULL, $noVendorMail = FALSE,$useDefault=true) {
 
-		self::loadOrderLanguages();
-
-		$view = self::prepareViewForMail($viewName, $vars, $controllerName);
-		$user = self::sendVmMail( $view, $recipient, $noVendorMail );
-
-		if(isset($view->doVendor) && !$noVendorMail) {
-			//We need to ensure the language for the vendor here
-			$vendorUserId = VmModel::getModel('vendor')->getUserIdByVendorId(1);
-			$vu = JFactory::getUser($vendorUserId);
-			$vLang = $vu->getParam('admin_language',VmConfig::$jDefLangTag);
-
-			self::loadOrderLanguages($vLang);
-			self::sendVmMail( $view, $view->vendorEmail, TRUE );
-		}
-
-		return $user;
-
-	}
-
-	public static function prepareViewForMail($viewName, $vars, $controllerName = false) {
 		if(!class_exists( 'VirtueMartControllerVirtuemart' )) require(VMPATH_SITE.DS.'controllers'.DS.'virtuemart.php');
 
 		$controller = new VirtueMartControllerVirtuemart();
@@ -563,7 +530,47 @@ class shopFunctionsF {
 			$view->$key = $val;
 		}
 
-		return $view;
+		$user = FALSE;
+		if(isset($vars['orderDetails'])){
+
+			//If the vRequest is there, the update is done by the order list view BE and so the checkbox does override the defaults.
+			//$name = 'orders['.$order['details']['BT']->virtuemart_order_id.'][customer_notified]';
+			//$customer_notified = vRequest::getVar($name,-1);
+			if(!$useDefault and isset($vars['newOrderData']['customer_notified']) and $vars['newOrderData']['customer_notified']==1 ){
+				$user = self::sendVmMail( $view, $recipient, $noVendorMail );
+				vmdebug('renderMail by overwrite');
+			} else {
+				$orderstatusForShopperEmail = VmConfig::get('email_os_s',array('U','C','S','R','X'));
+				if(!is_array($orderstatusForShopperEmail)) $orderstatusForShopperEmail = array($orderstatusForShopperEmail);
+				if ( in_array((string) $vars['orderDetails']['details']['BT']->order_status,$orderstatusForShopperEmail) ){
+					$user = self::sendVmMail( $view, $recipient, $noVendorMail );
+					vmdebug('renderMail by default');
+				} else{
+					$user = -1;
+				}
+			}
+		} else {
+			$user = self::sendVmMail( $view, $recipient, $noVendorMail );
+		}
+
+		if(isset($view->doVendor) && !$noVendorMail) {
+			if(isset($vars['orderDetails'])){
+				$order = $vars['orderDetails'];
+				$orderstatusForVendorEmail = VmConfig::get('email_os_v',array('U','C','R','X'));
+				if(!is_array($orderstatusForVendorEmail)) $orderstatusForVendorEmail = array($orderstatusForVendorEmail);
+				if ( in_array((string)$order['details']['BT']->order_status,$orderstatusForVendorEmail)){
+					self::sendVmMail( $view, $view->vendorEmail, TRUE );
+				}else{
+					$user = -1;
+				}
+			} else {
+				self::sendVmMail( $view, $view->vendorEmail, TRUE );
+			}
+
+		}
+
+		return $user;
+
 	}
 
 	/**
@@ -591,21 +598,6 @@ class shopFunctionsF {
 		return VmTemplate::setVmTemplate($view, $catTpl, $prodTpl, $catLayout, $prodLayout);
 	}
 
-	static public function loadOrderLanguages($language = 0){
-
-		$s = TRUE;
-		$cache = true;
-		vmLanguage::setLanguageByTag($language);
-
-		//Shouldnt be necessary anylonger.
-		vmLanguage::loadJLang('com_virtuemart', 0, $language, $cache);
-		vmLanguage::loadJLang('com_virtuemart', $s, $language, $cache);
-		vmLanguage::loadJLang('com_virtuemart_shoppers', $s, $language, $cache);
-		vmLanguage::loadJLang('com_virtuemart_orders', $s, $language, $cache);
-
-	}
-
-
 	/**
 	 * With this function you can use a view to sent it by email.
 	 * Just use a task in a controller
@@ -615,9 +607,20 @@ class shopFunctionsF {
 	 * @param bool $vendor true for notifying vendor of user action (e.g. registration)
 	 */
 
-	public static function sendVmMail (&$view, $recipient, $noVendorMail = FALSE) {
+	private static function sendVmMail (&$view, $recipient, $noVendorMail = FALSE) {
 
 		VmConfig::ensureMemoryLimit(96);
+
+		VmConfig::loadJLang('com_virtuemart',true);
+
+		if($noVendorMail and !empty($view->orderDetails) and !empty($view->orderDetails['details']['BT']->order_language)) {
+			VmConfig::loadJLang('com_virtuemart',true,$view->orderDetails['details']['BT']->order_language);
+			VmConfig::loadJLang('com_virtuemart_shoppers',TRUE,$view->orderDetails['details']['BT']->order_language);
+			VmConfig::loadJLang('com_virtuemart_orders',TRUE,$view->orderDetails['details']['BT']->order_language);
+		} else {
+			VmConfig::loadJLang('com_virtuemart_shoppers',TRUE);
+			VmConfig::loadJLang('com_virtuemart_orders',TRUE);
+		}
 
 		ob_start();
 
@@ -628,39 +631,24 @@ class shopFunctionsF {
 		$subject = (isset($view->subject)) ? $view->subject : vmText::_( 'COM_VIRTUEMART_DEFAULT_MESSAGE_SUBJECT' );
 		$mailer = JFactory::getMailer();
 		$mailer->addRecipient( $recipient );
-
-		$subjectMailer= '=?utf-8?B?'.base64_encode($subject).'?=';
-		$mailer->setSubject(  html_entity_decode( $subjectMailer , ENT_QUOTES, 'UTF-8') );
+		$mailer->setSubject(  html_entity_decode( $subject , ENT_QUOTES, 'UTF-8') );
 		$mailer->isHTML( VmConfig::get( 'order_mail_html', TRUE ) );
 		$mailer->setBody( $body );
-		$replyTo = array();
-		$replyToName = array();
- 
+
 		if(!$noVendorMail) {
 			$replyTo[0] = $view->vendorEmail;
-			$replyToName[0] = $view->vendor->vendor_name;
+			$replyTo[1] = $view->vendor->vendor_name;
+			$mailer->addReplyTo( $replyTo );
 		} else {
-			if(isset($view->orderDetails['details']) && isset($view->orderDetails['details']['BT'])) {
+			if(isset($view->orderDetails['details']) and isset($view->orderDetails['details']['BT'])){
 				$replyTo[0] = $view->orderDetails['details']['BT']->email;
-				$replyToName[0] = $view->orderDetails['details']['BT']->first_name . ' ' . $view->orderDetails['details']['BT']->last_name;
+				$replyTo[1] = $view->orderDetails['details']['BT']->first_name.' '.$view->orderDetails['details']['BT']->last_name;
 			} else {
-				if(isset($view->user->email) && $view->user->name) {
-					$replyTo[0] = $view->user->email;
-					$replyToName[0] = $view->user->name;
-				} else {
-					$replyTo[0] = $view->user['email'];
-					$replyToName[0] = $view->user['name'];
-				}
+				$replyTo[0] = $view->user->email;
+				$replyTo[1] = $view->user->name;
 			}
-		}
- 
-		if(count($replyTo)) {
-			if(version_compare(JVERSION, '3.5', 'ge')) {
-				$mailer->addReplyTo($replyTo, $replyToName);
-			} else {
-				$replyTo[1] = $replyToName[0];
-				$mailer->addReplyTo($replyTo);
-			}
+
+			$mailer->addReplyTo( $replyTo );
 		}
 		if(isset($view->mediaToSend)) {
 			foreach( (array)$view->mediaToSend as $media ) {
@@ -685,39 +673,7 @@ class shopFunctionsF {
 		}
 		$mailer->setSender( $sender );
 
-		$mailer->setSender($sender);
-		$debug_email = VmConfig::get('debug_mail', false);
-		if (VmConfig::get('debug_mail', false) == '1') {
-			$debug_email = 'debug_email';
-
-		}
-		if ($debug_email) {
-			if (!is_array($recipient)) {
-				$recipient = array($recipient);
-			}
-			if (VmConfig::showDebug()) {
-				vmdebug('Debug mail active, no mail sent. The mail to send subject ' . $subject . ' to "' . implode(' ', $recipient) . '" from ' . $sender[0] . ' ' . $sender[1] . ' ' . vmText::$language->getTag() . '<br>' . $body);
-			} else {
-				vmInfo('Debug mail active, no mail sent. The mail to send subject ' . $subject . ' to "' . implode(' ', $recipient) . '" from ' . $sender[0] . ' ' . $sender[1] . '<br>' . $body);
-			}
-			if ($debug_email == 'debug_email') {
-				return true;
-			}
-		}
-		try {
-			$return = $mailer->Send();
-		}
-		catch (Exception $e)
-		{
-			VmConfig::$logDebug = true;
-			vmdebug('Error sending mail ',$e);
-			vmError('Error sending mail ');
-			// this will take care of the error message
-			return false;
-		}
-
-
-		return $return; 
+		return $mailer->Send();
 	}
 
 
@@ -917,17 +873,7 @@ class shopFunctionsF {
 	 * @return The full filename of the invoice/deliverynote without file extension, sanitized not to contain problematic characters like /
 	 */
 	static function getInvoiceName($invoice_number, $layout='invoice'){
-
-		$tmpT = false;
-		vmLanguage::loadJLang('com_virtuemart_orders', true);
-		if(VmConfig::get('invoiceNameInShopLang',true)){
-			$tmpT = VmConfig::$vmlangTag;
-			vmLanguage::setLanguageByTag(VmConfig::$jDefLangTag);
-		}
 		$prefix = vmText::_('COM_VIRTUEMART_FILEPREFIX_'.strtoupper($layout));
-		if($tmpT!=false){
-			vmLanguage::setLanguageByTag($tmpT);
-		}
 		if($prefix == 'COM_VIRTUEMART_FILEPREFIX_'.strtoupper($layout)){
 			$prefix = 'vm'.$layout.'_';
 		}
@@ -965,26 +911,5 @@ class shopFunctionsF {
 		}
 	}
 
-	static public function renderCaptcha($config = 'reg_captcha',$id = 'dynamic_recaptcha_1'){
 
-		if(VmConfig::get ($config) and JFactory::getUser()->guest==1 ){
-
-			JPluginHelper::importPlugin('captcha');
-			$dispatcher = JDispatcher::getInstance();
-			$dispatcher->trigger('onInit',$id);
-			if(version_compare(JVERSION, '3.5', 'ge')){
-				$plugin = JPluginHelper::getPlugin('captcha', 'recaptcha');
-				if(!empty($plugin->params)){
-					$params = new JRegistry($plugin->params);
-					if ($params->get('version') != '1.0') {
-						return '<div id="jform_captcha" class="g-recaptcha  required" data-sitekey="'.$params->get('public_key').'" data-theme="'.$params->get('theme2').'" data-size="normal"></div>';
-					}
-				}
-
-			}
-			JHTML::_('behavior.framework');
-			return '<div id="'.$id.'"></div>';
-		}
-		return '';
-	}
 }

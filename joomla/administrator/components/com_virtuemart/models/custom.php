@@ -6,7 +6,7 @@
 * @package	VirtueMart
 * @subpackage
 * @author Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved by the author.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -138,13 +138,9 @@ class VirtueMartModelCustom extends VmModel {
 		$field_types = self::getCustomTypes() ;
 
 		foreach ($datas->items as $key => & $data) {
-
-			if (!empty($data->custom_parent_id)){
-				$g = $this->getCustom($data->custom_parent_id);
-				$data->group_title = $g->custom_title;
-			}
+	  		if (!empty($data->custom_parent_id)) $data->custom_parent_title = $this->getCustomParentTitle($data->custom_parent_id);
 			else {
-				$data->group_title =  '-' ;
+				$data->custom_parent_title =  '-' ;
 			}
 			if(!empty($field_types[$data->field_type ])){
 				$data->field_type_display = vmText::_( $field_types[$data->field_type ] );
@@ -158,6 +154,13 @@ class VirtueMartModelCustom extends VmModel {
 		return $datas;
     }
 
+	public function getCustomParentTitle ($custom_parent_id) {
+
+		$q = 'SELECT custom_title FROM `#__virtuemart_customs` WHERE virtuemart_custom_id =' . (int)$custom_parent_id;
+		$db = JFactory::getDBO();
+		$db->setQuery ($q);
+		return $db->loadResult ();
+	}
 
 	/**
 	 * Displays a possibility to select created custom
@@ -292,60 +295,26 @@ class VirtueMartModelCustom extends VmModel {
 
 		$table = $this->getTable('customs');
 
-		if(!empty($data['custom_jplugin_id']) or !empty($data['custom_element'])){
+		if(!empty($data['custom_jplugin_id'])){
 
 			$tb = '#__extensions';
 			$ext_id = 'extension_id';
 
-			$validEntry = false;
-			$updateEntry = false;
-			if(!empty($data['virtuemart_custom_id'])){
-				$table->load($data['virtuemart_custom_id']);
-				//For now we just override it.
-				if(!empty($table->custom_element)){
-					$data['custom_element'] = $table->custom_element;
-				}
-				//if(empty($data['custom_jplugin_id'])){
-					$data['custom_jplugin_id'] = $table->custom_jplugin_id;
-				//}
-			}
-
 			$db = JFactory::getDBO();
 
-			//Lets check if valid
-			if(!empty($data['custom_jplugin_id']) and !empty($data['custom_element'])){
-				$q = 'SELECT `extension_id`,`element` FROM `' . $tb . '` WHERE `element` = "'.$data['custom_element'].'" AND `' . $ext_id . '` = "'.$data['custom_jplugin_id'].'" AND `enabled`="1" AND `state`="0" ';
-				$db->setQuery($q);
-				$id = $db->loadResult();
-				if(!$id){	//Does not fit, search for id by element
-					$data['custom_jplugin_id'] = 0;
-				} else {
-					$validEntry=true;
-				}
-			}
+			$q = 'SELECT `element` FROM `' . $tb . '` WHERE `' . $ext_id . '` = "'.$data['custom_jplugin_id'].'"';
+			$db->setQuery($q);
+			$cElement = $db->loadResult();
+			if(empty($cElement)){
 
-			if(!$validEntry and !empty($data['custom_element']) and empty($data['custom_jplugin_id'])){
-				$q = 'SELECT `extension_id` FROM `' . $tb . '` WHERE `element` = "'.$data['custom_element'].'" AND `enabled`="1" AND `state`="0" ';
-				$db->setQuery($q);
-				$data['custom_jplugin_id'] = $db->loadResult();
-				if(!empty($data['custom_jplugin_id'])){
-					$validEntry=true;
-					$updateEntry = true;
+				if(!empty($data['virtuemart_custom_id'])){
+					$table->load($data['virtuemart_custom_id']);
+					$cElement = $table->custom_element;
+				} else if(!empty($data['custom_element'])){
+					$cElement = $data['custom_element'];
 				}
-			}
 
-			if(!$validEntry and !empty($data['custom_jplugin_id'])){
-				$q = 'SELECT `element` FROM `' . $tb . '` WHERE `' . $ext_id . '` = "'.$data['custom_jplugin_id'].'" AND `enabled`="1" AND `state`="0" ';
-				$db->setQuery($q);
-				$data['custom_element'] = $db->loadResult();
-				if(!empty($data['custom_element'])){
-					$validEntry=true;
-					$updateEntry = true;
-				}
-			}
-
-			if(!$validEntry){
-				$q = 'SELECT * FROM `' . $tb . '` WHERE `element` = "'.$data['custom_element'].'" ';
+				$q = 'SELECT * FROM `' . $tb . '` WHERE `element` = "'.$cElement.'" ';
 				$db->setQuery($q);
 				if($jids=$db->loadAssocList()){
 
@@ -356,7 +325,7 @@ class VirtueMartModelCustom extends VmModel {
 							break;
 						}
 					}
-					vmdebug('Available entries '.$q,$newJid,$jids);
+					vmdebug('Available entries ',$newJid,$jids);
 					if(!empty($newJid)){
 						$q = 'UPDATE `#__virtuemart_customs` SET `custom_jplugin_id`="'.$jid.'" WHERE `custom_jplugin_id` = "'.$data['custom_jplugin_id'].'"';
 						$db->setQuery($q);
@@ -369,6 +338,9 @@ class VirtueMartModelCustom extends VmModel {
 				}
 			}
 
+			if(!empty($cElement)){
+				$data['custom_element'] = $cElement;
+			}
 			$q = 'UPDATE `#__extensions` SET `enabled`= 1, `state` = 0 WHERE `extension_id` = "'.$data['custom_jplugin_id'].'"';
 			$db->setQuery($q);
 			$db->execute();
@@ -429,7 +401,7 @@ class VirtueMartModelCustom extends VmModel {
 			JPluginHelper::importPlugin ('vmcustom');
 			$dispatcher = JDispatcher::getInstance ();
 			//We call here vmplugin->getTablePluginParams which sets the xParam and the varsToPush of the Plugin
-			//vmdebug('setParameterableByFieldType before trigger plgVmGetTablePluginParams ',$custom_element, $custom_jplugin_id, $xParams,$varsToPush);
+			vmdebug('setParameterableByFieldType before trigger plgVmGetTablePluginParams ',$custom_element, $custom_jplugin_id, $xParams,$varsToPush);
 			$retValue = $dispatcher->trigger ('plgVmGetTablePluginParams', array('custom',$custom_element, $custom_jplugin_id, &$xParams, &$varsToPush));
 		}
 		$xParams = $table->_xParams;
@@ -446,21 +418,17 @@ class VirtueMartModelCustom extends VmModel {
 			$varsToPush = array(
 				'withParent'        => array(0, 'int'),
 				'parentOrderable'   => array(0, 'int'),
-				'wPrice'		=> array(0, 'int'),
-				'browseajax'	=> array(0, 'int')
+				'wPrice'		=> array(0, 'int')
 			);
 		} else if($type=='P'){
 			$varsToPush = array(
-			'round' 	=> array('', 'int'),
-			'digits' 	=> array('', 'string') //actually an int, but the type determines at the moment also the GUI
+			'round' 	=> array('', 'int')
 			);
 		} else if($type=='C'){
 			$varsToPush = array(
 				'usecanonical' 	=> array(0, 'int'),
 				'showlabels'	=> array(0, 'int'),
-				'browseajax'	=> array(0, 'int'),
 				'sCustomId'		=> array(0, 'int', 'scustom'),
-				'selectType'	=> array(0, 'int'),
 				'selectoptions'	=> array(0, 'int'),
 				'clabels'   	=> array(0, 'int'),
 				'options'		=> array(0, 'int')
@@ -468,33 +436,29 @@ class VirtueMartModelCustom extends VmModel {
 		} else if($type=='S' or $type=='B'){
 			$varsToPush = array(
 				'addEmpty'		=> array(0, 'int'),
-				'selectType'	=> array(0, 'int'),
-				'multiplyPrice'	=> array('', 'string')
+				'selectType'	=> array(0, 'int')
 			);
 		} else if($type=='M'){
 			$varsToPush = array(
-				'width'		=> array('', 'string'),
-				'height'	=> array('', 'string'),
+				'width'		=> array(VmConfig::get('img_width',90), 'string'),
+				'height'	=> array(VmConfig::get('img_width',90), 'string'),
 				'addEmpty'		=> array(0, 'int'),
-				'selectType'	=> array(1, 'int'),
-				'multiplyPrice'	=> array('', 'string')
+				'selectType'	=> array(1, 'int')
 			);
 		} else if($type=='R'){
 			$varsToPush = array(
-				'waddtocart' => array(0, 'int'),
 				'wPrice'	=> array(0, 'int'),
 				'wImage'	=> array(1, 'int'),
 				'wDescr'	=> array(0, 'int'),
-				'width'		=> array('', 'string'),
-				'height'	=> array('', 'string')
-
+				'width'		=> array(VmConfig::get('img_width',90), 'string'),
+				'height'	=> array(VmConfig::get('img_width',90), 'string')
 			);
 		} else if($type=='Z'){
 			$varsToPush = array(
 				'wImage'	=> array(1, 'int'),
 				'wDescr'	=> array(0, 'int'),
-				'width'		=> array('', 'string'),
-				'height'	=> array('', 'string')
+				'width'		=> array(VmConfig::get('img_width',90), 'string'),
+				'height'	=> array(VmConfig::get('img_width',90), 'string')
 			);
 		}
 		return $varsToPush;

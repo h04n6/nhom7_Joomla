@@ -1,24 +1,10 @@
 if (typeof Virtuemart === "undefined")
-	var Virtuemart = {};
-
-Virtuemart.stopSendtocart = false;
+	Virtuemart = {};
 
 Virtuemart.setproducttype = function(form, id) {
 	form.view = null;
 	var datas = form.serialize();
-
-	var runs= 0, maxruns = 20;
-	var container = form;
-	while(!container.hasClass('product-container') && !container.hasClass('productdetails') && !container.hasClass('vm-product-details-container')  && runs<=maxruns){
-		container = container.parent();
-		runs++;
-	}
-	if(runs>maxruns){
-		console.log('setproducttype: Could not find parent container product-container nor product-field-display');
-		return false;
-	}
-
-	var prices = container.find(".product-price");
+	var prices = form.parents(".productdetails").find(".product-price");
 	if (0 == prices.length) {
 		prices = jQuery("#productPrice" + id);
 	}
@@ -29,7 +15,7 @@ Virtuemart.setproducttype = function(form, id) {
         type: "POST",
         cache: false,
         dataType: "json",
-        url: Virtuemart.vmSiteurl + "index.php?option=com_virtuemart&view=productdetails&task=recalculate&format=json&nosef=1" + Virtuemart.vmLang,
+        url: window.vmSiteurl + "index.php?&option=com_virtuemart&view=productdetails&task=recalculate&format=json&nosef=1" + window.vmLang,
         data: datas
     }).done(
         function (data, textStatus) {
@@ -82,19 +68,20 @@ Virtuemart.sendtocart = function (form){
 }
 
 Virtuemart.cartEffect = function(form) {
+	var $ = jQuery ;
 
 	var dat = form.serialize();
 
 	if(usefancy){
-		jQuery.fancybox.showActivity();
+
+        jQuery.fancybox.showActivity();
 	}
 
     jQuery.ajax({
         type: "POST",
         cache: false,
         dataType: "json",
-        timeout: "20000",
-        url: Virtuemart.vmSiteurl + "index.php?option=com_virtuemart&nosef=1&view=cart&task=addJS&format=json"+Virtuemart.vmLang+window.Itemid,
+        url: window.vmSiteurl + "index.php?option=com_virtuemart&nosef=1&view=cart&task=addJS&format=json"+window.vmLang+window.Itemid,
         data: dat
     }).done(
 
@@ -103,12 +90,12 @@ Virtuemart.cartEffect = function(form) {
 		if(datas.stat ==1){
 			var txt = datas.msg;
 		} else if(datas.stat ==2){
-			var txt = datas.msg;
+			var txt = datas.msg +"<H4>"+form.find(".pname").val()+"</H4>";
 		} else {
 			var txt = "<H4>"+vmCartError+"</H4>"+datas.msg;
 		}
 		if(usefancy){
-			jQuery.fancybox({
+            jQuery.fancybox({
 					"titlePosition" : 	"inside",
 					"transitionIn"	:	"fade",
 					"transitionOut"	:	"fade",
@@ -121,10 +108,14 @@ Virtuemart.cartEffect = function(form) {
 				}
 			);
 		} else {
-			jQuery.facebox( txt , 'my-groovy-style');
+            jQuery.facebox.settings.closeImage = closeImage;
+            jQuery.facebox.settings.loadingImage = loadingImage;
+			//$.facebox.settings.faceboxHtml = faceboxHtml;
+            jQuery.facebox({ text: txt }, 'my-groovy-style');
 		}
 
-        jQuery('body').trigger('updateVirtueMartCartModule');
+
+		Virtuemart.productUpdate();
 	});
 
 }
@@ -167,14 +158,10 @@ Virtuemart.decrQuantity = (function(event) {
 
 Virtuemart.addtocart = function (e){
 
+
     var targ;
     if (!e) e = window.event;
     e.preventDefault();
-
-    if(!Virtuemart.quantityErrorAlert(e)){
-        return false;
-    }
-
     if(e.hasOwnProperty('stopSendtocart') && e.stopSendtocart == true){
         return false;
     }
@@ -183,19 +170,10 @@ Virtuemart.addtocart = function (e){
     if (targ.nodeType == 3) // defeat Safari bug
         targ = targ.parentNode;
 
-    //if (jQuery(targ).prop("type") == "submit" ||  jQuery(targ).prop("type") == "image" ) {
+    if (jQuery(targ).prop("type") == "submit" ||  jQuery(targ).prop("type") == "image" ) {
         Virtuemart.sendtocart(e.data.cart);
         return false;
-    //}
-};
-
-Virtuemart.quantityErrorAlert = function(e) {
-	var me = jQuery(this);
-    e.preventDefault();
-	if(me.is('input')){
-        return Virtuemart.checkQuantity(this, me.attr("step"), me.attr("data-errStr"));
-	}
-	return true;
+    }
 };
 
 Virtuemart.product = function(carts) {
@@ -209,10 +187,15 @@ Virtuemart.product = function(carts) {
 		radio = cart.find('input:radio:not(.no-vm-bind)'),
 		virtuemart_product_id = cart.find('input[name="virtuemart_product_id[]"]').val(),
 		quantity = cart.find('.quantity-input');
+
 		var Ste = parseInt(quantityInput.attr("step"));
 		//Fallback for layouts lower than 2.0.18b
 		if(isNaN(Ste)) { Ste = 1; }
-        this.action ="#";
+
+        var quantityErrorAlert = function() {
+            var me = jQuery(this);
+            Virtuemart.checkQuantity(this, me.attr("step"), me.attr("data-errStr"));
+        };
 
         plus
             .off('click', Virtuemart.incrQuantity)
@@ -231,17 +214,18 @@ Virtuemart.product = function(carts) {
             .on('change', {cart:cart,virtuemart_product_id:virtuemart_product_id},Virtuemart.eventsetproducttype);
 
         quantity
-            .off('click blur submit', Virtuemart.quantityErrorAlert)
-            .on('click blur submit', Virtuemart.quantityErrorAlert)
-			.off('keyup', Virtuemart.eventsetproducttype)
-			.on('keyup', {cart:cart,virtuemart_product_id:virtuemart_product_id},Virtuemart.eventsetproducttype);
+            .off('keyup', Virtuemart.eventsetproducttype)
+            .on('keyup', {cart:cart,virtuemart_product_id:virtuemart_product_id},Virtuemart.eventsetproducttype)
+            .off('blur click change submit', quantityErrorAlert)
+            .on('blur click change submit', quantityErrorAlert);
 
 
-        var addtocart = cart.find('button[name="addtocart"], input[name="addtocart"], a[name="addtocart"]');
+        this.action ="#";
+        //addtocart = cart.find('input[name="addtocart"]');
+        addtocart = cart.find('button[name="addtocart"], input[name="addtocart"], a[name="addtocart"]');
 
-        addtocart
-            .off('click submit',Virtuemart.addtocart)
-            .on('click submit',{cart:cart},Virtuemart.addtocart);
+        jQuery(addtocart).off('click',Virtuemart.addtocart);
+        jQuery(addtocart).on('click',{cart:cart},Virtuemart.addtocart);
 
 	});
 }
@@ -253,7 +237,7 @@ Virtuemart.checkQuantity = function (obj,step,myStr) {
 
     if (remainder  != 0) {
         //myStr = "'.vmText::_ ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED').'";
-        if(!isNaN(myStr)) alert(myStr.replace("%s",step));
+        alert(myStr.replace("%s",step));
         if(quantity!=remainder && quantity>remainder){
             obj.value = quantity-remainder;
         } else {

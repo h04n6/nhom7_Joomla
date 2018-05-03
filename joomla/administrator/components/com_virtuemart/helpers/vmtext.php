@@ -33,12 +33,6 @@ class vmText
 	 * @since  11.1
 	 */
 	protected static $strings = array();
-	public static $language = false;
-
-
-	public static function setLanguage(&$l){
-		self::$language =$l;
-	}
 
 	/**
 	 * Translates a string into the current language. This just jText of joomla 2.5.x
@@ -59,14 +53,7 @@ class vmText
 	 */
 	public static function _($string, $jsSafe = false, $interpretBackSlashes = true, $script = false)
 	{
-		if(!isset(self::$language)){
-			VmConfig::$echoDebug = 1;
-			echo '<pre> vmText self::$languages has no '.self::$language;
-			debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,10);
-			echo '</pre>';
-
-		}
-
+		$lang = JFactory::getLanguage();
 		if (is_array($jsSafe))
 		{
 			if (array_key_exists('interpretBackSlashes', $jsSafe))
@@ -88,12 +75,12 @@ class vmText
 		}
 		if ($script)
 		{
-			self::$strings[$string] = self::$language->_($string, $jsSafe, $interpretBackSlashes);
+			self::$strings[$string] = $lang->_($string, $jsSafe, $interpretBackSlashes);
 			return $string;
 		}
 		else
 		{
-			return self::$language->_($string, $jsSafe, $interpretBackSlashes);
+			return $lang->_($string, $jsSafe, $interpretBackSlashes);
 		}
 	}
 
@@ -120,14 +107,14 @@ class vmText
 	 */
 	public static function sprintf($string)
 	{
-
+		$lang = JFactory::getLanguage();
 		$args = func_get_args();
 		$count = count($args);
 		if ($count > 0)
 		{
 			if (is_array($args[$count - 1]))
 			{
-				$args[0] = self::$language->_(
+				$args[0] = $lang->_(
 					$string, array_key_exists('jsSafe', $args[$count - 1]) ? $args[$count - 1]['jsSafe'] : false,
 					array_key_exists('interpretBackSlashes', $args[$count - 1]) ? $args[$count - 1]['interpretBackSlashes'] : true
 				);
@@ -142,7 +129,7 @@ class vmText
 			{
 				foreach($args as &$arg){
 					//vmdebug('my sprintf $arg',$arg);
-					$arg = self::$language->_($arg);
+					$arg = $lang->_($arg);
 					$arg = preg_replace('/\[\[%([0-9]+):[^\]]*\]\]/', '%\1$s', $arg);
 				}
 

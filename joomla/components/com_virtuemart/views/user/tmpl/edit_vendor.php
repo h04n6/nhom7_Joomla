@@ -6,22 +6,18 @@
 * @package	VirtueMart
 * @subpackage User
 * @author Oscar van Eijk
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: edit_vendor.php 9590 2017-06-27 12:46:05Z Milbo $
+* @version $Id$
 */
 
 // Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-if(!vmAccess::manager('user.editshop')){
-	?><div><?php echo vmText::_('COM_VM_PERM_MISSING_VENDOR');?></div> <?php
-}
-?>
+defined('_JEXEC') or die('Restricted access'); ?>
 <!--div class="col50"-->
 	<table class="admintable">
 		<tr>
@@ -31,16 +27,6 @@ if(!vmAccess::manager('user.editshop')){
 						<?php echo vmText::_('COM_VIRTUEMART_VENDOR_FORM_INFO_LBL') ?>
 					</legend>
 					<table class="admintable">
-                        <tr>
-                            <td class="key">
-                                <label for="vendor_name">
-									<?php echo vmText::_('COM_VIRTUEMART_STORE_FORM_COMPANY_NAME'); ?>:
-                                </label>
-                            </td>
-                            <td>
-                                <input class="inputbox" type="text" name="vendor_name" id="vendor_name" size="50" value="<?php echo $this->vendor->vendor_name; ?>" />
-                            </td>
-                        </tr>
 						<tr>
 							<td class="key">
                 <label for="vendor_store_name">
@@ -49,6 +35,16 @@ if(!vmAccess::manager('user.editshop')){
 							</td>
 							<td>
 								<input class="inputbox" type="text" name="vendor_store_name" id="vendor_store_name" size="50" value="<?php echo $this->vendor->vendor_store_name; ?>" />
+							</td>
+						</tr>
+						<tr>
+							<td class="key">
+                <label for="vendor_name">
+								<?php echo vmText::_('COM_VIRTUEMART_STORE_FORM_COMPANY_NAME'); ?>:
+                </label>
+							</td>
+							<td>
+								<input class="inputbox" type="text" name="vendor_name" id="vendor_name" size="50" value="<?php echo $this->vendor->vendor_name; ?>" />
 							</td>
 						</tr>
 						<tr>

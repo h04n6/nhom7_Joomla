@@ -2,7 +2,7 @@
 if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not allowed.' );
 /**
 *
-* @version $Id: virtuemart.php 9666 2017-11-15 11:02:04Z Milbo $
+* @version $Id$
 * @package VirtueMart
 * @subpackage core
 * @author Max Milbers
@@ -18,21 +18,19 @@ if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not 
 */
 
 /* Require the config */
-
-if (!class_exists( 'VmConfig' )) require(JPATH_ROOT .'/administrator/components/com_virtuemart/helpers/config.php');
+defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+if (!class_exists( 'VmConfig' )) require(JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_virtuemart'.DS.'helpers'.DS.'config.php');
 
 VmConfig::loadConfig();
 
 vmRam('Start');
-//vmTime('joomla start until Vm is called','joomlaStart');
-vmSetStartTime('vmStart');
+vmSetStartTime('Start');
 
-vmLanguage::loadJLang('com_virtuemart', true);
+VmConfig::loadJLang('com_virtuemart', true);
 
-$_controller = vRequest::getCmd('view', vRequest::getCmd('controller', 'virtuemart')) ;
-$task = vRequest::getCmd('task','') ;
 
-if(VmConfig::get('shop_is_offline',0) and $task!='feed' and $_controller!='virtuemart'){	//yes, quickndirty
+if(VmConfig::get('shop_is_offline',0)){
+	//$cache->setCaching (1);
 	$_controller = 'virtuemart';
 	require (VMPATH_SITE.DS.'controllers'.DS.'virtuemart.php');
 	vRequest::setVar('view', 'virtuemart');
@@ -44,10 +42,10 @@ if(VmConfig::get('shop_is_offline',0) and $task!='feed' and $_controller!='virtu
 	if(!class_exists('VmImage')) require(VMPATH_ADMIN.DS.'helpers'.DS.'image.php'); //dont remove that file it is actually in every view except the state view
 	if(!class_exists('shopFunctionsF'))require(VMPATH_SITE.DS.'helpers'.DS.'shopfunctionsf.php'); //dont remove that file it is actually in every view
 
-
+	$_controller = vRequest::getCmd('view', vRequest::getCmd('controller', 'virtuemart')) ;
 	$trigger = 'onVmSiteController';
 // 	$task = vRequest::getCmd('task',vRequest::getCmd('layout',$_controller) );		$this makes trouble!
-
+	$task = vRequest::getCmd('task','') ;
 
 	$session = JFactory::getSession();
 	$manage = vRequest::getCmd('manage',$session->get('manage', false,'vm'));
@@ -62,11 +60,11 @@ if(VmConfig::get('shop_is_offline',0) and $task!='feed' and $_controller!='virtu
 			vRequest::setVar('manage','1');
 			vRequest::setVar('tmpl','component') ;
 
-			vmLanguage::loadJLang('com_virtuemart');
+			VmConfig::loadJLang('com_virtuemart');
 			$jlang = JFactory::getLanguage();
 			$tag = $jlang->getTag();
 			$jlang->load('', JPATH_ADMINISTRATOR,$tag,true);
-			vmLanguage::loadJLang('com_virtuemart');
+			VmConfig::loadJLang('com_virtuemart');
 			$basePath = VMPATH_ADMIN;
 			$trigger = 'onVmAdminController';
 
@@ -86,8 +84,8 @@ if(VmConfig::get('shop_is_offline',0) and $task!='feed' and $_controller!='virtu
 
 	} elseif($_controller) {
 			if($_controller!='productdetails'){
-				//$session->set('manage', 0,'vm');
-				//vRequest::setVar('manage','0');
+				$session->set('manage', 0,'vm');
+				vRequest::setVar('manage','0');
 			}
 			vmJsApi::jQuery();
 			vmJsApi::jSite();
@@ -128,13 +126,13 @@ if (class_exists($_class)) {
     //vmTime($_class.' Finished task '.$task,'Start');
     vmRam('End');
     vmRamPeak('Peak');
-	vmTime('"'.$_class.'" Finished task ','vmStart');
+
     /* Redirect if set by the controller */
     $controller->redirect();
 } else {
     vmDebug('VirtueMart controller not found: '. $_class);
     if (VmConfig::get('handle_404',1)) {
-    	$mainframe = JFactory::getApplication();
+    	$mainframe = Jfactory::getApplication();
     	$mainframe->redirect(JRoute::_ ('index.php?option=com_virtuemart&view=virtuemart', FALSE));
     } else {
     	JError::raise(E_ERROR,'404','Not found');

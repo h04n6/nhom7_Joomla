@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage User
 * @author Oscar van Eijk
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: user.php 9478 2017-03-16 09:33:17Z Milbo $
+* @version $Id: user.php 8970 2015-09-06 23:19:17Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -63,7 +63,6 @@ class VirtuemartControllerUser extends VmController {
 
 	function removeAddressST(){
 
-		vRequest::vmCheckToken();
 		$virtuemart_userinfo_id = vRequest::getInt('virtuemart_userinfo_id');
 		$virtuemart_user_id = vRequest::getInt('virtuemart_user_id');
 
@@ -73,6 +72,7 @@ class VirtuemartControllerUser extends VmController {
 		$userModel->setId($virtuemart_user_id[0]);
 		$userModel->removeAddress($virtuemart_userinfo_id);
 
+		$layout = vRequest::getCmd('layout','edit');
 		$this->setRedirect( 'index.php?option=com_virtuemart&view=user&task=edit&virtuemart_user_id[]='.$virtuemart_user_id[0] );
 	}
 
@@ -98,8 +98,14 @@ class VirtuemartControllerUser extends VmController {
 	 * @author Max Milbers
 	 */
 	function save($data = 0){
-		vRequest::vmCheckToken();
 
+		$document = JFactory::getDocument();
+		$viewType = $document->getType();
+		$view = $this->getView('user', $viewType);
+
+		$_currentUser = JFactory::getUser();
+// TODO sortout which check is correctt.....
+//		if (!$_currentUser->authorise('administration', 'manage', 'components', 'com_users')) {
 		if (!vmAccess::manager('user.edit')) {
 			$msg = vmText::_('_NOT_AUTH');
 		} else {
@@ -120,17 +126,6 @@ class VirtuemartControllerUser extends VmController {
 			$data['vendor_letter_header_html'] = vRequest::getHtml('vendor_letter_header_html');
 			$data['vendor_letter_footer_html'] = vRequest::getHtml('vendor_letter_footer_html');
 
-			$ids = vRequest::getInt('virtuemart_user_id');
-
-			if($ids){
-				if(is_array($ids) and isset($ids[0])){
-					$model->setId((int)$ids[0]);
-					vmdebug('my user controller set '.(int)$ids[0],$ids);
-				} else{
-					$model->setId((int)$ids);
-					vmdebug('my user controller set '.(int)$ids,$ids);
-				}
-			}
 			$ret=$model->store($data);
 			if(!$ret){
 				$msg = '';
@@ -138,9 +133,6 @@ class VirtuemartControllerUser extends VmController {
 				$msg = $ret['message'];
 			}
 
-			if(!isset($data['virtuemart_shoppergroup_id'])){
-				$data['virtuemart_shoppergroup_id'] = array();
-			}
 		}
 		$cmd = vRequest::getCmd('task');
 		$lastTask = vRequest::getCmd('last_task');

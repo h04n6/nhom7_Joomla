@@ -6,7 +6,7 @@
 * @package	VirtueMart
 * @subpackage vendor
 * @author Kohl Patrick, Eugen Stranz
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 
 ?>
 
-<div class="vendor-details-view vendor-details-view-contact">
+<div class="vendor-details-view">
 	<h1><?php echo $this->vendor->vendor_store_name;
 	if (!empty($this->vendor->images[0])) { ?>
 		<div class="vendor-image">

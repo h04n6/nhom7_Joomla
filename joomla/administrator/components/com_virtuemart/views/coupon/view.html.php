@@ -7,14 +7,14 @@
 * @subpackage Coupon
 * @author RickG
  * @author Valerie Isaksen
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 9681 2017-11-30 12:12:54Z Milbo $
+* @version $Id: view.html.php 8724 2015-02-18 14:03:29Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -89,7 +89,7 @@ class VirtuemartViewCoupon extends VmViewAdmin {
 				} else {
 					$_expDate = new DateTime();
 					$_expDate->add(new DateInterval('P'.$_expTime[0].$_expTime[1]));
-					$coupon->coupon_expiry_date = $_expDate->format("Y-m-d H:i:s");
+					$coupon->coupon_expiry_date = $_expDate->format("U");
 				}
 			}
 
@@ -101,8 +101,8 @@ class VirtuemartViewCoupon extends VmViewAdmin {
 			$this->addStandardDefaultViewCommands();
 			$this->addStandardDefaultViewLists($model);
 
-			$filter_coupon = vRequest::getString('filter_coupon', false);
-			$this->coupons = $model->getCoupons($filter_coupon);
+			$coupons = $model->getCoupons();
+			$this->assignRef('coupons',	$coupons);
 
 			$this->pagination = $model->getPagination();
 

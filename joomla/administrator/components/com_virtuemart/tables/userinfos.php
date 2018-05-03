@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage User
 * @author 	RickG, RolandD
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: userinfos.php 9413 2017-01-04 17:20:58Z Milbo $
+* @version $Id: userinfos.php 8970 2015-09-06 23:19:17Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -99,7 +99,7 @@ class TableUserinfos extends VmTableData {
 		if (!empty($this->virtuemart_userinfo_id)) {
 			$this->virtuemart_userinfo_id = (int)$this->virtuemart_userinfo_id;
 
-			if(!vmAccess::manager('user.edit')){
+			if(!vmAccess::manager('core')){
 				$q = "SELECT virtuemart_user_id
 										FROM #__virtuemart_userinfos
 										WHERE virtuemart_userinfo_id = ".$this->virtuemart_userinfo_id;

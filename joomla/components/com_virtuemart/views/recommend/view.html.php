@@ -6,7 +6,7 @@
 * @package VirtueMart
 * @subpackage
 * @author RolandD
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -90,7 +90,7 @@ class virtuemartViewrecommend extends VmView {
 		/* Set Canonic link */
 		$format = vRequest::getCmd('format', 'html');
 		if ($format == 'html') {
-			$document->addHeadLink( JUri::getInstance()->toString(array('scheme', 'host', 'port')).JRoute::_($this->product->link) , 'canonical', 'rel', '' );
+			$document->addHeadLink( $this->product->link , 'canonical', 'rel', '' );
 		}
 
 		/* Set the titles */
@@ -139,14 +139,13 @@ class virtuemartViewrecommend extends VmView {
 			$document->setMetaData('keywords', $this->product->metakey);
 		}
 
+
 		if ($mainframe->getCfg('MetaTitle') == '1') {
 			$document->setMetaData('title', $this->product->product_s_desc);  //Maybe better product_name
 		}
 		if ($mainframe->getCfg('MetaAuthor') == '1') {
 			$document->setMetaData('author', $this->product->metaauthor);
 		}
-
-		$this->captcha = shopFunctionsF::renderCaptcha('ask_captcha');
 
 		parent::display($tpl);
 	}

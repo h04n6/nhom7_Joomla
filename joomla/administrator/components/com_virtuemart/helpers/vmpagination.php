@@ -128,8 +128,6 @@ class VmPagination extends vObject {
 		$limits = array();
 		$selected = $this->limit;
 
-		if(!class_exists('VmHtml')) require(VMPATH_ADMIN.DS.'helpers'.DS.'html.php');
-
 		// Build the select list
 		if($app->isAdmin()) {
 
@@ -161,9 +159,7 @@ class VmPagination extends vObject {
 			}
 
 			$namespace = 'Joomla.';
-
-			$id = VmHtml::ensureUniqueId('limit');
-			$html = JHtml::_( 'select.genericlist', $limits, 'limit', 'class="inputbox" size="1" onchange="'.$namespace.'submitform();"', 'value', 'text', $selected, $id );
+			$html = JHtml::_( 'select.genericlist', $limits, 'limit', 'class="inputbox" size="1" onchange="'.$namespace.'submitform();"', 'value', 'text', $selected );
 		} else {
 
 			$getArray = vRequest::getGet();
@@ -210,8 +206,7 @@ class VmPagination extends vObject {
 			$selected = JRoute::_( $link.'&limit='.$selected, false );
 			$js = 'onchange="window.top.location.href=this.options[this.selectedIndex].value"';
 
-			$id = VmHtml::ensureUniqueId('limit');
-			$html = JHtml::_( 'select.genericlist', $limits, '', 'class="inputbox" size="1" '.$js, 'value', 'text', $selected,$id );
+			$html = JHtml::_( 'select.genericlist', $limits, '', 'class="inputbox" size="1" '.$js, 'value', 'text', $selected );
 		}
 		return $html;
 	}
@@ -349,7 +344,7 @@ class VmPagination extends vObject {
 		$html = null;
 		if ($this->get('pages.total') > 1)
 		{
-			$html .= vmText::sprintf('JLIB_HTML_PAGE_CURRENT_OF_TOTAL', $this->get('pages.current'), $this->get('pages.total'));
+			$html .= JText::sprintf('JLIB_HTML_PAGE_CURRENT_OF_TOTAL', $this->get('pages.current'), $this->get('pages.total'));
 		}
 		return $html;
 	}
@@ -380,12 +375,12 @@ class VmPagination extends vObject {
 		// If there are results found.
 		if ($this->total > 0)
 		{
-			$msg = vmText::sprintf('JLIB_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
+			$msg = JText::sprintf('JLIB_HTML_RESULTS_OF', $fromResult, $toResult, $this->total);
 			$html .= "\n" . $msg;
 		}
 		else
 		{
-			$html .= "\n" . vmText::_('JLIB_HTML_NO_RECORDS_FOUND');
+			$html .= "\n" . JText::_('JLIB_HTML_NO_RECORDS_FOUND');
 		}
 
 		return $html;
@@ -512,7 +507,7 @@ class VmPagination extends vObject {
 	 *
 	 * @since   11.1
 	 */
-	public function getListFooter($lbox=true)
+	public function getListFooter()
 	{
 		$app = JFactory::getApplication();
 
@@ -521,7 +516,7 @@ class VmPagination extends vObject {
 		$list['limit'] = $this->limit;
 		$list['limitstart'] = $this->limitstart;
 		$list['total'] = $this->total;
-		$list['limitfield'] = $lbox? $this->getLimitBox():'';
+		$list['limitfield'] = $this->getLimitBox();
 		$list['pagescounter'] = $this->getPagesCounter();
 		$list['pageslinks'] = $this->getPagesLinks();
 
@@ -601,9 +596,9 @@ class VmPagination extends vObject {
 	 */
 	protected function _list_footer($list)
 	{
-		$html = "<div class=\"list-footer pagination pagination-toolbar clearfix\">\n";
+		$html = "<div class=\"list-footer\">\n";
 
-		$html .= "\n<div class=\"limit\">" . vmText::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield'] . "</div>";
+		$html .= "\n<div class=\"limit\">" . JText::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield'] . "</div>";
 		$html .= $list['pageslinks'];
 		$html .= "\n<div class=\"counter\">" . $list['pagescounter'] . "</div>";
 
@@ -642,7 +637,7 @@ class VmPagination extends vObject {
 	/**
 	 * Method to create an active pagination link to the item
 	 *
-	 * @param   vPaginationObject  &$item  The object with which to make an active link.
+	 * @param   JPaginationObject  &$item  The object with which to make an active link.
 	 *
 	 * @return   string  HTML link
 	 *
@@ -721,7 +716,7 @@ class VmPagination extends vObject {
 			}
 		}
 
-		$data->all = new vPaginationObject(vmText::_('JLIB_HTML_VIEW_ALL'), $this->prefix);
+		$data->all = new JPaginationObject(JText::_('JLIB_HTML_VIEW_ALL'), $this->prefix);
 		if (!$this->_viewall)
 		{
 			$data->all->base = '0';
@@ -729,8 +724,8 @@ class VmPagination extends vObject {
 		}
 
 		// Set the start and previous data objects.
-		$data->start = new vPaginationObject(vmText::_('JLIB_HTML_START'), $this->prefix);
-		$data->previous = new vPaginationObject(vmText::_('JPREV'), $this->prefix);
+		$data->start = new JPaginationObject(JText::_('JLIB_HTML_START'), $this->prefix);
+		$data->previous = new JPaginationObject(JText::_('JPREV'), $this->prefix);
 
 		if ($this->get('pages.current') > 1)
 		{
@@ -746,8 +741,8 @@ class VmPagination extends vObject {
 		}
 
 		// Set the next and end data objects.
-		$data->next = new vPaginationObject(vmText::_('JNEXT'), $this->prefix);
-		$data->end = new vPaginationObject(vmText::_('JLIB_HTML_END'), $this->prefix);
+		$data->next = new JPaginationObject(JText::_('JNEXT'), $this->prefix);
+		$data->end = new JPaginationObject(JText::_('JLIB_HTML_END'), $this->prefix);
 
 		if ($this->get('pages.current') < $this->get('pages.total'))
 		{
@@ -768,7 +763,7 @@ class VmPagination extends vObject {
 			// Set the empty for removal from route
 			//$offset = $offset == 0 ? '' : $offset;
 
-			$data->pages[$i] = new vPaginationObject($i, $this->prefix);
+			$data->pages[$i] = new JPaginationObject($i, $this->prefix);
 			if ($i != $this->get('pages.current') || $this->_viewall)
 			{
 				$data->pages[$i]->base = $offset;
@@ -786,7 +781,7 @@ class VmPagination extends vObject {
  * @subpackage  HTML
  * @since       11.1
  */
-class vPaginationObject extends JObject
+class JPaginationObject extends JObject
 {
 	/**
 	 * @var    string  The link text.

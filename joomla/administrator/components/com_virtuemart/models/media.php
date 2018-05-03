@@ -6,14 +6,14 @@
  * @package	VirtueMart
  * @subpackage
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved by the author.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: media.php 9660 2017-10-27 08:01:38Z Milbo $
+ * @version $Id: media.php 8994 2015-09-17 18:41:25Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -94,7 +94,8 @@ class VirtueMartModelMedia extends VmModel {
 					$id = $virtuemart_media_id;
 				}
 				if(!empty($id)){
-					if (!isset($_medias[$id])) {
+					if (!array_key_exists ($id, $_medias)) {
+
 						$data->load((int)$id);
 						if($app->isSite()){
 							if($data->published==0){
@@ -106,6 +107,7 @@ class VirtueMartModelMedia extends VmModel {
 						$mime		= empty($data->file_mimetype)? $mime:$data->file_mimetype;
 						if($app->isSite()){
 							$selectedLangue = explode(",", $data->file_lang);
+							//vmdebug('selectedLangue',$selectedLangue);
 							$lang =  JFactory::getLanguage();
 							if(in_array($lang->getTag(), $selectedLangue) || $data->file_lang == '') {
 								$_medias[$id] = VmMediaHandler::createMedia($data,$file_type,$mime);
@@ -214,14 +216,8 @@ class VirtueMartModelMedia extends VmModel {
 			$mainTable = '`#__virtuemart_medias`';
 			$selectFields[] = ' `virtuemart_media_id` ';
 
-
-			if(vmAccess::manager('managevendors')){
-				$vendorId = vRequest::getInt('virtuemart_vendor_id',false);
-				if(!empty($vendorId)){
-					$whereItems[] = '(`virtuemart_vendor_id` = "'.$vendorId.'" OR `shared`="1")';
-				}
-
-			} else {
+			$user = JFactory::getUser();
+			if(!$user->authorise('core.admin','com_virtuemart') and !$user->authorise('core.manager','com_virtuemart')){
 				$vendorId = vmAccess::isSuperVendor();
 				$whereItems[] = '(`virtuemart_vendor_id` = "'.$vendorId.'" OR `shared`="1")';
 			}
@@ -319,7 +315,7 @@ class VirtueMartModelMedia extends VmModel {
 		if(empty($data['media_action'])){
 			$data['media_action'] = 'none';
 		}
-
+		vmdebug('storeMedia',$data);
 		//the active media id is not empty, so there should be something done with it
 		if( (!empty($data['active_media_id']) and isset($data['virtuemart_media_id']) ) || $data['media_action']=='upload'){
 
@@ -361,7 +357,6 @@ class VirtueMartModelMedia extends VmModel {
 
 		//set the relations
 		$table = $this->getTable($type.'_medias');
-		//vmdebug('my data before storing media',$data);
 		// Bind the form fields to the country table
 		$table->bindChecknStore($data);
 
@@ -386,14 +381,14 @@ class VirtueMartModelMedia extends VmModel {
 			return false;
 		}
 
-		vmLanguage::loadJLang('com_virtuemart_media');
+		VmConfig::loadJLang('com_virtuemart_media');
 		if (!class_exists('VmMediaHandler')) require(VMPATH_ADMIN.DS.'helpers'.DS.'mediahandler.php');
 
 		$table = $this->getTable('medias');
 
 		$table->bind($data);
 		$data = VmMediaHandler::prepareStoreMedia($table,$data,$data['file_type']); //this does not store the media, it process the actions and prepares data
-		if($data===false) return $table->virtuemart_media_id;
+
 		// workarround for media published and product published two fields in one form.
 		$tmpPublished = false;
 		if (isset($data['media_published'])){
@@ -435,36 +430,7 @@ class VirtueMartModelMedia extends VmModel {
 			vmWarn('Insufficient permissions to delete media');
 			return false;
 		}
-
 		return parent::remove($ids);
-	}
-
-	function removeFiles($ids){
-
-		if(!vmAccess::manager('media.delete')){
-			vmWarn('Insufficient permissions to delete media');
-			return false;
-		}
-
-		if(!is_array($ids)) $ids = array($ids);
-		$rids = array();
-		foreach($ids as $id){
-			$file = $this->getFile($id);
-
-			$image = $this->createMediaByIds($id,$file->file_type,$file->file_mimetype,1);
-			if(empty($image[0])){
-
-			} else {
-				$image[0]->deleteThumbs();
-				$r = $image[0]->deleteFile($image[0]->file_url,$image[0]->file_is_forSale);
-				if($r){
-					$rids[] = $id;
-				}
-			}
-
-		}
-
-		return parent::remove($rids);
 	}
 
 }

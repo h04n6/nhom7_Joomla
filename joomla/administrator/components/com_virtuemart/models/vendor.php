@@ -6,14 +6,14 @@
  * @package    VirtueMart
  * @subpackage
  * @author RolandD, RickG
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: vendor.php 9646 2017-10-15 18:52:42Z Milbo $
+ * @version $Id: vendor.php 8930 2015-07-28 23:26:17Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -80,25 +80,25 @@ class VirtueMartModelVendor extends VmModel {
 
 		if(!empty($vendor_id)) $this->_id = (int)$vendor_id;
 
-		if (empty($this->_cache[$this->_id][VmConfig::$vmlang])) {
+		if (empty($this->_cache[$this->_id])) {
 
-			$this->_cache[$this->_id][VmConfig::$vmlang] = $this->getTable ('vendors');
-			$this->_cache[$this->_id][VmConfig::$vmlang]->load ($this->_id);
+			$this->_cache[$this->_id] = $this->getTable ('vendors');
+			$this->_cache[$this->_id]->load ($this->_id);
 // 			vmdebug('getVendor',$this->_id,$this->_data);
 			// Convert ; separated string into array
-			if ($this->_cache[$this->_id][VmConfig::$vmlang]->vendor_accepted_currencies) {
-				$this->_cache[$this->_id][VmConfig::$vmlang]->vendor_accepted_currencies = explode (',', $this->_cache[$this->_id][VmConfig::$vmlang]->vendor_accepted_currencies);
+			if ($this->_cache[$this->_id]->vendor_accepted_currencies) {
+				$this->_cache[$this->_id]->vendor_accepted_currencies = explode (',', $this->_cache[$this->_id]->vendor_accepted_currencies);
 			} else {
-				$this->_cache[$this->_id][VmConfig::$vmlang]->vendor_accepted_currencies = array();
+				$this->_cache[$this->_id]->vendor_accepted_currencies = array();
 			}
 
 			//Todo, check this construction
 			$xrefTable = $this->getTable ('vendor_medias');
-			$this->_cache[$this->_id][VmConfig::$vmlang]->virtuemart_media_id = $xrefTable->load ($this->_id);
+			$this->_cache[$this->_id]->virtuemart_media_id = $xrefTable->load ($this->_id);
 
 		}
 
-		return $this->_cache[$this->_id][VmConfig::$vmlang];
+		return $this->_cache[$this->_id];
 	}
 
 	/**
@@ -198,15 +198,6 @@ class VirtueMartModelVendor extends VmModel {
 		}
 		if(empty($data['vendor_name'])) $data['vendor_name'] = $data['vendor_store_name'];
 
-		if(!vmAccess::manager('managevendors')){
-			if(empty($oldVendorId)){
-				$data['max_cats_per_product'] = -1;
-			} else {
-				$table->load($oldVendorId);
-				$data['max_cats_per_product'] = $table->max_cats_per_product;
-			}
-		}
-
 		$res = $table->bindChecknStore ($data);
 		if(!$res) {
 			vmError ('Error storing vendor');
@@ -258,8 +249,9 @@ class VirtueMartModelVendor extends VmModel {
 			$db = JFactory::getDBO ();
 
 			$q = 'SELECT *  FROM `#__virtuemart_currencies` AS c
-			LEFT JOIN `#__virtuemart_vendors` AS v ON  c.virtuemart_currency_id = v.vendor_currency
-			WHERE v.virtuemart_vendor_id = "' . (int)$_vendorId . '"';
+			, `#__virtuemart_vendors` AS v
+			WHERE v.virtuemart_vendor_id = ' . (int)$_vendorId . '
+			AND   v.vendor_currency = c.virtuemart_currency_id';
 			$db->setQuery ($q);
 			self::$_vendorCurrencies[$_vendorId] = $db->loadObject ();
 		}
@@ -267,26 +259,21 @@ class VirtueMartModelVendor extends VmModel {
 		return self::$_vendorCurrencies[$_vendorId];
 	}
 
-	static $_vendorAcceptedCurrencies = array();
-	function getVendorAndAcceptedCurrencies($vendorId){
+	/**
+	 * Retrieve a lost of vendor objects
+	 *
+	 * @author Oscar van Eijk
+	 * @return Array with all Vendor objects
+	 */
+	function getVendorCategories () {
 
-		if(!isset(self::$_vendorAcceptedCurrencies[$vendorId])){
-			$db = JFactory::getDBO();
-// the select list should include the vendor currency which is the currency in which the product prices are displayed by default.
-			$q  = 'SELECT CONCAT(`vendor_accepted_currencies`, ",",`vendor_currency`) AS all_currencies, `vendor_currency` FROM `#__virtuemart_vendors` WHERE `virtuemart_vendor_id`='.(int)$vendorId;
-			$db->setQuery($q);
-			self::$_vendorAcceptedCurrencies[$vendorId] = $db->loadAssoc();
-		}
-
-		return self::$_vendorAcceptedCurrencies[$vendorId];
+		$_q = 'SELECT * FROM `#__vm_vendor_category`';
+		$db = JFactory::getDBO();
+		$db->setQuery ($_q);
+		return $db->loadObjectList ();
 	}
 
-	/**
-	 * @deprecated
-	 * @param $virtuemart_order_id
-	 * @return int|mixed
-	 */
-	public function getUserIdByOrderId ($virtuemart_order_id) {
+	function getUserIdByOrderId ($virtuemart_order_id) {
 
 		if (empty ($virtuemart_order_id)) {
 			return 0;
@@ -326,13 +313,9 @@ class VirtueMartModelVendor extends VmModel {
 			return 0;
 		}
 
-		static $c = array();
 		//sanitize input params
 		$value = (int)$value;
-		$h = $value.$type.$ownerOnly;
-		if(isset($c[$h])){
-			return $c[$h];
-		}
+
 		//static call used, so we need our own db instance
 		$db = JFactory::getDBO ();
 		switch ($type) {
@@ -354,14 +337,18 @@ class VirtueMartModelVendor extends VmModel {
 				$q = 'SELECT virtuemart_vendor_id FROM #__virtuemart_products WHERE virtuemart_product_id=' . $value;
 				break;
 		}
-
 		$db->setQuery ($q);
-		$c[$h] = $db->loadResult ();
-		if ($c[$h]) {
-			return $c[$h];
+		$virtuemart_vendor_id = $db->loadResult ();
+		if ($virtuemart_vendor_id) {
+			return $virtuemart_vendor_id;
 		} else {
-			$c[$h] = 0;
 			return 0;
+//			if($type!='user'){
+//				return 0;
+//			} else {
+//				JError::raiseNotice(1, 'No virtuemart_vendor_id found for '.$value.' on '.$type.' check.');
+//				return 0;
+//			}
 		}
 	}
 
@@ -418,14 +405,13 @@ class VirtueMartModelVendor extends VmModel {
 	public function getVendorAddressFields($vendorId=0){
 		if($vendorId!=0) $this->_id = (int)$vendorId;
 		if(!$this->_vendorFields){
-			if(empty($vendorId)) $vendorId = 1;
-			$userId = VirtueMartModelVendor::getUserIdByVendorId ($vendorId);
+			$userId = VirtueMartModelVendor::getUserIdByVendorId ($this->_id);
 			$userModel = VmModel::getModel ('user');
 			$virtuemart_userinfo_id = $userModel->getBTuserinfo_id ($userId);
 
-			//TODO should be unecessary, lets change the code: this is needed to set the correct user id for the vendor when the user is logged
-			//$userModel->setId($userId);
-			$userModel->getVendor($vendorId,FALSE);
+			// this is needed to set the correct user id for the vendor when the user is logged
+			$userModel->getVendor($this->_id,FALSE);
+
 			$vendorFieldsArray = $userModel->getUserInfoInUserFields ('mail', 'BT', $virtuemart_userinfo_id, FALSE, TRUE);
 			$this->_vendorFields = $vendorFieldsArray[$virtuemart_userinfo_id];
 		}

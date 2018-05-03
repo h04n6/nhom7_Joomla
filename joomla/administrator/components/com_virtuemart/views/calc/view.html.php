@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage Calculation tool
 * @author Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 9420 2017-01-12 09:35:36Z Milbo $
+* @version $Id: view.html.php 8962 2015-08-27 12:37:36Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -38,6 +38,7 @@ class VirtuemartViewCalc extends VmViewAdmin {
 
 		$model = VmModel::getModel('calc');
 
+		//@todo should be depended by loggedVendor
 		$this->vendorId = vmAccess::getVendorId();
 
 		$this->SetViewTitle();
@@ -88,7 +89,7 @@ class VirtuemartViewCalc extends VmViewAdmin {
 			}
 
 			$this->countriesList = ShopFunctionsF::renderCountryList($calc->calc_countries,True);
-			$this->statesList = ShopFunctionsF::renderStateList($calc->virtuemart_state_ids,'', True, 0, array(), 'virtuemart_state_id', '');
+			$this->statesList = ShopFunctionsF::renderStateList($calc->virtuemart_state_ids,'', True);
 			$this->manufacturerList= ShopFunctions::renderManufacturerList($calc->virtuemart_manufacturers,true);
 
 			if($this->showVendors()){
@@ -108,7 +109,7 @@ class VirtuemartViewCalc extends VmViewAdmin {
 
 			$search = vRequest::getCmd('search', false);
 			$this->calcs = $model->getCalcs(false, false, $search);
-			vmLanguage::loadJLang('com_virtuemart_shoppers',true);
+			VmConfig::loadJLang('com_virtuemart_shoppers',true);
 			foreach ($this->calcs as &$data){
 				$data->calcCategoriesList = shopfunctions::renderGuiList($data->virtuemart_calc_id,'categories','category_name','category','calc_categories','virtuemart_calc_id');
 
@@ -185,7 +186,7 @@ class VirtuemartViewCalc extends VmViewAdmin {
 
 		$answer = $dispatcher->trigger('plgVmAddMathOp', array(&$mathOps));
 
-		$listHTML = JHtml::_('Select.genericlist', $mathOps, 'calc_value_mathop', 'style="width:70px;"', 'calc_value_mathop', 'calc_value_mathop_name', $selected );
+		$listHTML = JHtml::_('Select.genericlist', $mathOps, 'calc_value_mathop', '', 'calc_value_mathop', 'calc_value_mathop_name', $selected );
 		return $listHTML;
 	}
 

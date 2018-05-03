@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage
 * @author
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 9420 2017-01-12 09:35:36Z Milbo $
+* @version $Id: view.html.php 8850 2015-05-13 14:06:11Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -35,7 +35,7 @@ class VirtuemartViewVirtuemart extends VmViewAdmin {
 
 		if (!class_exists('VmImage'))
 			require(VMPATH_ADMIN . DS . 'helpers' . DS . 'image.php');
-		vmLanguage::loadJLang('com_virtuemart_orders',TRUE);
+		VmConfig::loadJLang('com_virtuemart_orders',TRUE);
 
 
 		if(JFactory::getApplication()->isSite()){
@@ -84,15 +84,11 @@ class VirtuemartViewVirtuemart extends VmViewAdmin {
 			vRequest::setvar('task','');
 			$myCurrencyDisplay = CurrencyDisplay::getInstance();
 			$revenueBasic = $reportModel->getRevenue(60,true);
-			$this->report = '';
-			if(!empty($revenueBasic['report'])){
-				$this->report = $revenueBasic['report'];
+			$this->report = $revenueBasic['report'];
 
-				vmJsApi::addJScript( "jsapi","//google.com/jsapi",false,false, false, '' );
-				vmJsApi::addJScript('vm.stats_chart',$revenueBasic['js'],false,true);
-				vmTime('Created report','report');
-			}
-
+			vmJsApi::addJScript( "jsapi","//google.com/jsapi",false,false,'' );
+			vmJsApi::addJScript('vm.stats_chart',$revenueBasic['js'],false,true);
+			vmTime('Created report','report');
 		}
 
 		//if($layout=='default'){

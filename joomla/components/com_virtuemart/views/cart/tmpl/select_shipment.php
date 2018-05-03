@@ -7,7 +7,7 @@
  * @subpackage Cart
  * @author Max Milbers
  *
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
@@ -24,7 +24,7 @@ if (VmConfig::get('oncheckout_show_steps', 1)) {
 	echo '<div class="checkoutStep" id="checkoutStep2">' . vmText::_('COM_VIRTUEMART_USER_FORM_CART_STEP2') . '</div>';
 }
 
-if ($this->layoutName!=$this->cart->layout) {
+if ($this->layoutName!='default') {
 $headerLevel = 1;
 if($this->cart->getInCheckOut()){
 	$buttonclass = 'button vm-button-correct';
@@ -32,7 +32,7 @@ if($this->cart->getInCheckOut()){
 	$buttonclass = 'default';
 }
 ?>
-<form method="post" id="shipmentForm" name="chooseShipmentRate" action="<?php echo JRoute::_('index.php'); ?>" class="form-validate">
+<form method="post" id="userForm" name="chooseShipmentRate" action="<?php echo JRoute::_('index.php'); ?>" class="form-validate">
 	<?php
 	} else {
 		$headerLevel = 3;
@@ -40,27 +40,27 @@ if($this->cart->getInCheckOut()){
 	}
 
 	if($this->cart->virtuemart_shipmentmethod_id){
-		echo '<h'.$headerLevel.' class="vm-shipment-header-selected">'.vmText::_('COM_VIRTUEMART_CART_SELECTED_SHIPMENT_SELECT').'</h'.$headerLevel.'>';
+		echo '<h'.$headerLevel.'>'.vmText::_('COM_VIRTUEMART_CART_SELECTED_SHIPMENT_SELECT').'</h'.$headerLevel.'>';
 	} else {
-		echo '<h'.$headerLevel.' class="vm-shipment-header-select">'.vmText::_('COM_VIRTUEMART_CART_SELECT_SHIPMENT').'</h'.$headerLevel.'>';
+		echo '<h'.$headerLevel.'>'.vmText::_('COM_VIRTUEMART_CART_SELECT_SHIPMENT').'</h'.$headerLevel.'>';
 	}
 
-    if(VmConfig::get('cart_extraSafeBtn',false) or $this->layoutName!=$this->cart->layout){
-		?>
-        <div class="buttonBar-right">
-			<?php $dynUpdate = '';
-			if( VmConfig::get('oncheckout_ajax',false)) {
-				$dynUpdate=' data-dynamic-update="1" ';
-			} ?>
-            <button name="updatecart" class="<?php echo $buttonclass ?>" type="submit" <?php echo $dynUpdate ?> ><?php echo vmText::_('COM_VIRTUEMART_SAVE'); ?></button>
 
-			<?php   if ($this->layoutName!=$this->cart->layout) { ?>
-                <button class="<?php echo $buttonclass ?>" type="reset" onClick="window.location.href='<?php echo JRoute::_('index.php?option=com_virtuemart&view=cart&task=cancel'); ?>'" ><?php echo vmText::_('COM_VIRTUEMART_CANCEL'); ?></button>
-			<?php  } ?>
-        </div>
-		<?php
-    }
+	?>
 
+	<div class="buttonBar-right">
+		<?php $dynUpdate = '';
+		if( VmConfig::get('oncheckout_ajax',false)) {
+		$dynUpdate=' data-dynamic-update="1" ';
+		} ?>
+		<button name="updatecart" class="<?php echo $buttonclass ?>" type="submit" <?php echo $dynUpdate ?> ><?php echo vmText::_('COM_VIRTUEMART_SAVE'); ?></button>
+
+		<?php   if ($this->layoutName!='default') { ?>
+			<button class="<?php echo $buttonclass ?>" type="reset" onClick="window.location.href='<?php echo JRoute::_('index.php?option=com_virtuemart&view=cart&task=cancel'); ?>'" ><?php echo vmText::_('COM_VIRTUEMART_CANCEL'); ?></button>
+		<?php  } ?>
+	</div>
+
+	<?php
 	if ($this->found_shipment_method ) {
 
 		echo '<fieldset class="vm-payment-shipment-select vm-shipment-select">';
@@ -78,7 +78,7 @@ if($this->cart->getInCheckOut()){
 	}
 
 
-	if ($this->layoutName!=$this->cart->layout) {
+	if ($this->layoutName!='default') {
 	?> <input type="hidden" name="option" value="com_virtuemart" />
 	<input type="hidden" name="view" value="cart" />
 	<input type="hidden" name="task" value="updatecart" />

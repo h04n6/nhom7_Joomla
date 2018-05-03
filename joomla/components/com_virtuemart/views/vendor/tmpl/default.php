@@ -6,7 +6,7 @@
 * @package	VirtueMart
 * @subpackage vendor
 * @author Kohl Patrick, Eugen Stranz
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -38,7 +38,7 @@ $horizontalSeparator = '<div class="horizontal-separator"></div>';
 // Lets output the categories, if there are some
 if (!empty($this->vendors)) { ?>
 
-<div class="vendor-details-view vendor-view-default">
+<div class="vendor-view-default">
 
 	<?php // Start the Output
 	foreach ( $this->vendors as $vendor ) {

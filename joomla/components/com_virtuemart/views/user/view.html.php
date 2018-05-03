@@ -8,14 +8,14 @@
  * @subpackage User
  * @author Oscar van Eijk
  * @author Max Milbers
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 9663 2017-11-09 00:00:38Z Milbo $
+ * @version $Id: view.html.php 8951 2015-08-19 09:41:44Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -51,10 +51,10 @@ class VirtuemartViewUser extends VmView {
      */
     function display($tpl = null) {
 
-		$this->useSSL = vmURI::useSSL();
+		$this->useSSL = VmConfig::get('useSSL', 0);
 		$this->useXHTML = false;
 
-		vmLanguage::loadJLang('com_virtuemart_shoppers',TRUE);
+		VmConfig::loadJLang('com_virtuemart_shoppers',TRUE);
 
 		$mainframe = JFactory::getApplication();
 		$pathway = $mainframe->getPathway();
@@ -130,7 +130,7 @@ class VirtuemartViewUser extends VmView {
 
 			$userFields = $userFields[$virtuemart_userinfo_id];
 		}
-		//vmdebug('my userfields ',$userFields);
+
 		$this->virtuemart_userinfo_id = $virtuemart_userinfo_id;
 
 		$this->assignRef('userFields', $userFields);
@@ -188,11 +188,11 @@ class VirtuemartViewUser extends VmView {
 		$pathway_text = vmText::_('COM_VIRTUEMART_YOUR_ACCOUNT_DETAILS');
 		if (!$this->userDetails->JUser->get('id')) {
 			if ($this->cart->_fromCart or $this->cart->getInCheckOut()) {
-				if ($this->address_type == 'BT') {
-					$vmfield_title = vmText::_('COM_VIRTUEMART_USER_FORM_EDIT_BILLTO_LBL');
-				} else {
-					$vmfield_title = vmText::_('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL');
-				}
+			if ($this->address_type == 'BT') {
+				$vmfield_title = vmText::_('COM_VIRTUEMART_USER_FORM_EDIT_BILLTO_LBL');
+			} else {
+				$vmfield_title = vmText::_('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL');
+			}
 			} else {
 			if ($this->address_type == 'BT') {
 				$vmfield_title = vmText::_('COM_VIRTUEMART_USER_FORM_EDIT_BILLTO_LBL');
@@ -209,21 +209,16 @@ class VirtuemartViewUser extends VmView {
 				$vmfield_title = vmText::_('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL');
 			}
 		}
-		//vmdebug('My fields',$userFields['fields']);
 
-		$prefiks = '';
-		if($this->address_type=='ST'){
-			$prefiks = 'shipto_';
-		}
-		vmJsApi::vmValidator($this->userDetails->JUser->guest,$userFields['fields'],$prefiks);
+		vmJsApi::vmValidator($this->userDetails->JUser->guest);
 
 		$this->add_product_link="";
 		$this->manage_link="";
-		if(ShopFunctionsF::isFEmanager('manage'/*,'category','product','inventory','ratings','custom','calc','manufacturer','orders','report','user'*/) ){
+		if(ShopFunctionsF::isFEmanager() ){
 			$mlnk = JURI::root() . 'index.php?option=com_virtuemart&tmpl=component&manage=1' ;
 			$this->manage_link = $this->linkIcon($mlnk, 'JACTION_MANAGE', 'new', false, false, true, true);
 		}
-		if(ShopFunctionsF::isFEmanager('product.edit')){
+		if(ShopFunctionsF::isFEmanager('vm.product.edit')){
 			$aplnk = JURI::root() . 'index.php?option=com_virtuemart&tmpl=component&view=product&view=product&task=edit&virtuemart_product_id=0&manage=1' ;
 			$this->add_product_link = $this->linkIcon($aplnk, 'COM_VIRTUEMART_PRODUCT_ADD_PRODUCT', 'new', false, false, true, true);
 		}
@@ -237,8 +232,6 @@ class VirtuemartViewUser extends VmView {
 		$this->assignRef('vmfield_title', $vmfield_title);
 
 		shopFunctionsF::setVmTemplate($this, 0, 0, $layoutName);
-
-		$this->captcha = shopFunctionsF::renderCaptcha();
 
 		parent::display($tpl);
     }
@@ -267,7 +260,7 @@ class VirtuemartViewUser extends VmView {
 	    }
 	}
 		if($this->_orderList){
-			vmLanguage::loadJLang('com_virtuemart_orders',TRUE);
+			VmConfig::loadJLang('com_virtuemart_orders',TRUE);
 		}
 	$this->assignRef('orderlist', $this->_orderList);
     }
@@ -315,7 +308,7 @@ class VirtuemartViewUser extends VmView {
 		// Load the required styresheets
 		if (count($userFields['links']) > 0) {
 			foreach ($userFields['links'] as $_link => $_path) {
-				vmJsApi::css($_link, $_path);
+			JHtml::stylesheet($_link, $_path);
 			}
 		}
     }
@@ -364,13 +357,8 @@ class VirtuemartViewUser extends VmView {
 		}
     }
 
-
 	public function vmValidator (){
-		$prefiks = '';
-		if($this->address_type=='ST'){
-			$prefiks = 'shipto_';
-		}
-		vmJsApi::vmValidator($this->userDetails->JUser->guest,$this->userFields['fields'],$prefiks);
+		vmJsApi::vmValidator($this->userDetails->JUser->guest);
 	}
 
     /**
@@ -382,7 +370,7 @@ class VirtuemartViewUser extends VmView {
 
     public function renderMailLayout($doVendor, $recipient) {
 
-		$this->useSSL = vmURI::useSSL();
+		$this->useSSL = VmConfig::get('useSSL', 0);
 		$this->useXHTML = true;
 
 		$userFieldsModel = VmModel::getModel('UserFields');
@@ -421,7 +409,6 @@ class VirtuemartViewUser extends VmView {
 
 		parent::display();
     }
-
 
 }
 

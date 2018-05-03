@@ -6,14 +6,14 @@
  * @package	VirtueMart
  * @subpackage User
  * @author Oscar van Eijk
- * @link https://virtuemart.net
+ * @link http://www.virtuemart.net
  * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 9617 2017-08-07 14:04:54Z Milbo $
+ * @version $Id: view.html.php 8933 2015-07-30 10:17:11Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -41,7 +41,7 @@ class VirtuemartViewUser extends VmViewAdmin {
 		$model = VmModel::getModel();
 		$currentUser = JFactory::getUser();
 
-		vmLanguage::loadJLang('com_virtuemart_shoppers',TRUE);
+		VmConfig::loadJLang('com_virtuemart_shoppers',TRUE);
 
 		$task = vRequest::getCmd('task', 'edit');
 		if($task == 'editshop'){
@@ -106,20 +106,15 @@ class VirtuemartViewUser extends VmViewAdmin {
 
 			// Shopper info
 			$this->lists['shoppergroups'] = ShopFunctions::renderShopperGroupList($userDetails->shopper_groups,true, 'virtuemart_shoppergroup_id');
-			$this->lists['vendors'] = '';
-			if($this->showVendors()){
-				$this->lists['vendors'] = ShopFunctions::renderVendorList($userDetails->virtuemart_vendor_id);
-			}
-
+			$this->lists['vendors'] = ShopFunctions::renderVendorList($userDetails->virtuemart_vendor_id);
 			$model->setId($userDetails->JUser->get('id'));
 			$this->lists['custnumber'] = $model->getCustomerNumberById();
 
 			// Shipment address(es)
-			if(!class_exists('ShopFunctionsF')) require(VMPATH_SITE.DS.'helpers'.DS.'shopfunctionsf.php');
-			$this->lists['shipTo'] = shopFunctionsF::generateStAddressList($this, $model, 'addST');
+			$this->lists['shipTo'] = ShopFunctions::generateStAddressList($this,$model,'addST');
 
 			$new = false;
-			if(vRequest::getInt('new','0')==1){
+			if(vRequest::getInt('new','0')===1){
 				$new = true;
 			}
 
@@ -136,7 +131,7 @@ class VirtuemartViewUser extends VmViewAdmin {
 			// Load the required stylesheets
 			if (count($userFieldsBT['links']) > 0) {
 				foreach ($userFieldsBT['links'] as $_link => $_path) {
-					vmJsApi::css($_link, $_path);
+					JHtml::stylesheet($_link, $_path);
 				}
 			}
 
@@ -151,12 +146,12 @@ class VirtuemartViewUser extends VmViewAdmin {
 				$userFieldsArray = $model->getUserInfoInUserFields($layoutName,'ST',$virtuemart_userinfo_id,false);
 				if($new ){
 					$virtuemart_userinfo_id = 0;
-
 				} else {
 
 				}
 				$userFieldsST = $userFieldsArray[$virtuemart_userinfo_id];
 				$this->assignRef('shipToFields', $userFieldsST);
+				vmdebug('hm ST $virtuemart_userinfo_id',$virtuemart_userinfo_id);
 			}
 
 			$this->assignRef('shipToId', $virtuemart_userinfo_id);
@@ -235,7 +230,7 @@ class VirtuemartViewUser extends VmViewAdmin {
 
 
 		if(!empty($this->orderlist)){
-			vmLanguage::loadJLang('com_virtuemart_orders',TRUE);
+			VmConfig::loadJLang('com_virtuemart_orders',TRUE);
 		}
 		parent::display($tpl);
 	}
@@ -261,7 +256,7 @@ class VirtuemartViewUser extends VmViewAdmin {
 	private function checkTCPDFinstalled(){
 
 		if(!file_exists(VMPATH_LIBS.DS.'tcpdf'.DS.'tcpdf.php')){
-			vmLanguage::loadJLang('com_virtuemart_config');
+			VmConfig::loadJLang('com_virtuemart_config');
 			vmWarn('COM_VIRTUEMART_TCPDF_NINSTALLED');
 		}
 	}

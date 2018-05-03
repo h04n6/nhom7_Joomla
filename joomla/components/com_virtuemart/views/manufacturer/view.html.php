@@ -6,7 +6,7 @@
 * @package	VirtueMart
 * @subpackage Manufacturer
 * @author Kohl Patrick
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
@@ -65,34 +65,12 @@ class VirtuemartViewManufacturer extends VmView {
 					break;
 				}
 			}
-			$document->addHeadLink( JUri::getInstance()->toString(array('scheme', 'host', 'port')).JRoute::_('index.php?option=com_virtuemart&view=category&virtuemart_manufacturer_id='.$virtuemart_manufacturer_id, FALSE) , 'canonical', 'rel', '' );
+			$document->addHeadLink( JRoute::_('index.php?option=com_virtuemart&view=category&virtuemart_manufacturer_id='.$virtuemart_manufacturer_id, FALSE) , 'canonical', 'rel', '' );
 			$this->assignRef('manufacturerImage', $manufacturerImage);
 			$this->assignRef('manufacturer',	$manufacturer);
 			$pathway->addItem(strip_tags($manufacturer->mf_name));
 
 			$this->setLayout('details');
-
-			if ($manufacturer->metadesc) {
-				$document->setDescription( strip_tags(html_entity_decode($manufacturer->metadesc,ENT_QUOTES)) );
-			} else {
-				$document->setDescription( strip_tags(html_entity_decode($manufacturer->mf_name,ENT_QUOTES))  );
-			}
-
-			if ($manufacturer->metakey) {
-				$document->setMetaData('keywords', $manufacturer->metakey);
-			}
-
-			if ($manufacturer->metarobot) {
-				$document->setMetaData('robots', $manufacturer->metarobot);
-			}
-
-			$app = JFactory::getApplication();
-			if ($app->getCfg('MetaTitle') == '1') {
-				$document->setMetaData('title', $manufacturer->mf_name);  //Maybe better product_name
-			}
-			if ($app->getCfg('MetaAuthor') == '1') {
-				$document->setMetaData('author', $manufacturer->metaauthor);
-			}
 
 		} else {
 			$document->setTitle(vmText::_('COM_VIRTUEMART_MANUFACTURER_PAGE')) ;

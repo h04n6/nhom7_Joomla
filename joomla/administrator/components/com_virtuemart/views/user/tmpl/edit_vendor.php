@@ -6,22 +6,18 @@
 * @package	VirtueMart
 * @subpackage User
 * @author Oscar van Eijk
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: edit_vendor.php 9590 2017-06-27 12:46:05Z Milbo $
+* @version $Id: edit_vendor.php 8539 2014-10-30 15:52:48Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die('Restricted access');
-if(!vmAccess::manager('user.editshop')){
-    ?><div><?php echo vmText::_('COM_VM_PERM_MISSING_VENDOR');?></div> <?php
-}
-?>
+defined('_JEXEC') or die('Restricted access'); ?>
 
 <div class="col50">
 
@@ -30,15 +26,39 @@ if(!vmAccess::manager('user.editshop')){
 						<?php echo vmText::_('COM_VIRTUEMART_VENDOR_FORM_INFO_LBL') ?>
 					</legend>
 					<table class="admintable">
-						<?php
-						echo VmHTML::row('input','COM_VIRTUEMART_STORE_FORM_COMPANY_NAME','vendor_name',$this->vendor->vendor_name);
-						echo VmHTML::row('input','COM_VIRTUEMART_STORE_FORM_STORE_NAME','vendor_store_name',$this->vendor->vendor_store_name);
-						echo VmHTML::row('input','COM_VIRTUEMART_PRODUCT_FORM_URL','vendor_url',$this->vendor->vendor_url);
-						echo VmHTML::row('input','COM_VIRTUEMART_STORE_FORM_MPOV','vendor_min_pov',$this->vendor->vendor_min_pov);
-						if(VmConfig::get('multix','none')!='none' and vmAccess::manager('managevendors')){
-							echo VmHTML::row('input','COM_VIRTUEMART_MAX_CATS_PER_PRODUCT','max_cats_per_product',$this->vendor->max_cats_per_product);
-						}
-						?>
+						<tr>
+							<td class="key">
+								<?php echo vmText::_('COM_VIRTUEMART_STORE_FORM_STORE_NAME'); ?>:
+							</td>
+							<td>
+								<input class="inputbox" type="text" name="vendor_store_name" id="vendor_store_name" size="50" value="<?php echo $this->vendor->vendor_store_name; ?>" />
+							</td>
+						</tr>
+						<tr>
+							<td class="key">
+								<?php echo vmText::_('COM_VIRTUEMART_STORE_FORM_COMPANY_NAME'); ?>:
+							</td>
+							<td>
+								<input class="inputbox" type="text" name="vendor_name" id="vendor_name" size="50" value="<?php echo $this->vendor->vendor_name; ?>" />
+							</td>
+						</tr>
+						<tr>
+							<td class="key">
+								<?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_URL'); ?>:
+							</td>
+							<td>
+								<input class="inputbox" type="text" name="vendor_url" id="vendor_url" size="50" value="<?php echo $this->vendor->vendor_url; ?>" />
+							</td>
+						</tr>
+						<tr>
+							<td class="key">
+								<?php echo vmText::_('COM_VIRTUEMART_STORE_FORM_MPOV'); ?>:
+							</td>
+							<td>
+								<input class="inputbox" type="text" name="vendor_min_pov" id="vendor_min_pov" size="10" value="<?php echo $this->vendor->vendor_min_pov; ?>" />
+							</td>
+						</tr>
+
 					</table>
 				</fieldset>
 
@@ -47,10 +67,22 @@ if(!vmAccess::manager('user.editshop')){
 						<?php echo vmText::_('COM_VIRTUEMART_STORE_CURRENCY_DISPLAY') ?>
 					</legend>
 					<table class="admintable">
-						<?php
-						echo VmHTML::row('genericlist','COM_VIRTUEMART_CURRENCY',$this->currencies,'vendor_currency','', 'virtuemart_currency_id', 'currency_name', $this->vendor->vendor_currency,'vendor_currency',true);
-						echo VmHTML::row('genericlist','COM_VIRTUEMART_STORE_FORM_ACCEPTED_CURRENCIES',$this->currencies,'vendor_accepted_currencies[]','size=10 multiple="multiple" data-placeholder="'.vmText::_('COM_VIRTUEMART_DRDOWN_SELECT_SOME_OPTIONS').'"', 'virtuemart_currency_id', 'currency_name', $this->vendor->vendor_accepted_currencies,'vendor_accepted_currencies',true);
-						?>
+						<tr>
+							<td class="key">
+								<?php echo vmText::_('COM_VIRTUEMART_CURRENCY'); ?>:
+							</td>
+							<td>
+								<?php echo JHtml::_('Select.genericlist', $this->currencies, 'vendor_currency', '', 'virtuemart_currency_id', 'currency_name', $this->vendor->vendor_currency); ?>
+							</td>
+						</tr>
+						<tr>
+							<td class="key">
+								<?php echo vmText::_('COM_VIRTUEMART_STORE_FORM_ACCEPTED_CURRENCIES'); ?>:
+							</td>
+							<td>
+								<?php echo JHtml::_('Select.genericlist', $this->currencies, 'vendor_accepted_currencies[]', 'size=10 multiple="multiple" data-placeholder="'.vmText::_('COM_VIRTUEMART_DRDOWN_SELECT_SOME_OPTIONS').'"', 'virtuemart_currency_id', 'currency_name', $this->vendor->vendor_accepted_currencies); ?>
+							</td>
+						</tr>
 					</table>
 				</fieldset>
 
@@ -59,11 +91,12 @@ if(!vmAccess::manager('user.editshop')){
 				<?php echo vmText::_('COM_VIRTUEMART_VENDOR_FORM_INFO_LBL') ?>
 			</legend>
 			<?php
-				echo $this->vendor->images[0]->displayFilesHandler($this->vendor->virtuemart_media_id,'vendor',$this->vendor->virtuemart_vendor_id);
+				echo $this->vendor->images[0]->displayFilesHandler($this->vendor->virtuemart_media_id,'vendor');
 			?>
 
 
 		</fieldset>
+
 
 				<fieldset>
 					<legend>

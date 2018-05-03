@@ -6,14 +6,14 @@
 * @package	VirtueMart
 * @subpackage
 * @author Max Milbers
-* @link https://virtuemart.net
+* @link http://www.virtuemart.net
 * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 * VirtueMart is free software. This version may have been modified pursuant
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: media.php 9660 2017-10-27 08:01:38Z Milbo $
+* @version $Id: media.php 8953 2015-08-19 10:30:52Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -37,7 +37,7 @@ class VirtuemartControllerMedia extends VmController {
 	 * @author
 	 */
 	function __construct() {
-		vmLanguage::loadJLang('com_virtuemart_media');
+		VmConfig::loadJLang('com_virtuemart_media');
 		parent::__construct('virtuemart_media_id');
 
 	}
@@ -59,9 +59,7 @@ class VirtuemartControllerMedia extends VmController {
 		$data = array_merge(vRequest::getRequest(),vRequest::get('media'));
 
 		//$data['file_title'] = vRequest::getVar('file_title','','post','STRING',JREQUEST_ALLOWHTML);
-		if(!empty($data['file_description'])){
-			$data['file_description'] = JComponentHelper::filterText($data['file_description']); //vRequest::filter(); vRequest::getHtml('file_description','');
-		}
+		$data['file_description'] = vRequest::getHtml('media[file_description]','');
 
 		/*$data['media_action'] = vRequest::getCmd('media[media_action]');
 		$data['media_attributes'] = vRequest::getCmd('media[media_attributes]');
@@ -69,7 +67,7 @@ class VirtuemartControllerMedia extends VmController {
 		if(empty($data['file_type'])){
 			$data['file_type'] = $data['media_attributes'];
 		}
-
+vmdebug('my media in controller save media',$data);
 		$msg = '';
 		if ($id = $fileModel->store($data)) {
 			$msg = vmText::_('COM_VIRTUEMART_FILE_SAVED_SUCCESS');
@@ -137,31 +135,5 @@ class VirtuemartControllerMedia extends VmController {
 		}
 
 	}
-
-	function deleteFiles(){
-
-		vRequest::vmCheckToken();
-
-		$ids = vRequest::getVar($this->_cidName, vRequest::getInt('cid', array() ));
-
-		$type = 'notice';
-		if(count($ids) < 1) {
-			$msg = vmText::_('COM_VIRTUEMART_SELECT_ITEM_TO_DELETE');
-
-		} else {
-			$model = $this->getModel($this->_cname);
-			$ret = $model->removeFiles($ids);
-
-			$msg = vmText::sprintf('COM_VIRTUEMART_STRING_DELETED',$this->mainLangKey);
-			if($ret==false) {
-				$msg = vmText::sprintf('COM_VIRTUEMART_STRING_COULD_NOT_BE_DELETED',$this->mainLangKey);
-				$type = 'error';
-			}
-		}
-
-		$this->setRedirect($this->redirectPath, $msg,$type);
-	}
-
-
 }
 // pure php no closing tag
